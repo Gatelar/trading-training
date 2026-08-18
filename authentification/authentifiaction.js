@@ -4,14 +4,12 @@ document.getElementById('authForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     //Récupère les valeur saisies dans les champs
-    const email = document.getElementById('email').Value;
-    const phone = document.getElementById('phone').Value;
+    const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     // Affichage dans la console du navigateur ( pour tester )
     console.log("données saisies :");
     console.log("Email : ", email);
-    console.log("Téléphone :", phone);
     console.log("Mot de passe :", password);
 
     // Message de confirmation temporaire

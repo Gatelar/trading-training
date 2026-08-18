@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+h1 {
+    font-family: 'Oswald', sans-serif;
+    color: bisque;
+}
+
+/*ici c'est style de la page et de l'arrière plan*/
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+
+    /*image en arrière plan*/
+    background-color: black;
+    /*background-image: url('fond-flou.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; *:
+
+    /*aligenement du contenue*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+
+}
+
+/*style du bloc de texte principal */
+.contenu {
+    text-align: center;
+    color: #1C0704;
+    padding: 20px;
+}
+
+/*titre principal*/
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/*bouton / lien*/
+.bouton {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #5E0E02;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.bouton:hover {
+    background-color: #5E0E02;
+}
+
+/* fond en noir et texte en blanc*/
+body{
+    background-color: black;
+    color: white
+}
+
+/*Positionnement du logo en haut à gauche*/
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+/*Taille du logo*/
+.logo {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+/*barre Blanche tout en haut*/
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0,3);
+    z-index: 1000;
+}
+
+/*Ajustement du logo dans la barre*/
+.logo {
+    height: 45px;
+    width: auto;
+    display: block;
+}
+
+/*Ajustement pour que le contenu ne soit pas caché par la barre*/
+body {
+    padding-top: 70px;
+}

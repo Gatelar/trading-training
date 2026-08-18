@@ -22,7 +22,7 @@ L'exercice proposé varie selon le niveau (prédiction hausse/baisse, ordre virt
 trading-training/
 ├── index.html                    # Page d'accueil
 ├── style.css                     # Styles de la page d'accueil
-├── app.js                        # Script JS de la page d'accueil (actuellement vide)
+├── app.js                        # Animations JavaScript de la page d'accueil (à implémenter, vide pour l'instant)
 ├── trading-trainer.html          # Prototype jouable (export du composant React)
 ├── trading-trainer-prototype.jsx # Code source React du simulateur de trading
 ├── authentification/             # Page de connexion / inscription
@@ -37,7 +37,7 @@ trading-training/
 - [x] Page d'accueil basique (`index.html`)
 - [x] Prototype interactif du simulateur de trading validé (`trading-trainer.html` / `.jsx`)
 - [x] Page d'authentification (visuel en place, logique de soumission non fonctionnelle)
-- [ ] Lien entre la page d'accueil et le reste du site à finaliser
+- [ ] Lien entre la page d'accueil et la page d'authentification à ajouter (`index.html` ne pointe pas encore vers `authentification/authentification.html`)
 - [ ] Système de compte utilisateur / connexion réelle
 - [ ] Outils de tracé sur le graphique (lignes de tendance, Fibonacci)
 - [ ] Contexte actualité/géopolitique lié à la période affichée sur le graphique

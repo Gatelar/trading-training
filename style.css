@@ -315,6 +315,10 @@ a {
     background-image: url('images/level-intermediaire.jpg');
 }
 
+.level-img--03 {
+    background-image: url('images/level-experimente.jpg');
+}
+
 .level-code {
     display: inline-block;
     color: var(--accent);

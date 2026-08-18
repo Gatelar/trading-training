@@ -302,8 +302,13 @@ a {
     height: 160px;
     border-radius: 10px;
     margin-bottom: 20px;
-    /* Remplace par : background-image: url('images/level-XXX.jpg'); background-size: cover; background-position: center; */
     background: linear-gradient(160deg, #131a12, #050605);
+    background-size: cover;
+    background-position: center;
+}
+
+.level-img--01 {
+    background-image: url('images/level-debutant.jpg');
 }
 
 .level-code {

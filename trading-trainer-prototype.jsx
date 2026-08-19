@@ -260,23 +260,34 @@ const NEWS = {
 const DOMAIN_LINKS = {
   or: {
     hint: "Regarde du côté des taux réels américains et de la force du dollar (indice DXY) sur cette période.",
-    url: "https://www.investing.com/economic-calendar/",
-    label: "Calendrier économique — Investing.com",
+    links: [
+      { url: "https://www.investing.com/economic-calendar/", label: "Calendrier économique — Investing.com" },
+      { url: "https://www.kitco.com/news/", label: "Actualités marché de l'or — Kitco" },
+      { url: "https://www.gold.org/goldhub", label: "Données et analyses — World Gold Council" },
+    ],
   },
   forex: {
     hint: "Regarde du côté des décisions de taux de la BCE et de la Fed sur cette période.",
-    url: "https://www.ecb.europa.eu/press/pr/date/html/index.en.html",
-    label: "Communiqués de politique monétaire — BCE",
+    links: [
+      { url: "https://www.ecb.europa.eu/press/pr/date/html/index.en.html", label: "Communiqués de politique monétaire — BCE" },
+      { url: "https://www.federalreserve.gov/newsevents/calendar.htm", label: "Calendrier — Réserve fédérale (Fed)" },
+      { url: "https://www.investing.com/economic-calendar/", label: "Calendrier économique — Investing.com" },
+    ],
   },
   actions: {
     hint: "Regarde du côté des résultats d'entreprises et du sentiment de marché (risk-on / risk-off) sur cette période.",
-    url: "https://www.investing.com/economic-calendar/",
-    label: "Calendrier économique — Investing.com",
+    links: [
+      { url: "https://www.investing.com/economic-calendar/", label: "Calendrier économique — Investing.com" },
+      { url: "https://www.investing.com/earnings-calendar/", label: "Calendrier des résultats — Investing.com" },
+    ],
   },
   crypto: {
     hint: "Regarde du côté des flux vers les ETF spot et du sentiment général du marché crypto sur cette période.",
-    url: "https://alternative.me/crypto/fear-and-greed-index/",
-    label: "Indice Fear & Greed — Crypto",
+    links: [
+      { url: "https://alternative.me/crypto/fear-and-greed-index/", label: "Indice Fear & Greed — Crypto" },
+      { url: "https://www.coindesk.com/", label: "Actualités crypto — CoinDesk" },
+      { url: "https://www.coingecko.com/en/categories", label: "Vue d'ensemble du marché — CoinGecko" },
+    ],
   },
 };
 
@@ -966,27 +977,32 @@ function ExerciseScreen({
               <p className="text-sm leading-relaxed" style={{ color: C_TEXT_MUTED }}>
                 {links.hint}
               </p>
-              <a
-                href={links.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-xs font-data px-3 py-2 rounded-md border transition-colors"
-                style={{ borderColor: C_ACCENT, color: C_ACCENT }}
-              >
-                {links.label} →
-              </a>
+              <div className="flex flex-col gap-2">
+                {links.links.map((l, i) => (
+                  <a
+                    key={i}
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-data px-3 py-2 rounded-md border transition-colors"
+                    style={{ borderColor: C_ACCENT, color: C_ACCENT }}
+                  >
+                    {l.label} →
+                  </a>
+                ))}
+              </div>
             </div>
           )}
 
           {level === "experimente" && links && (
             <a
-              href={links.url}
+              href={links.links[0].url}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block text-xs font-data px-3 py-2 rounded-md border transition-colors"
               style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}
             >
-              {links.label} →
+              {links.links[0].label} →
             </a>
           )}
 

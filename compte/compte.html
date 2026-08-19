@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Training - Mon compte</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="compte.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase-client.js"></script>
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="../index.html" class="logo-container">
+            <img src="../logott.png" alt="Logo Trading Training" class="logo">
+        </a>
+        <div class="top-bar-actions" id="topBarActions" data-prefix="../"></div>
+    </header>
+
+    <section class="account-wrap reveal">
+        <span class="eyebrow">Mon compte</span>
+        <h1 id="accountName">—</h1>
+        <p class="account-email" id="accountEmail">—</p>
+
+        <div class="account-cards">
+            <div class="account-card">
+                <span class="account-card-label">Offre actuelle</span>
+                <p class="account-card-value">Découverte <span class="tag-free">gratuit</span></p>
+                <a href="../abonnement/abonnement.html" class="account-card-link">Voir l'abonnement →</a>
+            </div>
+
+            <div class="account-card">
+                <span class="account-card-label">Exercices aujourd'hui</span>
+                <p class="account-card-value" id="quotaValue">— / 3</p>
+                <p class="account-card-note">Réinitialisé chaque jour à minuit.</p>
+            </div>
+        </div>
+
+        <button class="btn-secondary account-logout" id="logoutBtn">Se déconnecter</button>
+    </section>
+
+    <script src="../app.js"></script>
+    <script src="compte.js"></script>
+    <script src="../auth-state.js"></script>
+</body>
+</html>

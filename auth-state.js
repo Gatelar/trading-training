@@ -18,14 +18,31 @@
 
         container.innerHTML = `
             <a href="${prefix}abonnement/abonnement.html" class="btn-secondary top-bar-plan">Abonnement</a>
-            <button class="btn-login" id="accountBtn">${firstName}</button>
+            <div class="account-menu">
+                <button class="btn-login" id="accountBtn">${firstName} <span class="menu-caret">▾</span></button>
+                <div class="account-dropdown" id="accountDropdown">
+                    <a href="${prefix}compte/compte.html">Mon compte</a>
+                    <a href="${prefix}abonnement/abonnement.html">Abonnement</a>
+                    <button id="logoutMenuBtn">Se déconnecter</button>
+                </div>
+            </div>
         `;
 
-        document.getElementById('accountBtn').addEventListener('click', async () => {
-            if (confirm('Se déconnecter ?')) {
-                await supabaseClient.auth.signOut();
-                window.location.href = prefix + 'index.html';
-            }
+        const accountBtn = document.getElementById('accountBtn');
+        const dropdown = document.getElementById('accountDropdown');
+
+        accountBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('is-open');
+        });
+
+        document.addEventListener('click', () => {
+            dropdown.classList.remove('is-open');
+        });
+
+        document.getElementById('logoutMenuBtn').addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = prefix + 'index.html';
         });
     });
 })();

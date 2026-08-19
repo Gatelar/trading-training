@@ -80,6 +80,23 @@ function generateScenario(rng, basePrice, phases) {
       idx++;
     }
   });
+
+  // Dates fabriquées (jours ouvrés consécutifs) uniquement pour l'affichage de l'axe temporel.
+  // Ces scénarios ne sont pas des données réelles — voir le badge "exemple" dans l'interface.
+  const total = candles.length;
+  const today = new Date();
+  let cursor = new Date(today);
+  const businessDays = [];
+  while (businessDays.length < total) {
+    cursor = new Date(cursor.getTime() - 24 * 60 * 60 * 1000);
+    const day = cursor.getDay();
+    if (day !== 0 && day !== 6) businessDays.push(new Date(cursor));
+  }
+  businessDays.reverse();
+  candles.forEach((c, i) => {
+    c.date = businessDays[i].toISOString().slice(0, 10);
+  });
+
   return candles;
 }
 
@@ -143,6 +160,12 @@ function getMacroEventsInWindow(windowCandles, visibleCount) {
   const startDate = visible[0].date;
   const endDate = visible[visible.length - 1].date;
   return MACRO_EVENTS_EURUSD.filter((ev) => ev.date >= startDate && ev.date <= endDate);
+}
+
+function formatAxisDate(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short" });
 }
 
 const LEVELS = [
@@ -224,18 +247,18 @@ const NEWS = {
   },
 };
 
-// ============ DISTANCE MINIMUM POUR VALIDER UN TRACÉ ============
 function isDrawingTooSmall(p1, p2) {
   return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
 }
 
 function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.toFixed(2) }) {
-  const W = 960;
-  const H = 500;
-  const padTop = 20;
-  const padBottom = 20;
-  const padRight = 76;
+  const W = 1400;
+  const H = 640;
+  const padTop = 24;
+  const padBottom = 34;
+  const padRight = 84;
   const innerW = W - padRight;
+  const innerH = H - padTop - padBottom;
 
   const shownCount = revealed ? candles.length : visibleCount;
   const shown = candles.slice(0, shownCount);
@@ -245,6 +268,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   const [drawings, setDrawings] = useState([]);
   const [dragStart, setDragStart] = useState(null);
   const [dragCurrent, setDragCurrent] = useState(null);
+  const [hover, setHover] = useState(null);
   const isDragging = dragStart !== null;
 
   if (shown.length === 0) return null;
@@ -258,16 +282,22 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   const slot = innerW / candles.length;
   const bodyW = Math.max(slot * 0.55, 1.5);
 
-  const yScale = (p) => padTop + (1 - (p - yMin) / (yMax - yMin)) * (H - padTop - padBottom);
+  const yScale = (p) => padTop + (1 - (p - yMin) / (yMax - yMin)) * innerH;
   const xScale = (i) => i * slot + slot / 2;
 
-  const tickCount = 5;
+  const tickCount = 6;
   const gridValues = Array.from({ length: tickCount + 1 }, (_, k) => yMin + (k / tickCount) * (yMax - yMin));
 
   const cutoffX = visibleCount * slot;
   const entryCandle = candles[visibleCount - 1];
   const lastCandle = candles[candles.length - 1];
   const lastUp = entryCandle && lastCandle ? lastCandle.close >= entryCandle.close : true;
+
+  // Étiquettes de dates sur l'axe X (réparties uniformément)
+  const axisLabelCount = 7;
+  const axisIndices = Array.from({ length: axisLabelCount }, (_, k) =>
+    Math.round((k / (axisLabelCount - 1)) * (candles.length - 1))
+  );
 
   function pointFromEvent(e) {
     const rect = svgRef.current.getBoundingClientRect();
@@ -277,7 +307,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
     const vy = fracY * H;
     const maxIndex = (revealed ? candles.length : visibleCount) - 1;
     const clickedIndex = Math.max(0, Math.min(maxIndex, Math.round(vx / slot - 0.5)));
-    const clickedPrice = yMin + (1 - (vy - padTop) / (H - padTop - padBottom)) * (yMax - yMin);
+    const clickedPrice = yMin + (1 - (vy - padTop) / innerH) * (yMax - yMin);
     return { index: clickedIndex, price: clickedPrice };
   }
 
@@ -296,8 +326,14 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   }
 
   function handlePointerMove(e) {
-    if (!isDragging || !svgRef.current) return;
-    setDragCurrent(pointFromEvent(e));
+    if (!svgRef.current) return;
+    const point = pointFromEvent(e);
+    setHover(point);
+    if (isDragging) setDragCurrent(point);
+  }
+
+  function handlePointerLeave() {
+    setHover(null);
   }
 
   function handlePointerUp() {
@@ -346,7 +382,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
                 strokeDasharray={lvl === 0 || lvl === 1 ? "0" : "3 3"}
                 opacity="0.75"
               />
-              <text x={leftX + 4} y={y - 3} fontSize="9" fill={C_FIB} className="font-data">
+              <text x={leftX + 4} y={y - 3} fontSize="10" fill={C_FIB} className="font-data">
                 {(lvl * 100).toFixed(1)}%
               </text>
             </g>
@@ -356,9 +392,12 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
     );
   }
 
+  const showCrosshair = hover && !isDragging;
+  const hoverCandle = hover ? candles[hover.index] : null;
+
   return (
-    <div>
-      <div className="flex items-center gap-2 mb-3">
+    <div className="w-full h-full flex flex-col">
+      <div className="flex items-center gap-2 mb-3 shrink-0">
         <button
           onClick={() => toggleTool("trend")}
           className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
@@ -396,112 +435,144 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
         )}
       </div>
 
-      <svg
-        ref={svgRef}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        viewBox={`0 0 ${W} ${H}`}
-        className={`w-full h-auto select-none touch-none ${activeTool ? "cursor-crosshair" : ""}`}
-        role="img"
-        aria-label="Graphique en chandeliers"
-      >
-        {gridValues.map((gv, k) => (
-          <g key={k}>
-            <line x1={0} x2={innerW} y1={yScale(gv)} y2={yScale(gv)} stroke={C_BORDER} strokeWidth="1" />
-            <text x={innerW + 8} y={yScale(gv) + 4} fontSize="11.5" fill={C_TEXT_MUTED} className="font-data">
-              {format(gv)}
-            </text>
-          </g>
-        ))}
-
-        <line
-          x1={cutoffX}
-          x2={cutoffX}
-          y1={padTop}
-          y2={H - padBottom}
-          stroke={C_ACCENT}
-          strokeWidth="1"
-          strokeDasharray="3 4"
-          opacity={revealed ? 0.35 : 0.75}
-        />
-        {!revealed && (
-          <text x={cutoffX} y={padTop - 6} fontSize="10.5" fill={C_ACCENT} textAnchor="middle" className="font-data">
-            MAINTENANT
-          </text>
-        )}
-
-        {shown.map((c, i) => {
-          const up = c.close >= c.open;
-          const color = up ? C_UP : C_DOWN;
-          const isNew = i >= visibleCount;
-          return (
-            <g key={c.i} className={isNew ? "candle-reveal" : ""} style={isNew ? { animationDelay: `${(i - visibleCount) * 22}ms` } : undefined}>
-              <line x1={xScale(i)} x2={xScale(i)} y1={yScale(c.high)} y2={yScale(c.low)} stroke={color} strokeWidth="1" />
-              <rect
-                x={xScale(i) - bodyW / 2}
-                y={Math.min(yScale(c.open), yScale(c.close))}
-                width={bodyW}
-                height={Math.max(Math.abs(yScale(c.close) - yScale(c.open)), 1)}
-                fill={color}
-              />
+      <div className="flex-1 min-h-0">
+        <svg
+          ref={svgRef}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerLeave}
+          viewBox={`0 0 ${W} ${H}`}
+          preserveAspectRatio="none"
+          className={`w-full h-full select-none touch-none ${activeTool ? "cursor-crosshair" : ""}`}
+          role="img"
+          aria-label="Graphique en chandeliers"
+        >
+          {gridValues.map((gv, k) => (
+            <g key={k}>
+              <line x1={0} x2={innerW} y1={yScale(gv)} y2={yScale(gv)} stroke={C_BORDER} strokeWidth="1" />
+              <text x={innerW + 8} y={yScale(gv) + 4} fontSize="13" fill={C_TEXT_MUTED} className="font-data">
+                {format(gv)}
+              </text>
             </g>
-          );
-        })}
+          ))}
 
-        {drawings.map((d) => (d.type === "trend" ? renderTrendLine(d.p1, d.p2, d.id) : renderFib(d.p1, d.p2, d.id)))}
+          {axisIndices.map((idx, k) => {
+            const c = candles[idx];
+            if (!c) return null;
+            return (
+              <text key={k} x={xScale(idx)} y={H - 12} fontSize="12" fill={C_TEXT_MUTED} textAnchor="middle" className="font-data">
+                {formatAxisDate(c.date)}
+              </text>
+            );
+          })}
 
-        {isDragging &&
-          dragCurrent &&
-          (activeTool === "trend" ? renderTrendLine(dragStart, dragCurrent, "preview", 0.55) : renderFib(dragStart, dragCurrent, "preview", 0.55))}
-
-        {entryCandle && (
-          <g>
-            <line
-              x1={0}
-              x2={innerW}
-              y1={yScale(entryCandle.close)}
-              y2={yScale(entryCandle.close)}
-              stroke={C_ACCENT}
-              strokeWidth="1"
-              strokeDasharray="2 3"
-              opacity="0.5"
-            />
-            <rect x={innerW + 2} y={yScale(entryCandle.close) - 9} width={padRight - 4} height={18} fill={C_ACCENT} rx="2" />
-            <text
-              x={innerW + padRight / 2}
-              y={yScale(entryCandle.close) + 4}
-              fontSize="10.5"
-              fill={C_BG}
-              textAnchor="middle"
-              fontWeight="700"
-              className="font-data"
-            >
-              {format(entryCandle.close)}
+          <line
+            x1={cutoffX}
+            x2={cutoffX}
+            y1={padTop}
+            y2={padTop + innerH}
+            stroke={C_ACCENT}
+            strokeWidth="1"
+            strokeDasharray="3 4"
+            opacity={revealed ? 0.35 : 0.75}
+          />
+          {!revealed && (
+            <text x={cutoffX} y={padTop - 8} fontSize="11" fill={C_ACCENT} textAnchor="middle" className="font-data">
+              MAINTENANT
             </text>
-          </g>
-        )}
+          )}
 
-        {revealed && lastCandle && lastCandle !== entryCandle && (
-          <g>
-            <rect x={innerW + 2} y={yScale(lastCandle.close) - 9} width={padRight - 4} height={18} fill={lastUp ? C_UP : C_DOWN} rx="2" />
-            <text
-              x={innerW + padRight / 2}
-              y={yScale(lastCandle.close) + 4}
-              fontSize="10.5"
-              fill={C_BG}
-              textAnchor="middle"
-              fontWeight="700"
-              className="font-data"
-            >
-              {format(lastCandle.close)}
-            </text>
-          </g>
-        )}
-      </svg>
+          {shown.map((c, i) => {
+            const up = c.close >= c.open;
+            const color = up ? C_UP : C_DOWN;
+            const isNew = i >= visibleCount;
+            return (
+              <g key={c.i} className={isNew ? "candle-reveal" : ""} style={isNew ? { animationDelay: `${(i - visibleCount) * 22}ms` } : undefined}>
+                <line x1={xScale(i)} x2={xScale(i)} y1={yScale(c.high)} y2={yScale(c.low)} stroke={color} strokeWidth="1" />
+                <rect
+                  x={xScale(i) - bodyW / 2}
+                  y={Math.min(yScale(c.open), yScale(c.close))}
+                  width={bodyW}
+                  height={Math.max(Math.abs(yScale(c.close) - yScale(c.open)), 1)}
+                  fill={color}
+                />
+              </g>
+            );
+          })}
+
+          {drawings.map((d) => (d.type === "trend" ? renderTrendLine(d.p1, d.p2, d.id) : renderFib(d.p1, d.p2, d.id)))}
+
+          {isDragging &&
+            dragCurrent &&
+            (activeTool === "trend" ? renderTrendLine(dragStart, dragCurrent, "preview", 0.55) : renderFib(dragStart, dragCurrent, "preview", 0.55))}
+
+          {entryCandle && (
+            <g>
+              <line
+                x1={0}
+                x2={innerW}
+                y1={yScale(entryCandle.close)}
+                y2={yScale(entryCandle.close)}
+                stroke={C_ACCENT}
+                strokeWidth="1"
+                strokeDasharray="2 3"
+                opacity="0.5"
+              />
+              <rect x={innerW + 2} y={yScale(entryCandle.close) - 10} width={padRight - 4} height={20} fill={C_ACCENT} rx="2" />
+              <text
+                x={innerW + padRight / 2}
+                y={yScale(entryCandle.close) + 4.5}
+                fontSize="11.5"
+                fill={C_BG}
+                textAnchor="middle"
+                fontWeight="700"
+                className="font-data"
+              >
+                {format(entryCandle.close)}
+              </text>
+            </g>
+          )}
+
+          {revealed && lastCandle && lastCandle !== entryCandle && (
+            <g>
+              <rect x={innerW + 2} y={yScale(lastCandle.close) - 10} width={padRight - 4} height={20} fill={lastUp ? C_UP : C_DOWN} rx="2" />
+              <text
+                x={innerW + padRight / 2}
+                y={yScale(lastCandle.close) + 4.5}
+                fontSize="11.5"
+                fill={C_BG}
+                textAnchor="middle"
+                fontWeight="700"
+                className="font-data"
+              >
+                {format(lastCandle.close)}
+              </text>
+            </g>
+          )}
+
+          {/* ============ CURSEUR CROISÉ (CROSSHAIR) ============ */}
+          {showCrosshair && hoverCandle && (
+            <g pointerEvents="none">
+              <line x1={xScale(hover.index)} x2={xScale(hover.index)} y1={padTop} y2={padTop + innerH} stroke="#4a534a" strokeWidth="1" strokeDasharray="2 3" />
+              <line x1={0} x2={innerW} y1={yScale(hover.price)} y2={yScale(hover.price)} stroke="#4a534a" strokeWidth="1" strokeDasharray="2 3" />
+
+              <rect x={innerW + 2} y={yScale(hover.price) - 10} width={padRight - 4} height={20} fill="#2a3228" stroke={C_BORDER} rx="2" />
+              <text x={innerW + padRight / 2} y={yScale(hover.price) + 4.5} fontSize="11.5" fill={C_TEXT} textAnchor="middle" fontWeight="600" className="font-data">
+                {format(hover.price)}
+              </text>
+
+              <rect x={xScale(hover.index) - 40} y={H - 24} width={80} height={18} fill="#2a3228" stroke={C_BORDER} rx="2" />
+              <text x={xScale(hover.index)} y={H - 11.5} fontSize="11" fill={C_TEXT} textAnchor="middle" className="font-data">
+                {formatAxisDate(hoverCandle.date)}
+              </text>
+            </g>
+          )}
+        </svg>
+      </div>
 
       {activeTool && !isDragging && (
-        <p className="text-xs mt-2 font-data" style={{ color: C_TEXT_DIM }}>
+        <p className="text-xs mt-2 font-data shrink-0" style={{ color: C_TEXT_DIM }}>
           Clique et fais glisser sur le graphique pour tracer
         </p>
       )}
@@ -644,10 +715,11 @@ function ExerciseScreen({
   const orderWin = pnl > 0;
 
   const cardStyle = { backgroundColor: C_BG_SOFT, borderColor: C_BORDER };
+  const chartHeight = "clamp(440px, 68vh, 720px)";
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+    <div className="max-w-[1600px] mx-auto">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="flex items-center gap-1.5 font-data text-xs" style={{ color: C_TEXT_MUTED }}>
             <span className="w-1.5 h-1.5 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} /> SESSION
@@ -672,8 +744,8 @@ function ExerciseScreen({
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-4">
-        <div className="rounded-xl p-4 border min-h-[420px] flex items-center justify-center" style={cardStyle}>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-4">
+        <div className="rounded-xl p-4 border flex items-center justify-center" style={{ ...cardStyle, height: chartHeight }}>
           {loading ? (
             <p className="text-sm font-data" style={{ color: C_TEXT_MUTED }}>
               Chargement des données EUR/USD réelles...
@@ -685,7 +757,7 @@ function ExerciseScreen({
           )}
         </div>
 
-        <div className="rounded-xl p-4 border flex flex-col" style={cardStyle}>
+        <div className="rounded-xl p-4 border flex flex-col" style={{ ...cardStyle, height: chartHeight, overflowY: "auto" }}>
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4" style={{ color: C_ACCENT }} />
             <h3 className="font-display text-sm" style={{ color: C_TEXT }}>
@@ -731,7 +803,7 @@ function ExerciseScreen({
           <p className="text-xs mt-4 pt-3 border-t" style={{ color: C_TEXT_DIM, borderColor: C_BORDER }}>
             {isReal
               ? "Cotations EUR/USD réelles (Alpha Vantage) et décisions de politique monétaire BCE réelles et datées."
-              : "Contexte illustratif pour ce prototype — données simulées en attendant leur intégration réelle."}
+              : "Contexte illustratif pour ce prototype — données et dates simulées en attendant leur intégration réelle."}
           </p>
         </div>
       </div>
@@ -956,8 +1028,8 @@ export default function App() {
         }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
-        <header className="flex items-center gap-2 mb-10">
+      <div className="max-w-[1600px] mx-auto px-4 py-6 md:py-8">
+        <header className="flex items-center gap-2 mb-6">
           <span className="w-2 h-2 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} />
           <span className="font-data text-xs tracking-widest" style={{ color: C_TEXT_MUTED }}>
             TRADE TRAINER — PROTOTYPE

@@ -339,6 +339,51 @@ function getRateContext(windowCandles, visibleCount) {
   return { rate: latest.rateAfter, trend, asOf: latest.date };
 }
 
+// ============ RÈGLE TECHNIQUE SYSTÉMATIQUE (comparaison, niveau expérimenté) ============
+// Croisement de moyennes mobiles (SMA rapide vs SMA lente), calculé uniquement
+// sur les données visibles AVANT le reveal — la règle ne triche pas non plus.
+function sma(values, period, endIndex) {
+  if (endIndex + 1 < period) return null;
+  let sum = 0;
+  for (let i = endIndex - period + 1; i <= endIndex; i++) sum += values[i];
+  return sum / period;
+}
+
+function computeSmaSignal(candles, visibleCount, fast = 5, slow = 20) {
+  if (visibleCount < slow + 1) return null;
+  const closes = candles.map((c) => c.close);
+  const idx = visibleCount - 1;
+  const fastVal = sma(closes, fast, idx);
+  const slowVal = sma(closes, slow, idx);
+  if (fastVal === null || slowVal === null) return null;
+  return { signal: fastVal > slowVal ? "hausse" : "baisse", fast, slow };
+}
+
+// ============ DEBRIEF POST-RÉVÉLATION, ADAPTÉ AU NIVEAU ============
+const DEBRIEF_QUESTIONS = {
+  debutant: ["Qu'est-ce qui t'a fait choisir cette direction ?"],
+  intermediaire: [
+    "Ton entrée était-elle basée sur une règle précise ou plutôt une impression ?",
+    "Qu'est-ce que tu ferais différemment la prochaine fois ?",
+  ],
+  experimente: [
+    "Quel était ton raisonnement complet avant le reveal ?",
+    "Qu'est-ce qui, avec le recul, aurait dû t'alerter (ou te rassurer) ?",
+    "Qu'est-ce que tu ferais différemment la prochaine fois ?",
+  ],
+};
+
+const BIAS_ITEMS = {
+  intermediaire: ["J'ai peut-être sur-analysé la situation", "J'ai suivi mon impression plus que mes règles", "J'ai ignoré le risque"],
+  experimente: [
+    "J'ai peut-être sur-analysé la situation",
+    "J'ai suivi mon impression plus que mes règles",
+    "J'ai ignoré le risque",
+    "Biais de confirmation : j'ai cherché ce qui confirmait mon idée de départ",
+    "J'ai changé d'avis en cours de route sans raison claire",
+  ],
+};
+
 
 function isDrawingTooSmall(p1, p2) {
   return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
@@ -774,6 +819,89 @@ function DomainScreen({ level, onSelect, onBack }) {
   );
 }
 
+function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAnswerChange, biasChecked, onToggleBias }) {
+  const questions = DEBRIEF_QUESTIONS[level] || [];
+  const biasItems = BIAS_ITEMS[level] || [];
+  const smaResult = level === "experimente" ? computeSmaSignal(candles, visibleCount) : null;
+
+  const inputStyle = {
+    backgroundColor: C_BG,
+    borderColor: C_BORDER,
+    color: C_TEXT,
+  };
+
+  return (
+    <div className="mt-5 pt-4 border-t" style={{ borderColor: C_BORDER }}>
+      <p className="text-[10px] font-data tracking-widest mb-3" style={{ color: C_TEXT_DIM }}>
+        DEBRIEF
+      </p>
+
+      {smaResult && (
+        <div className="mb-4 p-3 rounded-lg border" style={{ borderColor: C_BORDER, backgroundColor: C_BG }}>
+          <p className="text-xs font-medium mb-1" style={{ color: C_TEXT }}>
+            Comparaison à une règle systématique (SMA{smaResult.fast}/SMA{smaResult.slow})
+          </p>
+          <p className="text-xs" style={{ color: C_TEXT_MUTED }}>
+            La règle aurait suggéré :{" "}
+            <span className="font-data font-medium" style={{ color: C_TEXT }}>
+              {smaResult.signal}
+            </span>{" "}
+            · Résultat réel :{" "}
+            <span className="font-data font-medium" style={{ color: C_TEXT }}>
+              {actualUp ? "hausse" : "baisse"}
+            </span>{" "}
+            ·{" "}
+            <span style={{ color: smaResult.signal === (actualUp ? "hausse" : "baisse") ? C_UP : C_DOWN }}>
+              {smaResult.signal === (actualUp ? "hausse" : "baisse") ? "règle alignée" : "règle en désaccord"}
+            </span>
+          </p>
+        </div>
+      )}
+
+      {questions.length > 0 && (
+        <div className="space-y-3 mb-4">
+          {questions.map((q, i) => (
+            <div key={i}>
+              <p className="text-xs mb-1.5" style={{ color: C_TEXT_MUTED }}>
+                {q}
+              </p>
+              <textarea
+                value={(debriefAnswers && debriefAnswers[i]) || ""}
+                onChange={(e) => onAnswerChange(i, e.target.value)}
+                rows={2}
+                placeholder="Facultatif..."
+                className="w-full rounded-lg p-2.5 text-xs resize-none border focus-visible:outline-none"
+                style={inputStyle}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {biasItems.length > 0 && (
+        <div>
+          <p className="text-xs mb-2" style={{ color: C_TEXT_MUTED }}>
+            Est-ce que l'un de ces biais s'est glissé dans ta décision ?
+          </p>
+          <div className="flex flex-col gap-1.5">
+            {biasItems.map((b, i) => (
+              <label key={i} className="flex items-center gap-2 text-xs cursor-pointer" style={{ color: C_TEXT }}>
+                <input
+                  type="checkbox"
+                  checked={!!(biasChecked && biasChecked[i])}
+                  onChange={() => onToggleBias(i)}
+                  className="w-3.5 h-3.5"
+                />
+                {b}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ExerciseScreen({
   level,
   domain,
@@ -786,6 +914,10 @@ function ExerciseScreen({
   loading,
   loadError,
   newsEvents,
+  debriefAnswers,
+  onDebriefAnswerChange,
+  biasChecked,
+  onToggleBias,
   onPredict,
   onOrder,
   onRevealAnalysis,
@@ -1108,6 +1240,18 @@ function ExerciseScreen({
                 {movePct.toFixed(2)}% — compare avec ton analyse.
               </div>
             )}
+
+            <Debrief
+              level={level}
+              candles={candles}
+              visibleCount={visibleCount}
+              actualUp={actualUp}
+              debriefAnswers={debriefAnswers}
+              onAnswerChange={onDebriefAnswerChange}
+              biasChecked={biasChecked}
+              onToggleBias={onToggleBias}
+            />
+
             <button
               onClick={onNew}
               className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors"
@@ -1130,6 +1274,8 @@ export default function App() {
   const [prediction, setPrediction] = useState(null);
   const [position, setPosition] = useState(null);
   const [analysis, setAnalysis] = useState("");
+  const [debriefAnswers, setDebriefAnswers] = useState({});
+  const [biasChecked, setBiasChecked] = useState({});
 
   const [forexSeries, setForexSeries] = useState(null);
   const [forexLoading, setForexLoading] = useState(false);
@@ -1182,6 +1328,16 @@ export default function App() {
     setPrediction(null);
     setPosition(null);
     setAnalysis("");
+    setDebriefAnswers({});
+    setBiasChecked({});
+  };
+
+  const handleDebriefAnswerChange = (i, value) => {
+    setDebriefAnswers((prev) => ({ ...prev, [i]: value }));
+  };
+
+  const handleToggleBias = (i) => {
+    setBiasChecked((prev) => ({ ...prev, [i]: !prev[i] }));
   };
 
   const handleSelectLevel = (id) => {
@@ -1260,6 +1416,10 @@ export default function App() {
             onPredict={handlePredict}
             onOrder={handleOrder}
             onRevealAnalysis={handleRevealAnalysis}
+            debriefAnswers={debriefAnswers}
+            onDebriefAnswerChange={handleDebriefAnswerChange}
+            biasChecked={biasChecked}
+            onToggleBias={handleToggleBias}
             setAnalysis={setAnalysis}
             onNew={handleNew}
             onChangeLevel={handleChangeLevel}

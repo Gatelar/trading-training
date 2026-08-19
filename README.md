@@ -32,6 +32,18 @@ Le panneau "Contexte marché" ne donne pas la même quantité d'aide selon le ni
 
 Les liens/pistes par marché sont dans `DOMAIN_LINKS` (`trading-trainer-prototype.jsx`).
 
+## Debrief après le reveal, adapté au niveau
+
+Symétriquement à l'accompagnement en amont, la profondeur du debrief **après** le reveal augmente avec le niveau — l'idée étant que plus on avance, moins on a d'aide avant de décider, mais plus on est poussé à analyser sa propre décision après coup :
+
+| Niveau | Debrief affiché |
+|---|---|
+| **Débutant** | 1 question simple de recul |
+| **Intermédiaire** | 2 questions de recul + checklist de 3 biais courants |
+| **Expérimenté** | 3 questions de recul + checklist de 5 biais + comparaison à une règle technique systématique (croisement de moyennes mobiles SMA5/SMA20, calculée uniquement sur les données visibles avant le reveal) |
+
+Les questions/biais par niveau sont dans `DEBRIEF_QUESTIONS` et `BIAS_ITEMS` (`trading-trainer-prototype.jsx`). Les réponses ne sont pas encore sauvegardées entre les sessions (juste en mémoire le temps de l'exercice) — une vraie sauvegarde (table Supabase) serait l'étape suivante si on veut un historique de progression.
+
 ## Comptes utilisateurs et quotas
 
 - Authentification réelle via **Supabase Auth** (inscription/connexion par email + mot de passe)

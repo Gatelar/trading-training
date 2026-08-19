@@ -142,10 +142,18 @@ async function fetchEurUsdDaily() {
 }
 
 function pickForexWindow(fullSeries, rng, windowLen) {
-  const maxStart = fullSeries.length - windowLen;
-  if (maxStart <= 0) return fullSeries.map((c, i) => ({ ...c, i }));
+  // On restreint le tirage à la période couverte par la base d'événements BCE,
+  // pour garantir un contexte macro toujours disponible côté débutant.
+  let pool = fullSeries;
+  if (typeof MACRO_EVENTS_EURUSD !== "undefined" && MACRO_EVENTS_EURUSD.length > 0) {
+    const minDate = MACRO_EVENTS_EURUSD[0].date;
+    const filtered = fullSeries.filter((c) => c.date >= minDate);
+    if (filtered.length >= windowLen) pool = filtered;
+  }
+  const maxStart = pool.length - windowLen;
+  if (maxStart <= 0) return pool.map((c, i) => ({ ...c, i }));
   const start = Math.floor(rng() * maxStart);
-  return fullSeries.slice(start, start + windowLen).map((c, i) => ({ ...c, i }));
+  return pool.slice(start, start + windowLen).map((c, i) => ({ ...c, i }));
 }
 
 function windowLenForLevel(levelId) {
@@ -283,6 +291,26 @@ function computeVolatility(candles, visibleCount) {
   const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
   const variance = returns.reduce((a, b) => a + (b - mean) ** 2, 0) / returns.length;
   return Math.sqrt(variance) * 100; // en %
+}
+
+function computeRangeStats(candles, visibleCount, format) {
+  const visible = candles.slice(0, visibleCount);
+  if (visible.length < 2) return null;
+  const high = Math.max(...visible.map((c) => c.high));
+  const low = Math.min(...visible.map((c) => c.low));
+  const rangePct = ((high - low) / low) * 100;
+  const avgDailyRangePct =
+    (visible.reduce((sum, c) => sum + (c.high - c.low) / c.open, 0) / visible.length) * 100;
+  const upCount = visible.filter((c) => c.close >= c.open).length;
+  const downCount = visible.length - upCount;
+  return {
+    high: format(high),
+    low: format(low),
+    rangePct,
+    avgDailyRangePct,
+    upCount,
+    downCount,
+  };
 }
 
 function getRateContext(windowCandles, visibleCount) {
@@ -770,6 +798,7 @@ function ExerciseScreen({
   const orderWin = pnl > 0;
 
   const volatility = candles.length > 0 ? computeVolatility(candles, visibleCount) : null;
+  const rangeStats = candles.length > 0 ? computeRangeStats(candles, visibleCount, d.format) : null;
   const rateContext = isReal ? getRateContext(candles, visibleCount) : null;
 
   const cardStyle = { backgroundColor: C_BG_SOFT, borderColor: C_BORDER };
@@ -803,15 +832,29 @@ function ExerciseScreen({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-4">
-        <div className="rounded-xl p-4 border flex items-center justify-center" style={{ ...cardStyle, height: chartHeight }}>
+        <div className="rounded-xl p-4 border flex flex-col" style={{ ...cardStyle, height: chartHeight }}>
+          <div className="flex items-center gap-2 mb-2 shrink-0">
+            <span className="font-data text-xs font-medium" style={{ color: C_TEXT }}>
+              {d.label}
+            </span>
+            <span className="font-data text-[10px] px-1.5 py-0.5 rounded border" style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}>
+              1D
+            </span>
+          </div>
           {loading ? (
-            <p className="text-sm font-data" style={{ color: C_TEXT_MUTED }}>
-              Chargement des données EUR/USD réelles...
-            </p>
+            <div className="flex-1 flex items-center justify-center">
+              <p className="text-sm font-data" style={{ color: C_TEXT_MUTED }}>
+                Chargement des données EUR/USD réelles...
+              </p>
+            </div>
           ) : loadError ? (
-            <p className="text-red-400 text-sm font-data text-center px-4">{loadError}</p>
+            <div className="flex-1 flex items-center justify-center">
+              <p className="text-red-400 text-sm font-data text-center px-4">{loadError}</p>
+            </div>
           ) : (
-            <CandlestickChart candles={candles} visibleCount={visibleCount} revealed={revealed} format={d.format} />
+            <div className="flex-1 min-h-0">
+              <CandlestickChart candles={candles} visibleCount={visibleCount} revealed={revealed} format={d.format} />
+            </div>
           )}
         </div>
 
@@ -860,7 +903,7 @@ function ExerciseScreen({
                 </>
               )}
 
-              {(rateContext || volatility !== null) && (
+              {(rateContext || volatility !== null || rangeStats) && (
                 <div className="mt-4 pt-3 border-t space-y-2" style={{ borderColor: C_BORDER }}>
                   <p className="text-[10px] font-data tracking-widest" style={{ color: C_TEXT_DIM }}>
                     INDICATEURS CLÉS
@@ -875,6 +918,35 @@ function ExerciseScreen({
                         </span>
                       </span>
                     </div>
+                  )}
+                  {rangeStats && (
+                    <>
+                      <div className="flex items-center justify-between text-xs">
+                        <span style={{ color: C_TEXT_MUTED }}>Plus haut / plus bas période</span>
+                        <span className="font-data font-medium" style={{ color: C_TEXT }}>
+                          {rangeStats.high} / {rangeStats.low}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span style={{ color: C_TEXT_MUTED }}>Amplitude totale</span>
+                        <span className="font-data font-medium" style={{ color: C_TEXT }}>
+                          {rangeStats.rangePct.toFixed(2)}%
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span style={{ color: C_TEXT_MUTED }}>Mouvement quotidien moyen</span>
+                        <span className="font-data font-medium" style={{ color: C_TEXT }}>
+                          {rangeStats.avgDailyRangePct.toFixed(2)}%
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span style={{ color: C_TEXT_MUTED }}>Bougies hausse / baisse</span>
+                        <span className="font-data font-medium" style={{ color: C_TEXT }}>
+                          <span style={{ color: C_UP }}>{rangeStats.upCount}</span> /{" "}
+                          <span style={{ color: C_DOWN }}>{rangeStats.downCount}</span>
+                        </span>
+                      </div>
+                    </>
                   )}
                   {volatility !== null && (
                     <div className="flex items-center justify-between text-xs">

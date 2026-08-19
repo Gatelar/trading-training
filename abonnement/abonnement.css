@@ -143,3 +143,124 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ============ TOAST "PAS LE MOMENT" (bouton notification abonnement) ============ */
+.crash-toast-wrap {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2000;
+}
+
+.crash-toast {
+    background-color: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 300px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+    animation: ctIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    font-family: 'Inter', sans-serif;
+}
+
+@keyframes ctIn {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ct-chart-zone {
+    height: 100px;
+    background: linear-gradient(180deg, #0c0f0c 0%, #0a0d09 100%);
+    position: relative;
+    padding: 14px 18px 0;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+}
+
+.ct-crack-label {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    color: #ef4444;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.ct-crack-label.show {
+    opacity: 1;
+}
+
+.ct-candles {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 78px;
+    position: relative;
+}
+
+.ct-candle {
+    width: 9px;
+    border-radius: 1px;
+    position: relative;
+    flex-shrink: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
+    background-color: #10b981;
+}
+
+.ct-candle .ct-wick {
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    width: 1px;
+    background-color: #10b981;
+    transform: translateX(-50%);
+}
+
+.ct-candle.ct-crash {
+    background-color: #ef4444;
+}
+
+.ct-candle.ct-crash .ct-wick {
+    background-color: #ef4444;
+}
+
+.ct-body {
+    padding: 14px 18px 16px;
+}
+
+.ct-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.ct-text {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.ct-progress {
+    height: 2px;
+    background-color: var(--accent);
+    width: 100%;
+}
+
+@media (max-width: 500px) {
+    .crash-toast-wrap {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+    }
+    .crash-toast {
+        width: 100%;
+    }
+}

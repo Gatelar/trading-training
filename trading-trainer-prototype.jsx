@@ -19,6 +19,19 @@ import {
   Trash2,
 } from "lucide-react";
 
+// ============ PALETTE (identique au reste du site) ============
+const C_BG = "#050605";
+const C_BG_SOFT = "#0c0f0c";
+const C_ACCENT = "#CDFC8A";
+const C_ACCENT_DIM = "#8fbf5a";
+const C_TEXT = "#f4f6f2";
+const C_TEXT_MUTED = "#9aa39a";
+const C_TEXT_DIM = "#5c655c";
+const C_BORDER = "#1c211c";
+const C_UP = "#10b981";
+const C_DOWN = "#ef4444";
+const C_FIB = "#a78bfa";
+
 function mulberry32(a) {
   return function () {
     a |= 0;
@@ -84,9 +97,7 @@ async function fetchEurUsdDaily() {
         return parsed.series;
       }
     }
-  } catch (e) {
-    // cache corrompu, on ignore et on refetch
-  }
+  } catch (e) {}
 
   const url = `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=EUR&to_symbol=USD&outputsize=full&apikey=${ALPHA_VANTAGE_KEY}`;
   const res = await fetch(url);
@@ -108,9 +119,7 @@ async function fetchEurUsdDaily() {
 
   try {
     localStorage.setItem(FOREX_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), series }));
-  } catch (e) {
-    // stockage plein, tant pis, on continue sans cache
-  }
+  } catch (e) {}
 
   return series;
 }
@@ -215,12 +224,17 @@ const NEWS = {
   },
 };
 
+// ============ DISTANCE MINIMUM POUR VALIDER UN TRACÉ ============
+function isDrawingTooSmall(p1, p2) {
+  return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
+}
+
 function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.toFixed(2) }) {
-  const W = 800;
-  const H = 360;
-  const padTop = 18;
-  const padBottom = 18;
-  const padRight = 66;
+  const W = 960;
+  const H = 500;
+  const padTop = 20;
+  const padBottom = 20;
+  const padRight = 76;
   const innerW = W - padRight;
 
   const shownCount = revealed ? candles.length : visibleCount;
@@ -229,7 +243,9 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   const svgRef = useRef(null);
   const [activeTool, setActiveTool] = useState(null);
   const [drawings, setDrawings] = useState([]);
-  const [pendingPoint, setPendingPoint] = useState(null);
+  const [dragStart, setDragStart] = useState(null);
+  const [dragCurrent, setDragCurrent] = useState(null);
+  const isDragging = dragStart !== null;
 
   if (shown.length === 0) return null;
 
@@ -253,13 +269,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   const lastCandle = candles[candles.length - 1];
   const lastUp = entryCandle && lastCandle ? lastCandle.close >= entryCandle.close : true;
 
-  function toggleTool(tool) {
-    setPendingPoint(null);
-    setActiveTool((cur) => (cur === tool ? null : tool));
-  }
-
-  function handleSvgClick(e) {
-    if (!activeTool || !svgRef.current) return;
+  function pointFromEvent(e) {
     const rect = svgRef.current.getBoundingClientRect();
     const fracX = (e.clientX - rect.left) / rect.width;
     const fracY = (e.clientY - rect.top) / rect.height;
@@ -268,15 +278,82 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
     const maxIndex = (revealed ? candles.length : visibleCount) - 1;
     const clickedIndex = Math.max(0, Math.min(maxIndex, Math.round(vx / slot - 0.5)));
     const clickedPrice = yMin + (1 - (vy - padTop) / (H - padTop - padBottom)) * (yMax - yMin);
-    const point = { index: clickedIndex, price: clickedPrice };
+    return { index: clickedIndex, price: clickedPrice };
+  }
 
-    if (pendingPoint) {
-      setDrawings((prev) => [...prev, { type: activeTool, p1: pendingPoint, p2: point, id: `${Date.now()}-${Math.random()}` }]);
-      setPendingPoint(null);
+  function toggleTool(tool) {
+    setDragStart(null);
+    setDragCurrent(null);
+    setActiveTool((cur) => (cur === tool ? null : tool));
+  }
+
+  function handlePointerDown(e) {
+    if (!activeTool || !svgRef.current) return;
+    svgRef.current.setPointerCapture(e.pointerId);
+    const point = pointFromEvent(e);
+    setDragStart(point);
+    setDragCurrent(point);
+  }
+
+  function handlePointerMove(e) {
+    if (!isDragging || !svgRef.current) return;
+    setDragCurrent(pointFromEvent(e));
+  }
+
+  function handlePointerUp() {
+    if (!isDragging) return;
+    if (dragCurrent && !isDrawingTooSmall(dragStart, dragCurrent)) {
+      setDrawings((prev) => [...prev, { type: activeTool, p1: dragStart, p2: dragCurrent, id: `${Date.now()}-${Math.random()}` }]);
       setActiveTool(null);
-    } else {
-      setPendingPoint(point);
     }
+    setDragStart(null);
+    setDragCurrent(null);
+  }
+
+  function renderTrendLine(p1, p2, key, opacity = 1) {
+    const x1 = xScale(p1.index);
+    const y1 = yScale(p1.price);
+    const x2 = xScale(p2.index);
+    const y2 = yScale(p2.price);
+    return (
+      <g key={key} opacity={opacity}>
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={C_ACCENT} strokeWidth="1.5" />
+        <circle cx={x1} cy={y1} r="3" fill={C_ACCENT} />
+        <circle cx={x2} cy={y2} r="3" fill={C_ACCENT} />
+      </g>
+    );
+  }
+
+  function renderFib(p1, p2, key, opacity = 1) {
+    const x1 = xScale(p1.index);
+    const x2 = xScale(p2.index);
+    const leftX = Math.min(x1, x2);
+    const levels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1];
+    return (
+      <g key={key} opacity={opacity}>
+        {levels.map((lvl) => {
+          const price = p1.price + (p2.price - p1.price) * lvl;
+          const y = yScale(price);
+          return (
+            <g key={lvl}>
+              <line
+                x1={leftX}
+                x2={innerW}
+                y1={y}
+                y2={y}
+                stroke={C_FIB}
+                strokeWidth="1"
+                strokeDasharray={lvl === 0 || lvl === 1 ? "0" : "3 3"}
+                opacity="0.75"
+              />
+              <text x={leftX + 4} y={y - 3} fontSize="9" fill={C_FIB} className="font-data">
+                {(lvl * 100).toFixed(1)}%
+              </text>
+            </g>
+          );
+        })}
+      </g>
+    );
   }
 
   return (
@@ -284,21 +361,23 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
       <div className="flex items-center gap-2 mb-3">
         <button
           onClick={() => toggleTool("trend")}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors ${
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
+          style={
             activeTool === "trend"
-              ? "bg-amber-500 border-amber-500 text-zinc-950"
-              : "bg-zinc-950 border-zinc-700 text-zinc-400 hover:border-amber-500"
-          }`}
+              ? { backgroundColor: C_ACCENT, borderColor: C_ACCENT, color: C_BG }
+              : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
+          }
         >
           <Minus className="w-3.5 h-3.5" /> Ligne
         </button>
         <button
           onClick={() => toggleTool("fib")}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors ${
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
+          style={
             activeTool === "fib"
-              ? "bg-violet-500 border-violet-500 text-zinc-950"
-              : "bg-zinc-950 border-zinc-700 text-zinc-400 hover:border-violet-400"
-          }`}
+              ? { backgroundColor: C_FIB, borderColor: C_FIB, color: C_BG }
+              : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
+          }
         >
           <Layers className="w-3.5 h-3.5" /> Fibonacci
         </button>
@@ -306,9 +385,11 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
           <button
             onClick={() => {
               setDrawings([]);
-              setPendingPoint(null);
+              setDragStart(null);
+              setDragCurrent(null);
             }}
-            className="ml-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-zinc-700 text-xs font-data text-zinc-500 hover:text-red-400 hover:border-red-500 transition-colors"
+            className="ml-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data hover:text-red-400 hover:border-red-500 transition-colors"
+            style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}
           >
             <Trash2 className="w-3.5 h-3.5" /> Effacer
           </button>
@@ -317,16 +398,18 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
 
       <svg
         ref={svgRef}
-        onClick={handleSvgClick}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
         viewBox={`0 0 ${W} ${H}`}
-        className={`w-full h-auto select-none ${activeTool ? "cursor-crosshair" : ""}`}
+        className={`w-full h-auto select-none touch-none ${activeTool ? "cursor-crosshair" : ""}`}
         role="img"
         aria-label="Graphique en chandeliers"
       >
         {gridValues.map((gv, k) => (
           <g key={k}>
-            <line x1={0} x2={innerW} y1={yScale(gv)} y2={yScale(gv)} stroke="#27272a" strokeWidth="1" />
-            <text x={innerW + 8} y={yScale(gv) + 4} fontSize="11" fill="#71717a" className="font-data">
+            <line x1={0} x2={innerW} y1={yScale(gv)} y2={yScale(gv)} stroke={C_BORDER} strokeWidth="1" />
+            <text x={innerW + 8} y={yScale(gv) + 4} fontSize="11.5" fill={C_TEXT_MUTED} className="font-data">
               {format(gv)}
             </text>
           </g>
@@ -337,20 +420,20 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
           x2={cutoffX}
           y1={padTop}
           y2={H - padBottom}
-          stroke="#f59e0b"
+          stroke={C_ACCENT}
           strokeWidth="1"
           strokeDasharray="3 4"
           opacity={revealed ? 0.35 : 0.75}
         />
         {!revealed && (
-          <text x={cutoffX} y={padTop - 6} fontSize="10" fill="#f59e0b" textAnchor="middle" className="font-data">
+          <text x={cutoffX} y={padTop - 6} fontSize="10.5" fill={C_ACCENT} textAnchor="middle" className="font-data">
             MAINTENANT
           </text>
         )}
 
         {shown.map((c, i) => {
           const up = c.close >= c.open;
-          const color = up ? "#10b981" : "#ef4444";
+          const color = up ? C_UP : C_DOWN;
           const isNew = i >= visibleCount;
           return (
             <g key={c.i} className={isNew ? "candle-reveal" : ""} style={isNew ? { animationDelay: `${(i - visibleCount) * 22}ms` } : undefined}>
@@ -366,61 +449,11 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
           );
         })}
 
-        {drawings.map((d) => {
-          const x1 = xScale(d.p1.index);
-          const y1 = yScale(d.p1.price);
-          const x2 = xScale(d.p2.index);
-          const y2 = yScale(d.p2.price);
+        {drawings.map((d) => (d.type === "trend" ? renderTrendLine(d.p1, d.p2, d.id) : renderFib(d.p1, d.p2, d.id)))}
 
-          if (d.type === "trend") {
-            return (
-              <g key={d.id}>
-                <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#fbbf24" strokeWidth="1.5" />
-                <circle cx={x1} cy={y1} r="3" fill="#fbbf24" />
-                <circle cx={x2} cy={y2} r="3" fill="#fbbf24" />
-              </g>
-            );
-          }
-
-          const levels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1];
-          const leftX = Math.min(x1, x2);
-          return (
-            <g key={d.id}>
-              {levels.map((lvl) => {
-                const price = d.p1.price + (d.p2.price - d.p1.price) * lvl;
-                const y = yScale(price);
-                return (
-                  <g key={lvl}>
-                    <line
-                      x1={leftX}
-                      x2={innerW}
-                      y1={y}
-                      y2={y}
-                      stroke="#a78bfa"
-                      strokeWidth="1"
-                      strokeDasharray={lvl === 0 || lvl === 1 ? "0" : "3 3"}
-                      opacity="0.7"
-                    />
-                    <text x={leftX + 4} y={y - 3} fontSize="9" fill="#a78bfa" className="font-data">
-                      {(lvl * 100).toFixed(1)}%
-                    </text>
-                  </g>
-                );
-              })}
-            </g>
-          );
-        })}
-
-        {pendingPoint && (
-          <circle
-            cx={xScale(pendingPoint.index)}
-            cy={yScale(pendingPoint.price)}
-            r="4"
-            fill="none"
-            stroke={activeTool === "fib" ? "#a78bfa" : "#fbbf24"}
-            strokeWidth="2"
-          />
-        )}
+        {isDragging &&
+          dragCurrent &&
+          (activeTool === "trend" ? renderTrendLine(dragStart, dragCurrent, "preview", 0.55) : renderFib(dragStart, dragCurrent, "preview", 0.55))}
 
         {entryCandle && (
           <g>
@@ -429,17 +462,17 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
               x2={innerW}
               y1={yScale(entryCandle.close)}
               y2={yScale(entryCandle.close)}
-              stroke="#f59e0b"
+              stroke={C_ACCENT}
               strokeWidth="1"
               strokeDasharray="2 3"
               opacity="0.5"
             />
-            <rect x={innerW + 2} y={yScale(entryCandle.close) - 9} width={padRight - 4} height={18} fill="#f59e0b" rx="2" />
+            <rect x={innerW + 2} y={yScale(entryCandle.close) - 9} width={padRight - 4} height={18} fill={C_ACCENT} rx="2" />
             <text
               x={innerW + padRight / 2}
               y={yScale(entryCandle.close) + 4}
               fontSize="10.5"
-              fill="#09090b"
+              fill={C_BG}
               textAnchor="middle"
               fontWeight="700"
               className="font-data"
@@ -451,19 +484,12 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
 
         {revealed && lastCandle && lastCandle !== entryCandle && (
           <g>
-            <rect
-              x={innerW + 2}
-              y={yScale(lastCandle.close) - 9}
-              width={padRight - 4}
-              height={18}
-              fill={lastUp ? "#10b981" : "#ef4444"}
-              rx="2"
-            />
+            <rect x={innerW + 2} y={yScale(lastCandle.close) - 9} width={padRight - 4} height={18} fill={lastUp ? C_UP : C_DOWN} rx="2" />
             <text
               x={innerW + padRight / 2}
               y={yScale(lastCandle.close) + 4}
               fontSize="10.5"
-              fill="#09090b"
+              fill={C_BG}
               textAnchor="middle"
               fontWeight="700"
               className="font-data"
@@ -474,9 +500,9 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
         )}
       </svg>
 
-      {activeTool && (
-        <p className="text-xs text-zinc-500 mt-2 font-data">
-          {pendingPoint ? "Clique le second point sur le graphique" : "Clique un premier point sur le graphique"}
+      {activeTool && !isDragging && (
+        <p className="text-xs mt-2 font-data" style={{ color: C_TEXT_DIM }}>
+          Clique et fais glisser sur le graphique pour tracer
         </p>
       )}
     </div>
@@ -486,23 +512,40 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
 function LevelScreen({ onSelect }) {
   return (
     <div className="max-w-2xl mx-auto">
-      <p className="font-data text-amber-400 text-xs tracking-widest mb-2">ÉTAPE 1 / 2</p>
-      <h1 className="font-display text-3xl md:text-4xl font-semibold text-zinc-100">Choisis ton niveau</h1>
-      <p className="text-zinc-400 mt-2 mb-8">La difficulté des configurations s'ajuste en fonction.</p>
+      <p className="font-data text-xs tracking-widest mb-2" style={{ color: C_ACCENT }}>
+        ÉTAPE 1 / 2
+      </p>
+      <h1 className="font-display text-3xl md:text-4xl font-semibold" style={{ color: C_TEXT }}>
+        Choisis ton niveau
+      </h1>
+      <p className="mt-2 mb-8" style={{ color: C_TEXT_MUTED }}>
+        La difficulté des configurations s'ajuste en fonction.
+      </p>
       <div className="grid gap-3">
         {LEVELS.map((lv) => (
           <button
             key={lv.id}
             onClick={() => onSelect(lv.id)}
-            className="group text-left bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-amber-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-colors"
+            className="group text-left rounded-xl p-5 border transition-colors focus-visible:outline-none"
+            style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = C_ACCENT)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = C_BORDER)}
           >
             <div className="flex items-center justify-between">
-              <span className="font-data text-xs text-amber-400 tracking-widest">{lv.code}</span>
-              <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:text-amber-400 transition-colors" />
+              <span className="font-data text-xs tracking-widest" style={{ color: C_ACCENT }}>
+                {lv.code}
+              </span>
+              <ChevronRight className="w-4 h-4 transition-colors" style={{ color: C_TEXT_DIM }} />
             </div>
-            <h3 className="font-display text-xl text-zinc-100 mt-2">{lv.label}</h3>
-            <p className="text-zinc-400 text-sm mt-1">{lv.tagline}</p>
-            <p className="text-zinc-500 text-sm mt-2">{lv.detail}</p>
+            <h3 className="font-display text-xl mt-2" style={{ color: C_TEXT }}>
+              {lv.label}
+            </h3>
+            <p className="text-sm mt-1" style={{ color: C_TEXT_MUTED }}>
+              {lv.tagline}
+            </p>
+            <p className="text-sm mt-2" style={{ color: "#7d8579" }}>
+              {lv.detail}
+            </p>
           </button>
         ))}
       </div>
@@ -516,13 +559,20 @@ function DomainScreen({ level, onSelect, onBack }) {
     <div className="max-w-2xl mx-auto">
       <button
         onClick={onBack}
-        className="flex items-center gap-1 text-zinc-500 hover:text-amber-400 text-sm mb-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+        className="flex items-center gap-1 text-sm mb-6 transition-colors focus-visible:outline-none rounded"
+        style={{ color: C_TEXT_MUTED }}
       >
         <ChevronLeft className="w-4 h-4" /> Changer de niveau
       </button>
-      <p className="font-data text-amber-400 text-xs tracking-widest mb-2">ÉTAPE 2 / 2 · {lv.code}</p>
-      <h1 className="font-display text-3xl md:text-4xl font-semibold text-zinc-100">Sur quel marché ?</h1>
-      <p className="text-zinc-400 mt-2 mb-8">Les exercices porteront sur l'actif choisi.</p>
+      <p className="font-data text-xs tracking-widest mb-2" style={{ color: C_ACCENT }}>
+        ÉTAPE 2 / 2 · {lv.code}
+      </p>
+      <h1 className="font-display text-3xl md:text-4xl font-semibold" style={{ color: C_TEXT }}>
+        Sur quel marché ?
+      </h1>
+      <p className="mt-2 mb-8" style={{ color: C_TEXT_MUTED }}>
+        Les exercices porteront sur l'actif choisi.
+      </p>
       <div className="grid grid-cols-2 gap-3">
         {DOMAINS.map((d) => {
           const Icon = d.Icon;
@@ -530,18 +580,28 @@ function DomainScreen({ level, onSelect, onBack }) {
             <button
               key={d.id}
               onClick={() => onSelect(d.id)}
-              className="group text-left bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-amber-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-colors"
+              className="group text-left rounded-xl p-5 border transition-colors focus-visible:outline-none"
+              style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = C_ACCENT)}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = C_BORDER)}
             >
               <div className="flex items-center justify-between">
-                <Icon className="w-5 h-5 text-amber-400 mb-3" />
+                <Icon className="w-5 h-5 mb-3" style={{ color: C_ACCENT }} />
                 {d.real && (
-                  <span className="text-[10px] font-data text-emerald-400 border border-emerald-800 rounded-full px-2 py-0.5">
+                  <span
+                    className="text-[10px] font-data rounded-full px-2 py-0.5 border"
+                    style={{ color: C_UP, borderColor: "#144d33" }}
+                  >
                     données réelles
                   </span>
                 )}
               </div>
-              <h3 className="font-display text-base text-zinc-100">{d.label}</h3>
-              <p className="font-data text-xs text-zinc-500 mt-1">{d.code}</p>
+              <h3 className="font-display text-base" style={{ color: C_TEXT }}>
+                {d.label}
+              </h3>
+              <p className="font-data text-xs mt-1" style={{ color: C_TEXT_MUTED }}>
+                {d.code}
+              </p>
             </button>
           );
         })}
@@ -583,35 +643,41 @@ function ExerciseScreen({
   const predictionWin = prediction ? (prediction === "hausse") === actualUp : null;
   const orderWin = pnl > 0;
 
+  const cardStyle = { backgroundColor: C_BG_SOFT, borderColor: C_BORDER };
+
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="flex items-center gap-1.5 font-data text-xs text-zinc-500">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 live-dot" /> SESSION
+          <span className="flex items-center gap-1.5 font-data text-xs" style={{ color: C_TEXT_MUTED }}>
+            <span className="w-1.5 h-1.5 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} /> SESSION
           </span>
           <button
             onClick={onChangeLevel}
-            className="font-data text-xs px-2 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300 hover:border-amber-500 transition-colors"
+            className="font-data text-xs px-2 py-1 rounded border transition-colors"
+            style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER, color: C_TEXT_MUTED }}
           >
             {lv.label}
           </button>
           <button
             onClick={onChangeDomain}
-            className="font-data text-xs px-2 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300 hover:border-amber-500 transition-colors"
+            className="font-data text-xs px-2 py-1 rounded border transition-colors"
+            style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER, color: C_TEXT_MUTED }}
           >
             {d.label}
           </button>
         </div>
-        <button onClick={onNew} className="flex items-center gap-1.5 font-data text-xs text-zinc-400 hover:text-amber-400 transition-colors">
+        <button onClick={onNew} className="flex items-center gap-1.5 font-data text-xs transition-colors" style={{ color: C_TEXT_MUTED }}>
           <RefreshCw className="w-3.5 h-3.5" /> Nouvel exercice
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-4 min-h-[300px] flex items-center justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-4">
+        <div className="rounded-xl p-4 border min-h-[420px] flex items-center justify-center" style={cardStyle}>
           {loading ? (
-            <p className="text-zinc-500 text-sm font-data">Chargement des données EUR/USD réelles...</p>
+            <p className="text-sm font-data" style={{ color: C_TEXT_MUTED }}>
+              Chargement des données EUR/USD réelles...
+            </p>
           ) : loadError ? (
             <p className="text-red-400 text-sm font-data text-center px-4">{loadError}</p>
           ) : (
@@ -619,12 +685,12 @@ function ExerciseScreen({
           )}
         </div>
 
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col">
+        <div className="rounded-xl p-4 border flex flex-col" style={cardStyle}>
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <h3 className="font-display text-sm text-zinc-100">
+            <Sparkles className="w-4 h-4" style={{ color: C_ACCENT }} />
+            <h3 className="font-display text-sm" style={{ color: C_TEXT }}>
               Contexte marché{" "}
-              <span className={isReal ? "text-emerald-400 font-normal" : "text-zinc-500 font-normal"}>
+              <span className="font-normal" style={{ color: isReal ? C_UP : C_TEXT_MUTED }}>
                 · {isReal ? "données réelles" : "exemple"}
               </span>
             </h3>
@@ -633,20 +699,28 @@ function ExerciseScreen({
           {isReal && newsEvents && newsEvents.length > 0 ? (
             <ul className="space-y-3">
               {newsEvents.map((ev, i) => (
-                <li key={i} className="border-l-2 border-amber-500 pl-3">
-                  <p className="font-data text-[10px] text-amber-400">{ev.date}</p>
-                  <p className="text-zinc-200 text-xs font-medium mt-0.5">{ev.title}</p>
-                  <p className="text-zinc-500 text-xs mt-1 leading-relaxed">{ev.detail}</p>
+                <li key={i} className="border-l-2 pl-3" style={{ borderColor: C_ACCENT }}>
+                  <p className="font-data text-[10px]" style={{ color: C_ACCENT }}>
+                    {ev.date}
+                  </p>
+                  <p className="text-xs font-medium mt-0.5" style={{ color: C_TEXT }}>
+                    {ev.title}
+                  </p>
+                  <p className="text-xs mt-1 leading-relaxed" style={{ color: C_TEXT_MUTED }}>
+                    {ev.detail}
+                  </p>
                 </li>
               ))}
             </ul>
           ) : (
             <>
-              <p className="text-zinc-400 text-sm leading-relaxed">{news.body}</p>
+              <p className="text-sm leading-relaxed" style={{ color: C_TEXT_MUTED }}>
+                {news.body}
+              </p>
               <ul className="mt-3 space-y-1.5">
                 {news.bullets.map((b, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-zinc-500">
-                    <span className="w-1 h-1 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                  <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "#7d8579" }}>
+                    <span className="w-1 h-1 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: C_ACCENT }} />
                     {b}
                   </li>
                 ))}
@@ -654,7 +728,7 @@ function ExerciseScreen({
             </>
           )}
 
-          <p className="text-zinc-600 text-xs mt-4 pt-3 border-t border-zinc-800">
+          <p className="text-xs mt-4 pt-3 border-t" style={{ color: C_TEXT_DIM, borderColor: C_BORDER }}>
             {isReal
               ? "Cotations EUR/USD réelles (Alpha Vantage) et décisions de politique monétaire BCE réelles et datées."
               : "Contexte illustratif pour ce prototype — données simulées en attendant leur intégration réelle."}
@@ -662,22 +736,26 @@ function ExerciseScreen({
         </div>
       </div>
 
-      <div className="mt-4 bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+      <div className="mt-4 rounded-xl p-5 border" style={cardStyle}>
         {!revealed ? (
           <>
             {level === "debutant" && (
               <>
-                <p className="text-zinc-300 text-sm mb-3">Selon toi, la tendance va plutôt...</p>
+                <p className="text-sm mb-3" style={{ color: C_TEXT }}>
+                  Selon toi, la tendance va plutôt...
+                </p>
                 <div className="flex gap-3">
                   <button
                     onClick={() => onPredict("hausse")}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-zinc-950 border border-zinc-700 text-emerald-400 hover:border-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-colors font-medium"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border text-emerald-400 hover:border-emerald-500 transition-colors font-medium"
+                    style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
                     <TrendingUp className="w-4 h-4" /> Monter
                   </button>
                   <button
                     onClick={() => onPredict("baisse")}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-zinc-950 border border-zinc-700 text-red-400 hover:border-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-colors font-medium"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border text-red-400 hover:border-red-500 transition-colors font-medium"
+                    style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
                     <TrendingDown className="w-4 h-4" /> Descendre
                   </button>
@@ -686,17 +764,21 @@ function ExerciseScreen({
             )}
             {level === "intermediaire" && (
               <>
-                <p className="text-zinc-300 text-sm mb-3">Tu ouvres une position...</p>
+                <p className="text-sm mb-3" style={{ color: C_TEXT }}>
+                  Tu ouvres une position...
+                </p>
                 <div className="flex gap-3">
                   <button
                     onClick={() => onOrder("achat")}
-                    className="flex-1 py-3 rounded-lg bg-zinc-950 border border-zinc-700 text-emerald-400 hover:border-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-colors font-medium"
+                    className="flex-1 py-3 rounded-lg border text-emerald-400 hover:border-emerald-500 transition-colors font-medium"
+                    style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
                     Acheter
                   </button>
                   <button
                     onClick={() => onOrder("vente")}
-                    className="flex-1 py-3 rounded-lg bg-zinc-950 border border-zinc-700 text-red-400 hover:border-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-colors font-medium"
+                    className="flex-1 py-3 rounded-lg border text-red-400 hover:border-red-500 transition-colors font-medium"
+                    style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
                     Vendre
                   </button>
@@ -705,19 +787,21 @@ function ExerciseScreen({
             )}
             {level === "experimente" && (
               <>
-                <p className="text-zinc-300 text-sm mb-2">
-                  Ton analyse <span className="text-zinc-500">(facultatif)</span>
+                <p className="text-sm mb-2" style={{ color: C_TEXT }}>
+                  Ton analyse <span style={{ color: C_TEXT_MUTED }}>(facultatif)</span>
                 </p>
                 <textarea
                   value={analysis}
                   onChange={(e) => setAnalysis(e.target.value)}
                   placeholder="Structure, niveaux clés, ce que tu observes..."
                   rows={3}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-sm text-zinc-200 placeholder-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 resize-none"
+                  className="w-full rounded-lg p-3 text-sm resize-none border focus-visible:outline-none"
+                  style={{ backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT }}
                 />
                 <button
                   onClick={onRevealAnalysis}
-                  className="mt-3 flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-500 text-zinc-950 font-medium text-sm hover:bg-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 transition-colors"
+                  className="mt-3 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors"
+                  style={{ backgroundColor: C_ACCENT, color: C_BG }}
                 >
                   <Eye className="w-4 h-4" /> Voir la suite
                 </button>
@@ -741,14 +825,15 @@ function ExerciseScreen({
               </div>
             )}
             {level === "experimente" && (
-              <div className="flex items-center gap-2 font-medium text-amber-400">
+              <div className="flex items-center gap-2 font-medium" style={{ color: C_ACCENT }}>
                 <Target className="w-5 h-5" /> Le marché a fait {actualUp ? "+" : ""}
                 {movePct.toFixed(2)}% — compare avec ton analyse.
               </div>
             )}
             <button
               onClick={onNew}
-              className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-500 text-zinc-950 font-medium text-sm hover:bg-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 transition-colors"
+              className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors"
+              style={{ backgroundColor: C_ACCENT, color: C_BG }}
             >
               <RefreshCw className="w-4 h-4" /> Exercice suivant
             </button>
@@ -781,7 +866,7 @@ export default function App() {
           setForexSeries(series);
           setForexLoading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setForexError("Impossible de charger les données EUR/USD réelles pour le moment.");
           setForexLoading(false);
         });
@@ -857,7 +942,7 @@ export default function App() {
   const screen = !level ? "level" : !domain ? "domain" : "exercise";
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 font-sans">
+    <div className="min-h-screen font-sans" style={{ backgroundColor: C_BG, color: C_TEXT }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
         .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
@@ -871,10 +956,12 @@ export default function App() {
         }
       `}</style>
 
-      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <header className="flex items-center gap-2 mb-10">
-          <span className="w-2 h-2 rounded-full bg-amber-400 live-dot" />
-          <span className="font-data text-xs tracking-widest text-zinc-500">TRADE TRAINER — PROTOTYPE</span>
+          <span className="w-2 h-2 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} />
+          <span className="font-data text-xs tracking-widest" style={{ color: C_TEXT_MUTED }}>
+            TRADE TRAINER — PROTOTYPE
+          </span>
         </header>
 
         {screen === "level" && <LevelScreen onSelect={handleSelectLevel} />}

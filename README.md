@@ -1,51 +1,73 @@
 # Trading Training
 
-**Trading Training** est un site permettant de s'entraîner à l'analyse de graphiques financiers (chandeliers japonais) sur des scénarios générés, avec un niveau de difficulté progressif.
-
-> ⚠️ Statut : **prototype / travail en cours**. Certaines pages ne sont pas encore reliées entre elles et plusieurs fonctionnalités restent à finaliser.
+**Trading Training** est un site permettant de s'entraîner à l'analyse de graphiques financiers (chandeliers japonais) sur des scénarios de marché, avec un niveau de difficulté progressif et un vrai système de comptes.
 
 ## Concept
 
-L'utilisateur choisit un domaine (or et métaux précieux, forex, actions/indices...) et un niveau de compétence. Un algorithme génère alors un scénario de graphique adapté :
+L'utilisateur choisit un niveau de compétence puis un marché (or, forex, actions/indices, crypto). Un scénario de graphique est généré ou tiré de données réelles selon le marché :
 
-| Niveau | Description |
-|---|---|
-| **Débutant** | Tendance nette avec peu de bruit, idéal pour apprendre à lire un graphique |
-| **Intermédiaire** | Retournements et pullbacks, la tendance change en cours de route |
-| **Expérimenté** | Range, faux signaux et forte volatilité, peu de structure évidente |
+| Niveau | Description | Exercice |
+|---|---|---|
+| **Débutant** | Tendance nette, peu de bruit | Prédire hausse/baisse |
+| **Intermédiaire** | Retournements et pullbacks | Ordre virtuel achat/vente avec P&L |
+| **Expérimenté** | Range, faux signaux, forte volatilité | Analyse libre (facultative), sans note |
 
-L'exercice proposé varie selon le niveau (prédiction hausse/baisse, ordre virtuel achat/vente avec calcul de P&L, ou analyse libre).
+Deux outils de tracé sont disponibles sur le graphique : ligne de tendance et Fibonacci (retracements calculés automatiquement entre deux points cliqués).
+
+## Marché avec données réelles : EUR/USD
+
+Le marché **Forex — EUR/USD** utilise de vraies cotations historiques (open/high/low/close quotidien, via l'API gratuite Alpha Vantage) plutôt qu'un scénario simulé. Le panneau "Contexte marché" affiche les vraies décisions de politique monétaire de la BCE tombées dans la période visible de l'exercice (dates et détails réels, voir `data/macro-events-eurusd.js`).
+
+Les autres marchés (or, actions, crypto) restent en scénario généré aléatoirement pour l'instant — même principe à étendre plus tard.
+
+## Comptes utilisateurs et quotas
+
+- Authentification réelle via **Supabase Auth** (inscription/connexion par email + mot de passe)
+- Visiteurs non connectés : **1 exercice/jour**
+- Inscrits gratuits : **3 exercices/jour** (suivi dans la table Supabase `exercise_logs`)
+- Page **Abonnement** avec prix encore en `???` (pas de paiement réel branché)
+- Page **Mon compte** : infos utilisateur + quota du jour restant
 
 ## Structure du projet
 
 ```
 trading-training/
-├── index.html                    # Page d'accueil
-├── style.css                     # Styles de la page d'accueil
-├── app.js                        # Animations JavaScript de la page d'accueil (à implémenter, vide pour l'instant)
-├── trading-trainer.html          # Prototype jouable (export du composant React)
-├── trading-trainer-prototype.jsx # Code source React du simulateur de trading
-├── authentification/             # Page de connexion / inscription
-│   ├── authentification.html
-│   ├── authentification.css
-│   └── authentifiaction.js
-└── (images : logos, visuels de fond, etc.)
+├── index.html                      # Page d'accueil (hero, ticker live, niveaux, CTA)
+├── style.css / app.js               # Styles et animations de la page d'accueil
+├── auth-state.js                    # Affiche l'état de connexion dans la top-bar (partout)
+├── supabase-client.js               # Config Supabase partagée (URL + clé publique)
+├── trading-trainer.html             # Prototype jouable (bundle React compilé)
+├── trading-trainer-prototype.jsx    # Code source React du simulateur (à recompiler avec esbuild)
+├── data/
+│   └── macro-events-eurusd.js       # Vraies dates de décisions BCE pour le contexte EUR/USD
+├── authentification/                # Connexion / inscription (panneau coulissant, Supabase Auth)
+├── abonnement/                      # Page abonnement (prix en attente)
+├── compte/                          # Page "Mon compte"
+└── images/                          # Visuels des cartes de niveaux
 ```
 
 ## Où en est le projet
 
-- [x] Page d'accueil basique (`index.html`)
-- [x] Prototype interactif du simulateur de trading validé (`trading-trainer.html` / `.jsx`)
-- [x] Page d'authentification (visuel en place, logique de soumission non fonctionnelle)
-- [ ] Lien entre la page d'accueil et la page d'authentification à ajouter (`index.html` ne pointe pas encore vers `authentification/authentification.html`)
-- [ ] Système de compte utilisateur / connexion réelle
-- [ ] Outils de tracé sur le graphique (lignes de tendance, Fibonacci)
-- [ ] Contexte actualité/géopolitique lié à la période affichée sur le graphique
+- [x] Page d'accueil avec ticker BTC/USD + EUR/USD en direct
+- [x] Authentification réelle (Supabase Auth), page Mon compte, menu déroulant
+- [x] Quotas d'exercices (1/jour visiteurs, 3/jour inscrits) avec page Abonnement
+- [x] Simulateur avec outils de tracé (ligne de tendance, Fibonacci)
+- [x] EUR/USD sur données réelles (prix + contexte BCE daté)
+- [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
+- [ ] Vrai système de paiement pour l'abonnement
+- [ ] Revue de sécurité complète du site
 
-## Lancer le projet
+## Recompiler trading-trainer.html après une modification du .jsx
 
-Pas encore de méthode de lancement officielle définie (pas de serveur local ni de build configuré pour l'instant). En attendant, les fichiers `.html` peuvent être ouverts directement dans un navigateur pour prévisualiser les pages.
+Le fichier jouable est un bundle React autonome. Pour le régénérer après avoir modifié `trading-trainer-prototype.jsx` :
+
+```
+npm install esbuild react react-dom lucide-react
+npx esbuild entry.jsx --bundle --minify --outfile=bundle.js --loader:.jsx=jsx
+```
+
+(`entry.jsx` importe `trading-trainer-prototype.jsx` et fait le `createRoot(...).render(...)`). Le HTML final = en-tête avec le gate d'accès + `bundle.js` + fermeture des balises.
 
 ## Notes
 
-Ce README sera mis à jour au fur et à mesure de l'avancement du projet.
+Ce README est mis à jour au fur et à mesure de l'avancement du projet.

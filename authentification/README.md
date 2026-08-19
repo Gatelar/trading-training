@@ -1,21 +1,21 @@
 # Authentification
 
-Page de connexion / inscription du site Trading Training.
+Page de connexion / inscription du site Trading Training. Un seul panneau bascule entre les deux formulaires (inspiré du pattern "sliding panel" de https://github.com/shivamchhapola/Login-Page-with-Framer-Motion, recréé en CSS/JS vanilla dans le thème du site).
 
 ## Fichiers
 
-- `authentification.html` — structure de la page (formulaire de connexion, bouton "Login with Google")
-- `authentification.css` — styles de la page
-- `authentifiaction.js` — logique de soumission du formulaire
+- `authentification.html` — structure de la page (formulaire connexion + inscription superposés, panneau coulissant)
+- `authentification.css` — styles et animation du panneau
+- `authentifiaction.js` — logique de bascule connexion/inscription + soumission des formulaires
 
 ## Statut
 
-- [x] Visuel de la page en place (carte de connexion avec colonne illustration + formulaire)
-- [ ] Bouton "Login with Google" non fonctionnel (visuel uniquement)
-- [ ] Le formulaire dans `authentification.html` n'a pas d'attribut `id="authForm"` et les champs n'ont pas d'`id` (`email`, `phone`, `password`) — `authentifiaction.js` ne peut donc pas les récupérer pour l'instant
-- [ ] `authentifiaction.js` utilise `.Value` (avec majuscule) au lieu de `.value` sur les champs — à corriger
-- [ ] Aucune vraie logique d'authentification (pas de backend, pas de vérification) — le formulaire affiche juste une alerte de confirmation
+- [x] Design en panneau coulissant fonctionnel (connexion ↔ inscription)
+- [x] Formulaires reliés au JS (`id` sur les champs, `.value` correct)
+- [x] Version mobile (le panneau passe au-dessus des formulaires, pas de glissement horizontal)
+- [ ] Bouton "Continuer avec Google" non fonctionnel (visuel uniquement)
+- [ ] Aucune vraie logique d'authentification (pas de backend, pas de vérification) — les formulaires affichent juste une alerte de confirmation
 
 ## À faire
 
-Relier le HTML et le JS (ajouter les `id` correspondants), corriger la casse de `.value`, puis brancher une vraie logique d'authentification (backend ou service tiers).
+Brancher une vraie logique d'authentification (backend ou service tiers) à la place des `alert()` actuels.

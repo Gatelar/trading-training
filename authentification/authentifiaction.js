@@ -1,18 +1,42 @@
-// Attente du chargement du formulaire
-document.getElementById('authForm').addEventListener('submit', function(event) {
-    // Empêche la page de se recharger lors du clic sur le bouton
+// ============ TOGGLE CONNEXION / INSCRIPTION ============
+const authCard = document.getElementById('authCard');
+const toggleToSignUp = document.getElementById('toggleToSignUp');
+const toggleToSignIn = document.getElementById('toggleToSignIn');
+
+toggleToSignUp.addEventListener('click', () => {
+    authCard.classList.add('right-panel-active');
+});
+
+toggleToSignIn.addEventListener('click', () => {
+    authCard.classList.remove('right-panel-active');
+});
+
+// ============ SOUMISSION - CONNEXION ============
+document.getElementById('signInForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    //Récupère les valeur saisies dans les champs
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('signInEmail').value;
+    const password = document.getElementById('signInPassword').value;
 
-    // Affichage dans la console du navigateur ( pour tester )
-    console.log("données saisies :");
-    console.log("Email : ", email);
-    console.log("Mot de passe :", password);
+    console.log('Connexion :');
+    console.log('Email :', email);
+    console.log('Mot de passe :', password);
 
-    // Message de confirmation temporaire
-    alert("Formulaire soumis avec succès pour : " + email);
+    alert('Connexion soumise pour : ' + email);
+});
 
+// ============ SOUMISSION - INSCRIPTION ============
+document.getElementById('signUpForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('signUpName').value;
+    const email = document.getElementById('signUpEmail').value;
+    const password = document.getElementById('signUpPassword').value;
+
+    console.log('Inscription :');
+    console.log('Nom :', name);
+    console.log('Email :', email);
+    console.log('Mot de passe :', password);
+
+    alert('Inscription soumise pour : ' + email);
 });

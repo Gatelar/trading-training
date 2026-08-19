@@ -1,62 +1,89 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, intial-scale=1.0">
-        <title>Trading Training - Authentification</title>
-        <link rel="stylesheet" href="authentification.css">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Training - Authentification</title>
+    <link rel="stylesheet" href="authentification.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
 
-        <div class="login-card">
-            <!--Colonne Gauche : Image / Illustration-->
-            <div class="card-left">
-                <div class="left-overlay">
-                    <span class="left-title">Trading Training</span>
-                    <div class="author-info">
-                        <div class="author-info">
-                            <strong>Trading Training</strong>
-                            <small> Master the market</small>
-                        </div>
-                    </div>
+    <a href="../index.html" class="back-home">← Retour à l'accueil</a>
+
+    <div class="auth-card" id="authCard">
+
+        <!-- ============ FORMULAIRE CONNEXION ============ -->
+        <div class="form-container sign-in-container">
+            <form id="signInForm">
+                <span class="eyebrow">Trading Training</span>
+                <h2>Connexion</h2>
+                <p class="form-subtitle">Reprends ton entraînement là où tu l'as laissé.</p>
+
+                <div class="input-group">
+                    <input type="email" id="signInEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signInPassword" placeholder="Mot de passe" required>
+                </div>
+
+                <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+
+                <button type="submit" class="btn-submit">Se connecter</button>
+
+                <button type="button" class="btn-google">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
+                    Continuer avec Google
+                </button>
+            </form>
+        </div>
+
+        <!-- ============ FORMULAIRE INSCRIPTION ============ -->
+        <div class="form-container sign-up-container">
+            <form id="signUpForm">
+                <span class="eyebrow">Trading Training</span>
+                <h2>Créer un compte</h2>
+                <p class="form-subtitle">Rejoins l'entraînement et progresse niveau par niveau.</p>
+
+                <div class="input-group">
+                    <input type="text" id="signUpName" placeholder="Nom" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="signUpEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signUpPassword" placeholder="Mot de passe" required>
+                </div>
+
+                <button type="submit" class="btn-submit">S'inscrire</button>
+
+                <button type="button" class="btn-google">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
+                    Continuer avec Google
+                </button>
+            </form>
+        </div>
+
+        <!-- ============ PANNEAU COULISSANT ============ -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <span class="level-code">TT.ACCESS</span>
+                    <h2>Déjà un compte ?</h2>
+                    <p>Connecte-toi pour reprendre ton entraînement là où tu l'avais laissé.</p>
+                    <button class="btn-ghost" id="toggleToSignIn">Se connecter</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <span class="level-code">TT.ACCESS</span>
+                    <h2>Nouveau trader ?</h2>
+                    <p>Crée ton compte et commence à t'entraîner sur des scénarios de marché réalistes.</p>
+                    <button class="btn-ghost" id="toggleToSignUp">S'inscrire</button>
                 </div>
             </div>
         </div>
 
-        <!-- Colonne Droite : Formulaire -->
-         <div class="card-right">
-            <div class="brand-header">
-                <span class="brand-logo">TRADING.UI</span>
-                <button class="lang-btn">FR <span>▼</span></button>
-            </div>
+    </div>
 
-            <div class="form-content">
-                <h2>Welcome Back</h2>
-                <p class="subtitle">Welcome to Trading Training</p>
-
-                <form id="authForm">
-                    <div class="input-group">
-                        <input type="email" id="email" placeholder="email" required >
-                    </div>
-                    <div class="input-group">
-                        <input type="password" id="password" placeholder="Password" required>
-                    </div>
-
-                    <a href="#" class="forgot-link">Forgot password ?</a>
-
-                    <button type="submit" class="btn-submit">Log In</button>
-
-                    <button type="button" class="btn-google">
-                        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
-                        Login with Google
-                    </button>
-                </form>
-                <p class="signup-prompt">
-                    Don't have an account ? <a href="#">Sign Up</a>
-                </p>
-            </div>
-         </div>
-        <script src="authentifiaction.js"></script>
-    </body>
+    <script src="authentifiaction.js"></script>
+</body>
 </html>

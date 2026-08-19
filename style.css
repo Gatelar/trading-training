@@ -60,6 +60,18 @@ a {
     display: block;
 }
 
+.top-bar-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.top-bar-plan {
+    padding: 9px 20px;
+    font-size: 0.85rem;
+}
+
 .btn-login {
     position: relative;
     overflow: hidden;

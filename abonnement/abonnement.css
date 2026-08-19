@@ -1,0 +1,145 @@
+.plan-hero {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 80px 24px 40px;
+    text-align: center;
+}
+
+.plan-hero h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    margin: 14px 0 16px;
+}
+
+.plan-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.plan-subtitle strong {
+    color: var(--accent);
+}
+
+.plan-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+}
+
+.plan-card {
+    background-color: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card--highlight {
+    border-color: var(--accent-dim);
+    box-shadow: 0 20px 40px rgba(205, 252, 138, 0.08);
+}
+
+.plan-badge {
+    align-self: flex-start;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+}
+
+.plan-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.plan-price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.2rem;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.plan-price span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+}
+
+.plan-note {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.plan-features {
+    list-style: none;
+    margin: 16px 0 24px;
+    flex-grow: 1;
+}
+
+.plan-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text);
+    padding: 6px 0;
+}
+
+.plan-features li.is-disabled {
+    color: var(--text-muted);
+}
+
+.plan-features .check {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.plan-features li.is-disabled .check {
+    color: var(--text-muted);
+}
+
+.plan-current {
+    display: inline-block;
+    text-align: center;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+}
+
+.plan-cta {
+    width: 100%;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.plan-footnote {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .plan-grid {
+        grid-template-columns: 1fr;
+    }
+}

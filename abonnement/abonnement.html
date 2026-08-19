@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Training - Abonnement</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="abonnement.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase-client.js"></script>
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="../index.html" class="logo-container">
+            <img src="../logott.png" alt="Logo Trading Training" class="logo">
+        </a>
+        <div class="top-bar-actions" id="topBarActions" data-prefix="../">
+            <a href="../authentification/authentification.html" class="btn-login">Se connecter</a>
+        </div>
+    </header>
+
+    <section class="plan-hero reveal">
+        <span class="eyebrow">Abonnement</span>
+        <h1>Passe à l'entraînement illimité</h1>
+        <p class="plan-subtitle">Pour l'instant, seule la partie <strong>entraînement</strong> est disponible sur Trading Training — la formation complète arrive plus tard.</p>
+    </section>
+
+    <section class="plan-grid">
+        <article class="plan-card reveal">
+            <span class="plan-badge">Gratuit</span>
+            <h2>Découverte</h2>
+            <p class="plan-price">0 €<span>/mois</span></p>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> 3 exercices par jour</li>
+                <li><span class="check">✓</span> Accès aux 3 niveaux</li>
+                <li class="is-disabled"><span class="check">–</span> Formation complète (à venir)</li>
+            </ul>
+            <span class="plan-current" id="currentPlanTag">Ton offre actuelle</span>
+        </article>
+
+        <article class="plan-card plan-card--highlight reveal">
+            <span class="plan-badge">Illimité</span>
+            <h2>Trader actif</h2>
+            <p class="plan-price">???<span>/mois</span></p>
+            <p class="plan-note">Le prix n'est pas encore fixé — l'entraînement illimité arrive bientôt.</p>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> Exercices illimités</li>
+                <li><span class="check">✓</span> Accès aux 3 niveaux</li>
+                <li class="is-disabled"><span class="check">–</span> Formation complète (à venir)</li>
+            </ul>
+            <button class="btn-primary plan-cta" id="notifyBtn">Être prévenu du lancement</button>
+        </article>
+    </section>
+
+    <p class="plan-footnote reveal">Seul l'entraînement est proposé actuellement. La formation (cours, coaching) n'est pas encore disponible et sera ajoutée plus tard.</p>
+
+    <script src="../app.js"></script>
+    <script src="abonnement.js"></script>
+    <script src="../auth-state.js"></script>
+</body>
+</html>

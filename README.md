@@ -14,11 +14,18 @@ L'utilisateur choisit un niveau de compétence puis un marché (or, forex, actio
 
 Deux outils de tracé sont disponibles sur le graphique : ligne de tendance et Fibonacci (retracements calculés automatiquement entre deux points cliqués).
 
-## Marché avec données réelles : EUR/USD
+## Marchés avec données réelles
 
-Le marché **Forex — EUR/USD** utilise de vraies cotations historiques (open/high/low/close quotidien, via l'API gratuite Alpha Vantage) plutôt qu'un scénario simulé. Les vraies décisions de politique monétaire de la BCE (dates, résultats, niveau de taux, voir `data/macro-events-eurusd.js`) alimentent le contexte et les indicateurs.
+| Marché | Source réelle | Granularité | Contexte enrichi (événements datés) |
+|---|---|---|---|
+| **Forex — EUR/USD** | Alpha Vantage (FX_DAILY) | 1D | Oui — vraies décisions BCE datées |
+| **Or et métaux précieux** | Alpha Vantage, ETF **GLD** (proxy de l'or physique, pas le spot exact) | 1D | Non — contexte générique |
+| **Actions et indices** | Alpha Vantage, ETF **SPY** (S&P 500) | 1D | Non — contexte générique |
+| **Crypto — BTC** | CoinGecko | 4D (pas de journalier gratuit sur un historique long) | Non — contexte générique |
 
-Les autres marchés (or, actions, crypto) restent en scénario généré aléatoirement pour l'instant — même principe à étendre plus tard.
+Les 4 marchés utilisent donc de vraies cotations historiques (open/high/low/close). Seul l'EUR/USD bénéficie en plus d'une base d'événements réels et datés (décisions BCE, voir `data/macro-events-eurusd.js`) pour enrichir le contexte marché et le debrief niveau débutant — construire l'équivalent pour les autres marchés (Fed/or, résultats du S&P, flux crypto) reste à faire.
+
+Les indicateurs calculés (volatilité, amplitude, plus haut/plus bas, ratio hausse/baisse) sont eux authentiques sur les 4 marchés, puisque calculés directement à partir des vrais prix.
 
 ## Accompagnement dégressif selon le niveau
 

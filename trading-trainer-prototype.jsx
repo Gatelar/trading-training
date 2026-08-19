@@ -100,52 +100,77 @@ function generateScenario(rng, basePrice, phases) {
   return candles;
 }
 
-// ============ DONNÉES RÉELLES EUR/USD (Alpha Vantage) ============
+// ============ DONNÉES RÉELLES (Alpha Vantage + CoinGecko) ============
 const ALPHA_VANTAGE_KEY = "5CL73VJ2EJMEBVF2";
-const FOREX_CACHE_KEY = "tt_eurusd_daily_cache_v1";
-const FOREX_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 1 jour
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 1 jour
 
-async function fetchEurUsdDaily() {
+function readCache(key) {
   try {
-    const cached = localStorage.getItem(FOREX_CACHE_KEY);
-    if (cached) {
-      const parsed = JSON.parse(cached);
-      if (Date.now() - parsed.fetchedAt < FOREX_CACHE_TTL_MS && parsed.series.length > 30) {
-        return parsed.series;
-      }
-    }
+    const cached = localStorage.getItem(key);
+    if (!cached) return null;
+    const parsed = JSON.parse(cached);
+    if (Date.now() - parsed.fetchedAt < CACHE_TTL_MS && parsed.series.length > 20) return parsed.series;
   } catch (e) {}
+  return null;
+}
 
+function writeCache(key, series) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ fetchedAt: Date.now(), series }));
+  } catch (e) {}
+}
+
+async function fetchAlphaVantageFxDaily(cacheKey) {
+  const cached = readCache(cacheKey);
+  if (cached) return cached;
   const url = `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=EUR&to_symbol=USD&outputsize=full&apikey=${ALPHA_VANTAGE_KEY}`;
   const res = await fetch(url);
   const data = await res.json();
   const raw = data["Time Series FX (Daily)"];
-  if (!raw) {
-    throw new Error(data["Note"] || data["Information"] || "Données EUR/USD indisponibles");
-  }
-
+  if (!raw) throw new Error(data["Note"] || data["Information"] || "Données EUR/USD indisponibles");
   const series = Object.entries(raw)
-    .map(([date, v]) => ({
-      date,
-      open: parseFloat(v["1. open"]),
-      high: parseFloat(v["2. high"]),
-      low: parseFloat(v["3. low"]),
-      close: parseFloat(v["4. close"]),
-    }))
+    .map(([date, v]) => ({ date, open: parseFloat(v["1. open"]), high: parseFloat(v["2. high"]), low: parseFloat(v["3. low"]), close: parseFloat(v["4. close"]) }))
     .sort((a, b) => (a.date < b.date ? -1 : 1));
-
-  try {
-    localStorage.setItem(FOREX_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), series }));
-  } catch (e) {}
-
+  writeCache(cacheKey, series);
   return series;
 }
 
-function pickForexWindow(fullSeries, rng, windowLen) {
-  // On restreint le tirage à la période couverte par la base d'événements BCE,
-  // pour garantir un contexte macro toujours disponible côté débutant.
+async function fetchAlphaVantageStockDaily(symbol, cacheKey) {
+  const cached = readCache(cacheKey);
+  if (cached) return cached;
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${ALPHA_VANTAGE_KEY}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const raw = data["Time Series (Daily)"];
+  if (!raw) throw new Error(data["Note"] || data["Information"] || `Données ${symbol} indisponibles`);
+  const series = Object.entries(raw)
+    .map(([date, v]) => ({ date, open: parseFloat(v["1. open"]), high: parseFloat(v["2. high"]), low: parseFloat(v["3. low"]), close: parseFloat(v["4. close"]) }))
+    .sort((a, b) => (a.date < b.date ? -1 : 1));
+  writeCache(cacheKey, series);
+  return series;
+}
+
+async function fetchCoinGeckoOhlc(cacheKey) {
+  const cached = readCache(cacheKey);
+  if (cached) return cached;
+  const url = `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=365`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!Array.isArray(data) || data.length === 0) throw new Error("Données BTC/USD indisponibles");
+  const series = data.map(([ts, open, high, low, close]) => ({
+    date: new Date(ts).toISOString().slice(0, 10),
+    open,
+    high,
+    low,
+    close,
+  }));
+  writeCache(cacheKey, series);
+  return series;
+}
+
+function pickRealWindow(fullSeries, rng, windowLen, constrainToMacroRange) {
   let pool = fullSeries;
-  if (typeof MACRO_EVENTS_EURUSD !== "undefined" && MACRO_EVENTS_EURUSD.length > 0) {
+  if (constrainToMacroRange && typeof MACRO_EVENTS_EURUSD !== "undefined" && MACRO_EVENTS_EURUSD.length > 0) {
     const minDate = MACRO_EVENTS_EURUSD[0].date;
     const filtered = fullSeries.filter((c) => c.date >= minDate);
     if (filtered.length >= windowLen) pool = filtered;
@@ -207,7 +232,11 @@ const DOMAINS = [
     code: "XAU",
     base: 2380,
     Icon: Gem,
-    format: (v) => `$${v.toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+    format: (v) => `$${v.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    real: true,
+    timeframe: "1D",
+    fetchSeries: () => fetchAlphaVantageStockDaily("GLD", "tt_gld_daily_cache_v1"),
+    realNote: "Cours réel de l'ETF SPDR Gold Shares (GLD), un proxy coté qui suit le prix de l'or physique (Alpha Vantage) — pas le prix spot exact de l'once.",
   },
   {
     id: "forex",
@@ -217,6 +246,11 @@ const DOMAINS = [
     Icon: ArrowLeftRight,
     format: (v) => v.toLocaleString("fr-FR", { minimumFractionDigits: 4, maximumFractionDigits: 4 }),
     real: true,
+    timeframe: "1D",
+    fetchSeries: () => fetchAlphaVantageFxDaily("tt_eurusd_daily_cache_v1"),
+    constrainToMacroRange: true,
+    hasRealNews: true,
+    realNote: "Cotations EUR/USD réelles (Alpha Vantage) et décisions de politique monétaire BCE réelles et datées.",
   },
   {
     id: "actions",
@@ -224,7 +258,11 @@ const DOMAINS = [
     code: "IDX",
     base: 6200,
     Icon: BarChart3,
-    format: (v) => `${v.toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })} pts`,
+    format: (v) => `$${v.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    real: true,
+    timeframe: "1D",
+    fetchSeries: () => fetchAlphaVantageStockDaily("SPY", "tt_spy_daily_cache_v1"),
+    realNote: "Cours réel du S&P 500 via l'ETF SPY (Alpha Vantage).",
   },
   {
     id: "crypto",
@@ -233,6 +271,10 @@ const DOMAINS = [
     base: 68000,
     Icon: Coins,
     format: (v) => `$${v.toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+    real: true,
+    timeframe: "4D",
+    fetchSeries: () => fetchCoinGeckoOhlc("tt_btc_4d_cache_v1"),
+    realNote: "Cours réel du Bitcoin en bougies de 4 jours (CoinGecko) — pas de granularité journalière disponible gratuitement sur un historique long.",
   },
 ];
 
@@ -959,6 +1001,7 @@ function ExerciseScreen({
   const news = NEWS[domain];
   const links = DOMAIN_LINKS[domain];
   const isReal = d.real && candles.length > 0;
+  const hasRealNews = d.hasRealNews && candles.length > 0;
 
   const entryCandle = candles[visibleCount - 1];
   const lastCandle = candles[candles.length - 1];
@@ -970,7 +1013,7 @@ function ExerciseScreen({
 
   const volatility = candles.length > 0 ? computeVolatility(candles, visibleCount) : null;
   const rangeStats = candles.length > 0 ? computeRangeStats(candles, visibleCount, d.format) : null;
-  const rateContext = isReal ? getRateContext(candles, visibleCount) : null;
+  const rateContext = hasRealNews ? getRateContext(candles, visibleCount) : null;
 
   const cardStyle = { backgroundColor: C_BG_SOFT, borderColor: C_BORDER };
   const chartHeight = "clamp(440px, 68vh, 720px)";
@@ -1009,13 +1052,13 @@ function ExerciseScreen({
               {d.label}
             </span>
             <span className="font-data text-[10px] px-1.5 py-0.5 rounded border" style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}>
-              1D
+              {d.timeframe || "1D"}
             </span>
           </div>
           {loading ? (
             <div className="flex-1 flex items-center justify-center">
               <p className="text-sm font-data" style={{ color: C_TEXT_MUTED }}>
-                Chargement des données EUR/USD réelles...
+                Chargement des données réelles de {d.label}...
               </p>
             </div>
           ) : loadError ? (
@@ -1042,7 +1085,7 @@ function ExerciseScreen({
 
           {level === "debutant" && (
             <>
-              {isReal && newsEvents && newsEvents.length > 0 ? (
+              {hasRealNews && newsEvents && newsEvents.length > 0 ? (
                 <ul className="space-y-3">
                   {newsEvents.map((ev, i) => (
                     <li key={i} className="border-l-2 pl-3" style={{ borderColor: C_ACCENT }}>
@@ -1167,9 +1210,7 @@ function ExerciseScreen({
           )}
 
           <p className="text-xs mt-4 pt-3 border-t" style={{ color: C_TEXT_DIM, borderColor: C_BORDER }}>
-            {isReal
-              ? "Cotations EUR/USD réelles (Alpha Vantage) et décisions de politique monétaire BCE réelles et datées."
-              : "Contexte illustratif pour ce prototype — données et dates simulées en attendant leur intégration réelle."}
+            {isReal ? d.realNote : "Contexte illustratif pour ce prototype — données et dates simulées en attendant leur intégration réelle."}
           </p>
         </div>
       </div>
@@ -1305,49 +1346,52 @@ export default function App() {
   const [debriefAnswers, setDebriefAnswers] = useState({});
   const [biasChecked, setBiasChecked] = useState({});
 
-  const [forexSeries, setForexSeries] = useState(null);
-  const [forexLoading, setForexLoading] = useState(false);
-  const [forexError, setForexError] = useState(null);
+  const [realSeries, setRealSeries] = useState(null);
+  const [realLoading, setRealLoading] = useState(false);
+  const [realError, setRealError] = useState(null);
+
+  const activeDomainCfg = DOMAINS.find((x) => x.id === domain);
 
   useEffect(() => {
-    if (domain === "forex" && !forexSeries && !forexLoading) {
-      setForexLoading(true);
-      setForexError(null);
-      fetchEurUsdDaily()
+    if (activeDomainCfg && activeDomainCfg.real && !realSeries && !realLoading) {
+      setRealLoading(true);
+      setRealError(null);
+      activeDomainCfg
+        .fetchSeries()
         .then((series) => {
-          setForexSeries(series);
-          setForexLoading(false);
+          setRealSeries(series);
+          setRealLoading(false);
         })
         .catch(() => {
-          setForexError("Impossible de charger les données EUR/USD réelles pour le moment.");
-          setForexLoading(false);
+          setRealError(`Impossible de charger les données réelles de ${activeDomainCfg.label} pour le moment.`);
+          setRealLoading(false);
         });
     }
   }, [domain]);
 
   const { candles, visibleCount } = useMemo(() => {
     if (!domain || !level) return { candles: [], visibleCount: 0 };
+    const d = DOMAINS.find((x) => x.id === domain);
 
-    if (domain === "forex") {
-      if (!forexSeries) return { candles: [], visibleCount: 0 };
+    if (d.real) {
+      if (!realSeries) return { candles: [], visibleCount: 0 };
       const rng = mulberry32(seed);
       const windowLen = windowLenForLevel(level);
-      const c = pickForexWindow(forexSeries, rng, windowLen);
+      const c = pickRealWindow(realSeries, rng, windowLen, !!d.constrainToMacroRange);
       const vc = Math.max(6, Math.round(c.length * 0.72));
       return { candles: c, visibleCount: vc };
     }
 
-    const d = DOMAINS.find((x) => x.id === domain);
     const rng = mulberry32(seed);
     const dir = rng() > 0.5 ? 1 : -1;
     const phases = buildPhases(level, dir);
     const c = generateScenario(rng, d.base, phases);
     const vc = Math.max(6, Math.round(c.length * 0.72));
     return { candles: c, visibleCount: vc };
-  }, [seed, domain, level, forexSeries]);
+  }, [seed, domain, level, realSeries]);
 
   const newsEvents = useMemo(() => {
-    if (domain !== "forex" || candles.length === 0) return [];
+    if (!activeDomainCfg || !activeDomainCfg.hasRealNews || candles.length === 0) return [];
     return getMacroEventsInWindow(candles, visibleCount);
   }, [domain, candles, visibleCount]);
 
@@ -1376,6 +1420,8 @@ export default function App() {
   const handleSelectDomain = (id) => {
     setDomain(id);
     setSeed(Math.floor(Math.random() * 1e9));
+    setRealSeries(null);
+    setRealError(null);
     resetExercise();
   };
   const handleNew = () => {
@@ -1385,10 +1431,14 @@ export default function App() {
   const handleChangeLevel = () => {
     setLevel(null);
     setDomain(null);
+    setRealSeries(null);
+    setRealError(null);
     resetExercise();
   };
   const handleChangeDomain = () => {
     setDomain(null);
+    setRealSeries(null);
+    setRealError(null);
     resetExercise();
   };
   const handlePredict = (p) => {
@@ -1439,8 +1489,8 @@ export default function App() {
             prediction={prediction}
             position={position}
             analysis={analysis}
-            loading={domain === "forex" && forexLoading}
-            loadError={domain === "forex" ? forexError : null}
+            loading={realLoading}
+            loadError={realError}
             newsEvents={newsEvents}
             onPredict={handlePredict}
             onOrder={handleOrder}

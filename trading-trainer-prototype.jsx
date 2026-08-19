@@ -247,6 +247,60 @@ const NEWS = {
   },
 };
 
+// ============ RESSOURCES EXTERNES PAR MARCHÉ ============
+// Pour l'accompagnement dégressif : intermédiaire = piste + lien, expérimenté = lien seul.
+const DOMAIN_LINKS = {
+  or: {
+    hint: "Regarde du côté des taux réels américains et de la force du dollar (indice DXY) sur cette période.",
+    url: "https://www.investing.com/economic-calendar/",
+    label: "Calendrier économique — Investing.com",
+  },
+  forex: {
+    hint: "Regarde du côté des décisions de taux de la BCE et de la Fed sur cette période.",
+    url: "https://www.ecb.europa.eu/press/pr/date/html/index.en.html",
+    label: "Communiqués de politique monétaire — BCE",
+  },
+  actions: {
+    hint: "Regarde du côté des résultats d'entreprises et du sentiment de marché (risk-on / risk-off) sur cette période.",
+    url: "https://www.investing.com/economic-calendar/",
+    label: "Calendrier économique — Investing.com",
+  },
+  crypto: {
+    hint: "Regarde du côté des flux vers les ETF spot et du sentiment général du marché crypto sur cette période.",
+    url: "https://alternative.me/crypto/fear-and-greed-index/",
+    label: "Indice Fear & Greed — Crypto",
+  },
+};
+
+// ============ INDICATEURS CALCULÉS (pour le niveau débutant) ============
+function computeVolatility(candles, visibleCount) {
+  const visible = candles.slice(0, visibleCount);
+  if (visible.length < 3) return null;
+  const returns = [];
+  for (let i = 1; i < visible.length; i++) {
+    returns.push((visible[i].close - visible[i - 1].close) / visible[i - 1].close);
+  }
+  const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
+  const variance = returns.reduce((a, b) => a + (b - mean) ** 2, 0) / returns.length;
+  return Math.sqrt(variance) * 100; // en %
+}
+
+function getRateContext(windowCandles, visibleCount) {
+  if (typeof MACRO_EVENTS_EURUSD === "undefined" || !windowCandles.length) return null;
+  const cutoffDate = windowCandles[visibleCount - 1].date;
+  const pastEvents = MACRO_EVENTS_EURUSD.filter((ev) => ev.date <= cutoffDate).sort((a, b) => (a.date < b.date ? 1 : -1));
+  if (pastEvents.length === 0) return null;
+  const latest = pastEvents[0];
+  const previous = pastEvents[1];
+  let trend = "stable";
+  if (previous) {
+    if (latest.rateAfter > previous.rateAfter) trend = "hausse";
+    else if (latest.rateAfter < previous.rateAfter) trend = "baisse";
+  }
+  return { rate: latest.rateAfter, trend, asOf: latest.date };
+}
+
+
 function isDrawingTooSmall(p1, p2) {
   return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
 }
@@ -704,6 +758,7 @@ function ExerciseScreen({
   const lv = LEVELS.find((l) => l.id === level);
   const d = DOMAINS.find((x) => x.id === domain);
   const news = NEWS[domain];
+  const links = DOMAIN_LINKS[domain];
   const isReal = d.real && candles.length > 0;
 
   const entryCandle = candles[visibleCount - 1];
@@ -713,6 +768,9 @@ function ExerciseScreen({
   const pnl = position ? movePct * (position === "achat" ? 1 : -1) : 0;
   const predictionWin = prediction ? (prediction === "hausse") === actualUp : null;
   const orderWin = pnl > 0;
+
+  const volatility = candles.length > 0 ? computeVolatility(candles, visibleCount) : null;
+  const rateContext = isReal ? getRateContext(candles, visibleCount) : null;
 
   const cardStyle = { backgroundColor: C_BG_SOFT, borderColor: C_BORDER };
   const chartHeight = "clamp(440px, 68vh, 720px)";
@@ -768,36 +826,96 @@ function ExerciseScreen({
             </h3>
           </div>
 
-          {isReal && newsEvents && newsEvents.length > 0 ? (
-            <ul className="space-y-3">
-              {newsEvents.map((ev, i) => (
-                <li key={i} className="border-l-2 pl-3" style={{ borderColor: C_ACCENT }}>
-                  <p className="font-data text-[10px]" style={{ color: C_ACCENT }}>
-                    {ev.date}
-                  </p>
-                  <p className="text-xs font-medium mt-0.5" style={{ color: C_TEXT }}>
-                    {ev.title}
-                  </p>
-                  <p className="text-xs mt-1 leading-relaxed" style={{ color: C_TEXT_MUTED }}>
-                    {ev.detail}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          ) : (
+          {level === "debutant" && (
             <>
-              <p className="text-sm leading-relaxed" style={{ color: C_TEXT_MUTED }}>
-                {news.body}
-              </p>
-              <ul className="mt-3 space-y-1.5">
-                {news.bullets.map((b, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "#7d8579" }}>
-                    <span className="w-1 h-1 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: C_ACCENT }} />
-                    {b}
-                  </li>
-                ))}
-              </ul>
+              {isReal && newsEvents && newsEvents.length > 0 ? (
+                <ul className="space-y-3">
+                  {newsEvents.map((ev, i) => (
+                    <li key={i} className="border-l-2 pl-3" style={{ borderColor: C_ACCENT }}>
+                      <p className="font-data text-[10px]" style={{ color: C_ACCENT }}>
+                        {ev.date}
+                      </p>
+                      <p className="text-xs font-medium mt-0.5" style={{ color: C_TEXT }}>
+                        {ev.title}
+                      </p>
+                      <p className="text-xs mt-1 leading-relaxed" style={{ color: C_TEXT_MUTED }}>
+                        {ev.detail}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <>
+                  <p className="text-sm leading-relaxed" style={{ color: C_TEXT_MUTED }}>
+                    {news.body}
+                  </p>
+                  <ul className="mt-3 space-y-1.5">
+                    {news.bullets.map((b, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "#7d8579" }}>
+                        <span className="w-1 h-1 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: C_ACCENT }} />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              {(rateContext || volatility !== null) && (
+                <div className="mt-4 pt-3 border-t space-y-2" style={{ borderColor: C_BORDER }}>
+                  <p className="text-[10px] font-data tracking-widest" style={{ color: C_TEXT_DIM }}>
+                    INDICATEURS CLÉS
+                  </p>
+                  {rateContext && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span style={{ color: C_TEXT_MUTED }}>Taux BCE (au {rateContext.asOf})</span>
+                      <span className="font-data font-medium" style={{ color: C_TEXT }}>
+                        {rateContext.rate.toFixed(2)}%{" "}
+                        <span style={{ color: rateContext.trend === "hausse" ? C_UP : rateContext.trend === "baisse" ? C_DOWN : C_TEXT_MUTED }}>
+                          ({rateContext.trend})
+                        </span>
+                      </span>
+                    </div>
+                  )}
+                  {volatility !== null && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span style={{ color: C_TEXT_MUTED }}>Volatilité récente</span>
+                      <span className="font-data font-medium" style={{ color: C_TEXT }}>
+                        {volatility.toFixed(2)}% / jour
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
             </>
+          )}
+
+          {level === "intermediaire" && links && (
+            <div className="space-y-4">
+              <p className="text-sm leading-relaxed" style={{ color: C_TEXT_MUTED }}>
+                {links.hint}
+              </p>
+              <a
+                href={links.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-xs font-data px-3 py-2 rounded-md border transition-colors"
+                style={{ borderColor: C_ACCENT, color: C_ACCENT }}
+              >
+                {links.label} →
+              </a>
+            </div>
+          )}
+
+          {level === "experimente" && links && (
+            <a
+              href={links.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-xs font-data px-3 py-2 rounded-md border transition-colors"
+              style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}
+            >
+              {links.label} →
+            </a>
           )}
 
           <p className="text-xs mt-4 pt-3 border-t" style={{ color: C_TEXT_DIM, borderColor: C_BORDER }}>

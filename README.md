@@ -16,9 +16,21 @@ Deux outils de tracé sont disponibles sur le graphique : ligne de tendance et F
 
 ## Marché avec données réelles : EUR/USD
 
-Le marché **Forex — EUR/USD** utilise de vraies cotations historiques (open/high/low/close quotidien, via l'API gratuite Alpha Vantage) plutôt qu'un scénario simulé. Le panneau "Contexte marché" affiche les vraies décisions de politique monétaire de la BCE tombées dans la période visible de l'exercice (dates et détails réels, voir `data/macro-events-eurusd.js`).
+Le marché **Forex — EUR/USD** utilise de vraies cotations historiques (open/high/low/close quotidien, via l'API gratuite Alpha Vantage) plutôt qu'un scénario simulé. Les vraies décisions de politique monétaire de la BCE (dates, résultats, niveau de taux, voir `data/macro-events-eurusd.js`) alimentent le contexte et les indicateurs.
 
 Les autres marchés (or, actions, crypto) restent en scénario généré aléatoirement pour l'instant — même principe à étendre plus tard.
+
+## Accompagnement dégressif selon le niveau
+
+Le panneau "Contexte marché" ne donne pas la même quantité d'aide selon le niveau choisi — l'idée est d'accompagner un débutant à construire une logique, puis de le pousser progressivement à aller chercher l'information lui-même, comme un vrai trader :
+
+| Niveau | Contexte affiché |
+|---|---|
+| **Débutant** | Contexte complet : événements réels (EUR/USD) ou exemple générique, + indicateurs calculés (taux BCE actuel et tendance, volatilité récente de la période) |
+| **Intermédiaire** | Une piste textuelle (sur quoi chercher) + un vrai lien externe pour approfondir soi-même |
+| **Expérimenté** | Un lien brut vers une ressource externe généraliste, sans aucune explication |
+
+Les liens/pistes par marché sont dans `DOMAIN_LINKS` (`trading-trainer-prototype.jsx`).
 
 ## Comptes utilisateurs et quotas
 

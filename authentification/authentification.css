@@ -143,6 +143,21 @@ h2 {
     margin-bottom: 20px;
 }
 
+.form-message {
+    font-size: 0.8rem;
+    margin-bottom: 14px;
+    min-height: 1.2em;
+    line-height: 1.4;
+}
+
+.form-message.is-error {
+    color: #ff8080;
+}
+
+.form-message.is-success {
+    color: var(--accent);
+}
+
 .btn-submit {
     width: 100%;
     padding: 13px;

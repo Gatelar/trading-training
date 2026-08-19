@@ -1,21 +1,32 @@
 # Authentification
 
-Page de connexion / inscription du site Trading Training. Un seul panneau bascule entre les deux formulaires (inspiré du pattern "sliding panel" de https://github.com/shivamchhapola/Login-Page-with-Framer-Motion, recréé en CSS/JS vanilla dans le thème du site).
+Page de connexion / inscription du site Trading Training, avec panneau coulissant entre les deux formulaires, branchée sur **Supabase Auth** pour de vrais comptes utilisateurs.
 
 ## Fichiers
 
-- `authentification.html` — structure de la page (formulaire connexion + inscription superposés, panneau coulissant)
+- `authentification.html` — structure de la page (formulaires connexion + inscription, panneau coulissant)
 - `authentification.css` — styles et animation du panneau
-- `authentifiaction.js` — logique de bascule connexion/inscription + soumission des formulaires
+- `supabase-client.js` — configuration du client Supabase (URL + clé publique du projet)
+- `authentifiaction.js` — logique de bascule connexion/inscription + appels à Supabase Auth (signUp / signInWithPassword)
 
 ## Statut
 
 - [x] Design en panneau coulissant fonctionnel (connexion ↔ inscription)
-- [x] Formulaires reliés au JS (`id` sur les champs, `.value` correct)
-- [x] Version mobile (le panneau passe au-dessus des formulaires, pas de glissement horizontal)
-- [ ] Bouton "Continuer avec Google" non fonctionnel (visuel uniquement)
-- [ ] Aucune vraie logique d'authentification (pas de backend, pas de vérification) — les formulaires affichent juste une alerte de confirmation
+- [x] Inscription et connexion branchées sur Supabase Auth (vrais comptes, vrai mot de passe vérifié côté serveur)
+- [x] Messages d'erreur/succès affichés dans le formulaire (email déjà utilisé, mot de passe trop court, etc.)
+- [x] Redirection vers la page d'accueil après connexion réussie
+- [ ] Bouton "Continuer avec Google" non fonctionnel (visuel uniquement — nécessiterait de configurer le provider Google dans Supabase)
+- [ ] Pas encore de gestion de session affichée sur le site (ex: remplacer "Se connecter" par le nom de l'utilisateur une fois connecté)
+- [ ] Pas de page "mot de passe oublié" fonctionnelle
+
+## Configuration Supabase
+
+Le projet Supabase associé est identifié par son URL (`pzycamkdwvpkyacvkzrs.supabase.co`) et sa clé publique dans `supabase-client.js`. Cette clé est faite pour être visible côté client — seule la clé secrète (jamais mise dans le code) donne un accès complet à la base.
+
+Selon la configuration du projet Supabase, la confirmation par email peut être activée ou désactivée (à vérifier dans Authentication → Settings sur le tableau de bord Supabase).
 
 ## À faire
 
-Brancher une vraie logique d'authentification (backend ou service tiers) à la place des `alert()` actuels.
+- Afficher l'état de connexion sur le reste du site (top-bar)
+- Implémenter "mot de passe oublié"
+- Éventuellement activer la connexion Google

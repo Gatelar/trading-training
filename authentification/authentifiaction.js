@@ -11,32 +11,68 @@ toggleToSignIn.addEventListener('click', () => {
     authCard.classList.remove('right-panel-active');
 });
 
-// ============ SOUMISSION - CONNEXION ============
-document.getElementById('signInForm').addEventListener('submit', function (event) {
-    event.preventDefault();
+// ============ AFFICHAGE DES MESSAGES ============
+function showMessage(elementId, text, isError) {
+    const el = document.getElementById(elementId);
+    el.textContent = text;
+    el.classList.toggle('is-error', isError);
+    el.classList.toggle('is-success', !isError);
+}
 
-    const email = document.getElementById('signInEmail').value;
-    const password = document.getElementById('signInPassword').value;
-
-    console.log('Connexion :');
-    console.log('Email :', email);
-    console.log('Mot de passe :', password);
-
-    alert('Connexion soumise pour : ' + email);
-});
-
-// ============ SOUMISSION - INSCRIPTION ============
-document.getElementById('signUpForm').addEventListener('submit', function (event) {
+// ============ INSCRIPTION ============
+document.getElementById('signUpForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const name = document.getElementById('signUpName').value;
     const email = document.getElementById('signUpEmail').value;
     const password = document.getElementById('signUpPassword').value;
+    const submitBtn = event.target.querySelector('.btn-submit');
 
-    console.log('Inscription :');
-    console.log('Nom :', name);
-    console.log('Email :', email);
-    console.log('Mot de passe :', password);
+    submitBtn.disabled = true;
+    showMessage('signUpMessage', 'Création du compte...', false);
 
-    alert('Inscription soumise pour : ' + email);
+    const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+            data: { full_name: name }
+        }
+    });
+
+    submitBtn.disabled = false;
+
+    if (error) {
+        showMessage('signUpMessage', error.message, true);
+        return;
+    }
+
+    showMessage('signUpMessage', 'Compte créé ! Vérifie ta boîte mail pour confirmer.', false);
+    event.target.reset();
+});
+
+// ============ CONNEXION ============
+document.getElementById('signInForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById('signInEmail').value;
+    const password = document.getElementById('signInPassword').value;
+    const submitBtn = event.target.querySelector('.btn-submit');
+
+    submitBtn.disabled = true;
+    showMessage('signInMessage', 'Connexion...', false);
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    submitBtn.disabled = false;
+
+    if (error) {
+        showMessage('signInMessage', error.message, true);
+        return;
+    }
+
+    showMessage('signInMessage', 'Connecté !', false);
+    window.location.href = '../index.html';
 });

@@ -819,6 +819,42 @@ function DomainScreen({ level, onSelect, onBack }) {
   );
 }
 
+// ============ CHECKBOX ANIMÉE "TERMINAL BLIP" (biais du debrief) ============
+function BiasCheckbox({ checked, onToggle, label }) {
+  return (
+    <label className="flex items-center gap-2.5 text-xs cursor-pointer" style={{ color: C_TEXT }}>
+      <span
+        className="relative flex items-center justify-center shrink-0"
+        style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${checked ? C_ACCENT : "#5c655c"}`, transition: "border-color .2s" }}
+      >
+        {checked && (
+          <span
+            key={checked ? "on" : "off"}
+            className="absolute rounded-full"
+            style={{
+              inset: -4,
+              border: `2px solid ${C_ACCENT}`,
+              animation: "biasBlip .5s ease-out",
+            }}
+          />
+        )}
+        <span
+          className="rounded-full"
+          style={{
+            width: 7,
+            height: 7,
+            backgroundColor: C_ACCENT,
+            transform: checked ? "scale(1)" : "scale(0)",
+            transition: "transform .2s ease .1s",
+          }}
+        />
+      </span>
+      <input type="checkbox" checked={checked} onChange={onToggle} className="sr-only" />
+      {label}
+    </label>
+  );
+}
+
 function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAnswerChange, biasChecked, onToggleBias }) {
   const questions = DEBRIEF_QUESTIONS[level] || [];
   const biasItems = BIAS_ITEMS[level] || [];
@@ -883,17 +919,9 @@ function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAns
           <p className="text-xs mb-2" style={{ color: C_TEXT_MUTED }}>
             Est-ce que l'un de ces biais s'est glissé dans ta décision ?
           </p>
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             {biasItems.map((b, i) => (
-              <label key={i} className="flex items-center gap-2 text-xs cursor-pointer" style={{ color: C_TEXT }}>
-                <input
-                  type="checkbox"
-                  checked={!!(biasChecked && biasChecked[i])}
-                  onChange={() => onToggleBias(i)}
-                  className="w-3.5 h-3.5"
-                />
-                {b}
-              </label>
+              <BiasCheckbox key={i} checked={!!(biasChecked && biasChecked[i])} onToggle={() => onToggleBias(i)} label={b} />
             ))}
           </div>
         </div>
@@ -1385,6 +1413,7 @@ export default function App() {
         .live-dot { animation: blink 1.6s ease-in-out infinite; }
         @keyframes candleIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
         .candle-reveal { animation: candleIn 0.45s ease-out forwards; }
+        @keyframes biasBlip { 0% { opacity: 0.8; transform: scale(0.6); } 100% { opacity: 0; transform: scale(1.6); } }
         @media (prefers-reduced-motion: reduce) {
           .live-dot, .candle-reveal { animation: none !important; }
         }

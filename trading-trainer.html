@@ -32,6 +32,9 @@ html,body{margin:0;background:#000;}
   const gate = document.getElementById('tt-gate');
   const root = document.getElementById('root');
 
+  // Comptes admin : jamais soumis au quota d'exercices.
+  const ADMIN_EMAILS = ['bidiyacine59@gmail.com'];
+
   function block(title, message, ctaLabel, ctaHref) {
     gate.innerHTML = `<h2>${title}</h2><p>${message}</p><a href="${ctaHref}">${ctaLabel}</a>`;
     gate.style.display = 'flex';
@@ -43,6 +46,11 @@ html,body{margin:0;background:#000;}
   }
 
   const { data: { session } } = await supabaseClient.auth.getSession();
+
+  if (session && ADMIN_EMAILS.includes(session.user.email)) {
+    allow();
+    return;
+  }
 
   if (!session) {
     const today = new Date().toISOString().slice(0, 10);

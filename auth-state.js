@@ -19,7 +19,7 @@
         container.innerHTML = `
             <a href="${prefix}abonnement/abonnement.html" class="btn-secondary top-bar-plan">Abonnement</a>
             <div class="account-menu">
-                <button class="btn-login" id="accountBtn">${firstName} <span class="menu-caret">▾</span></button>
+                <button class="btn-login" id="accountBtn"><span id="accountBtnName"></span> <span class="menu-caret">▾</span></button>
                 <div class="account-dropdown" id="accountDropdown">
                     <a href="${prefix}compte/compte.html">Mon compte</a>
                     <a href="${prefix}abonnement/abonnement.html">Abonnement</a>
@@ -27,6 +27,9 @@
                 </div>
             </div>
         `;
+        // Le nom vient d'un champ saisi par l'utilisateur à l'inscription — on l'insère
+        // via textContent (jamais innerHTML) pour empêcher toute injection de code (XSS).
+        document.getElementById('accountBtnName').textContent = firstName;
 
         const accountBtn = document.getElementById('accountBtn');
         const dropdown = document.getElementById('accountDropdown');

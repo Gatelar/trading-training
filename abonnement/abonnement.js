@@ -59,7 +59,7 @@ subscribeBtn.addEventListener('click', async () => {
             },
             body: JSON.stringify({
                 priceId: STRIPE_PRICE_IDS[selectedPlan],
-                successUrl: window.location.origin + window.location.pathname.replace('abonnement.html', '') + '../compte/compte.html?checkout=success',
+                successUrl: new URL('../compte/compte.html?checkout=success', window.location.href).href,
                 cancelUrl: window.location.href,
             }),
         });

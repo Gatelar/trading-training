@@ -401,6 +401,7 @@ a {
 }
 
 .level-card h3 {
+    color: var(--text);
     font-size: 1.3rem;
     margin-bottom: 10px;
 }

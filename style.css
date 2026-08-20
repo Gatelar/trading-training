@@ -435,6 +435,25 @@ a {
     border-top: 1px solid var(--border);
 }
 
+.footer-legal {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.footer-legal a {
+    color: var(--text-dim, #5c655c);
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+.footer-legal a:hover {
+    color: var(--accent);
+}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width: 780px) {
     .level-grid {

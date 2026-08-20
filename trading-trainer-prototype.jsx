@@ -1470,11 +1470,20 @@ export default function App() {
       `}</style>
 
       <div className="max-w-[1600px] mx-auto px-4 py-6 md:py-8">
-        <header className="flex items-center gap-2 mb-6">
-          <span className="w-2 h-2 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} />
-          <span className="font-data text-xs tracking-widest" style={{ color: C_TEXT_MUTED }}>
-            TRADE TRAINER — PROTOTYPE
-          </span>
+        <header className="flex items-center justify-between gap-2 mb-6">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} />
+            <span className="font-data text-xs tracking-widest" style={{ color: C_TEXT_MUTED }}>
+              TRADE TRAINER — PROTOTYPE
+            </span>
+          </div>
+          <a
+            href="index.html"
+            className="font-data text-xs px-3 py-1.5 rounded border transition-colors"
+            style={{ borderColor: C_BORDER, color: C_TEXT_MUTED, textDecoration: "none" }}
+          >
+            ← Accueil
+          </a>
         </header>
 
         {screen === "level" && <LevelScreen onSelect={handleSelectLevel} />}

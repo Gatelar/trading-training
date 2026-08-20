@@ -824,7 +824,7 @@ function DomainScreen({ level, onSelect, onBack }) {
       <p className="mt-2 mb-8" style={{ color: C_TEXT_MUTED }}>
         Les exercices porteront sur l'actif choisi.
       </p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {DOMAINS.map((d) => {
           const Icon = d.Icon;
           return (
@@ -1470,7 +1470,7 @@ export default function App() {
       `}</style>
 
       <div className="max-w-[1600px] mx-auto px-4 py-6 md:py-8">
-        <header className="flex items-center justify-between gap-2 mb-6">
+        <header className="flex items-center justify-between gap-2 mb-6 flex-wrap">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} />
             <span className="font-data text-xs tracking-widest" style={{ color: C_TEXT_MUTED }}>

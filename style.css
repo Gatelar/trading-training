@@ -460,3 +460,79 @@ a {
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 640px) {
+    body {
+        padding-top: 60px;
+    }
+
+    .top-bar {
+        height: 60px;
+        padding: 0 14px;
+    }
+
+    .logo {
+        height: 32px;
+    }
+
+    .top-bar-actions {
+        gap: 8px;
+    }
+
+    .top-bar-plan {
+        display: none;
+    }
+
+    .btn-login {
+        padding: 8px 14px;
+        font-size: 0.82rem;
+        max-width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .account-dropdown {
+        min-width: 160px;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 50px 18px 44px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-actions .btn-primary,
+    .hero-actions .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+
+    .concept,
+    .niveaux {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .cta-final {
+        padding: 70px 18px 90px;
+    }
+}
+
+@media (max-width: 380px) {
+    .top-bar {
+        padding: 0 10px;
+    }
+
+    .logo {
+        height: 28px;
+    }
+
+    .btn-login {
+        max-width: 100px;
+    }
+}

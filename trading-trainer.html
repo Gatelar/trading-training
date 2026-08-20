@@ -52,6 +52,18 @@ html,body{margin:0;background:#000;}
     return;
   }
 
+  if (session) {
+    const { data: sub } = await supabaseClient
+      .from('subscriptions')
+      .select('status')
+      .eq('user_id', session.user.id)
+      .maybeSingle();
+    if (sub && (sub.status === 'active' || sub.status === 'trialing')) {
+      allow();
+      return;
+    }
+  }
+
   if (!session) {
     const today = new Date().toISOString().slice(0, 10);
     const key = 'tt_anon_exercise_' + today;

@@ -83,3 +83,20 @@
         grid-template-columns: 1fr;
     }
 }
+
+.tag-pro {
+    background-color: var(--accent);
+    color: #06170a;
+    border-color: var(--accent);
+}
+
+.checkout-success {
+    background-color: rgba(205, 252, 138, 0.1);
+    border: 1px solid var(--accent-dim);
+    color: var(--accent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 24px;
+}

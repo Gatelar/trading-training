@@ -264,3 +264,49 @@
         width: 100%;
     }
 }
+
+/* ============ TOGGLE MENSUEL / ANNUEL ============ */
+.plan-toggle {
+    display: flex;
+    gap: 6px;
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 16px;
+}
+
+.plan-toggle-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.82rem;
+    padding: 8px;
+    border-radius: 7px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.plan-toggle-btn.active {
+    background-color: var(--accent);
+    color: #06170a;
+}
+
+.plan-toggle-badge {
+    font-size: 0.68rem;
+    opacity: 0.8;
+}
+
+.plan-error {
+    color: #ff8080;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    text-align: center;
+    min-height: 1.2em;
+}

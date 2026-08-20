@@ -23,14 +23,16 @@
         <h1 id="accountName">—</h1>
         <p class="account-email" id="accountEmail">—</p>
 
+        <p class="checkout-success" id="checkoutSuccess" style="display:none;">✓ Abonnement activé, bienvenue chez les traders actifs !</p>
+
         <div class="account-cards">
             <div class="account-card">
                 <span class="account-card-label">Offre actuelle</span>
-                <p class="account-card-value">Découverte <span class="tag-free">gratuit</span></p>
+                <p class="account-card-value"><span id="planLabel">Découverte</span> <span class="tag-free" id="planTag">gratuit</span></p>
                 <a href="../abonnement/abonnement.html" class="account-card-link">Voir l'abonnement →</a>
             </div>
 
-            <div class="account-card">
+            <div class="account-card" id="quotaCard">
                 <span class="account-card-label">Exercices aujourd'hui</span>
                 <p class="account-card-value" id="quotaValue">— / 3</p>
                 <p class="account-card-note">Réinitialisé chaque jour à minuit.</p>

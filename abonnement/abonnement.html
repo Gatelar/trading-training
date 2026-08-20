@@ -42,18 +42,25 @@
         <article class="plan-card plan-card--highlight reveal">
             <span class="plan-badge">Illimité</span>
             <h2>Trader actif</h2>
-            <p class="plan-price">???<span>/mois</span></p>
-            <p class="plan-note">Le prix n'est pas encore fixé — l'entraînement illimité arrive bientôt.</p>
+
+            <div class="plan-toggle">
+                <button class="plan-toggle-btn active" data-plan="monthly" id="toggleMonthly">Mensuel</button>
+                <button class="plan-toggle-btn" data-plan="annual" id="toggleAnnual">Annuel <span class="plan-toggle-badge">-17%</span></button>
+            </div>
+
+            <p class="plan-price" id="planPrice">9,99 €<span>/mois</span></p>
+            <p class="plan-note">Tarif de test (mode Stripe Test) — le prix définitif n'est pas encore fixé.</p>
             <ul class="plan-features">
                 <li><span class="check">✓</span> Exercices illimités</li>
                 <li><span class="check">✓</span> Accès aux 3 niveaux</li>
                 <li class="is-disabled"><span class="check">–</span> Formation complète (à venir)</li>
             </ul>
-            <button class="btn-primary plan-cta" id="notifyBtn">Être prévenu du lancement</button>
+            <button class="btn-primary plan-cta" id="subscribeBtn">S'abonner (mode test)</button>
+            <p class="plan-error" id="planError"></p>
         </article>
     </section>
 
-    <p class="plan-footnote reveal">Seul l'entraînement est proposé actuellement. La formation (cours, coaching) n'est pas encore disponible et sera ajoutée plus tard.</p>
+    <p class="plan-footnote reveal">Seul l'entraînement est proposé actuellement. La formation (cours, coaching) n'est pas encore disponible et sera ajoutée plus tard. Le paiement est actuellement en mode test Stripe — aucune carte réelle n'est débitée.</p>
 
     <script src="../app.js"></script>
     <script src="abonnement.js"></script>

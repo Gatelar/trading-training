@@ -13,6 +13,29 @@
     document.getElementById('accountName').textContent = firstName;
     document.getElementById('accountEmail').textContent = email;
 
+    // ============ STATUT ABONNEMENT ============
+    const { data: sub } = await supabaseClient
+        .from('subscriptions')
+        .select('status, plan')
+        .eq('user_id', session.user.id)
+        .maybeSingle();
+
+    const isActive = sub && (sub.status === 'active' || sub.status === 'trialing');
+    const planLabel = document.getElementById('planLabel');
+    const planTag = document.getElementById('planTag');
+    const quotaCard = document.getElementById('quotaCard');
+
+    if (isActive) {
+        planLabel.textContent = 'Trader actif';
+        planTag.textContent = sub.plan || 'illimité';
+        planTag.classList.add('tag-pro');
+        if (quotaCard) quotaCard.style.display = 'none';
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('checkout') === 'success') {
+            document.getElementById('checkoutSuccess').style.display = 'block';
+        }
+    }
+
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
 

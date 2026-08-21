@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Training - Politique de confidentialité</title>
+    <title>Trading Training - Politique de confidentialité / Privacy Policy</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="legal.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../supabase-client.js"></script>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 
@@ -16,114 +17,207 @@
             <img src="../logott.png" alt="Logo Trading Training" class="logo">
         </a>
         <div class="top-bar-actions" id="topBarActions" data-prefix="../">
-            <a href="../authentification/authentification.html" class="btn-login">Se connecter</a>
+            <div id="langToggle"></div>
+            <a href="../authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
         </div>
     </header>
 
     <section class="legal-wrap reveal">
-        <span class="eyebrow">Informations légales</span>
-        <h1>Politique de confidentialité</h1>
-        <p class="legal-updated">Dernière mise à jour : 20 août 2026</p>
+        <span class="eyebrow" data-i18n="legal.eyebrow">Informations légales</span>
+        <h1 data-i18n="legal.privacyTitle">Politique de confidentialité</h1>
+        <p class="legal-updated"><span class="lang-fr">Dernière mise à jour : 20 août 2026</span><span class="lang-en">Last updated: August 20, 2026</span></p>
 
         <nav class="legal-nav">
-            <a href="mentions-legales.html">Mentions légales</a>
-            <a href="cgu.html">CGU</a>
-            <a href="confidentialite.html" class="active">Confidentialité</a>
+            <a href="mentions-legales.html" data-i18n="legal.mentionsTitle">Mentions légales</a>
+            <a href="cgu.html" data-i18n="legal.cguTitle">CGU</a>
+            <a href="confidentialite.html" class="active" data-i18n="legal.privacyTitle">Confidentialité</a>
         </nav>
 
-        <h2>1. Responsable du traitement</h2>
-        <p>
-            <span class="legal-placeholder">[NOM ET PRÉNOM]</span>, entrepreneur individuel, éditeur du site Trading
-            Training, est responsable du traitement des données personnelles décrites ci-dessous.<br>
-            Contact : <span class="legal-placeholder">[EMAIL DE CONTACT]</span>
-        </p>
+        <div class="lang-fr">
+            <h2>1. Responsable du traitement</h2>
+            <p>
+                <span class="legal-placeholder">[NOM ET PRÉNOM]</span>, entrepreneur individuel, éditeur du site Trading
+                Training, est responsable du traitement des données personnelles décrites ci-dessous.<br>
+                Contact : <span class="legal-placeholder">[EMAIL DE CONTACT]</span>
+            </p>
 
-        <h2>2. Données collectées</h2>
-        <p>Lors de la création d'un compte, les données suivantes sont collectées :</p>
-        <ul>
-            <li>Adresse email</li>
-            <li>Nom (facultatif, saisi librement à l'inscription)</li>
-            <li>Mot de passe (stocké de façon chiffrée, jamais en clair)</li>
-        </ul>
-        <p>Dans le cadre de l'utilisation du Site, sont également enregistrés :</p>
-        <ul>
-            <li>La date et l'heure de chaque exercice réalisé (pour le calcul du quota quotidien)</li>
-            <li>Des préférences techniques stockées localement dans le navigateur (localStorage), notamment pour le
-                suivi du quota des visiteurs non connectés et la mise en cache de données de marché</li>
-        </ul>
+            <h2>2. Données collectées</h2>
+            <p>Lors de la création d'un compte, les données suivantes sont collectées :</p>
+            <ul>
+                <li>Adresse email</li>
+                <li>Nom (facultatif, saisi librement à l'inscription)</li>
+                <li>Mot de passe (stocké de façon chiffrée, jamais en clair)</li>
+            </ul>
+            <p>Dans le cadre de l'utilisation du Site, sont également enregistrés :</p>
+            <ul>
+                <li>La date et l'heure de chaque exercice réalisé (pour le calcul du quota quotidien)</li>
+                <li>Des préférences techniques stockées localement dans le navigateur (localStorage), notamment pour le
+                    suivi du quota des visiteurs non connectés et la mise en cache de données de marché</li>
+            </ul>
 
-        <h2>3. Finalités du traitement</h2>
-        <ul>
-            <li>Gestion des comptes utilisateurs et authentification</li>
-            <li>Application des quotas d'utilisation gratuite</li>
-            <li>Amélioration du service</li>
-            <li>Communication éventuelle concernant l'ouverture de l'offre d'abonnement (si l'utilisateur en fait la demande)</li>
-        </ul>
+            <h2>3. Finalités du traitement</h2>
+            <ul>
+                <li>Gestion des comptes utilisateurs et authentification</li>
+                <li>Application des quotas d'utilisation gratuite</li>
+                <li>Amélioration du service</li>
+                <li>Communication éventuelle concernant l'ouverture de l'offre d'abonnement (si l'utilisateur en fait la demande)</li>
+            </ul>
 
-        <h2>4. Hébergement et sous-traitants</h2>
-        <p>Les données personnelles sont hébergées et traitées par les prestataires suivants :</p>
-        <ul>
-            <li><strong>Supabase</strong> (authentification et base de données) — voir la politique de confidentialité de Supabase</li>
-        </ul>
-        <p>
-            Par ailleurs, certaines pages du Site effectuent des appels techniques (non liés à un compte utilisateur)
-            vers des services tiers pour afficher des données de marché publiques :
-        </p>
-        <ul>
-            <li><strong>Alpha Vantage</strong> (cotations financières)</li>
-            <li><strong>CoinGecko</strong> (cotations crypto)</li>
-        </ul>
-        <p>Ces services ne reçoivent aucune donnée personnelle identifiant l'utilisateur dans le cadre de ces appels.</p>
+            <h2>4. Hébergement et sous-traitants</h2>
+            <p>Les données personnelles sont hébergées et traitées par les prestataires suivants :</p>
+            <ul>
+                <li><strong>Supabase</strong> (authentification et base de données) — voir la politique de confidentialité de Supabase</li>
+            </ul>
+            <p>
+                Par ailleurs, certaines pages du Site effectuent des appels techniques (non liés à un compte utilisateur)
+                vers des services tiers pour afficher des données de marché publiques :
+            </p>
+            <ul>
+                <li><strong>Alpha Vantage</strong> (cotations financières)</li>
+                <li><strong>CoinGecko</strong> (cotations crypto)</li>
+            </ul>
+            <p>Ces services ne reçoivent aucune donnée personnelle identifiant l'utilisateur dans le cadre de ces appels.</p>
 
-        <h2>5. Durée de conservation</h2>
-        <p>
-            Les données du compte sont conservées tant que le compte est actif. En cas de suppression du compte, les
-            données personnelles sont supprimées dans un délai raisonnable, sauf obligation légale de conservation
-            plus longue.
-        </p>
+            <h2>5. Durée de conservation</h2>
+            <p>
+                Les données du compte sont conservées tant que le compte est actif. En cas de suppression du compte, les
+                données personnelles sont supprimées dans un délai raisonnable, sauf obligation légale de conservation
+                plus longue.
+            </p>
 
-        <h2>6. Droits de l'utilisateur (RGPD)</h2>
-        <p>Conformément au Règlement Général sur la Protection des Données (RGPD), l'utilisateur dispose des droits suivants :</p>
-        <ul>
-            <li>Droit d'accès à ses données</li>
-            <li>Droit de rectification</li>
-            <li>Droit à l'effacement (« droit à l'oubli »)</li>
-            <li>Droit à la limitation du traitement</li>
-            <li>Droit à la portabilité des données</li>
-            <li>Droit d'opposition</li>
-        </ul>
-        <p>
-            Ces droits peuvent être exercés en écrivant à : <span class="legal-placeholder">[EMAIL DE CONTACT]</span>.
-            L'utilisateur dispose également du droit d'introduire une réclamation auprès de la CNIL (www.cnil.fr).
-        </p>
+            <h2>6. Droits de l'utilisateur (RGPD)</h2>
+            <p>Conformément au Règlement Général sur la Protection des Données (RGPD), l'utilisateur dispose des droits suivants :</p>
+            <ul>
+                <li>Droit d'accès à ses données</li>
+                <li>Droit de rectification</li>
+                <li>Droit à l'effacement (« droit à l'oubli »)</li>
+                <li>Droit à la limitation du traitement</li>
+                <li>Droit à la portabilité des données</li>
+                <li>Droit d'opposition</li>
+            </ul>
+            <p>
+                Ces droits peuvent être exercés en écrivant à : <span class="legal-placeholder">[EMAIL DE CONTACT]</span>.
+                L'utilisateur dispose également du droit d'introduire une réclamation auprès de la CNIL (www.cnil.fr).
+            </p>
 
-        <h2>7. Sécurité</h2>
-        <p>
-            Des mesures techniques raisonnables sont mises en place pour protéger les données des utilisateurs
-            (chiffrement des mots de passe, contrôle d'accès aux données via des règles de sécurité au niveau de la
-            base de données). Aucun système n'étant infaillible, l'éditeur ne peut garantir une sécurité absolue.
-        </p>
+            <h2>7. Sécurité</h2>
+            <p>
+                Des mesures techniques raisonnables sont mises en place pour protéger les données des utilisateurs
+                (chiffrement des mots de passe, contrôle d'accès aux données via des règles de sécurité au niveau de la
+                base de données). Aucun système n'étant infaillible, l'éditeur ne peut garantir une sécurité absolue.
+            </p>
 
-        <h2>8. Cookies et stockage local</h2>
-        <p>
-            Le Site utilise le stockage local du navigateur (localStorage) à des fins strictement techniques : suivi
-            du quota d'exercices gratuits pour les visiteurs non connectés, et mise en cache temporaire de données de
-            marché publiques pour limiter les appels aux services tiers. Ce stockage ne collecte aucune donnée
-            personnelle identifiante et n'est pas partagé avec des tiers à des fins publicitaires.
-        </p>
+            <h2>8. Cookies et stockage local</h2>
+            <p>
+                Le Site utilise le stockage local du navigateur (localStorage) à des fins strictement techniques : suivi
+                du quota d'exercices gratuits pour les visiteurs non connectés, et mise en cache temporaire de données de
+                marché publiques pour limiter les appels aux services tiers. Ce stockage ne collecte aucune donnée
+                personnelle identifiante et n'est pas partagé avec des tiers à des fins publicitaires.
+            </p>
 
-        <h2>9. Modification de la politique de confidentialité</h2>
-        <p>
-            Cette politique peut être mise à jour. La version en vigueur est celle publiée sur le Site à la date de
-            consultation.
-        </p>
+            <h2>9. Modification de la politique de confidentialité</h2>
+            <p>
+                Cette politique peut être mise à jour. La version en vigueur est celle publiée sur le Site à la date de
+                consultation.
+            </p>
+        </div>
+
+        <div class="lang-en">
+            <h2>1. Data Controller</h2>
+            <p>
+                <span class="legal-placeholder">[FULL NAME]</span>, sole proprietor, publisher of the Trading Training
+                website, is responsible for the processing of personal data described below.<br>
+                Contact: <span class="legal-placeholder">[CONTACT EMAIL]</span>
+            </p>
+
+            <h2>2. Data Collected</h2>
+            <p>When creating an account, the following data is collected:</p>
+            <ul>
+                <li>Email address</li>
+                <li>Name (optional, freely entered at sign-up)</li>
+                <li>Password (stored encrypted, never in plain text)</li>
+            </ul>
+            <p>As part of using the Site, the following is also recorded:</p>
+            <ul>
+                <li>The date and time of each exercise completed (to compute the daily quota)</li>
+                <li>Technical preferences stored locally in the browser (localStorage), notably to track the quota for
+                    non-logged-in visitors and to cache market data</li>
+            </ul>
+
+            <h2>3. Purposes of Processing</h2>
+            <ul>
+                <li>User account management and authentication</li>
+                <li>Enforcement of free-usage quotas</li>
+                <li>Service improvement</li>
+                <li>Possible communication regarding the launch of the subscription offer (if requested by the user)</li>
+            </ul>
+
+            <h2>4. Hosting and Subprocessors</h2>
+            <p>Personal data is hosted and processed by the following providers:</p>
+            <ul>
+                <li><strong>Supabase</strong> (authentication and database) — see Supabase's privacy policy</li>
+            </ul>
+            <p>
+                In addition, some pages of the Site make technical calls (not tied to a user account) to third-party
+                services to display public market data:
+            </p>
+            <ul>
+                <li><strong>Alpha Vantage</strong> (financial quotes)</li>
+                <li><strong>CoinGecko</strong> (crypto quotes)</li>
+            </ul>
+            <p>These services do not receive any personal data identifying the user as part of these calls.</p>
+
+            <h2>5. Data Retention Period</h2>
+            <p>
+                Account data is retained as long as the account is active. If the account is deleted, personal data is
+                removed within a reasonable timeframe, unless a longer legal retention obligation applies.
+            </p>
+
+            <h2>6. User Rights (GDPR)</h2>
+            <p>In accordance with the General Data Protection Regulation (GDPR), the user has the following rights:</p>
+            <ul>
+                <li>Right of access to their data</li>
+                <li>Right to rectification</li>
+                <li>Right to erasure ("right to be forgotten")</li>
+                <li>Right to restriction of processing</li>
+                <li>Right to data portability</li>
+                <li>Right to object</li>
+            </ul>
+            <p>
+                These rights may be exercised by writing to: <span class="legal-placeholder">[CONTACT EMAIL]</span>.
+                The user also has the right to lodge a complaint with the French data protection authority, the CNIL
+                (www.cnil.fr), or with their local data protection authority.
+            </p>
+
+            <h2>7. Security</h2>
+            <p>
+                Reasonable technical measures are in place to protect user data (password encryption, access control via
+                database-level security rules). As no system is infallible, the publisher cannot guarantee absolute
+                security.
+            </p>
+
+            <h2>8. Cookies and Local Storage</h2>
+            <p>
+                The Site uses the browser's local storage (localStorage) for strictly technical purposes: tracking the
+                free exercise quota for non-logged-in visitors, and temporarily caching public market data to limit calls
+                to third-party services. This storage does not collect any personally identifying data and is not shared
+                with third parties for advertising purposes.
+            </p>
+
+            <h2>9. Changes to This Privacy Policy</h2>
+            <p>
+                This policy may be updated. The version in effect is the one published on the Site at the time of
+                consultation.
+            </p>
+        </div>
     </section>
 
     <footer class="site-footer">
-        <span>Trading Training</span>
+        <span data-i18n="home.footerTag">Trading Training</span>
     </footer>
 
     <script src="../app.js"></script>
     <script src="../auth-state.js"></script>
+    <script src="../lang-toggle.js"></script>
 </body>
 </html>

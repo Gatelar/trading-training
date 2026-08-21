@@ -22,13 +22,18 @@ const priceEl = document.getElementById('planPrice');
 const btnMonthly = document.getElementById('toggleMonthly');
 const btnAnnual = document.getElementById('toggleAnnual');
 
+function tt(key) {
+    const lang = typeof ttGetLang === 'function' ? ttGetLang() : 'fr';
+    return (typeof I18N_DICT !== 'undefined' && I18N_DICT[key]) ? (I18N_DICT[key][lang] || I18N_DICT[key].fr) : key;
+}
+
 function setPlan(plan) {
     selectedPlan = plan;
     btnMonthly.classList.toggle('active', plan === 'monthly');
     btnAnnual.classList.toggle('active', plan === 'annual');
-    priceEl.innerHTML = plan === 'monthly'
-        ? '9,99 €<span>/mois</span>'
-        : '99 €<span>/an</span>';
+    const unit = plan === 'monthly' ? tt('plan.perMonth') : tt('plan.perYear');
+    const amount = plan === 'monthly' ? '9,99 €' : '99 €';
+    priceEl.innerHTML = `${amount}<span>${unit}</span>`;
 }
 
 btnMonthly.addEventListener('click', () => setPlan('monthly'));
@@ -48,7 +53,7 @@ subscribeBtn.addEventListener('click', async () => {
     }
 
     subscribeBtn.disabled = true;
-    subscribeBtn.textContent = 'Redirection...';
+    subscribeBtn.textContent = tt('plan.redirecting');
 
     try {
         const res = await fetch(`${SUPABASE_FUNCTIONS_URL}/create-checkout-session`, {
@@ -67,13 +72,13 @@ subscribeBtn.addEventListener('click', async () => {
         const json = await res.json();
 
         if (!res.ok || json.error) {
-            throw new Error(json.error || 'Erreur lors de la création de la session de paiement.');
+            throw new Error(json.error || tt('plan.genericError'));
         }
 
         window.location.href = json.url;
     } catch (err) {
         errorEl.textContent = err.message;
         subscribeBtn.disabled = false;
-        subscribeBtn.textContent = "S'abonner (mode test)";
+        subscribeBtn.textContent = tt('plan.subscribeButton');
     }
 });

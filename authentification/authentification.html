@@ -8,36 +8,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../supabase-client.js"></script>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 
-    <a href="../index.html" class="back-home">← Retour à l'accueil</a>
+    <a href="../index.html" class="back-home" data-i18n="nav.backHome">← Retour à l'accueil</a>
+    <div class="auth-lang-toggle" id="langToggle"></div>
 
     <div class="auth-card" id="authCard">
 
         <!-- ============ FORMULAIRE CONNEXION ============ -->
         <div class="form-container sign-in-container">
             <form id="signInForm">
-                <span class="eyebrow">Trading Training</span>
-                <h2>Connexion</h2>
-                <p class="form-subtitle">Reprends ton entraînement là où tu l'as laissé.</p>
+                <span class="eyebrow" data-i18n="auth.eyebrow">Trading Training</span>
+                <h2 data-i18n="auth.signInTitle">Connexion</h2>
+                <p class="form-subtitle" data-i18n="auth.signInSubtitle">Reprends ton entraînement là où tu l'as laissé.</p>
 
                 <div class="input-group">
-                    <input type="email" id="signInEmail" placeholder="Email" required>
+                    <input type="email" id="signInEmail" placeholder="Email" data-i18n="auth.emailPlaceholder" data-i18n-placeholder required>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="signInPassword" placeholder="Mot de passe" required>
+                    <input type="password" id="signInPassword" placeholder="Mot de passe" data-i18n="auth.passwordPlaceholder" data-i18n-placeholder required>
                 </div>
 
-                <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+                <a href="#" class="forgot-link" data-i18n="auth.forgotPassword">Mot de passe oublié ?</a>
 
                 <p class="form-message" id="signInMessage"></p>
 
-                <button type="submit" class="btn-submit">Se connecter</button>
+                <button type="submit" class="btn-submit" data-i18n="auth.signInButton">Se connecter</button>
 
                 <button type="button" class="btn-google">
                     <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
-                    Continuer avec Google
+                    <span data-i18n="auth.googleButton">Continuer avec Google</span>
                 </button>
             </form>
         </div>
@@ -45,27 +47,27 @@
         <!-- ============ FORMULAIRE INSCRIPTION ============ -->
         <div class="form-container sign-up-container">
             <form id="signUpForm">
-                <span class="eyebrow">Trading Training</span>
-                <h2>Créer un compte</h2>
-                <p class="form-subtitle">Rejoins l'entraînement et progresse niveau par niveau.</p>
+                <span class="eyebrow" data-i18n="auth.eyebrow">Trading Training</span>
+                <h2 data-i18n="auth.signUpTitle">Créer un compte</h2>
+                <p class="form-subtitle" data-i18n="auth.signUpSubtitle">Rejoins l'entraînement et progresse niveau par niveau.</p>
 
                 <div class="input-group">
-                    <input type="text" id="signUpName" placeholder="Nom" required>
+                    <input type="text" id="signUpName" placeholder="Nom" data-i18n="auth.namePlaceholder" data-i18n-placeholder required>
                 </div>
                 <div class="input-group">
-                    <input type="email" id="signUpEmail" placeholder="Email" required>
+                    <input type="email" id="signUpEmail" placeholder="Email" data-i18n="auth.emailPlaceholder" data-i18n-placeholder required>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="signUpPassword" placeholder="Mot de passe (8 caractères min.)" minlength="8" required>
+                    <input type="password" id="signUpPassword" placeholder="Mot de passe (8 caractères min.)" data-i18n="auth.passwordMinPlaceholder" data-i18n-placeholder minlength="8" required>
                 </div>
 
                 <p class="form-message" id="signUpMessage"></p>
 
-                <button type="submit" class="btn-submit">S'inscrire</button>
+                <button type="submit" class="btn-submit" data-i18n="auth.signUpButton">S'inscrire</button>
 
                 <button type="button" class="btn-google">
                     <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
-                    Continuer avec Google
+                    <span data-i18n="auth.googleButton">Continuer avec Google</span>
                 </button>
             </form>
         </div>
@@ -75,15 +77,15 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
                     <span class="level-code">TT.ACCESS</span>
-                    <h2>Déjà un compte ?</h2>
-                    <p>Connecte-toi pour reprendre ton entraînement là où tu l'avais laissé.</p>
-                    <button class="btn-ghost" id="toggleToSignIn">Se connecter</button>
+                    <h2 data-i18n="auth.overlayLoginTitle">Déjà un compte ?</h2>
+                    <p data-i18n="auth.overlayLoginBody">Connecte-toi pour reprendre ton entraînement là où tu l'avais laissé.</p>
+                    <button class="btn-ghost" id="toggleToSignIn" data-i18n="auth.signInButton">Se connecter</button>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <span class="level-code">TT.ACCESS</span>
-                    <h2>Nouveau trader ?</h2>
-                    <p>Crée ton compte et commence à t'entraîner sur des scénarios de marché réalistes.</p>
-                    <button class="btn-ghost" id="toggleToSignUp">S'inscrire</button>
+                    <h2 data-i18n="auth.overlaySignupTitle">Nouveau trader ?</h2>
+                    <p data-i18n="auth.overlaySignupBody">Crée ton compte et commence à t'entraîner sur des scénarios de marché réalistes.</p>
+                    <button class="btn-ghost" id="toggleToSignUp" data-i18n="auth.signUpButton">S'inscrire</button>
                 </div>
             </div>
         </div>
@@ -91,5 +93,6 @@
     </div>
 
     <script src="authentifiaction.js"></script>
+    <script src="../lang-toggle.js"></script>
 </body>
 </html>

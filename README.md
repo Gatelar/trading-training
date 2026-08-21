@@ -88,6 +88,16 @@ trading-training/
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
 
+## Site bilingue (FR/EN)
+
+Le site entier (pages statiques + simulateur d'exercice) est traduit en français et anglais, avec un sélecteur en pastille glissante dans la top-bar.
+
+- `i18n.js` — dictionnaire central + fonctions utilitaires, chargé sur toutes les pages statiques. Chaque élément traduisible porte un attribut `data-i18n="clé"` (utiliser `data-i18n-html` pour du HTML, `data-i18n-placeholder` pour un placeholder de champ).
+- `lang-toggle.js` — composant du sélecteur FR/EN, attend un élément `#langToggle` dans la page.
+- Les longues pages légales utilisent un système de blocs (`class="lang-fr"` / `class="lang-en"`, basculés via `html[lang]` en CSS) plutôt que des clés unitaires.
+- Le simulateur d'exercice (React) a son propre dictionnaire `T` embarqué dans `trading-trainer-prototype.jsx`, avec un état `lang` propagé à tous les composants. Il partage la même clé `localStorage` (`tt_lang`) que le reste du site pour rester synchronisé.
+- La base d'événements BCE (`data/macro-events-eurusd.js`) a des champs `title_en`/`detail_en` en plus des champs français.
+
 ## Recompiler trading-trainer.html après une modification du .jsx
 
 Le fichier jouable est un bundle React autonome. Pour le régénérer après avoir modifié `trading-trainer-prototype.jsx` :

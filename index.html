@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
+    <script src="i18n.js"></script>
 </head>
 <body>
 
@@ -15,19 +16,20 @@
             <img src="logott.png" alt="Logo Trading Training" class="logo">
         </a>
         <div class="top-bar-actions" id="topBarActions">
-            <a href="authentification/authentification.html" class="btn-login">Se connecter</a>
+            <div id="langToggle"></div>
+            <a href="authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
         </div>
     </header>
     <section class="hero">
         <!-- Zone image sombre à remplir (Banana) : images/hero-bg.jpg -->
         <div class="hero-bg"></div>
         <div class="hero-content reveal">
-            <span class="eyebrow">Entraînement au trading</span>
-            <h1>Le marché ne t'attendra pas.<br>Prépare-toi avant d'y entrer.</h1>
-            <p class="hero-subtitle">Des scénarios de marché réalistes, générés pour ton niveau. Lis un graphique comme un pro, sans risquer un centime.</p>
+            <span class="eyebrow" data-i18n="home.eyebrow">Entraînement au trading</span>
+            <h1 data-i18n="home.heroTitle" data-i18n-html>Le marché ne t'attendra pas.<br>Prépare-toi avant d'y entrer.</h1>
+            <p class="hero-subtitle" data-i18n="home.heroSubtitle">Des scénarios de marché réalistes, générés pour ton niveau. Lis un graphique comme un pro, sans risquer un centime.</p>
             <div class="hero-actions">
-                <a href="trading-trainer.html" class="btn-primary">Commencer l'entraînement</a>
-                <a href="#niveaux" class="btn-secondary">Voir les niveaux</a>
+                <a href="trading-trainer.html" class="btn-primary" data-i18n="home.startTraining">Commencer l'entraînement</a>
+                <a href="#niveaux" class="btn-secondary" data-i18n="home.seeLevels">Voir les niveaux</a>
             </div>
         </div>
     </section>
@@ -51,17 +53,17 @@
     <!-- ============ CONCEPT ============ -->
     <section class="concept">
         <div class="reveal">
-            <span class="eyebrow">Le concept</span>
-            <h2>Un graphique. Une décision. Un résultat.</h2>
-            <p>Chaque exercice te place devant une période réelle du marché, choisie selon ton niveau. Analyse, décide, et découvre si tu avais raison.</p>
+            <span class="eyebrow" data-i18n="home.conceptEyebrow">Le concept</span>
+            <h2 data-i18n="home.conceptTitle">Un graphique. Une décision. Un résultat.</h2>
+            <p data-i18n="home.conceptBody">Chaque exercice te place devant une période réelle du marché, choisie selon ton niveau. Analyse, décide, et découvre si tu avais raison.</p>
         </div>
     </section>
 
     <!-- ============ NIVEAUX ============ -->
     <section class="niveaux" id="niveaux">
         <div class="section-heading reveal">
-            <span class="eyebrow">3 niveaux</span>
-            <h2>Choisis ton terrain d'entraînement</h2>
+            <span class="eyebrow" data-i18n="home.levelsEyebrow">3 niveaux</span>
+            <h2 data-i18n="home.levelsTitle">Choisis ton terrain d'entraînement</h2>
         </div>
 
         <div class="level-grid">
@@ -69,24 +71,24 @@
                 <!-- Zone image sombre à remplir (Banana) : images/level-debutant.jpg -->
                 <div class="level-img level-img--01"></div>
                 <span class="level-code">LVL.01</span>
-                <h3>Débutant</h3>
-                <p>Tendances nettes, peu de bruit. Idéal pour apprendre à lire un graphique.</p>
+                <h3 data-i18n="home.level1Title">Débutant</h3>
+                <p data-i18n="home.level1Desc">Tendances nettes, peu de bruit. Idéal pour apprendre à lire un graphique.</p>
             </a>
 
             <a href="niveaux/intermediaire.html" class="level-card reveal">
                 <!-- Zone image sombre à remplir (Banana) : images/level-intermediaire.jpg -->
                 <div class="level-img level-img--02"></div>
                 <span class="level-code">LVL.02</span>
-                <h3>Intermédiaire</h3>
-                <p>Retournements et pullbacks. La tendance change en cours de route.</p>
+                <h3 data-i18n="home.level2Title">Intermédiaire</h3>
+                <p data-i18n="home.level2Desc">Retournements et pullbacks. La tendance change en cours de route.</p>
             </a>
 
             <a href="niveaux/experimente.html" class="level-card reveal">
                 <!-- Zone image sombre à remplir (Banana) : images/level-experimente.jpg -->
                 <div class="level-img level-img--03"></div>
                 <span class="level-code">LVL.03</span>
-                <h3>Expérimenté</h3>
-                <p>Range, faux signaux, forte volatilité. Peu de structure évidente.</p>
+                <h3 data-i18n="home.level3Title">Expérimenté</h3>
+                <p data-i18n="home.level3Desc">Range, faux signaux, forte volatilité. Peu de structure évidente.</p>
             </a>
         </div>
     </section>
@@ -94,21 +96,22 @@
     <!-- ============ CTA FINAL ============ -->
     <section class="cta-final">
         <div class="reveal">
-            <h2>Prêt à tester ton œil ?</h2>
-            <a href="trading-trainer.html" class="btn-primary btn-large">Lancer un exercice</a>
+            <h2 data-i18n="home.ctaTitle">Prêt à tester ton œil ?</h2>
+            <a href="trading-trainer.html" class="btn-primary btn-large" data-i18n="home.ctaButton">Lancer un exercice</a>
         </div>
     </section>
 
     <footer class="site-footer">
-        <span>Trading Training</span>
+        <span data-i18n="home.footerTag">Trading Training</span>
         <nav class="footer-legal">
-            <a href="legal/mentions-legales.html">Mentions légales</a>
-            <a href="legal/cgu.html">CGU</a>
-            <a href="legal/confidentialite.html">Confidentialité</a>
+            <a href="legal/mentions-legales.html" data-i18n="footer.legal">Mentions légales</a>
+            <a href="legal/cgu.html" data-i18n="footer.cgu">CGU</a>
+            <a href="legal/confidentialite.html" data-i18n="footer.privacy">Confidentialité</a>
         </nav>
     </footer>
 
     <script src="app.js"></script>
     <script src="auth-state.js"></script>
+    <script src="lang-toggle.js"></script>
 </body>
 </html>

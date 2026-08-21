@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="abonnement.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../supabase-client.js"></script>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 
@@ -16,54 +17,56 @@
             <img src="../logott.png" alt="Logo Trading Training" class="logo">
         </a>
         <div class="top-bar-actions" id="topBarActions" data-prefix="../">
-            <a href="../authentification/authentification.html" class="btn-login">Se connecter</a>
+            <div id="langToggle"></div>
+            <a href="../authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
         </div>
     </header>
 
     <section class="plan-hero reveal">
-        <span class="eyebrow">Abonnement</span>
-        <h1>Passe à l'entraînement illimité</h1>
-        <p class="plan-subtitle">Pour l'instant, seule la partie <strong>entraînement</strong> est disponible sur Trading Training — la formation complète arrive plus tard.</p>
+        <span class="eyebrow" data-i18n="plan.eyebrow">Abonnement</span>
+        <h1 data-i18n="plan.title">Passe à l'entraînement illimité</h1>
+        <p class="plan-subtitle" data-i18n="plan.subtitle" data-i18n-html>Pour l'instant, seule la partie <strong>entraînement</strong> est disponible sur Trading Training — la formation complète arrive plus tard.</p>
     </section>
 
     <section class="plan-grid">
         <article class="plan-card reveal">
-            <span class="plan-badge">Gratuit</span>
-            <h2>Découverte</h2>
-            <p class="plan-price">0 €<span>/mois</span></p>
+            <span class="plan-badge" data-i18n="plan.freeBadge">Gratuit</span>
+            <h2 data-i18n="plan.freeTitle">Découverte</h2>
+            <p class="plan-price">0 €<span data-i18n="plan.perMonth">/mois</span></p>
             <ul class="plan-features">
-                <li><span class="check">✓</span> 3 exercices par jour</li>
-                <li><span class="check">✓</span> Accès aux 3 niveaux</li>
-                <li class="is-disabled"><span class="check">–</span> Formation complète (à venir)</li>
+                <li><span class="check">✓</span> <span data-i18n="plan.freeFeature1">3 exercices par jour</span></li>
+                <li><span class="check">✓</span> <span data-i18n="plan.featureLevels">Accès aux 3 niveaux</span></li>
+                <li class="is-disabled"><span class="check">–</span> <span data-i18n="plan.featureFormation">Formation complète (à venir)</span></li>
             </ul>
-            <span class="plan-current" id="currentPlanTag">Ton offre actuelle</span>
+            <span class="plan-current" id="currentPlanTag" data-i18n="plan.currentPlan">Ton offre actuelle</span>
         </article>
 
         <article class="plan-card plan-card--highlight reveal">
-            <span class="plan-badge">Illimité</span>
-            <h2>Trader actif</h2>
+            <span class="plan-badge" data-i18n="plan.proBadge">Illimité</span>
+            <h2 data-i18n="plan.proTitle">Trader actif</h2>
 
             <div class="plan-toggle">
-                <button class="plan-toggle-btn active" data-plan="monthly" id="toggleMonthly">Mensuel</button>
-                <button class="plan-toggle-btn" data-plan="annual" id="toggleAnnual">Annuel <span class="plan-toggle-badge">-17%</span></button>
+                <button class="plan-toggle-btn active" data-plan="monthly" id="toggleMonthly" data-i18n="plan.toggleMonthly">Mensuel</button>
+                <button class="plan-toggle-btn" data-plan="annual" id="toggleAnnual"><span data-i18n="plan.toggleAnnual">Annuel</span> <span class="plan-toggle-badge">-17%</span></button>
             </div>
 
-            <p class="plan-price" id="planPrice">9,99 €<span>/mois</span></p>
-            <p class="plan-note">Tarif de test (mode Stripe Test) — le prix définitif n'est pas encore fixé.</p>
+            <p class="plan-price" id="planPrice">9,99 €<span data-i18n="plan.perMonth">/mois</span></p>
+            <p class="plan-note" data-i18n="plan.testNote">Tarif de test (mode Stripe Test) — le prix définitif n'est pas encore fixé.</p>
             <ul class="plan-features">
-                <li><span class="check">✓</span> Exercices illimités</li>
-                <li><span class="check">✓</span> Accès aux 3 niveaux</li>
-                <li class="is-disabled"><span class="check">–</span> Formation complète (à venir)</li>
+                <li><span class="check">✓</span> <span data-i18n="plan.featureUnlimited">Exercices illimités</span></li>
+                <li><span class="check">✓</span> <span data-i18n="plan.featureLevels">Accès aux 3 niveaux</span></li>
+                <li class="is-disabled"><span class="check">–</span> <span data-i18n="plan.featureFormation">Formation complète (à venir)</span></li>
             </ul>
-            <button class="btn-primary plan-cta" id="subscribeBtn">S'abonner (mode test)</button>
+            <button class="btn-primary plan-cta" id="subscribeBtn" data-i18n="plan.subscribeButton">S'abonner (mode test)</button>
             <p class="plan-error" id="planError"></p>
         </article>
     </section>
 
-    <p class="plan-footnote reveal">Seul l'entraînement est proposé actuellement. La formation (cours, coaching) n'est pas encore disponible et sera ajoutée plus tard. Le paiement est actuellement en mode test Stripe — aucune carte réelle n'est débitée.</p>
+    <p class="plan-footnote reveal" data-i18n="plan.footnote">Seul l'entraînement est proposé actuellement. La formation (cours, coaching) n'est pas encore disponible et sera ajoutée plus tard. Le paiement est actuellement en mode test Stripe — aucune carte réelle n'est débitée.</p>
 
     <script src="../app.js"></script>
     <script src="abonnement.js"></script>
     <script src="../auth-state.js"></script>
+    <script src="../lang-toggle.js"></script>
 </body>
 </html>

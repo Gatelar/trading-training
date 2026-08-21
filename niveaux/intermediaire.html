@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="niveaux.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../supabase-client.js"></script>
+    <script src="../i18n.js"></script>
 </head>
 <body>
 
@@ -16,25 +17,27 @@
             <img src="../logott.png" alt="Logo Trading Training" class="logo">
         </a>
         <div class="top-bar-actions" id="topBarActions" data-prefix="../">
-            <a href="../authentification/authentification.html" class="btn-login">Se connecter</a>
+            <div id="langToggle"></div>
+            <a href="../authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
         </div>
     </header>
 
     <section class="level-detail reveal">
-        <a href="../index.html#niveaux" class="back-link">← Retour aux niveaux</a>
+        <a href="../index.html#niveaux" class="back-link" data-i18n="level.backToLevels">← Retour aux niveaux</a>
         <span class="eyebrow">LVL.02</span>
-        <h1>Intermédiaire</h1>
+        <h1 data-i18n="home.level2Title">Intermédiaire</h1>
 
         <!-- Contenu à venir -->
 
-        <a href="../trading-trainer.html" class="btn-primary">Commencer l'entraînement</a>
+        <a href="../trading-trainer.html" class="btn-primary" data-i18n="home.startTraining">Commencer l'entraînement</a>
     </section>
 
     <footer class="site-footer">
-        <span>Trading Training</span>
+        <span data-i18n="home.footerTag">Trading Training</span>
     </footer>
 
     <script src="../app.js"></script>
     <script src="../auth-state.js"></script>
+    <script src="../lang-toggle.js"></script>
 </body>
 </html>

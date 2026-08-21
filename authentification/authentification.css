@@ -357,3 +357,9 @@ h2 {
         display: none;
     }
 }
+
+.auth-lang-toggle {
+    position: absolute;
+    top: 26px;
+    right: 30px;
+}

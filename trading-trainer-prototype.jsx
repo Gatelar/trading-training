@@ -28,6 +28,95 @@ const C_TEXT = "#f4f6f2";
 const C_TEXT_MUTED = "#9aa39a";
 const C_TEXT_DIM = "#5c655c";
 const C_BORDER = "#1c211c";
+
+// ============ TRADUCTION (FR/EN) ============
+// Partage la même clé localStorage que le reste du site (i18n.js) pour rester synchronisé.
+const TT_LANG_KEY = "tt_lang";
+
+function getStoredLang() {
+  try {
+    return localStorage.getItem(TT_LANG_KEY) || "fr";
+  } catch (e) {
+    return "fr";
+  }
+}
+
+function setStoredLang(lang) {
+  try {
+    localStorage.setItem(TT_LANG_KEY, lang);
+  } catch (e) {}
+}
+
+const T = {
+  prototypeLabel: { fr: "TRADE TRAINER — PROTOTYPE", en: "TRADE TRAINER — PROTOTYPE" },
+  backHome: { fr: "← Accueil", en: "← Home" },
+  step1: { fr: "ÉTAPE 1 / 2", en: "STEP 1 / 2" },
+  chooseLevelTitle: { fr: "Choisis ton niveau", en: "Choose your level" },
+  chooseLevelSubtitle: { fr: "La difficulté des configurations s'ajuste en fonction.", en: "The difficulty of the setups adjusts accordingly." },
+  step2: { fr: "ÉTAPE 2 / 2 ·", en: "STEP 2 / 2 ·" },
+  changeLevelLink: { fr: "Changer de niveau", en: "Change level" },
+  chooseMarketTitle: { fr: "Sur quel marché ?", en: "Which market?" },
+  chooseMarketSubtitle: { fr: "Les exercices porteront sur l'actif choisi.", en: "Exercises will be based on the chosen asset." },
+  realDataBadge: { fr: "données réelles", en: "real data" },
+  session: { fr: "SESSION", en: "SESSION" },
+  newExercise: { fr: "Nouvel exercice", en: "New exercise" },
+  loadingReal: { fr: "Chargement des données réelles de", en: "Loading real data for" },
+  contextTitle: { fr: "Contexte marché", en: "Market context" },
+  example: { fr: "exemple", en: "example" },
+  keyIndicators: { fr: "INDICATEURS CLÉS", en: "KEY INDICATORS" },
+  bceRateAt: { fr: "Taux BCE (au", en: "ECB rate (as of" },
+  trendUp: { fr: "hausse", en: "up" },
+  trendDown: { fr: "baisse", en: "down" },
+  trendStable: { fr: "stable", en: "stable" },
+  highLowPeriod: { fr: "Plus haut / plus bas période", en: "Period high / low" },
+  totalRange: { fr: "Amplitude totale", en: "Total range" },
+  avgDailyMove: { fr: "Mouvement quotidien moyen", en: "Average daily move" },
+  upDownCandles: { fr: "Bougies hausse / baisse", en: "Up / down candles" },
+  recentVolatility: { fr: "Volatilité récente", en: "Recent volatility" },
+  perDay: { fr: "/ jour", en: "/ day" },
+  trendYourTurn: { fr: "Selon toi, la tendance va plutôt...", en: "In your view, the trend is more likely to..." },
+  goUp: { fr: "Monter", en: "Go up" },
+  goDown: { fr: "Descendre", en: "Go down" },
+  openPosition: { fr: "Tu ouvres une position...", en: "You open a position..." },
+  buy: { fr: "Acheter", en: "Buy" },
+  sell: { fr: "Vendre", en: "Sell" },
+  yourAnalysis: { fr: "Ton analyse", en: "Your analysis" },
+  optional: { fr: "(facultatif)", en: "(optional)" },
+  analysisPlaceholder: { fr: "Structure, niveaux clés, ce que tu observes...", en: "Structure, key levels, what you observe..." },
+  seeMore: { fr: "Voir la suite", en: "See what happened" },
+  goodCall: { fr: "Bien vu", en: "Good call" },
+  missed: { fr: "Raté", en: "Missed" },
+  marketDid: { fr: "le marché a fait", en: "the market did" },
+  longPosition: { fr: "longue", en: "long" },
+  shortPosition: { fr: "courte", en: "short" },
+  positionResult: { fr: "Position", en: "Position" },
+  result: { fr: "résultat", en: "result" },
+  compareAnalysis: { fr: "compare avec ton analyse.", en: "compare with your analysis." },
+  nextExercise: { fr: "Exercice suivant", en: "Next exercise" },
+  drawInstructions: { fr: "Clique et fais glisser sur le graphique pour tracer", en: "Click and drag on the chart to draw" },
+  chartAriaLabel: { fr: "Graphique en chandeliers", en: "Candlestick chart" },
+  lineTool: { fr: "Ligne", en: "Line" },
+  fibTool: { fr: "Fibonacci", en: "Fibonacci" },
+  clear: { fr: "Effacer", en: "Clear" },
+  now: { fr: "MAINTENANT", en: "NOW" },
+  debriefLabel: { fr: "DEBRIEF", en: "DEBRIEF" },
+  smaCompareTitle: { fr: "Comparaison à une règle systématique (SMA", en: "Comparison to a systematic rule (SMA" },
+  ruleWouldSuggest: { fr: "La règle aurait suggéré :", en: "The rule would have suggested:" },
+  realResult: { fr: "Résultat réel :", en: "Actual result:" },
+  ruleAligned: { fr: "règle alignée", en: "rule aligned" },
+  ruleDisagreed: { fr: "règle en désaccord", en: "rule disagreed" },
+  biasQuestion: { fr: "Est-ce que l'un de ces biais s'est glissé dans ta décision ?", en: "Did any of these biases creep into your decision?" },
+  optionalPlaceholder: { fr: "Facultatif...", en: "Optional..." },
+  loadErrorPrefix: { fr: "Impossible de charger les données réelles de", en: "Unable to load real data for" },
+  loadErrorSuffix: { fr: "pour le moment.", en: "at the moment." },
+  exampleDisclaimer: { fr: "Contexte illustratif pour ce prototype — données et dates simulées en attendant leur intégration réelle.", en: "Illustrative context for this prototype — simulated data and dates until real integration is complete." },
+};
+
+function t(key, lang) {
+  const entry = T[key];
+  if (!entry) return key;
+  return entry[lang] || entry.fr;
+}
 const C_UP = "#10b981";
 const C_DOWN = "#ef4444";
 const C_FIB = "#a78bfa";
@@ -195,105 +284,141 @@ function getMacroEventsInWindow(windowCandles, visibleCount) {
   return MACRO_EVENTS_EURUSD.filter((ev) => ev.date >= startDate && ev.date <= endDate);
 }
 
-function formatAxisDate(dateStr) {
+function formatAxisDate(dateStr, lang) {
   if (!dateStr) return "";
   const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "short" });
+  return d.toLocaleDateString(lang === "en" ? "en-US" : "fr-FR", { day: "2-digit", month: "short" });
 }
 
 const LEVELS = [
   {
     id: "debutant",
     code: "LVL.01",
-    label: "Débutant",
-    tagline: "Tendances nettes, peu de bruit",
-    detail: "Une direction claire, idéale pour apprendre à lire un graphique.",
+    label: { fr: "Débutant", en: "Beginner" },
+    tagline: { fr: "Tendances nettes, peu de bruit", en: "Clean trends, little noise" },
+    detail: { fr: "Une direction claire, idéale pour apprendre à lire un graphique.", en: "A clear direction, ideal for learning to read a chart." },
   },
   {
     id: "intermediaire",
     code: "LVL.02",
-    label: "Intermédiaire",
-    tagline: "Retournements et pullbacks",
-    detail: "La tendance change en cours de route, il faut ajuster sa lecture.",
+    label: { fr: "Intermédiaire", en: "Intermediate" },
+    tagline: { fr: "Retournements et pullbacks", en: "Reversals and pullbacks" },
+    detail: { fr: "La tendance change en cours de route, il faut ajuster sa lecture.", en: "The trend shifts along the way, forcing you to adjust." },
   },
   {
     id: "experimente",
     code: "LVL.03",
-    label: "Expérimenté",
-    tagline: "Range, faux signaux, forte volatilité",
-    detail: "Peu de structure évidente, avec de fausses cassures.",
+    label: { fr: "Expérimenté", en: "Experienced" },
+    tagline: { fr: "Range, faux signaux, forte volatilité", en: "Ranges, false signals, high volatility" },
+    detail: { fr: "Peu de structure évidente, avec de fausses cassures.", en: "Little obvious structure, with fake breakouts." },
   },
 ];
 
 const DOMAINS = [
   {
     id: "or",
-    label: "Or et métaux précieux",
+    label: { fr: "Or et métaux précieux", en: "Gold & precious metals" },
     code: "XAU",
     base: 2380,
     Icon: Gem,
-    format: (v) => `$${v.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    format: (v) => `$${v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
     real: true,
     timeframe: "1D",
     fetchSeries: () => fetchAlphaVantageStockDaily("GLD", "tt_gld_daily_cache_v1"),
-    realNote: "Cours réel de l'ETF SPDR Gold Shares (GLD), un proxy coté qui suit le prix de l'or physique (Alpha Vantage) — pas le prix spot exact de l'once.",
+    realNote: {
+      fr: "Cours réel de l'ETF SPDR Gold Shares (GLD), un proxy coté qui suit le prix de l'or physique (Alpha Vantage) — pas le prix spot exact de l'once.",
+      en: "Real price of the SPDR Gold Shares ETF (GLD), a listed proxy tracking physical gold (Alpha Vantage) — not the exact spot price per ounce.",
+    },
   },
   {
     id: "forex",
-    label: "Forex — EUR/USD",
+    label: { fr: "Forex — EUR/USD", en: "Forex — EUR/USD" },
     code: "FX",
     base: 1.085,
     Icon: ArrowLeftRight,
-    format: (v) => v.toLocaleString("fr-FR", { minimumFractionDigits: 4, maximumFractionDigits: 4 }),
+    format: (v) => v.toLocaleString("en-US", { minimumFractionDigits: 4, maximumFractionDigits: 4 }),
     real: true,
     timeframe: "1D",
     fetchSeries: () => fetchAlphaVantageFxDaily("tt_eurusd_daily_cache_v1"),
     constrainToMacroRange: true,
     hasRealNews: true,
-    realNote: "Cotations EUR/USD réelles (Alpha Vantage) et décisions de politique monétaire BCE réelles et datées.",
+    realNote: {
+      fr: "Cotations EUR/USD réelles (Alpha Vantage) et décisions de politique monétaire BCE réelles et datées.",
+      en: "Real EUR/USD quotes (Alpha Vantage) and real, dated ECB monetary policy decisions.",
+    },
   },
   {
     id: "actions",
-    label: "Actions et indices",
+    label: { fr: "Actions et indices", en: "Stocks & indices" },
     code: "IDX",
     base: 6200,
     Icon: BarChart3,
-    format: (v) => `$${v.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    format: (v) => `$${v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
     real: true,
     timeframe: "1D",
     fetchSeries: () => fetchAlphaVantageStockDaily("SPY", "tt_spy_daily_cache_v1"),
-    realNote: "Cours réel du S&P 500 via l'ETF SPY (Alpha Vantage).",
+    realNote: {
+      fr: "Cours réel du S&P 500 via l'ETF SPY (Alpha Vantage).",
+      en: "Real S&P 500 price via the SPY ETF (Alpha Vantage).",
+    },
   },
   {
     id: "crypto",
-    label: "Crypto — BTC",
+    label: { fr: "Crypto — BTC", en: "Crypto — BTC" },
     code: "BTC",
     base: 68000,
     Icon: Coins,
-    format: (v) => `$${v.toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+    format: (v) => `$${v.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
     real: true,
     timeframe: "4D",
     fetchSeries: () => fetchCoinGeckoOhlc("tt_btc_4d_cache_v1"),
-    realNote: "Cours réel du Bitcoin en bougies de 4 jours (CoinGecko) — pas de granularité journalière disponible gratuitement sur un historique long.",
+    realNote: {
+      fr: "Cours réel du Bitcoin en bougies de 4 jours (CoinGecko) — pas de granularité journalière disponible gratuitement sur un historique long.",
+      en: "Real Bitcoin price in 4-day candles (CoinGecko) — no free daily granularity available over a long history.",
+    },
   },
 ];
 
 const NEWS = {
   or: {
-    body: "Contexte type : l'or réagit souvent aux anticipations de taux de la Fed, à la vigueur du dollar et aux tensions géopolitiques qui renforcent son rôle de valeur refuge.",
-    bullets: ["Taux réels et discours de la Fed", "Force du dollar (indice DXY)", "Tensions géopolitiques et demande refuge"],
+    body: {
+      fr: "Contexte type : l'or réagit souvent aux anticipations de taux de la Fed, à la vigueur du dollar et aux tensions géopolitiques qui renforcent son rôle de valeur refuge.",
+      en: "Typical context: gold often reacts to Fed rate expectations, dollar strength, and geopolitical tensions that reinforce its safe-haven role.",
+    },
+    bullets: {
+      fr: ["Taux réels et discours de la Fed", "Force du dollar (indice DXY)", "Tensions géopolitiques et demande refuge"],
+      en: ["Real rates and Fed commentary", "Dollar strength (DXY index)", "Geopolitical tensions and safe-haven demand"],
+    },
   },
   forex: {
-    body: "L'EUR/USD réagit aux écarts de politique monétaire entre BCE et Fed, ainsi qu'aux publications macro des deux zones.",
-    bullets: ["Décisions de taux BCE et Fed", "Chiffres d'inflation", "Données d'emploi américaines"],
+    body: {
+      fr: "L'EUR/USD réagit aux écarts de politique monétaire entre BCE et Fed, ainsi qu'aux publications macro des deux zones.",
+      en: "EUR/USD reacts to monetary policy gaps between the ECB and the Fed, as well as macro releases from both regions.",
+    },
+    bullets: {
+      fr: ["Décisions de taux BCE et Fed", "Chiffres d'inflation", "Données d'emploi américaines"],
+      en: ["ECB and Fed rate decisions", "Inflation figures", "US employment data"],
+    },
   },
   actions: {
-    body: "Contexte type : les indices actions réagissent aux résultats d'entreprises, aux anticipations de taux et à l'appétit pour le risque des marchés.",
-    bullets: ["Saison des résultats d'entreprises", "Anticipations de taux directeurs", "Sentiment de marché (risk-on / risk-off)"],
+    body: {
+      fr: "Contexte type : les indices actions réagissent aux résultats d'entreprises, aux anticipations de taux et à l'appétit pour le risque des marchés.",
+      en: "Typical context: stock indices react to corporate earnings, rate expectations, and market risk appetite.",
+    },
+    bullets: {
+      fr: ["Saison des résultats d'entreprises", "Anticipations de taux directeurs", "Sentiment de marché (risk-on / risk-off)"],
+      en: ["Corporate earnings season", "Policy rate expectations", "Market sentiment (risk-on / risk-off)"],
+    },
   },
   crypto: {
-    body: "Contexte type : le bitcoin est sensible au sentiment de risque global, aux flux vers les ETF spot et à l'actualité réglementaire.",
-    bullets: ["Flux vers les ETF spot", "Annonces réglementaires", "Corrélation aux actifs risqués"],
+    body: {
+      fr: "Contexte type : le bitcoin est sensible au sentiment de risque global, aux flux vers les ETF spot et à l'actualité réglementaire.",
+      en: "Typical context: bitcoin is sensitive to overall risk sentiment, spot ETF flows, and regulatory news.",
+    },
+    bullets: {
+      fr: ["Flux vers les ETF spot", "Annonces réglementaires", "Corrélation aux actifs risqués"],
+      en: ["Spot ETF flows", "Regulatory announcements", "Correlation to risk assets"],
+    },
   },
 };
 
@@ -301,34 +426,46 @@ const NEWS = {
 // Pour l'accompagnement dégressif : intermédiaire = piste + lien, expérimenté = lien seul.
 const DOMAIN_LINKS = {
   or: {
-    hint: "Regarde du côté des taux réels américains et de la force du dollar (indice DXY) sur cette période.",
+    hint: {
+      fr: "Regarde du côté des taux réels américains et de la force du dollar (indice DXY) sur cette période.",
+      en: "Look at US real rates and dollar strength (DXY index) over this period.",
+    },
     links: [
-      { url: "https://www.investing.com/economic-calendar/", label: "Calendrier économique — Investing.com" },
-      { url: "https://www.kitco.com/news/", label: "Actualités marché de l'or — Kitco" },
-      { url: "https://www.gold.org/goldhub", label: "Données et analyses — World Gold Council" },
+      { url: "https://www.investing.com/economic-calendar/", label: { fr: "Calendrier économique — Investing.com", en: "Economic calendar — Investing.com" } },
+      { url: "https://www.kitco.com/news/", label: { fr: "Actualités marché de l'or — Kitco", en: "Gold market news — Kitco" } },
+      { url: "https://www.gold.org/goldhub", label: { fr: "Données et analyses — World Gold Council", en: "Data & insights — World Gold Council" } },
     ],
   },
   forex: {
-    hint: "Regarde du côté des décisions de taux de la BCE et de la Fed sur cette période.",
+    hint: {
+      fr: "Regarde du côté des décisions de taux de la BCE et de la Fed sur cette période.",
+      en: "Look at ECB and Fed rate decisions over this period.",
+    },
     links: [
-      { url: "https://www.ecb.europa.eu/press/pr/date/html/index.en.html", label: "Communiqués de politique monétaire — BCE" },
-      { url: "https://www.federalreserve.gov/newsevents/calendar.htm", label: "Calendrier — Réserve fédérale (Fed)" },
-      { url: "https://www.investing.com/economic-calendar/", label: "Calendrier économique — Investing.com" },
+      { url: "https://www.ecb.europa.eu/press/pr/date/html/index.en.html", label: { fr: "Communiqués de politique monétaire — BCE", en: "Monetary policy statements — ECB" } },
+      { url: "https://www.federalreserve.gov/newsevents/calendar.htm", label: { fr: "Calendrier — Réserve fédérale (Fed)", en: "Calendar — Federal Reserve (Fed)" } },
+      { url: "https://www.investing.com/economic-calendar/", label: { fr: "Calendrier économique — Investing.com", en: "Economic calendar — Investing.com" } },
     ],
   },
   actions: {
-    hint: "Regarde du côté des résultats d'entreprises et du sentiment de marché (risk-on / risk-off) sur cette période.",
+    hint: {
+      fr: "Regarde du côté des résultats d'entreprises et du sentiment de marché (risk-on / risk-off) sur cette période.",
+      en: "Look at corporate earnings and market sentiment (risk-on / risk-off) over this period.",
+    },
     links: [
-      { url: "https://www.investing.com/economic-calendar/", label: "Calendrier économique — Investing.com" },
-      { url: "https://www.investing.com/earnings-calendar/", label: "Calendrier des résultats — Investing.com" },
+      { url: "https://www.investing.com/economic-calendar/", label: { fr: "Calendrier économique — Investing.com", en: "Economic calendar — Investing.com" } },
+      { url: "https://www.investing.com/earnings-calendar/", label: { fr: "Calendrier des résultats — Investing.com", en: "Earnings calendar — Investing.com" } },
     ],
   },
   crypto: {
-    hint: "Regarde du côté des flux vers les ETF spot et du sentiment général du marché crypto sur cette période.",
+    hint: {
+      fr: "Regarde du côté des flux vers les ETF spot et du sentiment général du marché crypto sur cette période.",
+      en: "Look at spot ETF flows and overall crypto market sentiment over this period.",
+    },
     links: [
-      { url: "https://alternative.me/crypto/fear-and-greed-index/", label: "Indice Fear & Greed — Crypto" },
-      { url: "https://www.coindesk.com/", label: "Actualités crypto — CoinDesk" },
-      { url: "https://www.coingecko.com/en/categories", label: "Vue d'ensemble du marché — CoinGecko" },
+      { url: "https://alternative.me/crypto/fear-and-greed-index/", label: { fr: "Indice Fear & Greed — Crypto", en: "Fear & Greed Index — Crypto" } },
+      { url: "https://www.coindesk.com/", label: { fr: "Actualités crypto — CoinDesk", en: "Crypto news — CoinDesk" } },
+      { url: "https://www.coingecko.com/en/categories", label: { fr: "Vue d'ensemble du marché — CoinGecko", en: "Market overview — CoinGecko" } },
     ],
   },
 };
@@ -403,35 +540,64 @@ function computeSmaSignal(candles, visibleCount, fast = 5, slow = 20) {
 
 // ============ DEBRIEF POST-RÉVÉLATION, ADAPTÉ AU NIVEAU ============
 const DEBRIEF_QUESTIONS = {
-  debutant: ["Qu'est-ce qui t'a fait choisir cette direction ?"],
-  intermediaire: [
-    "Ton entrée était-elle basée sur une règle précise ou plutôt une impression ?",
-    "Qu'est-ce que tu ferais différemment la prochaine fois ?",
-  ],
-  experimente: [
-    "Quel était ton raisonnement complet avant le reveal ?",
-    "Qu'est-ce qui, avec le recul, aurait dû t'alerter (ou te rassurer) ?",
-    "Qu'est-ce que tu ferais différemment la prochaine fois ?",
-  ],
+  debutant: {
+    fr: ["Qu'est-ce qui t'a fait choisir cette direction ?"],
+    en: ["What made you choose this direction?"],
+  },
+  intermediaire: {
+    fr: [
+      "Ton entrée était-elle basée sur une règle précise ou plutôt une impression ?",
+      "Qu'est-ce que tu ferais différemment la prochaine fois ?",
+    ],
+    en: [
+      "Was your entry based on a precise rule, or more on a gut feeling?",
+      "What would you do differently next time?",
+    ],
+  },
+  experimente: {
+    fr: [
+      "Quel était ton raisonnement complet avant le reveal ?",
+      "Qu'est-ce qui, avec le recul, aurait dû t'alerter (ou te rassurer) ?",
+      "Qu'est-ce que tu ferais différemment la prochaine fois ?",
+    ],
+    en: [
+      "What was your full reasoning before the reveal?",
+      "Looking back, what should have alerted (or reassured) you?",
+      "What would you do differently next time?",
+    ],
+  },
 };
 
 const BIAS_ITEMS = {
-  intermediaire: ["J'ai peut-être sur-analysé la situation", "J'ai suivi mon impression plus que mes règles", "J'ai ignoré le risque"],
-  experimente: [
-    "J'ai peut-être sur-analysé la situation",
-    "J'ai suivi mon impression plus que mes règles",
-    "J'ai ignoré le risque",
-    "Biais de confirmation : j'ai cherché ce qui confirmait mon idée de départ",
-    "J'ai changé d'avis en cours de route sans raison claire",
-  ],
+  intermediaire: {
+    fr: ["J'ai peut-être sur-analysé la situation", "J'ai suivi mon impression plus que mes règles", "J'ai ignoré le risque"],
+    en: ["I may have overanalyzed the situation", "I followed my gut more than my rules", "I ignored risk"],
+  },
+  experimente: {
+    fr: [
+      "J'ai peut-être sur-analysé la situation",
+      "J'ai suivi mon impression plus que mes règles",
+      "J'ai ignoré le risque",
+      "Biais de confirmation : j'ai cherché ce qui confirmait mon idée de départ",
+      "J'ai changé d'avis en cours de route sans raison claire",
+    ],
+    en: [
+      "I may have overanalyzed the situation",
+      "I followed my gut more than my rules",
+      "I ignored risk",
+      "Confirmation bias: I looked for what confirmed my initial idea",
+      "I changed my mind midway without a clear reason",
+    ],
+  },
 };
+
 
 
 function isDrawingTooSmall(p1, p2) {
   return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
 }
 
-function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.toFixed(2) }) {
+function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.toFixed(2), lang = "fr" }) {
   const W = 1400;
   const H = 640;
   const padTop = 24;
@@ -587,7 +753,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
               : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
           }
         >
-          <Minus className="w-3.5 h-3.5" /> Ligne
+          <Minus className="w-3.5 h-3.5" /> {t("lineTool", lang)}
         </button>
         <button
           onClick={() => toggleTool("fib")}
@@ -598,7 +764,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
               : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
           }
         >
-          <Layers className="w-3.5 h-3.5" /> Fibonacci
+          <Layers className="w-3.5 h-3.5" /> {t("fibTool", lang)}
         </button>
         {drawings.length > 0 && (
           <button
@@ -610,7 +776,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
             className="ml-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data hover:text-red-400 hover:border-red-500 transition-colors"
             style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}
           >
-            <Trash2 className="w-3.5 h-3.5" /> Effacer
+            <Trash2 className="w-3.5 h-3.5" /> {t("clear", lang)}
           </button>
         )}
       </div>
@@ -626,7 +792,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
           preserveAspectRatio="none"
           className={`w-full h-full select-none touch-none ${activeTool ? "cursor-crosshair" : ""}`}
           role="img"
-          aria-label="Graphique en chandeliers"
+          aria-label={t("chartAriaLabel", lang)}
         >
           {gridValues.map((gv, k) => (
             <g key={k}>
@@ -642,7 +808,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
             if (!c) return null;
             return (
               <text key={k} x={xScale(idx)} y={H - 12} fontSize="12" fill={C_TEXT_MUTED} textAnchor="middle" className="font-data">
-                {formatAxisDate(c.date)}
+                {formatAxisDate(c.date, lang)}
               </text>
             );
           })}
@@ -659,7 +825,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
           />
           {!revealed && (
             <text x={cutoffX} y={padTop - 8} fontSize="11" fill={C_ACCENT} textAnchor="middle" className="font-data">
-              MAINTENANT
+              {t("now", lang)}
             </text>
           )}
 
@@ -744,7 +910,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
 
               <rect x={xScale(hover.index) - 40} y={H - 24} width={80} height={18} fill="#2a3228" stroke={C_BORDER} rx="2" />
               <text x={xScale(hover.index)} y={H - 11.5} fontSize="11" fill={C_TEXT} textAnchor="middle" className="font-data">
-                {formatAxisDate(hoverCandle.date)}
+                {formatAxisDate(hoverCandle.date, lang)}
               </text>
             </g>
           )}
@@ -753,24 +919,24 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
 
       {activeTool && !isDragging && (
         <p className="text-xs mt-2 font-data shrink-0" style={{ color: C_TEXT_DIM }}>
-          Clique et fais glisser sur le graphique pour tracer
+          {t("drawInstructions", lang)}
         </p>
       )}
     </div>
   );
 }
 
-function LevelScreen({ onSelect }) {
+function LevelScreen({ onSelect, lang }) {
   return (
     <div className="max-w-2xl mx-auto">
       <p className="font-data text-xs tracking-widest mb-2" style={{ color: C_ACCENT }}>
-        ÉTAPE 1 / 2
+        {t("step1", lang)}
       </p>
       <h1 className="font-display text-3xl md:text-4xl font-semibold" style={{ color: C_TEXT }}>
-        Choisis ton niveau
+        {t("chooseLevelTitle", lang)}
       </h1>
       <p className="mt-2 mb-8" style={{ color: C_TEXT_MUTED }}>
-        La difficulté des configurations s'ajuste en fonction.
+        {t("chooseLevelSubtitle", lang)}
       </p>
       <div className="grid gap-3">
         {LEVELS.map((lv) => (
@@ -789,13 +955,13 @@ function LevelScreen({ onSelect }) {
               <ChevronRight className="w-4 h-4 transition-colors" style={{ color: C_TEXT_DIM }} />
             </div>
             <h3 className="font-display text-xl mt-2" style={{ color: C_TEXT }}>
-              {lv.label}
+              {lv.label[lang] || lv.label.fr}
             </h3>
             <p className="text-sm mt-1" style={{ color: C_TEXT_MUTED }}>
-              {lv.tagline}
+              {lv.tagline[lang] || lv.tagline.fr}
             </p>
             <p className="text-sm mt-2" style={{ color: "#7d8579" }}>
-              {lv.detail}
+              {lv.detail[lang] || lv.detail.fr}
             </p>
           </button>
         ))}
@@ -804,7 +970,7 @@ function LevelScreen({ onSelect }) {
   );
 }
 
-function DomainScreen({ level, onSelect, onBack }) {
+function DomainScreen({ level, onSelect, onBack, lang }) {
   const lv = LEVELS.find((l) => l.id === level);
   return (
     <div className="max-w-2xl mx-auto">
@@ -813,16 +979,16 @@ function DomainScreen({ level, onSelect, onBack }) {
         className="flex items-center gap-1 text-sm mb-6 transition-colors focus-visible:outline-none rounded"
         style={{ color: C_TEXT_MUTED }}
       >
-        <ChevronLeft className="w-4 h-4" /> Changer de niveau
+        <ChevronLeft className="w-4 h-4" /> {t("changeLevelLink", lang)}
       </button>
       <p className="font-data text-xs tracking-widest mb-2" style={{ color: C_ACCENT }}>
-        ÉTAPE 2 / 2 · {lv.code}
+        {t("step2", lang)} {lv.code}
       </p>
       <h1 className="font-display text-3xl md:text-4xl font-semibold" style={{ color: C_TEXT }}>
-        Sur quel marché ?
+        {t("chooseMarketTitle", lang)}
       </h1>
       <p className="mt-2 mb-8" style={{ color: C_TEXT_MUTED }}>
-        Les exercices porteront sur l'actif choisi.
+        {t("chooseMarketSubtitle", lang)}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {DOMAINS.map((d) => {
@@ -843,12 +1009,12 @@ function DomainScreen({ level, onSelect, onBack }) {
                     className="text-[10px] font-data rounded-full px-2 py-0.5 border"
                     style={{ color: C_UP, borderColor: "#144d33" }}
                   >
-                    données réelles
+                    {t("realDataBadge", lang)}
                   </span>
                 )}
               </div>
               <h3 className="font-display text-base" style={{ color: C_TEXT }}>
-                {d.label}
+                {d.label[lang] || d.label.fr}
               </h3>
               <p className="font-data text-xs mt-1" style={{ color: C_TEXT_MUTED }}>
                 {d.code}
@@ -897,10 +1063,11 @@ function BiasCheckbox({ checked, onToggle, label }) {
   );
 }
 
-function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAnswerChange, biasChecked, onToggleBias }) {
-  const questions = DEBRIEF_QUESTIONS[level] || [];
-  const biasItems = BIAS_ITEMS[level] || [];
+function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAnswerChange, biasChecked, onToggleBias, lang }) {
+  const questions = (DEBRIEF_QUESTIONS[level] && (DEBRIEF_QUESTIONS[level][lang] || DEBRIEF_QUESTIONS[level].fr)) || [];
+  const biasItems = (BIAS_ITEMS[level] && (BIAS_ITEMS[level][lang] || BIAS_ITEMS[level].fr)) || [];
   const smaResult = level === "experimente" ? computeSmaSignal(candles, visibleCount) : null;
+  const actualSignal = actualUp ? "hausse" : "baisse";
 
   const inputStyle = {
     backgroundColor: C_BG,
@@ -911,26 +1078,26 @@ function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAns
   return (
     <div className="mt-5 pt-4 border-t" style={{ borderColor: C_BORDER }}>
       <p className="text-[10px] font-data tracking-widest mb-3" style={{ color: C_TEXT_DIM }}>
-        DEBRIEF
+        {t("debriefLabel", lang)}
       </p>
 
       {smaResult && (
         <div className="mb-4 p-3 rounded-lg border" style={{ borderColor: C_BORDER, backgroundColor: C_BG }}>
           <p className="text-xs font-medium mb-1" style={{ color: C_TEXT }}>
-            Comparaison à une règle systématique (SMA{smaResult.fast}/SMA{smaResult.slow})
+            {t("smaCompareTitle", lang)}{smaResult.fast}/SMA{smaResult.slow})
           </p>
           <p className="text-xs" style={{ color: C_TEXT_MUTED }}>
-            La règle aurait suggéré :{" "}
+            {t("ruleWouldSuggest", lang)}{" "}
             <span className="font-data font-medium" style={{ color: C_TEXT }}>
-              {smaResult.signal}
+              {t(smaResult.signal === "hausse" ? "trendUp" : "trendDown", lang)}
             </span>{" "}
-            · Résultat réel :{" "}
+            · {t("realResult", lang)}{" "}
             <span className="font-data font-medium" style={{ color: C_TEXT }}>
-              {actualUp ? "hausse" : "baisse"}
+              {t(actualSignal === "hausse" ? "trendUp" : "trendDown", lang)}
             </span>{" "}
             ·{" "}
-            <span style={{ color: smaResult.signal === (actualUp ? "hausse" : "baisse") ? C_UP : C_DOWN }}>
-              {smaResult.signal === (actualUp ? "hausse" : "baisse") ? "règle alignée" : "règle en désaccord"}
+            <span style={{ color: smaResult.signal === actualSignal ? C_UP : C_DOWN }}>
+              {smaResult.signal === actualSignal ? t("ruleAligned", lang) : t("ruleDisagreed", lang)}
             </span>
           </p>
         </div>
@@ -947,7 +1114,7 @@ function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAns
                 value={(debriefAnswers && debriefAnswers[i]) || ""}
                 onChange={(e) => onAnswerChange(i, e.target.value)}
                 rows={2}
-                placeholder="Facultatif..."
+                placeholder={t("optionalPlaceholder", lang)}
                 className="w-full rounded-lg p-2.5 text-xs resize-none border focus-visible:outline-none"
                 style={inputStyle}
               />
@@ -959,7 +1126,7 @@ function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAns
       {biasItems.length > 0 && (
         <div>
           <p className="text-xs mb-2" style={{ color: C_TEXT_MUTED }}>
-            Est-ce que l'un de ces biais s'est glissé dans ta décision ?
+            {t("biasQuestion", lang)}
           </p>
           <div className="flex flex-col gap-2">
             {biasItems.map((b, i) => (
@@ -995,6 +1162,7 @@ function ExerciseScreen({
   onNew,
   onChangeLevel,
   onChangeDomain,
+  lang,
 }) {
   const lv = LEVELS.find((l) => l.id === level);
   const d = DOMAINS.find((x) => x.id === domain);
@@ -1023,25 +1191,25 @@ function ExerciseScreen({
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="flex items-center gap-1.5 font-data text-xs" style={{ color: C_TEXT_MUTED }}>
-            <span className="w-1.5 h-1.5 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} /> SESSION
+            <span className="w-1.5 h-1.5 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} /> {t("session", lang)}
           </span>
           <button
             onClick={onChangeLevel}
             className="font-data text-xs px-2 py-1 rounded border transition-colors"
             style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER, color: C_TEXT_MUTED }}
           >
-            {lv.label}
+            {lv.label[lang] || lv.label.fr}
           </button>
           <button
             onClick={onChangeDomain}
             className="font-data text-xs px-2 py-1 rounded border transition-colors"
             style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER, color: C_TEXT_MUTED }}
           >
-            {d.label}
+            {d.label[lang] || d.label.fr}
           </button>
         </div>
         <button onClick={onNew} className="flex items-center gap-1.5 font-data text-xs transition-colors" style={{ color: C_TEXT_MUTED }}>
-          <RefreshCw className="w-3.5 h-3.5" /> Nouvel exercice
+          <RefreshCw className="w-3.5 h-3.5" /> {t("newExercise", lang)}
         </button>
       </div>
 
@@ -1049,7 +1217,7 @@ function ExerciseScreen({
         <div className="rounded-xl p-4 border flex flex-col" style={{ ...cardStyle, height: chartHeight }}>
           <div className="flex items-center gap-2 mb-2 shrink-0">
             <span className="font-data text-xs font-medium" style={{ color: C_TEXT }}>
-              {d.label}
+              {d.label[lang] || d.label.fr}
             </span>
             <span className="font-data text-[10px] px-1.5 py-0.5 rounded border" style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}>
               {d.timeframe || "1D"}
@@ -1058,7 +1226,7 @@ function ExerciseScreen({
           {loading ? (
             <div className="flex-1 flex items-center justify-center">
               <p className="text-sm font-data" style={{ color: C_TEXT_MUTED }}>
-                Chargement des données réelles de {d.label}...
+                {t("loadingReal", lang)} {d.label[lang] || d.label.fr}...
               </p>
             </div>
           ) : loadError ? (
@@ -1067,7 +1235,7 @@ function ExerciseScreen({
             </div>
           ) : (
             <div className="flex-1 min-h-0">
-              <CandlestickChart candles={candles} visibleCount={visibleCount} revealed={revealed} format={d.format} />
+              <CandlestickChart candles={candles} visibleCount={visibleCount} revealed={revealed} format={d.format} lang={lang} />
             </div>
           )}
         </div>
@@ -1076,9 +1244,9 @@ function ExerciseScreen({
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4" style={{ color: C_ACCENT }} />
             <h3 className="font-display text-sm" style={{ color: C_TEXT }}>
-              Contexte marché{" "}
+              {t("contextTitle", lang)}{" "}
               <span className="font-normal" style={{ color: isReal ? C_UP : C_TEXT_MUTED }}>
-                · {isReal ? "données réelles" : "exemple"}
+                · {isReal ? t("realDataBadge", lang) : t("example", lang)}
               </span>
             </h3>
           </div>
@@ -1093,10 +1261,10 @@ function ExerciseScreen({
                         {ev.date}
                       </p>
                       <p className="text-xs font-medium mt-0.5" style={{ color: C_TEXT }}>
-                        {ev.title}
+                        {lang === "en" ? ev.title_en || ev.title : ev.title}
                       </p>
                       <p className="text-xs mt-1 leading-relaxed" style={{ color: C_TEXT_MUTED }}>
-                        {ev.detail}
+                        {lang === "en" ? ev.detail_en || ev.detail : ev.detail}
                       </p>
                     </li>
                   ))}
@@ -1104,10 +1272,10 @@ function ExerciseScreen({
               ) : (
                 <>
                   <p className="text-sm leading-relaxed" style={{ color: C_TEXT_MUTED }}>
-                    {news.body}
+                    {news.body[lang] || news.body.fr}
                   </p>
                   <ul className="mt-3 space-y-1.5">
-                    {news.bullets.map((b, i) => (
+                    {(news.bullets[lang] || news.bullets.fr).map((b, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "#7d8579" }}>
                         <span className="w-1 h-1 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: C_ACCENT }} />
                         {b}
@@ -1120,15 +1288,15 @@ function ExerciseScreen({
               {(rateContext || volatility !== null || rangeStats) && (
                 <div className="mt-4 pt-3 border-t space-y-2" style={{ borderColor: C_BORDER }}>
                   <p className="text-[10px] font-data tracking-widest" style={{ color: C_TEXT_DIM }}>
-                    INDICATEURS CLÉS
+                    {t("keyIndicators", lang)}
                   </p>
                   {rateContext && (
                     <div className="flex items-center justify-between text-xs">
-                      <span style={{ color: C_TEXT_MUTED }}>Taux BCE (au {rateContext.asOf})</span>
+                      <span style={{ color: C_TEXT_MUTED }}>{t("bceRateAt", lang)} {rateContext.asOf})</span>
                       <span className="font-data font-medium" style={{ color: C_TEXT }}>
                         {rateContext.rate.toFixed(2)}%{" "}
                         <span style={{ color: rateContext.trend === "hausse" ? C_UP : rateContext.trend === "baisse" ? C_DOWN : C_TEXT_MUTED }}>
-                          ({rateContext.trend})
+                          ({t(rateContext.trend === "hausse" ? "trendUp" : rateContext.trend === "baisse" ? "trendDown" : "trendStable", lang)})
                         </span>
                       </span>
                     </div>
@@ -1136,25 +1304,25 @@ function ExerciseScreen({
                   {rangeStats && (
                     <>
                       <div className="flex items-center justify-between text-xs">
-                        <span style={{ color: C_TEXT_MUTED }}>Plus haut / plus bas période</span>
+                        <span style={{ color: C_TEXT_MUTED }}>{t("highLowPeriod", lang)}</span>
                         <span className="font-data font-medium" style={{ color: C_TEXT }}>
                           {rangeStats.high} / {rangeStats.low}
                         </span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span style={{ color: C_TEXT_MUTED }}>Amplitude totale</span>
+                        <span style={{ color: C_TEXT_MUTED }}>{t("totalRange", lang)}</span>
                         <span className="font-data font-medium" style={{ color: C_TEXT }}>
                           {rangeStats.rangePct.toFixed(2)}%
                         </span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span style={{ color: C_TEXT_MUTED }}>Mouvement quotidien moyen</span>
+                        <span style={{ color: C_TEXT_MUTED }}>{t("avgDailyMove", lang)}</span>
                         <span className="font-data font-medium" style={{ color: C_TEXT }}>
                           {rangeStats.avgDailyRangePct.toFixed(2)}%
                         </span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span style={{ color: C_TEXT_MUTED }}>Bougies hausse / baisse</span>
+                        <span style={{ color: C_TEXT_MUTED }}>{t("upDownCandles", lang)}</span>
                         <span className="font-data font-medium" style={{ color: C_TEXT }}>
                           <span style={{ color: C_UP }}>{rangeStats.upCount}</span> /{" "}
                           <span style={{ color: C_DOWN }}>{rangeStats.downCount}</span>
@@ -1164,9 +1332,9 @@ function ExerciseScreen({
                   )}
                   {volatility !== null && (
                     <div className="flex items-center justify-between text-xs">
-                      <span style={{ color: C_TEXT_MUTED }}>Volatilité récente</span>
+                      <span style={{ color: C_TEXT_MUTED }}>{t("recentVolatility", lang)}</span>
                       <span className="font-data font-medium" style={{ color: C_TEXT }}>
-                        {volatility.toFixed(2)}% / jour
+                        {volatility.toFixed(2)}% {t("perDay", lang)}
                       </span>
                     </div>
                   )}
@@ -1178,7 +1346,7 @@ function ExerciseScreen({
           {level === "intermediaire" && links && (
             <div className="space-y-4">
               <p className="text-sm leading-relaxed" style={{ color: C_TEXT_MUTED }}>
-                {links.hint}
+                {links.hint[lang] || links.hint.fr}
               </p>
               <div className="flex flex-col gap-2">
                 {links.links.map((l, i) => (
@@ -1190,7 +1358,7 @@ function ExerciseScreen({
                     className="text-xs font-data px-3 py-2 rounded-md border transition-colors"
                     style={{ borderColor: C_ACCENT, color: C_ACCENT }}
                   >
-                    {l.label} →
+                    {l.label[lang] || l.label.fr} →
                   </a>
                 ))}
               </div>
@@ -1205,12 +1373,12 @@ function ExerciseScreen({
               className="inline-block text-xs font-data px-3 py-2 rounded-md border transition-colors"
               style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}
             >
-              {links.links[0].label} →
+              {links.links[0].label[lang] || links.links[0].label.fr} →
             </a>
           )}
 
           <p className="text-xs mt-4 pt-3 border-t" style={{ color: C_TEXT_DIM, borderColor: C_BORDER }}>
-            {isReal ? d.realNote : "Contexte illustratif pour ce prototype — données et dates simulées en attendant leur intégration réelle."}
+            {isReal ? (d.realNote[lang] || d.realNote.fr) : t("exampleDisclaimer", lang)}
           </p>
         </div>
       </div>
@@ -1221,7 +1389,7 @@ function ExerciseScreen({
             {level === "debutant" && (
               <>
                 <p className="text-sm mb-3" style={{ color: C_TEXT }}>
-                  Selon toi, la tendance va plutôt...
+                  {t("trendYourTurn", lang)}
                 </p>
                 <div className="flex gap-3">
                   <button
@@ -1229,14 +1397,14 @@ function ExerciseScreen({
                     className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border text-emerald-400 hover:border-emerald-500 transition-colors font-medium"
                     style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
-                    <TrendingUp className="w-4 h-4" /> Monter
+                    <TrendingUp className="w-4 h-4" /> {t("goUp", lang)}
                   </button>
                   <button
                     onClick={() => onPredict("baisse")}
                     className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border text-red-400 hover:border-red-500 transition-colors font-medium"
                     style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
-                    <TrendingDown className="w-4 h-4" /> Descendre
+                    <TrendingDown className="w-4 h-4" /> {t("goDown", lang)}
                   </button>
                 </div>
               </>
@@ -1244,7 +1412,7 @@ function ExerciseScreen({
             {level === "intermediaire" && (
               <>
                 <p className="text-sm mb-3" style={{ color: C_TEXT }}>
-                  Tu ouvres une position...
+                  {t("openPosition", lang)}
                 </p>
                 <div className="flex gap-3">
                   <button
@@ -1252,14 +1420,14 @@ function ExerciseScreen({
                     className="flex-1 py-3 rounded-lg border text-emerald-400 hover:border-emerald-500 transition-colors font-medium"
                     style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
-                    Acheter
+                    {t("buy", lang)}
                   </button>
                   <button
                     onClick={() => onOrder("vente")}
                     className="flex-1 py-3 rounded-lg border text-red-400 hover:border-red-500 transition-colors font-medium"
                     style={{ backgroundColor: C_BG, borderColor: C_BORDER }}
                   >
-                    Vendre
+                    {t("sell", lang)}
                   </button>
                 </div>
               </>
@@ -1267,12 +1435,12 @@ function ExerciseScreen({
             {level === "experimente" && (
               <>
                 <p className="text-sm mb-2" style={{ color: C_TEXT }}>
-                  Ton analyse <span style={{ color: C_TEXT_MUTED }}>(facultatif)</span>
+                  {t("yourAnalysis", lang)} <span style={{ color: C_TEXT_MUTED }}>{t("optional", lang)}</span>
                 </p>
                 <textarea
                   value={analysis}
                   onChange={(e) => setAnalysis(e.target.value)}
-                  placeholder="Structure, niveaux clés, ce que tu observes..."
+                  placeholder={t("analysisPlaceholder", lang)}
                   rows={3}
                   className="w-full rounded-lg p-3 text-sm resize-none border focus-visible:outline-none"
                   style={{ backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT }}
@@ -1282,7 +1450,7 @@ function ExerciseScreen({
                   className="mt-3 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors"
                   style={{ backgroundColor: C_ACCENT, color: C_BG }}
                 >
-                  <Eye className="w-4 h-4" /> Voir la suite
+                  <Eye className="w-4 h-4" /> {t("seeMore", lang)}
                 </button>
               </>
             )}
@@ -1292,21 +1460,21 @@ function ExerciseScreen({
             {level === "debutant" && prediction && (
               <div className={`flex items-center gap-2 font-medium ${predictionWin ? "text-emerald-400" : "text-red-400"}`}>
                 {predictionWin ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
-                {predictionWin ? "Bien vu" : "Raté"} — le marché a fait {actualUp ? "+" : ""}
+                {predictionWin ? t("goodCall", lang) : t("missed", lang)} — {t("marketDid", lang)} {actualUp ? "+" : ""}
                 {movePct.toFixed(2)}%
               </div>
             )}
             {level === "intermediaire" && position && (
               <div className={`flex items-center gap-2 font-medium ${orderWin ? "text-emerald-400" : "text-red-400"}`}>
                 {orderWin ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
-                Position {position === "achat" ? "longue" : "courte"} — résultat {orderWin ? "+" : ""}
+                {t("positionResult", lang)} {position === "achat" ? t("longPosition", lang) : t("shortPosition", lang)} — {t("result", lang)} {orderWin ? "+" : ""}
                 {pnl.toFixed(2)}%
               </div>
             )}
             {level === "experimente" && (
               <div className="flex items-center gap-2 font-medium" style={{ color: C_ACCENT }}>
-                <Target className="w-5 h-5" /> Le marché a fait {actualUp ? "+" : ""}
-                {movePct.toFixed(2)}% — compare avec ton analyse.
+                <Target className="w-5 h-5" /> {t("marketDid", lang)} {actualUp ? "+" : ""}
+                {movePct.toFixed(2)}% — {t("compareAnalysis", lang)}
               </div>
             )}
 
@@ -1319,6 +1487,7 @@ function ExerciseScreen({
               onAnswerChange={onDebriefAnswerChange}
               biasChecked={biasChecked}
               onToggleBias={onToggleBias}
+              lang={lang}
             />
 
             <button
@@ -1326,7 +1495,7 @@ function ExerciseScreen({
               className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors"
               style={{ backgroundColor: C_ACCENT, color: C_BG }}
             >
-              <RefreshCw className="w-4 h-4" /> Exercice suivant
+              <RefreshCw className="w-4 h-4" /> {t("nextExercise", lang)}
             </button>
           </div>
         )}
@@ -1345,6 +1514,12 @@ export default function App() {
   const [analysis, setAnalysis] = useState("");
   const [debriefAnswers, setDebriefAnswers] = useState({});
   const [biasChecked, setBiasChecked] = useState({});
+  const [lang, setLang] = useState(() => getStoredLang());
+
+  const handleSetLang = (newLang) => {
+    setLang(newLang);
+    setStoredLang(newLang);
+  };
 
   const [realSeries, setRealSeries] = useState(null);
   const [realLoading, setRealLoading] = useState(false);
@@ -1363,7 +1538,8 @@ export default function App() {
           setRealLoading(false);
         })
         .catch(() => {
-          setRealError(`Impossible de charger les données réelles de ${activeDomainCfg.label} pour le moment.`);
+          const label = activeDomainCfg.label[lang] || activeDomainCfg.label.fr;
+          setRealError(`${t("loadErrorPrefix", lang)} ${label} ${t("loadErrorSuffix", lang)}`);
           setRealLoading(false);
         });
     }
@@ -1474,20 +1650,51 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} />
             <span className="font-data text-xs tracking-widest" style={{ color: C_TEXT_MUTED }}>
-              TRADE TRAINER — PROTOTYPE
+              {t("prototypeLabel", lang)}
             </span>
           </div>
-          <a
-            href="index.html"
-            className="font-data text-xs px-3 py-1.5 rounded border transition-colors"
-            style={{ borderColor: C_BORDER, color: C_TEXT_MUTED, textDecoration: "none" }}
-          >
-            ← Accueil
-          </a>
+          <div className="flex items-center gap-2">
+            <div
+              className="flex gap-1 rounded-lg p-0.5 relative"
+              style={{ backgroundColor: C_BG, border: `1px solid ${C_BORDER}` }}
+            >
+              <div
+                className="absolute top-0.5 left-0.5 rounded-md transition-transform"
+                style={{
+                  width: 30,
+                  height: 24,
+                  backgroundColor: C_ACCENT,
+                  transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  transform: lang === "en" ? "translateX(30px)" : "translateX(0px)",
+                }}
+              />
+              <button
+                onClick={() => handleSetLang("fr")}
+                className="relative font-data text-[11px] transition-colors"
+                style={{ width: 30, height: 24, color: lang === "fr" ? C_BG : C_TEXT_MUTED }}
+              >
+                FR
+              </button>
+              <button
+                onClick={() => handleSetLang("en")}
+                className="relative font-data text-[11px] transition-colors"
+                style={{ width: 30, height: 24, color: lang === "en" ? C_BG : C_TEXT_MUTED }}
+              >
+                EN
+              </button>
+            </div>
+            <a
+              href="index.html"
+              className="font-data text-xs px-3 py-1.5 rounded border transition-colors"
+              style={{ borderColor: C_BORDER, color: C_TEXT_MUTED, textDecoration: "none" }}
+            >
+              {t("backHome", lang)}
+            </a>
+          </div>
         </header>
 
-        {screen === "level" && <LevelScreen onSelect={handleSelectLevel} />}
-        {screen === "domain" && <DomainScreen level={level} onSelect={handleSelectDomain} onBack={handleChangeLevel} />}
+        {screen === "level" && <LevelScreen onSelect={handleSelectLevel} lang={lang} />}
+        {screen === "domain" && <DomainScreen level={level} onSelect={handleSelectDomain} onBack={handleChangeLevel} lang={lang} />}
         {screen === "exercise" && (
           <ExerciseScreen
             level={level}
@@ -1512,6 +1719,7 @@ export default function App() {
             onNew={handleNew}
             onChangeLevel={handleChangeLevel}
             onChangeDomain={handleChangeDomain}
+            lang={lang}
           />
         )}
       </div>

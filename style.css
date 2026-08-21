@@ -60,8 +60,14 @@ a {
     display: block;
 }
 
-.top-bar-actions {
+.top-bar-right {
     margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.top-bar-actions {
     display: flex;
     align-items: center;
     gap: 12px;

@@ -55,6 +55,16 @@
     const feedback = container.querySelector(`.quiz-feedback[data-index="${index}"]`);
     const userAnswer = textarea.value;
 
+    // Ne rien évaluer (et surtout ne pas révéler la définition de référence)
+    // tant que l'utilisateur n'a pas vraiment écrit de réponse.
+    if (!userAnswer || !userAnswer.trim()) {
+      feedback.style.display = "block";
+      feedback.innerHTML = `<p class="quiz-badge is-failed">${tt("quiz.emptyAnswer")}</p>`;
+      textarea.style.borderColor = "#ff8080";
+      textarea.focus();
+      return;
+    }
+
     const keywordList = termData.keywords[lang] || termData.keywords.fr;
     const result = checkGlossaryAnswer(userAnswer, keywordList);
 

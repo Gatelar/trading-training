@@ -103,6 +103,7 @@ const I18N_DICT = {
   "quiz.startExercises": { fr: "Commencer l'entraînement", en: "Start training" },
   "quiz.locked": { fr: "🔒 Termine le quiz de vocabulaire ci-dessus pour débloquer l'entraînement.", en: "🔒 Finish the vocabulary quiz above to unlock training." },
   "quiz.retryHint": { fr: "Retente autant de fois que tu veux, sans pénalité.", en: "Try again as many times as you like, no penalty." },
+  "quiz.emptyAnswer": { fr: "Écris une réponse avant de vérifier.", en: "Write an answer before checking." },
 
   // ---- Pages légales ----
   "legal.eyebrow": { fr: "Informations légales", en: "Legal information" },

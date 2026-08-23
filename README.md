@@ -84,9 +84,19 @@ trading-training/
 - [x] Quotas d'exercices (1/jour visiteurs, 3/jour inscrits) avec page Abonnement
 - [x] Simulateur avec outils de tracé (ligne de tendance, Fibonacci)
 - [x] EUR/USD sur données réelles (prix + contexte BCE daté)
+- [x] Quiz de définitions par niveau (correction par mots-clés, débloque l'accès aux exercices)
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
+
+## Quiz de définitions par niveau
+
+Chaque page `niveaux/<niveau>.html` affiche un quiz de vocabulaire avant de débloquer l'accès aux exercices de ce niveau :
+
+- `data/glossary-terms.js` — 4 termes par niveau (technique + biais psychologiques), bilingue FR/EN, chaque terme a une définition de référence et une liste de mots-clés attendus
+- `niveaux/quiz.js` — logique du quiz : correction par mots-clés (60% minimum requis, insensible aux accents/casse via `checkGlossaryAnswer`), affichage côte à côte réponse utilisateur / définition de référence, déblocage stocké dans `localStorage` (`tt_quiz_passed_<niveau>`)
+- Le simulateur d'exercice (React) vérifie ce même `localStorage` : un niveau non débloqué redirige vers sa page quiz plutôt que de laisser passer (gate appliqué aussi côté simulateur, pas juste côté page niveau)
+- Retries illimités, sans pénalité — l'objectif est pédagogique, pas un examen à note unique
 
 ## Site bilingue (FR/EN)
 

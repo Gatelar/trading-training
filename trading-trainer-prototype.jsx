@@ -926,6 +926,14 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   );
 }
 
+function isLevelUnlocked(levelId) {
+  try {
+    return localStorage.getItem(`tt_quiz_passed_${levelId}`) === "1";
+  } catch (e) {
+    return false;
+  }
+}
+
 function LevelScreen({ onSelect, lang }) {
   return (
     <div className="max-w-2xl mx-auto">
@@ -939,32 +947,41 @@ function LevelScreen({ onSelect, lang }) {
         {t("chooseLevelSubtitle", lang)}
       </p>
       <div className="grid gap-3">
-        {LEVELS.map((lv) => (
-          <button
-            key={lv.id}
-            onClick={() => onSelect(lv.id)}
-            className="group text-left rounded-xl p-5 border transition-colors focus-visible:outline-none"
-            style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = C_ACCENT)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = C_BORDER)}
-          >
-            <div className="flex items-center justify-between">
-              <span className="font-data text-xs tracking-widest" style={{ color: C_ACCENT }}>
-                {lv.code}
-              </span>
-              <ChevronRight className="w-4 h-4 transition-colors" style={{ color: C_TEXT_DIM }} />
-            </div>
-            <h3 className="font-display text-xl mt-2" style={{ color: C_TEXT }}>
-              {lv.label[lang] || lv.label.fr}
-            </h3>
-            <p className="text-sm mt-1" style={{ color: C_TEXT_MUTED }}>
-              {lv.tagline[lang] || lv.tagline.fr}
-            </p>
-            <p className="text-sm mt-2" style={{ color: "#7d8579" }}>
-              {lv.detail[lang] || lv.detail.fr}
-            </p>
-          </button>
-        ))}
+        {LEVELS.map((lv) => {
+          const unlocked = isLevelUnlocked(lv.id);
+          return (
+            <button
+              key={lv.id}
+              onClick={() => onSelect(lv.id)}
+              className="group text-left rounded-xl p-5 border transition-colors focus-visible:outline-none"
+              style={{ backgroundColor: C_BG_SOFT, borderColor: C_BORDER }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = C_ACCENT)}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = C_BORDER)}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-data text-xs tracking-widest" style={{ color: C_ACCENT }}>
+                  {lv.code}
+                </span>
+                {unlocked ? (
+                  <ChevronRight className="w-4 h-4 transition-colors" style={{ color: C_TEXT_DIM }} />
+                ) : (
+                  <span className="text-xs" style={{ color: C_TEXT_DIM }}>
+                    🔒
+                  </span>
+                )}
+              </div>
+              <h3 className="font-display text-xl mt-2" style={{ color: C_TEXT }}>
+                {lv.label[lang] || lv.label.fr}
+              </h3>
+              <p className="text-sm mt-1" style={{ color: C_TEXT_MUTED }}>
+                {lv.tagline[lang] || lv.tagline.fr}
+              </p>
+              <p className="text-sm mt-2" style={{ color: "#7d8579" }}>
+                {lv.detail[lang] || lv.detail.fr}
+              </p>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -1521,6 +1538,15 @@ export default function App() {
     setStoredLang(newLang);
   };
 
+  // Si on arrive avec ?level=xxx (depuis la page niveau, quiz déjà validé), on saute la sélection.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlLevel = params.get("level");
+    if (urlLevel && LEVELS.some((l) => l.id === urlLevel) && isLevelUnlocked(urlLevel)) {
+      setLevel(urlLevel);
+    }
+  }, []);
+
   const [realSeries, setRealSeries] = useState(null);
   const [realLoading, setRealLoading] = useState(false);
   const [realError, setRealError] = useState(null);
@@ -1589,6 +1615,10 @@ export default function App() {
   };
 
   const handleSelectLevel = (id) => {
+    if (!isLevelUnlocked(id)) {
+      window.location.href = `niveaux/${id}.html`;
+      return;
+    }
     setLevel(id);
     setDomain(null);
     resetExercise();

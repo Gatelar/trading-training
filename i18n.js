@@ -89,6 +89,21 @@ const I18N_DICT = {
   "level.stepLabel": { fr: "ÉTAPE 1 / 2", en: "STEP 1 / 2" },
   "level.backToLevels": { fr: "← Retour aux niveaux", en: "← Back to levels" },
 
+  // ---- Quiz de définitions ----
+  "quiz.intro": { fr: "Avant de commencer, montre que tu maîtrises le vocabulaire de ce niveau. Pas besoin d'une définition parfaite — retrouve juste les idées clés avec tes propres mots.", en: "Before you start, show that you've got the vocabulary for this level down. No need for a perfect definition — just capture the key ideas in your own words." },
+  "quiz.placeholder": { fr: "Ta définition avec tes mots...", en: "Your definition, in your own words..." },
+  "quiz.checkButton": { fr: "Vérifier", en: "Check" },
+  "quiz.yourAnswer": { fr: "Ta réponse", en: "Your answer" },
+  "quiz.referenceAnswer": { fr: "Définition de référence", en: "Reference definition" },
+  "quiz.passed": { fr: "Validé", en: "Passed" },
+  "quiz.notPassed": { fr: "Pas encore — réessaie", en: "Not quite — try again" },
+  "quiz.progress": { fr: "termes validés", en: "terms passed" },
+  "quiz.allPassedTitle": { fr: "Vocabulaire validé !", en: "Vocabulary validated!" },
+  "quiz.allPassedBody": { fr: "Tu peux maintenant accéder aux exercices de ce niveau.", en: "You can now access this level's exercises." },
+  "quiz.startExercises": { fr: "Commencer l'entraînement", en: "Start training" },
+  "quiz.locked": { fr: "🔒 Termine le quiz de vocabulaire ci-dessus pour débloquer l'entraînement.", en: "🔒 Finish the vocabulary quiz above to unlock training." },
+  "quiz.retryHint": { fr: "Retente autant de fois que tu veux, sans pénalité.", en: "Try again as many times as you like, no penalty." },
+
   // ---- Pages légales ----
   "legal.eyebrow": { fr: "Informations légales", en: "Legal information" },
   "legal.mentionsTitle": { fr: "Mentions légales", en: "Legal Notice" },

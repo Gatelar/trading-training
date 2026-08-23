@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../supabase-client.js"></script>
     <script src="../i18n.js?v=2"></script>
+    <script src="../data/glossary-terms.js"></script>
 </head>
 <body>
 
@@ -28,10 +29,16 @@
         <a href="../index.html#niveaux" class="back-link" data-i18n="level.backToLevels">← Retour aux niveaux</a>
         <span class="eyebrow">LVL.01</span>
         <h1 data-i18n="home.level1Title">Débutant</h1>
+        <p class="level-intro" data-i18n="quiz.intro">Avant de commencer, montre que tu maîtrises le vocabulaire de ce niveau. Pas besoin d'une définition parfaite — retrouve juste les idées clés avec tes propres mots.</p>
 
-        <!-- Contenu à venir -->
+        <div class="quiz-container" id="quizContainer" data-level="debutant"></div>
 
-        <a href="../trading-trainer.html" class="btn-primary" data-i18n="home.startTraining">Commencer l'entraînement</a>
+        <div class="quiz-unlock" id="quizUnlock">
+            <p data-i18n="quiz.allPassedBody">Tu peux maintenant accéder aux exercices de ce niveau.</p>
+            <a href="../trading-trainer.html?level=debutant" class="btn-primary" data-i18n="quiz.startExercises">Commencer l'entraînement</a>
+        </div>
+
+        <p class="quiz-locked-msg" id="quizLockedMsg" data-i18n="quiz.locked">🔒 Termine le quiz de vocabulaire ci-dessus pour débloquer l'entraînement.</p>
     </section>
 
     <footer class="site-footer">
@@ -41,5 +48,6 @@
     <script src="../app.js"></script>
     <script src="../auth-state.js?v=2"></script>
     <script src="../lang-toggle.js?v=3"></script>
+    <script src="quiz.js"></script>
 </body>
 </html>

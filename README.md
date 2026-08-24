@@ -85,9 +85,19 @@ trading-training/
 - [x] Simulateur avec outils de tracé (ligne de tendance, Fibonacci)
 - [x] EUR/USD sur données réelles (prix + contexte BCE daté)
 - [x] Quiz de définitions par niveau (correction par mots-clés, débloque l'accès aux exercices)
+- [x] Gestion du risque (stop-loss/take-profit, score en multiples de R) sur les niveaux intermédiaire et expérimenté
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
+
+## Gestion du risque (stop-loss / take-profit)
+
+Sur les niveaux **intermédiaire** et **expérimenté**, après avoir choisi achat/vente, une étape supplémentaire s'ajoute avant le reveal :
+
+- L'utilisateur place un **stop-loss** et un **take-profit** directement sur le graphique (clic simple sur le prix voulu, boutons dédiés dans le composant `CandlestickChart`)
+- Validation : le stop doit être du côté perdant de la position, le take-profit du côté gagnant (`isValidRiskSetup`)
+- Une fois confirmé (`Valider mon trade`), le résultat est simulé bougie par bougie sur la partie non encore révélée du graphique (`simulateRiskOutcome`) : lequel des deux niveaux est touché en premier, et le résultat est exprimé en **multiples de R** (R = distance entre l'entrée et le stop, l'unité de risque) plutôt qu'en simple pourcentage
+- Pour le niveau **expérimenté**, cette étape se glisse avant l'analyse libre déjà existante — l'exercice le plus complet cumule position + gestion du risque + réflexion écrite
 
 ## Quiz de définitions par niveau
 

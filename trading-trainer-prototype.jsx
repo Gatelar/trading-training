@@ -110,6 +110,21 @@ const T = {
   loadErrorPrefix: { fr: "Impossible de charger les données réelles de", en: "Unable to load real data for" },
   loadErrorSuffix: { fr: "pour le moment.", en: "at the moment." },
   exampleDisclaimer: { fr: "Contexte illustratif pour ce prototype — données et dates simulées en attendant leur intégration réelle.", en: "Illustrative context for this prototype — simulated data and dates until real integration is complete." },
+
+  // ---- Gestion du risque (stop-loss / take-profit) ----
+  riskStepTitle: { fr: "Place ton stop-loss et ton take-profit", en: "Place your stop-loss and take-profit" },
+  riskStepSubtitle: { fr: "Clique un outil, puis clique sur le graphique pour placer le niveau de prix.", en: "Click a tool, then click on the chart to place the price level." },
+  stopLossTool: { fr: "Stop-loss", en: "Stop-loss" },
+  takeProfitTool: { fr: "Take-profit", en: "Take-profit" },
+  riskNotSet: { fr: "non placé", en: "not set" },
+  riskInvalidStop: { fr: "Le stop-loss doit être du côté perdant de ta position.", en: "The stop-loss must be on the losing side of your position." },
+  riskInvalidTp: { fr: "Le take-profit doit être du côté gagnant de ta position.", en: "The take-profit must be on the winning side of your position." },
+  confirmTrade: { fr: "Valider mon trade", en: "Confirm my trade" },
+  riskRewardLabel: { fr: "Ratio risque/récompense", en: "Risk/reward ratio" },
+  stopHit: { fr: "Stop-loss touché", en: "Stop-loss hit" },
+  tpHit: { fr: "Take-profit touché", en: "Take-profit hit" },
+  neitherHit: { fr: "Ni l'un ni l'autre touché — position close à la fin de la période", en: "Neither hit — position closed at the end of the period" },
+  resultInR: { fr: "Résultat", en: "Result" },
 };
 
 function t(key, lang) {
@@ -538,6 +553,76 @@ function computeSmaSignal(candles, visibleCount, fast = 5, slow = 20) {
   return { signal: fastVal > slowVal ? "hausse" : "baisse", fast, slow };
 }
 
+// ============ GESTION DU RISQUE : STOP-LOSS / TAKE-PROFIT ============
+// Vérifie que le stop est bien du côté perdant et le TP du côté gagnant, selon la position.
+function isValidRiskSetup(position, entryPrice, stopPrice, takeProfitPrice) {
+  if (stopPrice === null || takeProfitPrice === null) return { valid: false };
+  if (position === "achat") {
+    if (stopPrice >= entryPrice) return { valid: false, reason: "stop" };
+    if (takeProfitPrice <= entryPrice) return { valid: false, reason: "tp" };
+  } else {
+    if (stopPrice <= entryPrice) return { valid: false, reason: "stop" };
+    if (takeProfitPrice >= entryPrice) return { valid: false, reason: "tp" };
+  }
+  return { valid: true };
+}
+
+// Simule candle par candle (à partir du point d'entrée) pour voir si le stop ou le
+// take-profit est touché en premier, et calcule le résultat en multiples de R
+// (R = distance entre le prix d'entrée et le stop-loss = "1 unité de risque").
+function simulateRiskOutcome(candles, visibleCount, position, entryPrice, stopPrice, takeProfitPrice) {
+  const riskDistance = Math.abs(entryPrice - stopPrice);
+  if (riskDistance <= 0) return null;
+
+  const future = candles.slice(visibleCount);
+  let outcome = "neither";
+
+  for (const c of future) {
+    if (position === "achat") {
+      const stopTouched = c.low <= stopPrice;
+      const tpTouched = c.high >= takeProfitPrice;
+      if (stopTouched && tpTouched) {
+        // Les deux touchés dans la même bougie : on suppose le pire cas (stop d'abord).
+        outcome = "stop";
+        break;
+      } else if (stopTouched) {
+        outcome = "stop";
+        break;
+      } else if (tpTouched) {
+        outcome = "tp";
+        break;
+      }
+    } else {
+      const stopTouched = c.high >= stopPrice;
+      const tpTouched = c.low <= takeProfitPrice;
+      if (stopTouched && tpTouched) {
+        outcome = "stop";
+        break;
+      } else if (stopTouched) {
+        outcome = "stop";
+        break;
+      } else if (tpTouched) {
+        outcome = "tp";
+        break;
+      }
+    }
+  }
+
+  let rMultiple;
+  if (outcome === "stop") {
+    rMultiple = -1;
+  } else if (outcome === "tp") {
+    const rewardDistance = Math.abs(takeProfitPrice - entryPrice);
+    rMultiple = rewardDistance / riskDistance;
+  } else {
+    const lastClose = candles[candles.length - 1].close;
+    const move = position === "achat" ? lastClose - entryPrice : entryPrice - lastClose;
+    rMultiple = move / riskDistance;
+  }
+
+  return { outcome, rMultiple, riskDistance, rewardDistance: Math.abs(takeProfitPrice - entryPrice) };
+}
+
 // ============ DEBRIEF POST-RÉVÉLATION, ADAPTÉ AU NIVEAU ============
 const DEBRIEF_QUESTIONS = {
   debutant: {
@@ -597,7 +682,7 @@ function isDrawingTooSmall(p1, p2) {
   return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
 }
 
-function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.toFixed(2), lang = "fr" }) {
+function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.toFixed(2), lang = "fr", riskMode = null, stopPrice = null, takeProfitPrice = null, onSetStopPrice, onSetTakeProfitPrice }) {
   const W = 1400;
   const H = 640;
   const padTop = 24;
@@ -664,6 +749,12 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   }
 
   function handlePointerDown(e) {
+    if (riskMode && svgRef.current) {
+      const point = pointFromEvent(e);
+      if (riskMode === "stop" && onSetStopPrice) onSetStopPrice(point.price);
+      if (riskMode === "tp" && onSetTakeProfitPrice) onSetTakeProfitPrice(point.price);
+      return;
+    }
     if (!activeTool || !svgRef.current) return;
     svgRef.current.setPointerCapture(e.pointerId);
     const point = pointFromEvent(e);
@@ -790,7 +881,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
           onPointerLeave={handlePointerLeave}
           viewBox={`0 0 ${W} ${H}`}
           preserveAspectRatio="none"
-          className={`w-full h-full select-none touch-none ${activeTool ? "cursor-crosshair" : ""}`}
+          className={`w-full h-full select-none touch-none ${activeTool || riskMode ? "cursor-crosshair" : ""}`}
           role="img"
           aria-label={t("chartAriaLabel", lang)}
         >
@@ -893,6 +984,26 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
                 className="font-data"
               >
                 {format(lastCandle.close)}
+              </text>
+            </g>
+          )}
+
+          {stopPrice !== null && stopPrice !== undefined && (
+            <g>
+              <line x1={0} x2={innerW} y1={yScale(stopPrice)} y2={yScale(stopPrice)} stroke={C_DOWN} strokeWidth="1.5" strokeDasharray="5 3" opacity="0.85" />
+              <rect x={innerW + 2} y={yScale(stopPrice) - 9} width={padRight - 4} height={18} fill={C_DOWN} rx="2" />
+              <text x={innerW + padRight / 2} y={yScale(stopPrice) + 4} fontSize="10" fill="#fff" textAnchor="middle" fontWeight="700" className="font-data">
+                {format(stopPrice)}
+              </text>
+            </g>
+          )}
+
+          {takeProfitPrice !== null && takeProfitPrice !== undefined && (
+            <g>
+              <line x1={0} x2={innerW} y1={yScale(takeProfitPrice)} y2={yScale(takeProfitPrice)} stroke={C_UP} strokeWidth="1.5" strokeDasharray="5 3" opacity="0.85" />
+              <rect x={innerW + 2} y={yScale(takeProfitPrice) - 9} width={padRight - 4} height={18} fill={C_UP} rx="2" />
+              <text x={innerW + padRight / 2} y={yScale(takeProfitPrice) + 4} fontSize="10" fill="#050605" textAnchor="middle" fontWeight="700" className="font-data">
+                {format(takeProfitPrice)}
               </text>
             </g>
           )}
@@ -1180,6 +1291,15 @@ function ExerciseScreen({
   onChangeLevel,
   onChangeDomain,
   lang,
+  stopPrice,
+  takeProfitPrice,
+  riskMode,
+  riskError,
+  riskConfirmed,
+  onToggleRiskMode,
+  onSetStopPrice,
+  onSetTakeProfitPrice,
+  onConfirmRisk,
 }) {
   const lv = LEVELS.find((l) => l.id === level);
   const d = DOMAINS.find((x) => x.id === domain);
@@ -1195,6 +1315,12 @@ function ExerciseScreen({
   const pnl = position ? movePct * (position === "achat" ? 1 : -1) : 0;
   const predictionWin = prediction ? (prediction === "hausse") === actualUp : null;
   const orderWin = pnl > 0;
+
+  const riskResult =
+    position && stopPrice !== null && takeProfitPrice !== null && entryCandle
+      ? simulateRiskOutcome(candles, visibleCount, position, entryCandle.close, stopPrice, takeProfitPrice)
+      : null;
+  const usesRiskManagement = level === "intermediaire" || level === "experimente";
 
   const volatility = candles.length > 0 ? computeVolatility(candles, visibleCount) : null;
   const rangeStats = candles.length > 0 ? computeRangeStats(candles, visibleCount, d.format) : null;
@@ -1252,7 +1378,18 @@ function ExerciseScreen({
             </div>
           ) : (
             <div className="flex-1 min-h-0">
-              <CandlestickChart candles={candles} visibleCount={visibleCount} revealed={revealed} format={d.format} lang={lang} />
+              <CandlestickChart
+                candles={candles}
+                visibleCount={visibleCount}
+                revealed={revealed}
+                format={d.format}
+                lang={lang}
+                riskMode={usesRiskManagement && position && !riskConfirmed ? riskMode : null}
+                stopPrice={usesRiskManagement ? stopPrice : null}
+                takeProfitPrice={usesRiskManagement ? takeProfitPrice : null}
+                onSetStopPrice={onSetStopPrice}
+                onSetTakeProfitPrice={onSetTakeProfitPrice}
+              />
             </div>
           )}
         </div>
@@ -1426,7 +1563,8 @@ function ExerciseScreen({
                 </div>
               </>
             )}
-            {level === "intermediaire" && (
+
+            {usesRiskManagement && !position && (
               <>
                 <p className="text-sm mb-3" style={{ color: C_TEXT }}>
                   {t("openPosition", lang)}
@@ -1449,7 +1587,56 @@ function ExerciseScreen({
                 </div>
               </>
             )}
-            {level === "experimente" && (
+
+            {usesRiskManagement && position && !riskConfirmed && (
+              <>
+                <p className="text-sm mb-1" style={{ color: C_TEXT }}>
+                  {t("riskStepTitle", lang)}
+                </p>
+                <p className="text-xs mb-3" style={{ color: C_TEXT_MUTED }}>
+                  {t("riskStepSubtitle", lang)}
+                </p>
+                <div className="flex gap-3 mb-3">
+                  <button
+                    onClick={() => onToggleRiskMode("stop")}
+                    className="flex-1 py-2.5 rounded-lg border text-sm font-medium transition-colors"
+                    style={
+                      riskMode === "stop"
+                        ? { backgroundColor: C_DOWN, borderColor: C_DOWN, color: "#fff" }
+                        : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT }
+                    }
+                  >
+                    {t("stopLossTool", lang)} {stopPrice !== null ? `· ${d.format(stopPrice)}` : `(${t("riskNotSet", lang)})`}
+                  </button>
+                  <button
+                    onClick={() => onToggleRiskMode("tp")}
+                    className="flex-1 py-2.5 rounded-lg border text-sm font-medium transition-colors"
+                    style={
+                      riskMode === "tp"
+                        ? { backgroundColor: C_UP, borderColor: C_UP, color: "#06170a" }
+                        : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT }
+                    }
+                  >
+                    {t("takeProfitTool", lang)} {takeProfitPrice !== null ? `· ${d.format(takeProfitPrice)}` : `(${t("riskNotSet", lang)})`}
+                  </button>
+                </div>
+                {riskError && (
+                  <p className="text-xs mb-3" style={{ color: "#ff8080" }}>
+                    {riskError === "stop" ? t("riskInvalidStop", lang) : t("riskInvalidTp", lang)}
+                  </p>
+                )}
+                <button
+                  onClick={onConfirmRisk}
+                  disabled={stopPrice === null || takeProfitPrice === null}
+                  className="px-4 py-2.5 rounded-lg font-medium text-sm transition-colors disabled:opacity-40"
+                  style={{ backgroundColor: C_ACCENT, color: C_BG }}
+                >
+                  {t("confirmTrade", lang)}
+                </button>
+              </>
+            )}
+
+            {level === "experimente" && position && riskConfirmed && (
               <>
                 <p className="text-sm mb-2" style={{ color: C_TEXT }}>
                   {t("yourAnalysis", lang)} <span style={{ color: C_TEXT_MUTED }}>{t("optional", lang)}</span>
@@ -1481,17 +1668,22 @@ function ExerciseScreen({
                 {movePct.toFixed(2)}%
               </div>
             )}
-            {level === "intermediaire" && position && (
-              <div className={`flex items-center gap-2 font-medium ${orderWin ? "text-emerald-400" : "text-red-400"}`}>
-                {orderWin ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
-                {t("positionResult", lang)} {position === "achat" ? t("longPosition", lang) : t("shortPosition", lang)} — {t("result", lang)} {orderWin ? "+" : ""}
-                {pnl.toFixed(2)}%
+            {level === "intermediaire" && position && riskResult && (
+              <div className={`flex items-center gap-2 font-medium ${riskResult.rMultiple >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                {riskResult.rMultiple >= 0 ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                {riskResult.outcome === "stop" ? t("stopHit", lang) : riskResult.outcome === "tp" ? t("tpHit", lang) : t("neitherHit", lang)}
+                {" — "}
+                {t("resultInR", lang)}: {riskResult.rMultiple >= 0 ? "+" : ""}
+                {riskResult.rMultiple.toFixed(2)}R
               </div>
             )}
-            {level === "experimente" && (
+            {level === "experimente" && riskResult && (
               <div className="flex items-center gap-2 font-medium" style={{ color: C_ACCENT }}>
-                <Target className="w-5 h-5" /> {t("marketDid", lang)} {actualUp ? "+" : ""}
-                {movePct.toFixed(2)}% — {t("compareAnalysis", lang)}
+                <Target className="w-5 h-5" />
+                {riskResult.outcome === "stop" ? t("stopHit", lang) : riskResult.outcome === "tp" ? t("tpHit", lang) : t("neitherHit", lang)}
+                {" — "}
+                {t("resultInR", lang)}: {riskResult.rMultiple >= 0 ? "+" : ""}
+                {riskResult.rMultiple.toFixed(2)}R — {t("compareAnalysis", lang)}
               </div>
             )}
 
@@ -1532,6 +1724,11 @@ export default function App() {
   const [debriefAnswers, setDebriefAnswers] = useState({});
   const [biasChecked, setBiasChecked] = useState({});
   const [lang, setLang] = useState(() => getStoredLang());
+  const [stopPrice, setStopPrice] = useState(null);
+  const [takeProfitPrice, setTakeProfitPrice] = useState(null);
+  const [riskMode, setRiskMode] = useState(null);
+  const [riskConfirmed, setRiskConfirmed] = useState(false);
+  const [riskError, setRiskError] = useState(null);
 
   const handleSetLang = (newLang) => {
     setLang(newLang);
@@ -1604,6 +1801,11 @@ export default function App() {
     setAnalysis("");
     setDebriefAnswers({});
     setBiasChecked({});
+    setStopPrice(null);
+    setTakeProfitPrice(null);
+    setRiskMode(null);
+    setRiskConfirmed(false);
+    setRiskError(null);
   };
 
   const handleDebriefAnswerChange = (i, value) => {
@@ -1653,8 +1855,39 @@ export default function App() {
   };
   const handleOrder = (p) => {
     setPosition(p);
-    setRevealed(true);
   };
+
+  const handleToggleRiskMode = (mode) => {
+    setRiskMode((cur) => (cur === mode ? null : mode));
+  };
+
+  const handleSetStopPrice = (price) => {
+    setStopPrice(price);
+    setRiskMode(null);
+    setRiskError(null);
+  };
+
+  const handleSetTakeProfitPrice = (price) => {
+    setTakeProfitPrice(price);
+    setRiskMode(null);
+    setRiskError(null);
+  };
+
+  const handleConfirmRisk = () => {
+    const entryPrice = candles[visibleCount - 1] ? candles[visibleCount - 1].close : null;
+    if (entryPrice === null) return;
+    const check = isValidRiskSetup(position, entryPrice, stopPrice, takeProfitPrice);
+    if (!check.valid) {
+      setRiskError(check.reason);
+      return;
+    }
+    setRiskError(null);
+    setRiskConfirmed(true);
+    if (level !== "experimente") {
+      setRevealed(true);
+    }
+  };
+
   const handleRevealAnalysis = () => setRevealed(true);
 
   const screen = !level ? "level" : !domain ? "domain" : "exercise";
@@ -1750,6 +1983,15 @@ export default function App() {
             onChangeLevel={handleChangeLevel}
             onChangeDomain={handleChangeDomain}
             lang={lang}
+            stopPrice={stopPrice}
+            takeProfitPrice={takeProfitPrice}
+            riskMode={riskMode}
+            riskError={riskError}
+            riskConfirmed={riskConfirmed}
+            onToggleRiskMode={handleToggleRiskMode}
+            onSetStopPrice={handleSetStopPrice}
+            onSetTakeProfitPrice={handleSetTakeProfitPrice}
+            onConfirmRisk={handleConfirmRisk}
           />
         )}
       </div>

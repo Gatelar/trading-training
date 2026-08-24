@@ -125,6 +125,21 @@ const T = {
   tpHit: { fr: "Take-profit touché", en: "Take-profit hit" },
   neitherHit: { fr: "Ni l'un ni l'autre touché — position close à la fin de la période", en: "Neither hit — position closed at the end of the period" },
   resultInR: { fr: "Résultat", en: "Result" },
+
+  // ---- Séance complète ----
+  sessionProgress: { fr: "Exercice", en: "Exercise" },
+  seeSessionSummary: { fr: "Voir le résumé de séance", en: "See session summary" },
+  sessionSummaryTitle: { fr: "Résumé de séance", en: "Session summary" },
+  sessionSummarySubtitle: { fr: "5 exercices enchaînés — la régularité compte plus qu'un coup de chance isolé.", en: "5 exercises in a row — consistency matters more than a single lucky call." },
+  sessionExercisesCount: { fr: "Exercices réalisés", en: "Exercises completed" },
+  sessionWinRate: { fr: "Taux de réussite", en: "Win rate" },
+  sessionCumulativeR: { fr: "R cumulé", en: "Cumulative R" },
+  sessionAvgR: { fr: "R moyen par trade", en: "Average R per trade" },
+  sessionBestTrade: { fr: "Meilleur trade", en: "Best trade" },
+  sessionWorstTrade: { fr: "Pire trade", en: "Worst trade" },
+  sessionDetailTitle: { fr: "Détail des exercices", en: "Exercise breakdown" },
+  newSession: { fr: "Nouvelle séance", en: "New session" },
+  changeMarket: { fr: "Changer de marché", en: "Change market" },
 };
 
 function t(key, lang) {
@@ -1300,6 +1315,9 @@ function ExerciseScreen({
   onSetStopPrice,
   onSetTakeProfitPrice,
   onConfirmRisk,
+  sessionProgress,
+  sessionLength,
+  onNextExercise,
 }) {
   const lv = LEVELS.find((l) => l.id === level);
   const d = DOMAINS.find((x) => x.id === domain);
@@ -1335,6 +1353,12 @@ function ExerciseScreen({
         <div className="flex items-center gap-2 flex-wrap">
           <span className="flex items-center gap-1.5 font-data text-xs" style={{ color: C_TEXT_MUTED }}>
             <span className="w-1.5 h-1.5 rounded-full live-dot" style={{ backgroundColor: C_ACCENT }} /> {t("session", lang)}
+            {typeof sessionProgress === "number" && typeof sessionLength === "number" && (
+              <span style={{ color: C_TEXT_DIM }}>
+                {" "}
+                · {t("sessionProgress", lang)} {Math.min(sessionProgress + (revealed ? 0 : 1), sessionLength)}/{sessionLength}
+              </span>
+            )}
           </span>
           <button
             onClick={onChangeLevel}
@@ -1700,14 +1724,154 @@ function ExerciseScreen({
             />
 
             <button
-              onClick={onNew}
+              onClick={onNextExercise}
               className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors"
               style={{ backgroundColor: C_ACCENT, color: C_BG }}
             >
-              <RefreshCw className="w-4 h-4" /> {t("nextExercise", lang)}
+              <RefreshCw className="w-4 h-4" />{" "}
+              {typeof sessionProgress === "number" && sessionProgress >= sessionLength ? t("seeSessionSummary", lang) : t("nextExercise", lang)}
             </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+const SESSION_LENGTH = 5;
+
+function SessionSummaryScreen({ sessionResults, level, domain, onNewSession, onChangeMarket, lang }) {
+  const d = DOMAINS.find((x) => x.id === domain);
+  const isRType = level === "intermediaire" || level === "experimente";
+
+  let winCount = 0;
+  let cumulativeR = 0;
+  let bestR = null;
+  let worstR = null;
+
+  sessionResults.forEach((r) => {
+    if (isRType) {
+      cumulativeR += r.rMultiple;
+      if (bestR === null || r.rMultiple > bestR) bestR = r.rMultiple;
+      if (worstR === null || r.rMultiple < worstR) worstR = r.rMultiple;
+      if (r.rMultiple > 0) winCount++;
+    } else {
+      if (r.win) winCount++;
+    }
+  });
+
+  const winRate = sessionResults.length > 0 ? (winCount / sessionResults.length) * 100 : 0;
+  const avgR = sessionResults.length > 0 ? cumulativeR / sessionResults.length : 0;
+
+  const statCardStyle = { backgroundColor: C_BG_SOFT, borderColor: C_BORDER };
+
+  return (
+    <div className="max-w-2xl mx-auto">
+      <p className="font-data text-xs tracking-widest mb-2" style={{ color: C_ACCENT }}>
+        {t("sessionSummaryTitle", lang).toUpperCase()}
+      </p>
+      <h1 className="font-display text-3xl md:text-4xl font-semibold mb-2" style={{ color: C_TEXT }}>
+        {t("sessionSummaryTitle", lang)}
+      </h1>
+      <p className="mb-8" style={{ color: C_TEXT_MUTED }}>
+        {t("sessionSummarySubtitle", lang)}
+      </p>
+
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="rounded-xl p-4 border" style={statCardStyle}>
+          <p className="text-xs mb-1" style={{ color: C_TEXT_MUTED }}>
+            {t("sessionExercisesCount", lang)}
+          </p>
+          <p className="font-display text-2xl" style={{ color: C_TEXT }}>
+            {sessionResults.length}
+          </p>
+        </div>
+        <div className="rounded-xl p-4 border" style={statCardStyle}>
+          <p className="text-xs mb-1" style={{ color: C_TEXT_MUTED }}>
+            {t("sessionWinRate", lang)}
+          </p>
+          <p className="font-display text-2xl" style={{ color: winRate >= 50 ? C_UP : C_DOWN }}>
+            {winRate.toFixed(0)}%
+          </p>
+        </div>
+        {isRType && (
+          <>
+            <div className="rounded-xl p-4 border" style={statCardStyle}>
+              <p className="text-xs mb-1" style={{ color: C_TEXT_MUTED }}>
+                {t("sessionCumulativeR", lang)}
+              </p>
+              <p className="font-display text-2xl" style={{ color: cumulativeR >= 0 ? C_UP : C_DOWN }}>
+                {cumulativeR >= 0 ? "+" : ""}
+                {cumulativeR.toFixed(2)}R
+              </p>
+            </div>
+            <div className="rounded-xl p-4 border" style={statCardStyle}>
+              <p className="text-xs mb-1" style={{ color: C_TEXT_MUTED }}>
+                {t("sessionAvgR", lang)}
+              </p>
+              <p className="font-display text-2xl" style={{ color: C_TEXT }}>
+                {avgR >= 0 ? "+" : ""}
+                {avgR.toFixed(2)}R
+              </p>
+            </div>
+            <div className="rounded-xl p-4 border" style={statCardStyle}>
+              <p className="text-xs mb-1" style={{ color: C_TEXT_MUTED }}>
+                {t("sessionBestTrade", lang)}
+              </p>
+              <p className="font-display text-2xl" style={{ color: C_UP }}>
+                {bestR !== null ? `+${bestR.toFixed(2)}R` : "—"}
+              </p>
+            </div>
+            <div className="rounded-xl p-4 border" style={statCardStyle}>
+              <p className="text-xs mb-1" style={{ color: C_TEXT_MUTED }}>
+                {t("sessionWorstTrade", lang)}
+              </p>
+              <p className="font-display text-2xl" style={{ color: C_DOWN }}>
+                {worstR !== null ? `${worstR.toFixed(2)}R` : "—"}
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="rounded-xl p-4 border mb-8" style={statCardStyle}>
+        <p className="text-xs font-data tracking-widest mb-3" style={{ color: C_TEXT_DIM }}>
+          {t("sessionDetailTitle", lang)}
+        </p>
+        <div className="flex flex-col gap-2">
+          {sessionResults.map((r, i) => (
+            <div key={i} className="flex items-center justify-between text-sm">
+              <span style={{ color: C_TEXT_MUTED }}>#{i + 1}</span>
+              {isRType ? (
+                <span className="font-data font-medium" style={{ color: r.rMultiple >= 0 ? C_UP : C_DOWN }}>
+                  {r.rMultiple >= 0 ? "+" : ""}
+                  {r.rMultiple.toFixed(2)}R
+                </span>
+              ) : (
+                <span className="font-data font-medium" style={{ color: r.win ? C_UP : C_DOWN }}>
+                  {r.win ? "✓" : "✗"}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex gap-3 flex-wrap">
+        <button
+          onClick={onNewSession}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors"
+          style={{ backgroundColor: C_ACCENT, color: C_BG }}
+        >
+          <RefreshCw className="w-4 h-4" /> {t("newSession", lang)}
+        </button>
+        <button
+          onClick={onChangeMarket}
+          className="px-4 py-2.5 rounded-lg font-medium text-sm border transition-colors"
+          style={{ borderColor: C_BORDER, color: C_TEXT_MUTED }}
+        >
+          {t("changeMarket", lang)}
+        </button>
       </div>
     </div>
   );
@@ -1729,6 +1893,8 @@ export default function App() {
   const [riskMode, setRiskMode] = useState(null);
   const [riskConfirmed, setRiskConfirmed] = useState(false);
   const [riskError, setRiskError] = useState(null);
+  const [sessionResults, setSessionResults] = useState([]);
+  const [showSessionSummary, setShowSessionSummary] = useState(false);
 
   const handleSetLang = (newLang) => {
     setLang(newLang);
@@ -1794,6 +1960,28 @@ export default function App() {
     return getMacroEventsInWindow(candles, visibleCount);
   }, [domain, candles, visibleCount]);
 
+  // Enregistre le résultat de chaque exercice dans la séance en cours, dès qu'il est révélé.
+  useEffect(() => {
+    if (!revealed) return;
+    const entryCandle = candles[visibleCount - 1];
+    const lastCandle = candles[candles.length - 1];
+    if (!entryCandle || !lastCandle) return;
+
+    let resultEntry = null;
+    if (level === "debutant" && prediction) {
+      const actualUp = lastCandle.close > entryCandle.close;
+      resultEntry = { type: "winloss", win: (prediction === "hausse") === actualUp };
+    } else if ((level === "intermediaire" || level === "experimente") && position && stopPrice !== null && takeProfitPrice !== null) {
+      const r = simulateRiskOutcome(candles, visibleCount, position, entryCandle.close, stopPrice, takeProfitPrice);
+      if (r) resultEntry = { type: "r", rMultiple: r.rMultiple, outcome: r.outcome };
+    }
+
+    if (resultEntry) {
+      setSessionResults((prev) => [...prev, resultEntry]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [revealed]);
+
   const resetExercise = () => {
     setRevealed(false);
     setPrediction(null);
@@ -1823,6 +2011,8 @@ export default function App() {
     }
     setLevel(id);
     setDomain(null);
+    setSessionResults([]);
+    setShowSessionSummary(false);
     resetExercise();
   };
   const handleSelectDomain = (id) => {
@@ -1830,6 +2020,8 @@ export default function App() {
     setSeed(Math.floor(Math.random() * 1e9));
     setRealSeries(null);
     setRealError(null);
+    setSessionResults([]);
+    setShowSessionSummary(false);
     resetExercise();
   };
   const handleNew = () => {
@@ -1841,13 +2033,29 @@ export default function App() {
     setDomain(null);
     setRealSeries(null);
     setRealError(null);
+    setSessionResults([]);
+    setShowSessionSummary(false);
     resetExercise();
   };
   const handleChangeDomain = () => {
     setDomain(null);
     setRealSeries(null);
     setRealError(null);
+    setSessionResults([]);
+    setShowSessionSummary(false);
     resetExercise();
+  };
+  const handleNextOrSummary = () => {
+    if (sessionResults.length >= SESSION_LENGTH) {
+      setShowSessionSummary(true);
+    } else {
+      handleNew();
+    }
+  };
+  const handleNewSession = () => {
+    setSessionResults([]);
+    setShowSessionSummary(false);
+    handleNew();
   };
   const handlePredict = (p) => {
     setPrediction(p);
@@ -1890,7 +2098,7 @@ export default function App() {
 
   const handleRevealAnalysis = () => setRevealed(true);
 
-  const screen = !level ? "level" : !domain ? "domain" : "exercise";
+  const screen = !level ? "level" : !domain ? "domain" : showSessionSummary ? "sessionSummary" : "exercise";
 
   return (
     <div className="min-h-screen font-sans" style={{ backgroundColor: C_BG, color: C_TEXT }}>
@@ -1992,6 +2200,19 @@ export default function App() {
             onSetStopPrice={handleSetStopPrice}
             onSetTakeProfitPrice={handleSetTakeProfitPrice}
             onConfirmRisk={handleConfirmRisk}
+            sessionProgress={sessionResults.length}
+            sessionLength={SESSION_LENGTH}
+            onNextExercise={handleNextOrSummary}
+          />
+        )}
+        {screen === "sessionSummary" && (
+          <SessionSummaryScreen
+            sessionResults={sessionResults}
+            level={level}
+            domain={domain}
+            onNewSession={handleNewSession}
+            onChangeMarket={handleChangeDomain}
+            lang={lang}
           />
         )}
       </div>

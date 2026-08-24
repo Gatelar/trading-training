@@ -86,9 +86,16 @@ trading-training/
 - [x] EUR/USD sur données réelles (prix + contexte BCE daté)
 - [x] Quiz de définitions par niveau (correction par mots-clés, débloque l'accès aux exercices)
 - [x] Gestion du risque (stop-loss/take-profit, score en multiples de R) sur les niveaux intermédiaire et expérimenté
+- [x] Mode séance : 5 exercices enchaînés dans le même niveau/marché, résumé avec P&L cumulé à la fin
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
+
+## Mode séance
+
+Chaque changement de marché démarre une nouvelle séance de **5 exercices** (`SESSION_LENGTH` dans `trading-trainer-prototype.jsx`). Le badge "SESSION" affiche la progression (ex: "Exercice 3/5"). Le résultat de chaque exercice révélé est enregistré automatiquement (`useEffect` sur `revealed`) : gagné/perdu pour le débutant, multiple de R pour intermédiaire/expérimenté.
+
+Une fois les 5 exercices complétés, le bouton devient "Voir le résumé de séance" et affiche : nombre d'exercices, taux de réussite, R cumulé, R moyen par trade, meilleur/pire trade, et le détail exercice par exercice. Boutons "Nouvelle séance" (relance sur le même niveau/marché) ou "Changer de marché".
 
 ## Gestion du risque (stop-loss / take-profit)
 

@@ -1,10 +1,13 @@
 // ============ GLOSSAIRE PAR NIVEAU (quiz de définitions) ============
 // Chaque terme a une définition de référence (affichée après coup, côte à côte
-// avec la réponse de l'utilisateur) et une liste de mots-clés attendus.
-// La correction n'exige jamais la formulation exacte — juste un nombre minimum
-// de mots-clés retrouvés dans la réponse de l'utilisateur (voir GLOSSARY_PASS_THRESHOLD).
+// avec la réponse de l'utilisateur) et une liste de CONCEPTS attendus.
+// Chaque concept est un groupe de variantes (racines/synonymes) — un concept est
+// considéré "trouvé" si UNE SEULE de ses variantes apparaît dans la réponse.
+// Ça évite qu'un simple accord grammatical (ex: "acheteur" vs "acheteuse") fasse
+// rater une réponse par ailleurs correcte.
+// Chaque définition de référence a été vérifiée pour bien valider son propre quiz.
 
-const GLOSSARY_PASS_THRESHOLD = 0.6; // 60% des mots-clés minimum pour valider un terme
+const GLOSSARY_PASS_THRESHOLD = 0.6; // 60% des concepts minimum pour valider un terme
 
 const GLOSSARY_TERMS = {
   debutant: [
@@ -16,8 +19,8 @@ const GLOSSARY_TERMS = {
         en: "A price level where buying pressure tends to stop a decline.",
       },
       keywords: {
-        fr: ["niveau", "prix", "achat", "acheteur", "stop", "arrête", "baisse"],
-        en: ["level", "price", "buy", "buyer", "stop", "halt", "decline"],
+        fr: [["niveau"], ["prix"], ["achet", "achat"], ["stop", "arret", "bloque"], ["baisse", "chute", "recul"]],
+        en: [["level"], ["price"], ["buy"], ["stop", "halt"], ["decline", "drop", "fall"]],
       },
     },
     {
@@ -28,8 +31,8 @@ const GLOSSARY_TERMS = {
         en: "A price level where selling pressure tends to stop a rise.",
       },
       keywords: {
-        fr: ["niveau", "prix", "vente", "vendeur", "stop", "arrête", "hausse"],
-        en: ["level", "price", "sell", "seller", "stop", "halt", "rise"],
+        fr: [["niveau"], ["prix"], ["vend", "vente"], ["stop", "arret", "bloque"], ["hausse", "monte", "augment"]],
+        en: [["level"], ["price"], ["sell"], ["stop", "halt"], ["rise", "rising", "increase"]],
       },
     },
     {
@@ -40,8 +43,8 @@ const GLOSSARY_TERMS = {
         en: "The general direction an asset's price follows over a given period.",
       },
       keywords: {
-        fr: ["direction", "prix", "période", "hausse", "baisse", "mouvement"],
-        en: ["direction", "price", "period", "up", "down", "movement"],
+        fr: [["direction"], ["prix"], ["actif", "marche"], ["periode", "duree"]],
+        en: [["direction"], ["price"], ["asset", "market"], ["period", "time"]],
       },
     },
     {
@@ -52,8 +55,8 @@ const GLOSSARY_TERMS = {
         en: "A chart representation showing the opening price, closing price, high, and low over a period.",
       },
       keywords: {
-        fr: ["ouverture", "clôture", "haut", "bas", "prix", "période"],
-        en: ["open", "close", "high", "low", "price", "period"],
+        fr: [["ouvert"], ["clotur"], ["haut"], ["bas"], ["prix"], ["periode"]],
+        en: [["open"], ["clos"], ["high"], ["low"], ["price"], ["period"]],
       },
     },
   ],
@@ -66,8 +69,8 @@ const GLOSSARY_TERMS = {
         en: "A temporary price move against the main trend, before the trend resumes.",
       },
       keywords: {
-        fr: ["retour", "temporaire", "tendance", "contre", "reprend"],
-        en: ["temporary", "against", "trend", "resumes", "pullback"],
+        fr: [["retour"], ["temporaire", "court"], ["tendance"], ["contre", "oppose"], ["repren", "continu"]],
+        en: [["temporary", "short"], ["against", "opposite"], ["trend"], ["resum", "continu"]],
       },
     },
     {
@@ -78,8 +81,8 @@ const GLOSSARY_TERMS = {
         en: "The magnitude of an asset's price fluctuations over a given period.",
       },
       keywords: {
-        fr: ["amplitude", "variation", "prix", "mouvement", "ampleur"],
-        en: ["magnitude", "fluctuation", "price", "movement", "swing"],
+        fr: [["amplitude", "ampleur"], ["variation", "mouvement"], ["prix"], ["periode"], ["actif"]],
+        en: [["magnitude", "size"], ["fluctuat", "movement"], ["price"], ["period"], ["asset"]],
       },
     },
     {
@@ -90,8 +93,8 @@ const GLOSSARY_TERMS = {
         en: "The tendency to seek, interpret, or favor information that confirms what one already believes.",
       },
       keywords: {
-        fr: ["chercher", "confirme", "croyance", "idée", "déjà", "ignore"],
-        en: ["seek", "confirm", "belief", "already", "ignore", "favor"],
+        fr: [["cherch", "recherch"], ["confirm"], ["deja", "avance"], ["pense", "croi", "crois"]],
+        en: [["seek", "search"], ["confirm"], ["already"], ["believ", "think"]],
       },
     },
     {
@@ -102,8 +105,8 @@ const GLOSSARY_TERMS = {
         en: "The comparison between what you risk losing on a trade and what you hope to gain.",
       },
       keywords: {
-        fr: ["risque", "perte", "gain", "compare", "rapport", "trade"],
-        en: ["risk", "loss", "gain", "compare", "ratio", "trade"],
+        fr: [["compar", "rapport"], ["risque"], ["perd", "perte"], ["trade", "position"], ["gagn", "gain"]],
+        en: [["compar", "ratio"], ["risk"], ["los", "loss"], ["trade", "position"], ["gain", "win"]],
       },
     },
   ],
@@ -116,8 +119,8 @@ const GLOSSARY_TERMS = {
         en: "A phase where the market moves between two price levels, without a clear trend.",
       },
       keywords: {
-        fr: ["entre", "niveaux", "sans", "tendance", "horizontal"],
-        en: ["between", "levels", "without", "trend", "sideways"],
+        fr: [["entre"], ["niveau"], ["sans", "aucune"], ["tendance"], ["marche"]],
+        en: [["between"], ["level"], ["without", "no clear"], ["trend"], ["market"]],
       },
     },
     {
@@ -128,8 +131,8 @@ const GLOSSARY_TERMS = {
         en: "A price move that breaks a key level then reverses direction, trapping traders.",
       },
       keywords: {
-        fr: ["dépasse", "niveau", "repart", "retourne", "piège", "sens"],
-        en: ["breaks", "level", "reverses", "direction", "trap"],
+        fr: [["depass", "casse", "franchi"], ["niveau"], ["repart", "retourn", "revient"], ["piege", "trompe"], ["sens", "direction"]],
+        en: [["break", "cross"], ["level"], ["revers", "return"], ["trap", "fool"], ["direction"]],
       },
     },
     {
@@ -140,8 +143,8 @@ const GLOSSARY_TERMS = {
         en: "Thinking too much about a decision, to the point of clouding judgment or being unable to act.",
       },
       keywords: {
-        fr: ["trop", "réfléchir", "décision", "bloque", "excès", "juge"],
-        en: ["overthink", "decision", "clouding", "judgment", "unable"],
+        fr: [["trop", "excessi"], ["reflech", "analys", "pense"], ["decision"], ["juge", "jugement"], ["agir", "action"]],
+        en: [["too much", "excess", "overthink"], ["think", "analy"], ["decision"], ["judgment", "judgement"], ["act", "action"]],
       },
     },
     {
@@ -152,14 +155,14 @@ const GLOSSARY_TERMS = {
         en: "The decline of a portfolio's capital from its highest previously reached level.",
       },
       keywords: {
-        fr: ["baisse", "capital", "haut", "perte", "portefeuille"],
-        en: ["decline", "capital", "high", "loss", "portfolio"],
+        fr: [["baisse", "perte", "chute"], ["capital"], ["portefeuille", "compte"], ["haut", "sommet"], ["niveau"]],
+        en: [["decline", "loss", "drop"], ["capital"], ["portfolio", "account"], ["high", "peak"], ["level"]],
       },
     },
   ],
 };
 
-// ============ CORRECTION PAR MOTS-CLÉS ============
+// ============ CORRECTION PAR CONCEPTS (groupes de mots-clés) ============
 function normalizeText(str) {
   return str
     .toLowerCase()
@@ -167,14 +170,16 @@ function normalizeText(str) {
     .replace(/[\u0300-\u036f]/g, ""); // retire les accents
 }
 
-function checkGlossaryAnswer(userAnswer, keywordList) {
+function checkGlossaryAnswer(userAnswer, conceptGroups) {
   const normalized = normalizeText(userAnswer || "");
-  const found = keywordList.filter((kw) => normalized.includes(normalizeText(kw)));
-  const ratio = keywordList.length > 0 ? found.length / keywordList.length : 0;
+  const foundConcepts = conceptGroups.filter((group) =>
+    group.some((variant) => normalized.includes(normalizeText(variant)))
+  );
+  const ratio = conceptGroups.length > 0 ? foundConcepts.length / conceptGroups.length : 0;
   return {
     passed: ratio >= GLOSSARY_PASS_THRESHOLD,
-    foundCount: found.length,
-    totalCount: keywordList.length,
+    foundCount: foundConcepts.length,
+    totalCount: conceptGroups.length,
     ratio,
   };
 }

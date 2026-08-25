@@ -101,6 +101,7 @@ const I18N_DICT = {
   "quiz.allPassedTitle": { fr: "Vocabulaire validé !", en: "Vocabulary validated!" },
   "quiz.allPassedBody": { fr: "Tu peux maintenant accéder aux exercices de ce niveau.", en: "You can now access this level's exercises." },
   "quiz.startExercises": { fr: "Commencer l'entraînement", en: "Start training" },
+  "level.bonusExercise": { fr: "Exercice bonus : Gestion de trade en cours de route", en: "Bonus exercise: Managing a Trade in Progress" },
   "quiz.locked": { fr: "🔒 Termine le quiz de vocabulaire ci-dessus pour débloquer l'entraînement.", en: "🔒 Finish the vocabulary quiz above to unlock training." },
   "quiz.retryHint": { fr: "Retente autant de fois que tu veux, sans pénalité.", en: "Try again as many times as you like, no penalty." },
   "quiz.emptyAnswer": { fr: "Écris une réponse avant de vérifier.", en: "Write an answer before checking." },

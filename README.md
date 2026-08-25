@@ -87,9 +87,14 @@ trading-training/
 - [x] Quiz de définitions par niveau (correction par mots-clés, débloque l'accès aux exercices)
 - [x] Gestion du risque (stop-loss/take-profit, score en multiples de R) sur les niveaux intermédiaire et expérimenté
 - [x] Mode séance : 5 exercices enchaînés dans le même niveau/marché, résumé avec P&L cumulé à la fin
+- [x] Exercice bonus "Gestion de trade en cours de route" (niveau Expérimenté) : 4 scénarios de décision en cours de trade, notation optimal/défendable/risqué
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
+
+## Exercice bonus : Gestion de trade en cours de route
+
+Page autonome `exercices/gestion-trade-en-cours.html`, accessible depuis la page niveau Expérimenté une fois le quiz de vocabulaire validé. 4 scénarios de décisions en cours de trade (ajuster un stop, prendre des profits partiels, tenir face à un pullback, gérer un pic de volatilité), chaque option notée sur une échelle qualitative (optimal/défendable/risqué) avec explication, puis bilan de synthèse à la fin. Contenu géré localement dans la page (pas via `i18n.js`), bilingue FR/EN, se re-rend automatiquement au changement de langue via l'événement `tt:langchange` (diffusé par `lang-toggle.js`).
 
 ## Mode séance
 

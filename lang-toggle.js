@@ -29,6 +29,9 @@
     btnFr.style.color = lang === "fr" ? "#06170a" : "#9aa39a";
     btnEn.style.color = lang === "en" ? "#06170a" : "#9aa39a";
     if (typeof ttSetLang === "function") ttSetLang(lang);
+    // Diffuse un événement pour que les pages avec du contenu généré en JS
+    // (comme un exercice) puissent se re-rendre dans la nouvelle langue.
+    window.dispatchEvent(new CustomEvent("tt:langchange", { detail: { lang } }));
   }
 
   btnFr.addEventListener("click", () => setActive("fr"));

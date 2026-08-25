@@ -9,21 +9,20 @@
 
     const prefix = container.dataset.prefix || '';
 
-    supabaseClient.auth.getSession().then(({ data }) => {
-        const session = data.session;
-        if (!session) return;
+    function tt(key) {
+        const lang = typeof ttGetLang === 'function' ? ttGetLang() : 'fr';
+        return (typeof I18N_DICT !== 'undefined' && I18N_DICT[key]) ? (I18N_DICT[key][lang] || I18N_DICT[key].fr) : key;
+    }
 
-        const email = session.user.email;
-        const firstName = (session.user.user_metadata && session.user.user_metadata.full_name) || email.split('@')[0];
-
+    function renderMenu(firstName) {
         container.innerHTML = `
-            <a href="${prefix}abonnement/abonnement.html" class="btn-secondary top-bar-plan">Abonnement</a>
+            <a href="${prefix}abonnement/abonnement.html" class="btn-secondary top-bar-plan">${tt('nav.subscription')}</a>
             <div class="account-menu">
                 <button class="btn-login" id="accountBtn"><span id="accountBtnName"></span> <span class="menu-caret">▾</span></button>
                 <div class="account-dropdown" id="accountDropdown">
-                    <a href="${prefix}compte/compte.html">Mon compte</a>
-                    <a href="${prefix}abonnement/abonnement.html">Abonnement</a>
-                    <button id="logoutMenuBtn">Se déconnecter</button>
+                    <a href="${prefix}compte/compte.html">${tt('nav.account')}</a>
+                    <a href="${prefix}abonnement/abonnement.html">${tt('nav.subscription')}</a>
+                    <button id="logoutMenuBtn">${tt('nav.logout')}</button>
                 </div>
             </div>
         `;
@@ -47,5 +46,16 @@
             await supabaseClient.auth.signOut();
             window.location.href = prefix + 'index.html';
         });
+    }
+
+    supabaseClient.auth.getSession().then(({ data }) => {
+        const session = data.session;
+        if (!session) return;
+
+        const email = session.user.email;
+        const firstName = (session.user.user_metadata && session.user.user_metadata.full_name) || email.split('@')[0];
+
+        renderMenu(firstName);
+        window.addEventListener('tt:langchange', () => renderMenu(firstName));
     });
 })();

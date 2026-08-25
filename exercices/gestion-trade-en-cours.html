@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Training - Gestion de trade en cours de route</title>
+    <link rel="stylesheet" href="../style.css?v=3">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase-client.js"></script>
+    <script src="../i18n.js?v=2"></script>
+    <style>
+        .exo-wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 70px 24px 100px;
+        }
+        .exo-wrap .back-link {
+            display: inline-block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+            transition: color 0.2s ease;
+        }
+        .exo-wrap .back-link:hover { color: var(--accent); }
+        .exo-wrap .eyebrow {
+            display: block;
+            color: var(--accent);
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        .exo-wrap h1 {
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            margin-bottom: 14px;
+        }
+        .exo-intro {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 36px;
+        }
+        .exo-card {
+            background-color: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+        }
+        .exo-progress {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+        .exo-progress span {
+            height: 4px;
+            flex: 1;
+            border-radius: 2px;
+            background-color: var(--border);
+            transition: background-color 0.2s ease;
+        }
+        .exo-progress span.done,
+        .exo-progress span.current-done { background-color: var(--accent); }
+        .exo-progress span.current { background-color: #3d4a3d; }
+        .exo-count {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .exo-setup { font-size: 0.95rem; margin: 16px 0 6px; }
+        .exo-tape { font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 18px; }
+        .exo-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+        }
+        .exo-option:hover:not(:disabled) { border-color: var(--accent); }
+        .exo-option:disabled { cursor: default; }
+        .exo-option.picked-optimal { border-color: #8fd14f; background-color: rgba(143, 209, 79, 0.1); }
+        .exo-option.picked-defendable { border-color: #f0b429; background-color: rgba(240, 180, 41, 0.1); }
+        .exo-option.picked-risque { border-color: #ef4444; background-color: rgba(239, 68, 68, 0.1); }
+        .exo-option.faded { opacity: 0.4; }
+        .exo-feedback {
+            margin-top: 6px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.03);
+        }
+        .exo-tier-badge {
+            display: inline-block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .exo-tier-badge.optimal { background-color: rgba(143, 209, 79, 0.15); color: #8fd14f; }
+        .exo-tier-badge.defendable { background-color: rgba(240, 180, 41, 0.15); color: #f0b429; }
+        .exo-tier-badge.risque { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .exo-feedback p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+        .exo-nav { display: flex; justify-content: space-between; margin-top: 22px; }
+        .exo-nav button:disabled { opacity: 0.35; cursor: default; }
+        .exo-summary-grid {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .exo-summary-tile {
+            flex: 1;
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+        .exo-summary-tile .num { font-family: 'Oswald', sans-serif; font-size: 1.6rem; margin-top: 4px; }
+        .exo-summary-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 0;
+            border-top: 1px solid var(--border);
+        }
+        .exo-summary-row .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+        .exo-summary-row .label { font-size: 0.78rem; color: var(--text-muted); margin: 0; }
+        .exo-summary-row .txt { font-size: 0.9rem; margin: 2px 0 0; }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="../index.html" class="logo-container">
+            <img src="../logott.png" alt="Logo Trading Training" class="logo">
+        </a>
+        <div class="top-bar-right">
+            <div id="langToggle"></div>
+            <div class="top-bar-actions" id="topBarActions" data-prefix="../">
+                <a href="../authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="exo-wrap">
+        <a href="../niveaux/experimente.html" class="back-link" id="exoBackLink">← Retour au niveau Expérimenté</a>
+        <span class="eyebrow" id="exoEyebrow">EXERCICE · LVL.03</span>
+        <h1 id="exoTitle">Gestion de trade en cours de route</h1>
+        <p class="exo-intro" id="exoIntro">Quatre scénarios avancés de décision en cours de trade : ajustement de stop, prise de profit partielle, tenue de position face à un pullback, et gestion d'un pic de volatilité. Chaque choix est noté sur une échelle qualitative — optimal, défendable ou risqué — car en gestion de trade en cours, plusieurs approches restent défendables selon le contexte.</p>
+
+        <div class="exo-card">
+            <div id="exoApp"></div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <span data-i18n="home.footerTag">Trading Training</span>
+    </footer>
+
+    <script src="../app.js"></script>
+    <script src="../auth-state.js"></script>
+    <script src="../lang-toggle.js?v=3"></script>
+    <script>
+    (function () {
+        // ============ TRADUCTIONS LOCALES DE CET EXERCICE ============
+        var STATIC_T = {
+            backLink: { fr: "← Retour au niveau Expérimenté", en: "← Back to the Experienced level" },
+            eyebrow: { fr: "EXERCICE · LVL.03", en: "EXERCISE · LVL.03" },
+            title: { fr: "Gestion de trade en cours de route", en: "Managing a Trade in Progress" },
+            intro: {
+                fr: "Quatre scénarios avancés de décision en cours de trade : ajustement de stop, prise de profit partielle, tenue de position face à un pullback, et gestion d'un pic de volatilité. Chaque choix est noté sur une échelle qualitative — optimal, défendable ou risqué — car en gestion de trade en cours, plusieurs approches restent défendables selon le contexte.",
+                en: "Four advanced in-trade decision scenarios: adjusting a stop, taking partial profits, holding through a pullback, and managing a volatility spike. Each choice is rated on a qualitative scale — optimal, defendable, or risky — because in live trade management, several approaches can be defendable depending on context.",
+            },
+            scenarioCount: { fr: "Scénario", en: "Scenario" },
+            of: { fr: "sur", en: "of" },
+            prev: { fr: "Précédent", en: "Previous" },
+            next: { fr: "Scénario suivant", en: "Next scenario" },
+            seeSummary: { fr: "Voir le bilan", en: "See results" },
+            restart: { fr: "Recommencer", en: "Restart" },
+            backToLevel: { fr: "Retour au niveau", en: "Back to level" },
+        };
+
+        function stt(key) {
+            var lang = typeof ttGetLang === "function" ? ttGetLang() : "fr";
+            return STATIC_T[key][lang] || STATIC_T[key].fr;
+        }
+
+        function applyStaticText() {
+            document.getElementById("exoBackLink").textContent = stt("backLink");
+            document.getElementById("exoEyebrow").textContent = stt("eyebrow");
+            document.getElementById("exoTitle").textContent = stt("title");
+            document.getElementById("exoIntro").textContent = stt("intro");
+        }
+
+        var scenarios = [
+            {
+                setup: {
+                    fr: "Position longue ouverte à 50,00 € sur XYZ, stop initial à 49,50 € (risque de 0,50 €/action).",
+                    en: "Long position open at €50.00 on XYZ, initial stop at €49.50 (risk of €0.50/share).",
+                },
+                tape: {
+                    fr: "Le prix accélère à 51,50 € en quelques minutes sur un volume élevé, puis le spread s'élargit et les empilements au bid diminuent : la pression acheteuse semble faiblir.",
+                    en: "The price accelerates to €51.50 within minutes on high volume, then the spread widens and bid-side stacking thins out: buying pressure appears to be fading.",
+                },
+                price: [10, 14, 13, 20, 30, 40, 52],
+                volume: [20, 25, 30, 55, 70, 45],
+                options: [
+                    {
+                        text: { fr: "Prendre tous les profits immédiatement", en: "Take all profits immediately" },
+                        tier: "risque",
+                        note: {
+                            fr: "Coupe un mouvement qui a peut-être encore de la place, sans confirmation claire d'un retournement.",
+                            en: "Cuts a move that may still have room left, without clear confirmation of a reversal.",
+                        },
+                    },
+                    {
+                        text: { fr: "Garder le stop initial à 49,50 €, sans rien changer", en: "Keep the initial stop at €49.50, change nothing" },
+                        tier: "risque",
+                        note: {
+                            fr: "Expose à rendre la quasi-totalité du gain si le signal d'essoufflement se confirme.",
+                            en: "Exposes you to giving back nearly all the gain if the exhaustion signal is confirmed.",
+                        },
+                    },
+                    {
+                        text: {
+                            fr: "Sécuriser une partie de la position et remonter le stop du reste au point d'entrée",
+                            en: "Lock in part of the position and move the stop on the rest to breakeven",
+                        },
+                        tier: "optimal",
+                        note: {
+                            fr: "Protège le gain acquis tout en gardant une exposition si le mouvement continue malgré le signal d'essoufflement.",
+                            en: "Protects the gain already made while keeping exposure if the move continues despite the exhaustion signal.",
+                        },
+                    },
+                    {
+                        text: { fr: "Resserrer le stop juste sous le prix actuel", en: "Tighten the stop just below the current price" },
+                        tier: "defendable",
+                        note: {
+                            fr: "Verrouille presque tout le gain, mais risque une sortie prématurée sur du simple bruit de marché.",
+                            en: "Locks in almost all the gain, but risks a premature exit on simple market noise.",
+                        },
+                    },
+                ],
+            },
+            {
+                setup: {
+                    fr: "Position longue ouverte à 120,00 $ sur ABC, objectif technique vers l'ancien sommet à 125,00 $.",
+                    en: "Long position open at $120.00 on ABC, technical target near the prior high at $125.00.",
+                },
+                tape: {
+                    fr: "Le prix approche 124,80 $, mais le volume diminue nettement sur les trois dernières bougies, qui deviennent de petits corps indécis.",
+                    en: "The price approaches $124.80, but volume drops noticeably over the last three candles, which turn into small, indecisive bodies.",
+                },
+                price: [10, 18, 25, 30, 33, 35, 36],
+                volume: [60, 55, 40, 30, 22, 15],
+                options: [
+                    {
+                        text: { fr: "Prendre tous les profits maintenant, avant le test du sommet", en: "Take all profits now, before the test of the high" },
+                        tier: "defendable",
+                        note: {
+                            fr: "Verrouille un gain complet, mais suppose un retournement qui n'est pas encore confirmé.",
+                            en: "Locks in a full gain, but assumes a reversal that isn't confirmed yet.",
+                        },
+                    },
+                    {
+                        text: {
+                            fr: "Alléger la position et laisser le reste courir avec un stop suiveur",
+                            en: "Trim the position and let the rest run with a trailing stop",
+                        },
+                        tier: "optimal",
+                        note: {
+                            fr: "Prend en compte l'essoufflement du volume tout en laissant une part de la position profiter d'une éventuelle cassure.",
+                            en: "Accounts for the volume exhaustion while still letting part of the position benefit from a possible breakout.",
+                        },
+                    },
+                    {
+                        text: { fr: "Renforcer la position en visant la cassure du sommet", en: "Add to the position, targeting a breakout of the high" },
+                        tier: "risque",
+                        note: {
+                            fr: "Ajouter sur un volume déclinant près d'une résistance connue va à l'encontre du signal de la tape.",
+                            en: "Adding on declining volume near a known resistance goes against the signal from the tape.",
+                        },
+                    },
+                    {
+                        text: {
+                            fr: "Garder la position entière inchangée jusqu'à la cassure confirmée",
+                            en: "Keep the entire position unchanged until the breakout is confirmed",
+                        },
+                        tier: "defendable",
+                        note: {
+                            fr: "Reste cohérent avec le plan initial, mais expose la totalité du gain à un retournement sur résistance.",
+                            en: "Stays consistent with the initial plan, but exposes the entire gain to a reversal at resistance.",
+                        },
+                    },
+                ],
+            },
+            {
+                setup: {
+                    fr: "Position longue à 80,00 € sur DEF, stop à 78,50 € (risque de 1,50 €/action).",
+                    en: "Long position at €80.00 on DEF, stop at €78.50 (risk of €1.50/share).",
+                },
+                tape: {
+                    fr: "Le prix recule à 79,20 € sur un pullback normal après l'entrée, toujours au-dessus du stop. Le flux d'ordres reste globalement acheteur, sans vendeurs agressifs.",
+                    en: "The price pulls back to €79.20 in a normal pullback after entry, still above the stop. Order flow remains broadly on the buy side, with no aggressive sellers.",
+                },
+                price: [10, 20, 26, 18, 17, 19, 20],
+                volume: [40, 42, 38, 40, 39, 41],
+                options: [
+                    {
+                        text: { fr: "Sortir maintenant pour éviter d'aller plus loin dans le rouge", en: "Exit now to avoid going further into the red" },
+                        tier: "risque",
+                        note: {
+                            fr: "Sortie émotionnelle sans nouvelle information contredisant le scénario initial : elle abandonne l'edge du setup.",
+                            en: "An emotional exit with no new information contradicting the original thesis — it gives up the setup's edge.",
+                        },
+                    },
+                    {
+                        text: { fr: "Garder la position telle quelle, le stop n'étant pas touché", en: "Keep the position as is, since the stop hasn't been hit" },
+                        tier: "optimal",
+                        note: {
+                            fr: "Le pullback reste dans le plan de risque initial et le flux d'ordres soutient toujours le scénario.",
+                            en: "The pullback stays within the original risk plan, and order flow still supports the thesis.",
+                        },
+                    },
+                    {
+                        text: { fr: "Descendre le stop pour laisser plus de marge à la position", en: "Lower the stop to give the position more room" },
+                        tier: "risque",
+                        note: {
+                            fr: "Augmente le risque au-delà du plan initial sans justification technique nouvelle.",
+                            en: "Increases risk beyond the original plan without any new technical justification.",
+                        },
+                    },
+                    {
+                        text: { fr: "Réduire la taille de la position pour se sentir plus à l'aise", en: "Reduce position size to feel more comfortable" },
+                        tier: "defendable",
+                        note: {
+                            fr: "Diminue l'exposition émotionnelle, mais dilue l'edge du setup sur un signal purement subjectif.",
+                            en: "Lowers emotional exposure, but dilutes the setup's edge based on a purely subjective signal.",
+                        },
+                    },
+                ],
+            },
+            {
+                setup: {
+                    fr: "Position courte à 300,00 $ sur GHI, stop à 303,00 $.",
+                    en: "Short position at $300.00 on GHI, stop at $303.00.",
+                },
+                tape: {
+                    fr: "Une annonce macro inattendue tombe : le prix devient très volatil, avec des mèches de plusieurs dollars dans les deux sens en quelques secondes, sans direction claire.",
+                    en: "An unexpected macro headline drops: the price turns highly volatile, with multi-dollar wicks in both directions within seconds, with no clear direction.",
+                },
+                price: [30, 45, 15, 50, 10, 48, 20],
+                volume: [50, 80, 90, 85, 95, 88],
+                options: [
+                    {
+                        text: { fr: "Sortir immédiatement au marché", en: "Exit immediately at market" },
+                        tier: "defendable",
+                        note: {
+                            fr: "Réduit l'exposition à une volatilité imprévisible, au prix d'une sortie possiblement à un cours défavorable.",
+                            en: "Reduces exposure to unpredictable volatility, at the cost of a possibly unfavorable exit price.",
+                        },
+                    },
+                    {
+                        text: { fr: "Garder la position et le stop initial sans les ajuster", en: "Keep the position and the initial stop unchanged" },
+                        tier: "risque",
+                        note: {
+                            fr: "Le stop a été calibré pour des conditions normales, il n'est plus adapté à ce régime de volatilité soudain.",
+                            en: "The stop was calibrated for normal conditions and is no longer suited to this sudden volatility regime.",
+                        },
+                    },
+                    {
+                        text: { fr: "Élargir le stop pour laisser respirer la position", en: "Widen the stop to give the position room to breathe" },
+                        tier: "risque",
+                        note: {
+                            fr: "Augmente le risque en pleine incertitude, sans nouveau plan qui justifie cette prise de risque supplémentaire.",
+                            en: "Increases risk in the middle of uncertainty, with no new plan justifying the extra risk taken on.",
+                        },
+                    },
+                    {
+                        text: {
+                            fr: "Réduire la taille de la position et actualiser le stop pour la nouvelle volatilité",
+                            en: "Reduce position size and update the stop for the new volatility",
+                        },
+                        tier: "optimal",
+                        note: {
+                            fr: "Adapte le risque au nouveau régime de marché sans abandonner le scénario initial.",
+                            en: "Adapts risk to the new market regime without abandoning the original thesis.",
+                        },
+                    },
+                ],
+            },
+        ];
+
+        var tierLabel = {
+            optimal: { fr: "Optimal", en: "Optimal" },
+            defendable: { fr: "Défendable", en: "Defendable" },
+            risque: { fr: "Risqué", en: "Risky" },
+        };
+
+        var current = 0;
+        var answers = new Array(scenarios.length).fill(null);
+        var app = document.getElementById("exoApp");
+
+        function lang() {
+            return typeof ttGetLang === "function" ? ttGetLang() : "fr";
+        }
+
+        function buildChart(s) {
+            var w = 300, ph = 60, vh = 18, gap = 6, totalH = ph + gap + vh, pMax = 60, vMax = 100;
+            var n = s.price.length;
+            var xStepP = w / (n - 1);
+            var pts = s.price.map(function (v, i) {
+                return (i * xStepP).toFixed(1) + "," + (ph - (v / pMax) * ph).toFixed(1);
+            }).join(" ");
+            var nv = s.volume.length;
+            var xStepV = w / nv;
+            var barW = xStepV * 0.6;
+            var bars = s.volume.map(function (v, i) {
+                var bh = (v / vMax) * vh;
+                var x = i * xStepV + (xStepV - barW) / 2;
+                var y = ph + gap + (vh - bh);
+                return '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + barW.toFixed(1) + '" height="' + bh.toFixed(1) + '" fill="#5c655c" />';
+            }).join("");
+            var lastX = (n - 1) * xStepP;
+            var lastY = ph - (s.price[n - 1] / pMax) * ph;
+            return '<svg viewBox="0 0 ' + w + ' ' + totalH + '" width="100%" height="120" role="img" aria-label="Chart">' +
+                '<polyline points="' + pts + '" fill="none" stroke="#f4f6f2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />' +
+                '<circle cx="' + lastX.toFixed(1) + '" cy="' + lastY.toFixed(1) + '" r="4" fill="#CDFC8A" />' +
+                '<line x1="' + lastX.toFixed(1) + '" y1="0" x2="' + lastX.toFixed(1) + '" y2="' + ph + '" stroke="#3d4a3d" stroke-width="1" stroke-dasharray="3,3" />' +
+                bars + '</svg>';
+        }
+
+        function render() {
+            applyStaticText();
+            if (current >= scenarios.length) { renderSummary(); return; }
+            var l = lang();
+            var s = scenarios[current];
+            var ans = answers[current];
+
+            var progressHtml = scenarios.map(function (_, i) {
+                var cls = i < current ? "done" : (i === current ? (ans !== null ? "current-done" : "current") : "");
+                return '<span class="' + cls + '"></span>';
+            }).join("");
+
+            var optionsHtml = s.options.map(function (o, i) {
+                var cls = "exo-option";
+                if (ans !== null) cls += (i === ans) ? (" picked-" + o.tier) : " faded";
+                return '<button type="button" class="' + cls + '" data-idx="' + i + '" ' + (ans !== null ? "disabled" : "") + '>' + o.text[l] + '</button>';
+            }).join("");
+
+            var feedbackHtml = "";
+            if (ans !== null) {
+                var o = s.options[ans];
+                feedbackHtml = '<div class="exo-feedback"><span class="exo-tier-badge ' + o.tier + '">' + tierLabel[o.tier][l] + '</span><p>' + o.note[l] + '</p></div>';
+            }
+
+            app.innerHTML =
+                '<div class="exo-progress">' + progressHtml + '</div>' +
+                '<p class="exo-count">' + stt("scenarioCount") + ' ' + (current + 1) + ' ' + stt("of") + ' ' + scenarios.length + '</p>' +
+                buildChart(s) +
+                '<p class="exo-setup">' + s.setup[l] + '</p>' +
+                '<p class="exo-tape">' + s.tape[l] + '</p>' +
+                optionsHtml +
+                feedbackHtml +
+                '<div class="exo-nav">' +
+                '<button type="button" class="btn-secondary" id="exoPrev" ' + (current === 0 ? "disabled" : "") + '>' + stt("prev") + '</button>' +
+                '<button type="button" class="btn-primary" id="exoNext" ' + (ans === null ? "disabled" : "") + '>' + (current === scenarios.length - 1 ? stt("seeSummary") : stt("next")) + '</button>' +
+                '</div>';
+
+            app.querySelectorAll(".exo-option").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    answers[current] = parseInt(btn.getAttribute("data-idx"), 10);
+                    render();
+                });
+            });
+            document.getElementById("exoPrev").addEventListener("click", function () { current = Math.max(0, current - 1); render(); });
+            document.getElementById("exoNext").addEventListener("click", function () { current++; render(); });
+        }
+
+        function renderSummary() {
+            applyStaticText();
+            var l = lang();
+            var counts = { optimal: 0, defendable: 0, risque: 0 };
+            answers.forEach(function (a, i) { counts[scenarios[i].options[a].tier]++; });
+
+            var rows = scenarios.map(function (s, i) {
+                var o = s.options[answers[i]];
+                var dotColor = o.tier === "optimal" ? "#8fd14f" : (o.tier === "defendable" ? "#f0b429" : "#ef4444");
+                return '<div class="exo-summary-row"><span class="dot" style="background-color:' + dotColor + ';"></span><div><p class="label">' + stt("scenarioCount") + ' ' + (i + 1) + ' — ' + tierLabel[o.tier][l] + '</p><p class="txt">' + o.text[l] + '</p></div></div>';
+            }).join("");
+
+            app.innerHTML =
+                '<div class="exo-summary-grid">' +
+                '<div class="exo-summary-tile"><p class="exo-count" style="margin:0;">' + tierLabel.optimal[l] + '</p><p class="num" style="color:#8fd14f;">' + counts.optimal + '</p></div>' +
+                '<div class="exo-summary-tile"><p class="exo-count" style="margin:0;">' + tierLabel.defendable[l] + '</p><p class="num" style="color:#f0b429;">' + counts.defendable + '</p></div>' +
+                '<div class="exo-summary-tile"><p class="exo-count" style="margin:0;">' + tierLabel.risque[l] + '</p><p class="num" style="color:#ef4444;">' + counts.risque + '</p></div>' +
+                '</div>' +
+                rows +
+                '<div style="display:flex; gap:12px; margin-top:22px; flex-wrap:wrap;">' +
+                '<button type="button" class="btn-primary" id="exoRestart">' + stt("restart") + '</button>' +
+                '<a href="../niveaux/experimente.html" class="btn-secondary">' + stt("backToLevel") + '</a>' +
+                '</div>';
+
+            document.getElementById("exoRestart").addEventListener("click", function () {
+                current = 0;
+                answers = new Array(scenarios.length).fill(null);
+                render();
+            });
+        }
+
+        window.addEventListener("tt:langchange", render);
+
+        render();
+    })();
+    </script>
+</body>
+</html>

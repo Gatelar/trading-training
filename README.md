@@ -90,9 +90,19 @@ trading-training/
 - [x] Exercice bonus "Gestion de trade en cours de route" (niveau Expérimenté) : 4 scénarios de décision en cours de trade, notation optimal/défendable/risqué
 - [x] Identification de structure (support/résistance) sur intermédiaire et expérimenté, avant le choix achat/vente, avec score de précision contre les vrais points pivots
 - [x] Quiz "quel événement explique ce mouvement" (EUR/USD, tous niveaux) intégré au debrief post-reveal
+- [x] Progression entre niveaux : intermédiaire/expérimenté verrouillés (y compris leur quiz de vocabulaire) tant qu'un seuil de performance n'est pas atteint sur le niveau précédent
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
+
+## Progression entre niveaux
+
+Le niveau intermédiaire et le niveau expérimenté ne sont plus accessibles librement — même leur quiz de vocabulaire est verrouillé tant qu'un seuil de performance n'est pas atteint sur le niveau précédent :
+
+- **Débutant → Intermédiaire** : terminer une séance complète avec au moins **60% de réussite**
+- **Intermédiaire → Expérimenté** : terminer une séance complète avec un **R cumulé ≥ +1R**
+
+Seuils définis dans `PROGRESSION_THRESHOLDS` (`trading-trainer-prototype.jsx`). Le déblocage est vérifié et enregistré (`checkAndUnlockNextLevel`) à la fin de chaque séance, dans `localStorage` (`tt_progression_unlocked_<niveau>`). Les pages `niveaux/intermediaire.html` et `niveaux/experimente.html` vérifient ce même flag avant même d'afficher leur quiz de vocabulaire ; le simulateur React fait de même via `isLevelUnlocked` (qui combine désormais quiz-validé ET progression débloquée).
 
 ## Quiz "Quel événement explique ce mouvement ?" (EUR/USD)
 

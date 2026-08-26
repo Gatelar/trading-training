@@ -104,6 +104,10 @@ const I18N_DICT = {
   "level.bonusExercise": { fr: "Exercice bonus : Gestion de trade en cours de route", en: "Bonus exercise: Managing a Trade in Progress" },
   "quiz.locked": { fr: "🔒 Termine le quiz de vocabulaire ci-dessus pour débloquer l'entraînement.", en: "🔒 Finish the vocabulary quiz above to unlock training." },
   "quiz.retryHint": { fr: "Retente autant de fois que tu veux, sans pénalité.", en: "Try again as many times as you like, no penalty." },
+  "progression.lockedIntermediaireTitle": { fr: "🔒 Niveau verrouillé", en: "🔒 Level locked" },
+  "progression.lockedIntermediaireBody": { fr: "Termine une séance complète de niveau Débutant avec au moins 60% de réussite pour débloquer ce niveau.", en: "Complete a full Beginner-level session with at least 60% win rate to unlock this level." },
+  "progression.lockedExperimenteBody": { fr: "Termine une séance complète de niveau Intermédiaire avec un résultat cumulé d'au moins +1R pour débloquer ce niveau.", en: "Complete a full Intermediate-level session with a cumulative result of at least +1R to unlock this level." },
+  "progression.backToPrereq": { fr: "Aller au niveau prérequis", en: "Go to the prerequisite level" },
   "quiz.emptyAnswer": { fr: "Écris une réponse avant de vérifier.", en: "Write an answer before checking." },
 
   // ---- Pages légales ----

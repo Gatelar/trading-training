@@ -31,15 +31,22 @@
         <h1 data-i18n="home.level3Title">Expérimenté</h1>
         <p class="level-intro" data-i18n="quiz.intro">Avant de commencer, montre que tu maîtrises le vocabulaire de ce niveau. Pas besoin d'une définition parfaite — retrouve juste les idées clés avec tes propres mots.</p>
 
-        <div class="quiz-container" id="quizContainer" data-level="experimente"></div>
-
-        <div class="quiz-unlock" id="quizUnlock">
-            <p data-i18n="quiz.allPassedBody">Tu peux maintenant accéder aux exercices de ce niveau.</p>
-            <a href="../trading-trainer.html?level=experimente" class="btn-primary" data-i18n="quiz.startExercises">Commencer l'entraînement</a>
-            <a href="../exercices/gestion-trade-en-cours.html" class="btn-secondary" style="margin-top:12px;display:inline-block;" data-i18n="level.bonusExercise">Exercice bonus : Gestion de trade en cours de route</a>
+        <div id="progressionLockedMsg" style="display:none;">
+            <p class="quiz-locked-msg" style="text-align:left; color: var(--text-muted); margin-top: 0;" data-i18n="progression.lockedExperimenteBody">Termine une séance complète de niveau Intermédiaire avec un résultat cumulé d'au moins +1R pour débloquer ce niveau.</p>
+            <a href="../niveaux/intermediaire.html" class="btn-secondary" data-i18n="progression.backToPrereq">Aller au niveau prérequis</a>
         </div>
 
-        <p class="quiz-locked-msg" id="quizLockedMsg" data-i18n="quiz.locked">🔒 Termine le quiz de vocabulaire ci-dessus pour débloquer l'entraînement.</p>
+        <div id="progressionUnlockedContent">
+            <div class="quiz-container" id="quizContainer" data-level="experimente"></div>
+
+            <div class="quiz-unlock" id="quizUnlock">
+                <p data-i18n="quiz.allPassedBody">Tu peux maintenant accéder aux exercices de ce niveau.</p>
+                <a href="../trading-trainer.html?level=experimente" class="btn-primary" data-i18n="quiz.startExercises">Commencer l'entraînement</a>
+                <a href="../exercices/gestion-trade-en-cours.html" class="btn-secondary" style="margin-top:12px;display:inline-block;" data-i18n="level.bonusExercise">Exercice bonus : Gestion de trade en cours de route</a>
+            </div>
+
+            <p class="quiz-locked-msg" id="quizLockedMsg" data-i18n="quiz.locked">🔒 Termine le quiz de vocabulaire ci-dessus pour débloquer l'entraînement.</p>
+        </div>
     </section>
 
     <footer class="site-footer">
@@ -49,6 +56,16 @@
     <script src="../app.js"></script>
     <script src="../auth-state.js?v=2"></script>
     <script src="../lang-toggle.js?v=3"></script>
+    <script>
+        (function () {
+            var unlocked = false;
+            try { unlocked = localStorage.getItem('tt_progression_unlocked_experimente') === '1'; } catch (e) {}
+            if (!unlocked) {
+                document.getElementById('progressionLockedMsg').style.display = 'block';
+                document.getElementById('progressionUnlockedContent').style.display = 'none';
+            }
+        })();
+    </script>
     <script src="quiz.js?v=2"></script>
 </body>
 </html>

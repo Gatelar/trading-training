@@ -157,6 +157,10 @@ const T = {
   newsQuizTitle: { fr: "D'après toi, quel événement explique ce mouvement ?", en: "Which event do you think explains this move?" },
   newsQuizCorrect: { fr: "✓ Exact —", en: "✓ Correct —" },
   newsQuizIncorrect: { fr: "✗ En réalité —", en: "✗ Actually —" },
+
+  // ---- Progression entre niveaux ----
+  progressionUnlockedTitle: { fr: "🔓 Niveau suivant débloqué !", en: "🔓 Next level unlocked!" },
+  progressionUnlockedBody: { fr: "Ta performance ouvre l'accès au niveau suivant.", en: "Your performance unlocks the next level." },
 };
 
 function t(key, lang) {
@@ -1181,9 +1185,45 @@ function CandlestickChart({
   );
 }
 
+// ============ PROGRESSION ENTRE NIVEAUX ============
+// Un niveau intermédiaire/expérimenté n'est accessible (même son quiz de vocabulaire)
+// qu'après avoir démontré une performance minimale sur le niveau précédent.
+const PROGRESSION_THRESHOLDS = {
+  intermediaire: { prereqLevel: "debutant", metric: "winRate", min: 60 },
+  experimente: { prereqLevel: "intermediaire", metric: "cumulativeR", min: 1 },
+};
+
+function isProgressionUnlocked(levelId) {
+  const rule = PROGRESSION_THRESHOLDS[levelId];
+  if (!rule) return true; // débutant : pas de prérequis
+  try {
+    return localStorage.getItem(`tt_progression_unlocked_${levelId}`) === "1";
+  } catch (e) {
+    return false;
+  }
+}
+
+function markProgressionUnlocked(levelId) {
+  try {
+    localStorage.setItem(`tt_progression_unlocked_${levelId}`, "1");
+  } catch (e) {}
+}
+
+// Vérifie si la séance qui vient de se terminer (pour `completedLevel`) débloque
+// le niveau suivant, et l'enregistre si c'est le cas.
+function checkAndUnlockNextLevel(completedLevel, winRate, cumulativeR) {
+  Object.keys(PROGRESSION_THRESHOLDS).forEach((nextLevel) => {
+    const rule = PROGRESSION_THRESHOLDS[nextLevel];
+    if (rule.prereqLevel !== completedLevel) return;
+    const value = rule.metric === "winRate" ? winRate : cumulativeR;
+    if (value >= rule.min) markProgressionUnlocked(nextLevel);
+  });
+}
+
 function isLevelUnlocked(levelId) {
   try {
-    return localStorage.getItem(`tt_quiz_passed_${levelId}`) === "1";
+    const quizPassed = localStorage.getItem(`tt_quiz_passed_${levelId}`) === "1";
+    return quizPassed && isProgressionUnlocked(levelId);
   } catch (e) {
     return false;
   }
@@ -2039,10 +2079,35 @@ function SessionSummaryScreen({ sessionResults, level, domain, onNewSession, onC
   const winRate = sessionResults.length > 0 ? (winCount / sessionResults.length) * 100 : 0;
   const avgR = sessionResults.length > 0 ? cumulativeR / sessionResults.length : 0;
 
+  const [justUnlocked, setJustUnlocked] = useState(false);
+
+  useEffect(() => {
+    if (sessionResults.length === 0) return;
+    const alreadyUnlocked = Object.keys(PROGRESSION_THRESHOLDS).some(
+      (nextLevel) => PROGRESSION_THRESHOLDS[nextLevel].prereqLevel === level && isProgressionUnlocked(nextLevel)
+    );
+    checkAndUnlockNextLevel(level, winRate, cumulativeR);
+    const nowUnlocked = Object.keys(PROGRESSION_THRESHOLDS).some(
+      (nextLevel) => PROGRESSION_THRESHOLDS[nextLevel].prereqLevel === level && isProgressionUnlocked(nextLevel)
+    );
+    if (!alreadyUnlocked && nowUnlocked) setJustUnlocked(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const statCardStyle = { backgroundColor: C_BG_SOFT, borderColor: C_BORDER };
 
   return (
     <div className="max-w-2xl mx-auto">
+      {justUnlocked && (
+        <div className="rounded-xl p-4 border mb-6" style={{ backgroundColor: "rgba(205,252,138,0.08)", borderColor: C_ACCENT_DIM }}>
+          <p className="font-display text-sm mb-1" style={{ color: C_ACCENT }}>
+            {t("progressionUnlockedTitle", lang)}
+          </p>
+          <p className="text-xs" style={{ color: C_TEXT_MUTED }}>
+            {t("progressionUnlockedBody", lang)}
+          </p>
+        </div>
+      )}
       <p className="font-data text-xs tracking-widest mb-2" style={{ color: C_ACCENT }}>
         {t("sessionSummaryTitle", lang).toUpperCase()}
       </p>

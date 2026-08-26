@@ -88,9 +88,18 @@ trading-training/
 - [x] Gestion du risque (stop-loss/take-profit, score en multiples de R) sur les niveaux intermédiaire et expérimenté
 - [x] Mode séance : 5 exercices enchaînés dans le même niveau/marché, résumé avec P&L cumulé à la fin
 - [x] Exercice bonus "Gestion de trade en cours de route" (niveau Expérimenté) : 4 scénarios de décision en cours de trade, notation optimal/défendable/risqué
+- [x] Identification de structure (support/résistance) sur intermédiaire et expérimenté, avant le choix achat/vente, avec score de précision contre les vrais points pivots
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
+
+## Identification de structure (support / résistance)
+
+Sur les niveaux **intermédiaire** et **expérimenté**, avant même de choisir achat/vente, une étape demande de placer un **support** et une **résistance** sur le graphique (clic simple, même mécanique que le stop/take-profit) :
+
+- `findSwingPoints` détecte les vrais points pivots (swing highs/lows) sur la portion visible des bougies, avec une fenêtre de comparaison de 2 bougies de chaque côté
+- `scoreStructurePlacement` compare le placement de l'utilisateur au pivot le plus proche et le classe en **Précis** (≤1% d'écart), **Proche** (≤3%) ou **Loin** (au-delà)
+- Le résultat s'affiche au reveal, à côté du résultat en R, donnant un vrai usage pédagogique aux outils de tracé plutôt qu'un simple outil décoratif
 
 ## Exercice bonus : Gestion de trade en cours de route
 

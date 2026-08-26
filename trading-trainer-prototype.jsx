@@ -140,6 +140,18 @@ const T = {
   sessionDetailTitle: { fr: "Détail des exercices", en: "Exercise breakdown" },
   newSession: { fr: "Nouvelle séance", en: "New session" },
   changeMarket: { fr: "Changer de marché", en: "Change market" },
+
+  // ---- Identification de structure (support/résistance) ----
+  structureStepTitle: { fr: "Identifie la structure du marché", en: "Identify the market structure" },
+  structureStepSubtitle: { fr: "Avant de te positionner, place un support et une résistance sur le graphique.", en: "Before taking a position, place a support and a resistance on the chart." },
+  supportTool: { fr: "Support", en: "Support" },
+  resistanceTool: { fr: "Résistance", en: "Resistance" },
+  confirmStructure: { fr: "Valider la structure", en: "Confirm structure" },
+  structureResultTitle: { fr: "Lecture de structure", en: "Structure reading" },
+  structurePrecise: { fr: "Précis", en: "Precise" },
+  structureClose: { fr: "Proche", en: "Close" },
+  structureFar: { fr: "Loin", en: "Off" },
+  structureNoPivot: { fr: "Pas de point de référence clair sur cette période", en: "No clear reference point over this period" },
 };
 
 function t(key, lang) {
@@ -570,6 +582,46 @@ function computeSmaSignal(candles, visibleCount, fast = 5, slow = 20) {
 
 // ============ GESTION DU RISQUE : STOP-LOSS / TAKE-PROFIT ============
 // Vérifie que le stop est bien du côté perdant et le TP du côté gagnant, selon la position.
+// ============ IDENTIFICATION DE STRUCTURE : SUPPORT / RÉSISTANCE ============
+// Détecte les points pivots (swing highs/lows) sur la portion visible du graphique
+// pour évaluer la précision du support/résistance placés par l'utilisateur.
+function findSwingPoints(candles, visibleCount, lookback = 2) {
+  const visible = candles.slice(0, visibleCount);
+  const swingHighs = [];
+  const swingLows = [];
+  for (let i = lookback; i < visible.length - lookback; i++) {
+    const c = visible[i];
+    let isHigh = true;
+    let isLow = true;
+    for (let j = i - lookback; j <= i + lookback; j++) {
+      if (j === i) continue;
+      if (visible[j].high >= c.high) isHigh = false;
+      if (visible[j].low <= c.low) isLow = false;
+    }
+    if (isHigh) swingHighs.push(c.high);
+    if (isLow) swingLows.push(c.low);
+  }
+  return { swingHighs, swingLows };
+}
+
+function scoreStructurePlacement(userPrice, referencePrices) {
+  if (userPrice === null || userPrice === undefined || referencePrices.length === 0) return null;
+  let nearest = null;
+  let minDistPct = Infinity;
+  referencePrices.forEach((p) => {
+    const distPct = (Math.abs(userPrice - p) / p) * 100;
+    if (distPct < minDistPct) {
+      minDistPct = distPct;
+      nearest = p;
+    }
+  });
+  let rating;
+  if (minDistPct <= 1) rating = "precise";
+  else if (minDistPct <= 3) rating = "close";
+  else rating = "far";
+  return { nearest, distPct: minDistPct, rating };
+}
+
 function isValidRiskSetup(position, entryPrice, stopPrice, takeProfitPrice) {
   if (stopPrice === null || takeProfitPrice === null) return { valid: false };
   if (position === "achat") {
@@ -697,7 +749,23 @@ function isDrawingTooSmall(p1, p2) {
   return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
 }
 
-function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.toFixed(2), lang = "fr", riskMode = null, stopPrice = null, takeProfitPrice = null, onSetStopPrice, onSetTakeProfitPrice }) {
+function CandlestickChart({
+  candles,
+  visibleCount,
+  revealed,
+  format = (v) => v.toFixed(2),
+  lang = "fr",
+  riskMode = null,
+  stopPrice = null,
+  takeProfitPrice = null,
+  onSetStopPrice,
+  onSetTakeProfitPrice,
+  structureMode = null,
+  supportPrice = null,
+  resistancePrice = null,
+  onSetSupportPrice,
+  onSetResistancePrice,
+}) {
   const W = 1400;
   const H = 640;
   const padTop = 24;
@@ -764,6 +832,12 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
   }
 
   function handlePointerDown(e) {
+    if (structureMode && svgRef.current) {
+      const point = pointFromEvent(e);
+      if (structureMode === "support" && onSetSupportPrice) onSetSupportPrice(point.price);
+      if (structureMode === "resistance" && onSetResistancePrice) onSetResistancePrice(point.price);
+      return;
+    }
     if (riskMode && svgRef.current) {
       const point = pointFromEvent(e);
       if (riskMode === "stop" && onSetStopPrice) onSetStopPrice(point.price);
@@ -896,7 +970,7 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
           onPointerLeave={handlePointerLeave}
           viewBox={`0 0 ${W} ${H}`}
           preserveAspectRatio="none"
-          className={`w-full h-full select-none touch-none ${activeTool || riskMode ? "cursor-crosshair" : ""}`}
+          className={`w-full h-full select-none touch-none ${activeTool || riskMode || structureMode ? "cursor-crosshair" : ""}`}
           role="img"
           aria-label={t("chartAriaLabel", lang)}
         >
@@ -1019,6 +1093,26 @@ function CandlestickChart({ candles, visibleCount, revealed, format = (v) => v.t
               <rect x={innerW + 2} y={yScale(takeProfitPrice) - 9} width={padRight - 4} height={18} fill={C_UP} rx="2" />
               <text x={innerW + padRight / 2} y={yScale(takeProfitPrice) + 4} fontSize="10" fill="#050605" textAnchor="middle" fontWeight="700" className="font-data">
                 {format(takeProfitPrice)}
+              </text>
+            </g>
+          )}
+
+          {supportPrice !== null && supportPrice !== undefined && (
+            <g>
+              <line x1={0} x2={innerW} y1={yScale(supportPrice)} y2={yScale(supportPrice)} stroke="#38bdf8" strokeWidth="1.5" strokeDasharray="2 4" opacity="0.85" />
+              <rect x={innerW + 2} y={yScale(supportPrice) - 9} width={padRight - 4} height={18} fill="#38bdf8" rx="2" />
+              <text x={innerW + padRight / 2} y={yScale(supportPrice) + 4} fontSize="10" fill="#050605" textAnchor="middle" fontWeight="700" className="font-data">
+                {format(supportPrice)}
+              </text>
+            </g>
+          )}
+
+          {resistancePrice !== null && resistancePrice !== undefined && (
+            <g>
+              <line x1={0} x2={innerW} y1={yScale(resistancePrice)} y2={yScale(resistancePrice)} stroke="#fb923c" strokeWidth="1.5" strokeDasharray="2 4" opacity="0.85" />
+              <rect x={innerW + 2} y={yScale(resistancePrice) - 9} width={padRight - 4} height={18} fill="#fb923c" rx="2" />
+              <text x={innerW + padRight / 2} y={yScale(resistancePrice) + 4} fontSize="10" fill="#050605" textAnchor="middle" fontWeight="700" className="font-data">
+                {format(resistancePrice)}
               </text>
             </g>
           )}
@@ -1318,6 +1412,14 @@ function ExerciseScreen({
   sessionProgress,
   sessionLength,
   onNextExercise,
+  structureMode,
+  supportPrice,
+  resistancePrice,
+  structureConfirmed,
+  onToggleStructureMode,
+  onSetSupportPrice,
+  onSetResistancePrice,
+  onConfirmStructure,
 }) {
   const lv = LEVELS.find((l) => l.id === level);
   const d = DOMAINS.find((x) => x.id === domain);
@@ -1339,6 +1441,10 @@ function ExerciseScreen({
       ? simulateRiskOutcome(candles, visibleCount, position, entryCandle.close, stopPrice, takeProfitPrice)
       : null;
   const usesRiskManagement = level === "intermediaire" || level === "experimente";
+
+  const swingPoints = candles.length > 0 ? findSwingPoints(candles, visibleCount) : { swingHighs: [], swingLows: [] };
+  const supportScore = structureConfirmed ? scoreStructurePlacement(supportPrice, swingPoints.swingLows) : null;
+  const resistanceScore = structureConfirmed ? scoreStructurePlacement(resistancePrice, swingPoints.swingHighs) : null;
 
   const volatility = candles.length > 0 ? computeVolatility(candles, visibleCount) : null;
   const rangeStats = candles.length > 0 ? computeRangeStats(candles, visibleCount, d.format) : null;
@@ -1413,6 +1519,11 @@ function ExerciseScreen({
                 takeProfitPrice={usesRiskManagement ? takeProfitPrice : null}
                 onSetStopPrice={onSetStopPrice}
                 onSetTakeProfitPrice={onSetTakeProfitPrice}
+                structureMode={usesRiskManagement && !structureConfirmed ? structureMode : null}
+                supportPrice={usesRiskManagement ? supportPrice : null}
+                resistancePrice={usesRiskManagement ? resistancePrice : null}
+                onSetSupportPrice={onSetSupportPrice}
+                onSetResistancePrice={onSetResistancePrice}
               />
             </div>
           )}
@@ -1588,7 +1699,50 @@ function ExerciseScreen({
               </>
             )}
 
-            {usesRiskManagement && !position && (
+            {usesRiskManagement && !structureConfirmed && (
+              <>
+                <p className="text-sm mb-1" style={{ color: C_TEXT }}>
+                  {t("structureStepTitle", lang)}
+                </p>
+                <p className="text-xs mb-3" style={{ color: C_TEXT_MUTED }}>
+                  {t("structureStepSubtitle", lang)}
+                </p>
+                <div className="flex gap-3 mb-3">
+                  <button
+                    onClick={() => onToggleStructureMode("support")}
+                    className="flex-1 py-2.5 rounded-lg border text-sm font-medium transition-colors"
+                    style={
+                      structureMode === "support"
+                        ? { backgroundColor: "#38bdf8", borderColor: "#38bdf8", color: "#050605" }
+                        : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT }
+                    }
+                  >
+                    {t("supportTool", lang)} {supportPrice !== null ? `· ${d.format(supportPrice)}` : `(${t("riskNotSet", lang)})`}
+                  </button>
+                  <button
+                    onClick={() => onToggleStructureMode("resistance")}
+                    className="flex-1 py-2.5 rounded-lg border text-sm font-medium transition-colors"
+                    style={
+                      structureMode === "resistance"
+                        ? { backgroundColor: "#fb923c", borderColor: "#fb923c", color: "#050605" }
+                        : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT }
+                    }
+                  >
+                    {t("resistanceTool", lang)} {resistancePrice !== null ? `· ${d.format(resistancePrice)}` : `(${t("riskNotSet", lang)})`}
+                  </button>
+                </div>
+                <button
+                  onClick={onConfirmStructure}
+                  disabled={supportPrice === null || resistancePrice === null}
+                  className="px-4 py-2.5 rounded-lg font-medium text-sm transition-colors disabled:opacity-40"
+                  style={{ backgroundColor: C_ACCENT, color: C_BG }}
+                >
+                  {t("confirmStructure", lang)}
+                </button>
+              </>
+            )}
+
+            {usesRiskManagement && structureConfirmed && !position && (
               <>
                 <p className="text-sm mb-3" style={{ color: C_TEXT }}>
                   {t("openPosition", lang)}
@@ -1708,6 +1862,44 @@ function ExerciseScreen({
                 {" — "}
                 {t("resultInR", lang)}: {riskResult.rMultiple >= 0 ? "+" : ""}
                 {riskResult.rMultiple.toFixed(2)}R — {t("compareAnalysis", lang)}
+              </div>
+            )}
+
+            {usesRiskManagement && (supportScore || resistanceScore) && (
+              <div className="mt-3 pt-3 border-t" style={{ borderColor: C_BORDER }}>
+                <p className="text-xs font-data tracking-widest mb-2" style={{ color: C_TEXT_DIM }}>
+                  {t("structureResultTitle", lang)}
+                </p>
+                <div className="flex flex-col gap-1.5">
+                  {supportScore && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span style={{ color: C_TEXT_MUTED }}>{t("supportTool", lang)}</span>
+                      <span
+                        className="font-data font-medium"
+                        style={{
+                          color: supportScore.rating === "precise" ? C_UP : supportScore.rating === "close" ? "#f0b429" : C_DOWN,
+                        }}
+                      >
+                        {supportScore.rating === "precise" ? t("structurePrecise", lang) : supportScore.rating === "close" ? t("structureClose", lang) : t("structureFar", lang)}{" "}
+                        ({supportScore.distPct.toFixed(1)}%)
+                      </span>
+                    </div>
+                  )}
+                  {resistanceScore && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span style={{ color: C_TEXT_MUTED }}>{t("resistanceTool", lang)}</span>
+                      <span
+                        className="font-data font-medium"
+                        style={{
+                          color: resistanceScore.rating === "precise" ? C_UP : resistanceScore.rating === "close" ? "#f0b429" : C_DOWN,
+                        }}
+                      >
+                        {resistanceScore.rating === "precise" ? t("structurePrecise", lang) : resistanceScore.rating === "close" ? t("structureClose", lang) : t("structureFar", lang)}{" "}
+                        ({resistanceScore.distPct.toFixed(1)}%)
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
@@ -1893,6 +2085,10 @@ export default function App() {
   const [riskMode, setRiskMode] = useState(null);
   const [riskConfirmed, setRiskConfirmed] = useState(false);
   const [riskError, setRiskError] = useState(null);
+  const [structureMode, setStructureMode] = useState(null);
+  const [supportPrice, setSupportPrice] = useState(null);
+  const [resistancePrice, setResistancePrice] = useState(null);
+  const [structureConfirmed, setStructureConfirmed] = useState(false);
   const [sessionResults, setSessionResults] = useState([]);
   const [showSessionSummary, setShowSessionSummary] = useState(false);
 
@@ -1994,6 +2190,10 @@ export default function App() {
     setRiskMode(null);
     setRiskConfirmed(false);
     setRiskError(null);
+    setStructureMode(null);
+    setSupportPrice(null);
+    setResistancePrice(null);
+    setStructureConfirmed(false);
   };
 
   const handleDebriefAnswerChange = (i, value) => {
@@ -2063,6 +2263,25 @@ export default function App() {
   };
   const handleOrder = (p) => {
     setPosition(p);
+  };
+
+  const handleToggleStructureMode = (mode) => {
+    setStructureMode((cur) => (cur === mode ? null : mode));
+  };
+
+  const handleSetSupportPrice = (price) => {
+    setSupportPrice(price);
+    setStructureMode(null);
+  };
+
+  const handleSetResistancePrice = (price) => {
+    setResistancePrice(price);
+    setStructureMode(null);
+  };
+
+  const handleConfirmStructure = () => {
+    if (supportPrice === null || resistancePrice === null) return;
+    setStructureConfirmed(true);
   };
 
   const handleToggleRiskMode = (mode) => {
@@ -2203,6 +2422,14 @@ export default function App() {
             sessionProgress={sessionResults.length}
             sessionLength={SESSION_LENGTH}
             onNextExercise={handleNextOrSummary}
+            structureMode={structureMode}
+            supportPrice={supportPrice}
+            resistancePrice={resistancePrice}
+            structureConfirmed={structureConfirmed}
+            onToggleStructureMode={handleToggleStructureMode}
+            onSetSupportPrice={handleSetSupportPrice}
+            onSetResistancePrice={handleSetResistancePrice}
+            onConfirmStructure={handleConfirmStructure}
           />
         )}
         {screen === "sessionSummary" && (

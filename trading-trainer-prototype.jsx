@@ -1081,20 +1081,20 @@ function CandlestickChart({
   function priceAtY(y) {
     return seriesRef.current ? seriesRef.current.coordinateToPrice(y) : null;
   }
-  // coordinateToTime renvoie null en dehors des barres chargées (ex: marge de
-  // droite créée par rightOffset). On se rabat alors sur l'index logique le
-  // plus proche, ramené dans la plage de données réellement affichée.
+  // coordinateToTime/coordinateToLogical (API lightweight-charts) peuvent
+  // renvoyer null — ou une valeur hors plage — tant que le graphique n'a pas
+  // terminé son tout premier rendu interne. On calcule donc la bougie
+  // directement à partir de la position en pixels dans le conteneur, comme le
+  // faisait l'ancien graphique SVG maison : robuste, indépendant de l'état
+  // interne de la lib, et largement suffisant pour un outil de dessin.
   function timeAtX(x) {
-    const chart = chartRef.current;
-    if (!chart) return null;
-    const ts = chart.timeScale();
-    const direct = ts.coordinateToTime(x);
-    if (direct !== null) return direct;
-    const logical = ts.coordinateToLogical(x);
-    if (logical === null || logical === undefined) return null;
-    const maxIndex = (revealed ? candles.length : visibleCount) - 1;
-    const clamped = Math.max(0, Math.min(maxIndex, Math.round(logical)));
-    return candles[clamped] ? candles[clamped].date : null;
+    if (!containerRef.current) return null;
+    const shown = revealed ? candles : candles.slice(0, visibleCount);
+    if (shown.length === 0) return null;
+    const width = containerRef.current.clientWidth;
+    if (!width) return null;
+    const idx = Math.max(0, Math.min(shown.length - 1, Math.floor((x / width) * shown.length)));
+    return shown[idx].date;
   }
   function xAtTime(time) {
     if (!chartRef.current || time === null || time === undefined) return null;
@@ -1139,8 +1139,8 @@ function CandlestickChart({
       return;
     }
     overlayRef.current?.setPointerCapture?.(e.pointerId);
-    setDragStart({ time, price });
-    setDragCurrent({ time, price });
+    setDragStart({ time, price, px: x, py: y });
+    setDragCurrent({ time, price, px: x, py: y });
   }
 
   function handlePointerMove(e) {
@@ -1149,14 +1149,14 @@ function CandlestickChart({
     const price = priceAtY(y);
     const time = timeAtX(x);
     if (price === null || time === null) return;
-    setDragCurrent({ time, price });
+    setDragCurrent({ time, price, px: x, py: y });
   }
 
   function handlePointerUp() {
     if (!isDragging) return;
     if (dragCurrent) {
-      const dx = Math.abs((xAtTime(dragCurrent.time) ?? 0) - (xAtTime(dragStart.time) ?? 0));
-      const dy = Math.abs((yAtPrice(dragCurrent.price) ?? 0) - (yAtPrice(dragStart.price) ?? 0));
+      const dx = Math.abs(dragCurrent.px - dragStart.px);
+      const dy = Math.abs(dragCurrent.py - dragStart.py);
       if (dx > 6 || dy > 6) {
         setDrawings((prev) => [...prev, { type: activeTool, p1: dragStart, p2: dragCurrent, id: `${Date.now()}-${Math.random()}` }]);
         setActiveTool(null);

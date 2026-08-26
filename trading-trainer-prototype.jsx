@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
-import { createChart, CandlestickSeries, ColorType, CrosshairMode, LineStyle } from "lightweight-charts";
+import { createChart, CandlestickSeries, LineSeries, ColorType, CrosshairMode, LineStyle } from "lightweight-charts";
 import {
   TrendingUp,
   TrendingDown,
@@ -19,6 +19,9 @@ import {
   Minus,
   Layers,
   Trash2,
+  Square,
+  ArrowRight,
+  Activity,
 } from "lucide-react";
 
 // ============ PALETTE (identique au reste du site) ============
@@ -98,9 +101,14 @@ const T = {
   compareAnalysis: { fr: "compare avec ton analyse.", en: "compare with your analysis." },
   nextExercise: { fr: "Exercice suivant", en: "Next exercise" },
   drawInstructions: { fr: "Clique et fais glisser sur le graphique pour tracer", en: "Click and drag on the chart to draw" },
+  rayInstructions: { fr: "Clique sur le graphique pour placer la ligne", en: "Click on the chart to place the line" },
   chartAriaLabel: { fr: "Graphique en chandeliers", en: "Candlestick chart" },
   lineTool: { fr: "Ligne", en: "Line" },
   fibTool: { fr: "Fibonacci", en: "Fibonacci" },
+  rectTool: { fr: "Rectangle", en: "Rectangle" },
+  rayTool: { fr: "Ligne horizontale", en: "Horizontal line" },
+  smaToggle: { fr: "MM 20", en: "SMA 20" },
+  emaToggle: { fr: "EMA 50", en: "EMA 50" },
   clear: { fr: "Effacer", en: "Clear" },
   now: { fr: "MAINTENANT", en: "NOW" },
   debriefLabel: { fr: "DEBRIEF", en: "DEBRIEF" },
@@ -623,6 +631,32 @@ function computeSmaSignal(candles, visibleCount, fast = 5, slow = 20) {
   return { signal: fastVal > slowVal ? "hausse" : "baisse", fast, slow };
 }
 
+// ============ SÉRIES DE MOYENNES MOBILES (overlay du graphique) ============
+function computeSmaSeries(candles, period) {
+  const closes = candles.map((c) => c.close);
+  const out = [];
+  for (let i = period - 1; i < candles.length; i++) {
+    const v = sma(closes, period, i);
+    if (v !== null) out.push({ time: candles[i].date, value: v });
+  }
+  return out;
+}
+
+function computeEmaSeries(candles, period) {
+  if (candles.length < period) return [];
+  const closes = candles.map((c) => c.close);
+  const k = 2 / (period + 1);
+  const out = [];
+  let prev = sma(closes, period, period - 1);
+  out.push({ time: candles[period - 1].date, value: prev });
+  for (let i = period; i < candles.length; i++) {
+    const v = closes[i] * k + prev * (1 - k);
+    out.push({ time: candles[i].date, value: v });
+    prev = v;
+  }
+  return out;
+}
+
 // ============ GESTION DU RISQUE : STOP-LOSS / TAKE-PROFIT ============
 // Vérifie que le stop est bien du côté perdant et le TP du côté gagnant, selon la position.
 // ============ IDENTIFICATION DE STRUCTURE : SUPPORT / RÉSISTANCE ============
@@ -815,12 +849,16 @@ function CandlestickChart({
   const overlayRef = useRef(null);
   const chartRef = useRef(null);
   const seriesRef = useRef(null);
+  const smaSeriesRef = useRef(null);
+  const emaSeriesRef = useRef(null);
   const priceLinesRef = useRef({});
 
   const [activeTool, setActiveTool] = useState(null);
-  const [drawings, setDrawings] = useState([]); // { type, p1: {time, price}, p2: {time, price}, id }
+  const [drawings, setDrawings] = useState([]); // { type: 'trend'|'fib'|'rect'|'ray', p1: {time, price}, p2: {time, price}, id }
   const [dragStart, setDragStart] = useState(null);
   const [dragCurrent, setDragCurrent] = useState(null);
+  const [showSma, setShowSma] = useState(false);
+  const [showEma, setShowEma] = useState(false);
   const [, forceRedraw] = useState(0);
 
   const isDragging = dragStart !== null;
@@ -867,8 +905,25 @@ function CandlestickChart({
       wickDownColor: C_DOWN,
     });
 
+    const smaSeries = chart.addSeries(LineSeries, {
+      color: "#f5a623",
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: false,
+      crosshairMarkerVisible: false,
+    });
+    const emaSeries = chart.addSeries(LineSeries, {
+      color: "#60a5fa",
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: false,
+      crosshairMarkerVisible: false,
+    });
+
     chartRef.current = chart;
     seriesRef.current = series;
+    smaSeriesRef.current = smaSeries;
+    emaSeriesRef.current = emaSeries;
 
     const redraw = () => forceRedraw((n) => n + 1);
     chart.timeScale().subscribeVisibleTimeRangeChange(redraw);
@@ -899,6 +954,8 @@ function CandlestickChart({
       chart.remove();
       chartRef.current = null;
       seriesRef.current = null;
+      smaSeriesRef.current = null;
+      emaSeriesRef.current = null;
       priceLinesRef.current = {};
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -931,6 +988,17 @@ function CandlestickChart({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [candles, visibleCount, revealed]);
+
+  // ============ MOYENNES MOBILES (SMA 20 / EMA 50, calculées sur la portion affichée) ============
+  useEffect(() => {
+    const shown = revealed ? candles : candles.slice(0, visibleCount);
+    if (smaSeriesRef.current) {
+      smaSeriesRef.current.setData(showSma ? computeSmaSeries(shown, 20) : []);
+    }
+    if (emaSeriesRef.current) {
+      emaSeriesRef.current.setData(showEma ? computeEmaSeries(shown, 50) : []);
+    }
+  }, [candles, visibleCount, revealed, showSma, showEma]);
 
   // ============ LIGNES DE PRIX HORIZONTALES (entrée/sortie, SL/TP, support/résistance) ============
   useEffect(() => {
@@ -1063,6 +1131,13 @@ function CandlestickChart({
     const price = priceAtY(y);
     const time = timeAtX(x);
     if (price === null || time === null) return;
+    if (activeTool === "ray") {
+      // Outil à clic simple : pas de glisser, la ligne horizontale s'étend
+      // directement du point cliqué jusqu'au bord droit du graphique.
+      setDrawings((prev) => [...prev, { type: "ray", p1: { time, price }, id: `${Date.now()}-${Math.random()}` }]);
+      setActiveTool(null);
+      return;
+    }
     overlayRef.current?.setPointerCapture?.(e.pointerId);
     setDragStart({ time, price });
     setDragCurrent({ time, price });
@@ -1106,6 +1181,36 @@ function CandlestickChart({
     );
   }
 
+  function renderRect(p1, p2, key, opacity = 1) {
+    const x1 = xAtTime(p1.time);
+    const y1 = yAtPrice(p1.price);
+    const x2 = xAtTime(p2.time);
+    const y2 = yAtPrice(p2.price);
+    if (x1 === null || y1 === null || x2 === null || y2 === null) return null;
+    const left = Math.min(x1, x2);
+    const top = Math.min(y1, y2);
+    const width = Math.abs(x2 - x1);
+    const height = Math.abs(y2 - y1);
+    return (
+      <g key={key} opacity={opacity}>
+        <rect x={left} y={top} width={width} height={height} fill={C_ACCENT} fillOpacity="0.1" stroke={C_ACCENT} strokeWidth="1.5" />
+      </g>
+    );
+  }
+
+  function renderRay(p1, key, opacity = 1) {
+    const x1 = xAtTime(p1.time);
+    const y1 = yAtPrice(p1.price);
+    if (x1 === null || y1 === null) return null;
+    const rightX = containerRef.current ? containerRef.current.clientWidth : x1 + 200;
+    return (
+      <g key={key} opacity={opacity}>
+        <line x1={x1} y1={y1} x2={rightX} y2={y1} stroke="#38bdf8" strokeWidth="1.5" strokeDasharray="4 3" />
+        <circle cx={x1} cy={y1} r="3" fill="#38bdf8" />
+      </g>
+    );
+  }
+
   function renderFib(p1, p2, key, opacity = 1) {
     const x1 = xAtTime(p1.time);
     const x2 = xAtTime(p2.time);
@@ -1141,11 +1246,19 @@ function CandlestickChart({
     );
   }
 
+  function renderDrawing(type, p1, p2, key, opacity = 1) {
+    if (type === "trend") return renderTrendLine(p1, p2, key, opacity);
+    if (type === "fib") return renderFib(p1, p2, key, opacity);
+    if (type === "rect") return renderRect(p1, p2, key, opacity);
+    if (type === "ray") return renderRay(p1, key, opacity);
+    return null;
+  }
+
   const nowX = entryCandle ? xAtTime(entryCandle.date) : null;
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="flex items-center gap-2 mb-3 shrink-0">
+      <div className="flex items-center gap-2 mb-3 shrink-0 flex-wrap">
         <button
           onClick={() => toggleTool("trend")}
           className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
@@ -1167,6 +1280,51 @@ function CandlestickChart({
           }
         >
           <Layers className="w-3.5 h-3.5" /> {t("fibTool", lang)}
+        </button>
+        <button
+          onClick={() => toggleTool("rect")}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
+          style={
+            activeTool === "rect"
+              ? { backgroundColor: C_ACCENT, borderColor: C_ACCENT, color: C_BG }
+              : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
+          }
+        >
+          <Square className="w-3.5 h-3.5" /> {t("rectTool", lang)}
+        </button>
+        <button
+          onClick={() => toggleTool("ray")}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
+          style={
+            activeTool === "ray"
+              ? { backgroundColor: "#38bdf8", borderColor: "#38bdf8", color: C_BG }
+              : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
+          }
+        >
+          <ArrowRight className="w-3.5 h-3.5" /> {t("rayTool", lang)}
+        </button>
+        <span className="w-px self-stretch my-1" style={{ backgroundColor: C_BORDER }} />
+        <button
+          onClick={() => setShowSma((v) => !v)}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
+          style={
+            showSma
+              ? { backgroundColor: "#f5a623", borderColor: "#f5a623", color: C_BG }
+              : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
+          }
+        >
+          <Activity className="w-3.5 h-3.5" /> {t("smaToggle", lang)}
+        </button>
+        <button
+          onClick={() => setShowEma((v) => !v)}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-data transition-colors"
+          style={
+            showEma
+              ? { backgroundColor: "#60a5fa", borderColor: "#60a5fa", color: C_BG }
+              : { backgroundColor: C_BG, borderColor: C_BORDER, color: C_TEXT_MUTED }
+          }
+        >
+          <Activity className="w-3.5 h-3.5" /> {t("emaToggle", lang)}
         </button>
         {drawings.length > 0 && (
           <button
@@ -1206,17 +1364,15 @@ function CandlestickChart({
             </g>
           )}
 
-          {drawings.map((d) => (d.type === "trend" ? renderTrendLine(d.p1, d.p2, d.id) : renderFib(d.p1, d.p2, d.id)))}
+          {drawings.map((d) => renderDrawing(d.type, d.p1, d.p2, d.id))}
 
-          {isDragging &&
-            dragCurrent &&
-            (activeTool === "trend" ? renderTrendLine(dragStart, dragCurrent, "preview", 0.55) : renderFib(dragStart, dragCurrent, "preview", 0.55))}
+          {isDragging && dragCurrent && renderDrawing(activeTool, dragStart, dragCurrent, "preview", 0.55)}
         </svg>
       </div>
 
       {activeTool && !isDragging && (
         <p className="text-xs mt-2 font-data shrink-0" style={{ color: C_TEXT_DIM }}>
-          {t("drawInstructions", lang)}
+          {t(activeTool === "ray" ? "rayInstructions" : "drawInstructions", lang)}
         </p>
       )}
     </div>

@@ -14,6 +14,7 @@ const I18N_DICT = {
   "footer.privacy": { fr: "Confidentialité", en: "Privacy" },
 
   // ---- Accueil ----
+  "home.liveBadge": { fr: "Marché en direct · Données réelles", en: "Live Market · Real Data" },
   "home.eyebrow": { fr: "Entraînement au trading", en: "Trading training" },
   "home.heroTitle": { fr: "Le marché ne t'attendra pas.<br>Prépare-toi avant d'y entrer.", en: "The market won't wait for you.<br>Get ready before you step in." },
   "home.heroSubtitle": { fr: "Des scénarios de marché réalistes, générés pour ton niveau. Lis un graphique comme un pro, sans risquer un centime.", en: "Realistic market scenarios, generated for your level. Read a chart like a pro, without risking a cent." },
@@ -22,6 +23,12 @@ const I18N_DICT = {
   "home.conceptEyebrow": { fr: "Le concept", en: "The concept" },
   "home.conceptTitle": { fr: "Un graphique. Une décision. Un résultat.", en: "One chart. One decision. One outcome." },
   "home.conceptBody": { fr: "Chaque exercice te place devant une période réelle du marché, choisie selon ton niveau. Analyse, décide, et découvre si tu avais raison.", en: "Each exercise puts you in front of a real market period, chosen for your level. Analyze, decide, and find out if you were right." },
+  "home.step1Title": { fr: "Graphique réel & contextuel", en: "Real & Contextual Chart" },
+  "home.step1Desc": { fr: "Plonge au cœur d'une session de marché réelle (Forex, Or, Indices, Crypto) avec outils de tracé.", en: "Dive into a real market session (Forex, Gold, Indices, Crypto) with drawing tools." },
+  "home.step2Title": { fr: "Prise de position & Risque", en: "Trade Decision & Risk" },
+  "home.step2Desc": { fr: "Anticipe la direction, place ton Stop-Loss et Take-Profit, et calcule ton ratio risque/rendement (R).", en: "Predict direction, place Stop-Loss and Take-Profit, and evaluate your risk/reward (R)." },
+  "home.step3Title": { fr: "Débriefing & Biais cognitifs", en: "Debriefing & Cognitive Biases" },
+  "home.step3Desc": { fr: "Découvre le reveal complet du cours, analyse tes erreurs et évite les pièges psychologiques.", en: "Discover the full price reveal, analyze your errors, and dodge psychological traps." },
   "home.levelsEyebrow": { fr: "3 niveaux", en: "3 levels" },
   "home.levelsTitle": { fr: "Choisis ton terrain d'entraînement", en: "Choose your training ground" },
   "home.level1Title": { fr: "Débutant", en: "Beginner" },
@@ -30,7 +37,9 @@ const I18N_DICT = {
   "home.level2Desc": { fr: "Retournements et pullbacks. La tendance change en cours de route.", en: "Reversals and pullbacks. The trend changes along the way." },
   "home.level3Title": { fr: "Expérimenté", en: "Experienced" },
   "home.level3Desc": { fr: "Range, faux signaux, forte volatilité. Peu de structure évidente.", en: "Range, false signals, high volatility. Little obvious structure." },
+  "home.exploreLevel": { fr: "Explorer le niveau", en: "Explore level" },
   "home.ctaTitle": { fr: "Prêt à tester ton œil ?", en: "Ready to test your eye?" },
+  "home.ctaSubtitle": { fr: "Des milliers de scénarios historiques t'attendent. Développe une véritable intuition de trader sans risque financier.", en: "Thousands of historical setups await you. Build genuine trader intuition without financial risk." },
   "home.ctaButton": { fr: "Lancer un exercice", en: "Start an exercise" },
   "home.footerTag": { fr: "Trading Training", en: "Trading Training" },
 

@@ -4,138 +4,192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trading Training - Gestion de trade en cours de route</title>
-    <link rel="stylesheet" href="../style.css?v=3">
+    <link rel="stylesheet" href="../style.css?v=6">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../supabase-client.js"></script>
     <script src="../i18n.js?v=2"></script>
     <style>
         .exo-wrap {
-            max-width: 720px;
+            max-width: 780px;
             margin: 0 auto;
-            padding: 70px 24px 100px;
+            padding: 80px 24px 120px;
         }
         .exo-wrap .back-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             color: var(--text-muted);
             text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
-            margin-bottom: 24px;
-            transition: color 0.2s ease;
+            margin-bottom: 28px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
         }
-        .exo-wrap .back-link:hover { color: var(--accent); }
+        .exo-wrap .back-link:hover { 
+            color: var(--accent); 
+            border-color: var(--border-bright);
+            background: rgba(205, 252, 138, 0.08);
+            transform: translateX(-3px);
+        }
         .exo-wrap .eyebrow {
-            display: block;
+            display: inline-block;
             color: var(--accent);
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
             letter-spacing: 3px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            background: rgba(205, 252, 138, 0.08);
+            border: 1px solid rgba(205, 252, 138, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
         }
         .exo-wrap h1 {
-            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-size: clamp(2rem, 5vw, 2.8rem);
             margin-bottom: 14px;
+            line-height: 1.15;
         }
         .exo-intro {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 36px;
+            font-size: 1rem;
+            line-height: 1.65;
+            margin-bottom: 40px;
         }
         .exo-card {
-            background-color: var(--bg-soft);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 24px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
         }
         .exo-progress {
             display: flex;
-            gap: 6px;
-            margin-bottom: 18px;
+            gap: 8px;
+            margin-bottom: 22px;
         }
         .exo-progress span {
-            height: 4px;
+            height: 5px;
             flex: 1;
-            border-radius: 2px;
-            background-color: var(--border);
-            transition: background-color 0.2s ease;
+            border-radius: 3px;
+            background-color: #1a2319;
+            transition: background-color 0.3s ease;
         }
         .exo-progress span.done,
-        .exo-progress span.current-done { background-color: var(--accent); }
-        .exo-progress span.current { background-color: #3d4a3d; }
-        .exo-count {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 14px;
+        .exo-progress span.current-done { 
+            background-color: var(--accent); 
+            box-shadow: 0 0 10px var(--accent-glow);
         }
-        .exo-setup { font-size: 0.95rem; margin: 16px 0 6px; }
-        .exo-tape { font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 18px; }
+        .exo-progress span.current { 
+            background-color: rgba(205, 252, 138, 0.35); 
+        }
+        .exo-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .exo-setup { 
+            font-size: 1.1rem; 
+            margin: 18px 0 8px; 
+            color: var(--text);
+        }
+        .exo-tape { 
+            font-size: 0.95rem; 
+            color: var(--text-muted); 
+            line-height: 1.6; 
+            margin-bottom: 22px; 
+        }
         .exo-option {
             display: block;
             width: 100%;
             text-align: left;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            background: rgba(16, 20, 15, 0.6);
+            border: 1px solid var(--border-bright);
+            border-radius: var(--radius-sm);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            padding: 12px 14px;
-            margin-bottom: 10px;
+            font-size: 0.92rem;
+            padding: 14px 16px;
+            margin-bottom: 12px;
             cursor: pointer;
-            transition: border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+            transition: all 0.2s ease;
         }
-        .exo-option:hover:not(:disabled) { border-color: var(--accent); }
+        .exo-option:hover:not(:disabled) { 
+            border-color: var(--accent); 
+            background: rgba(205, 252, 138, 0.08);
+            transform: translateY(-2px);
+        }
         .exo-option:disabled { cursor: default; }
-        .exo-option.picked-optimal { border-color: #8fd14f; background-color: rgba(143, 209, 79, 0.1); }
-        .exo-option.picked-defendable { border-color: #f0b429; background-color: rgba(240, 180, 41, 0.1); }
-        .exo-option.picked-risque { border-color: #ef4444; background-color: rgba(239, 68, 68, 0.1); }
-        .exo-option.faded { opacity: 0.4; }
+        .exo-option.picked-optimal { 
+            border-color: var(--accent); 
+            background-color: rgba(205, 252, 138, 0.15); 
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .exo-option.picked-defendable { 
+            border-color: #f59e0b; 
+            background-color: rgba(245, 158, 11, 0.15); 
+        }
+        .exo-option.picked-risque { 
+            border-color: #ff5c5c; 
+            background-color: rgba(255, 92, 92, 0.15); 
+        }
+        .exo-option.faded { opacity: 0.35; }
         .exo-feedback {
-            margin-top: 6px;
-            padding: 12px 14px;
-            border-radius: 10px;
-            background-color: rgba(255,255,255,0.03);
+            margin-top: 14px;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            animation: fadeIn 0.3s ease-out;
         }
         .exo-tier-badge {
             display: inline-block;
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
             letter-spacing: 1px;
+            text-transform: uppercase;
             padding: 3px 10px;
-            border-radius: 6px;
-            margin-bottom: 8px;
+            border-radius: 20px;
+            margin-bottom: 10px;
         }
-        .exo-tier-badge.optimal { background-color: rgba(143, 209, 79, 0.15); color: #8fd14f; }
-        .exo-tier-badge.defendable { background-color: rgba(240, 180, 41, 0.15); color: #f0b429; }
-        .exo-tier-badge.risque { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .exo-feedback p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
-        .exo-nav { display: flex; justify-content: space-between; margin-top: 22px; }
-        .exo-nav button:disabled { opacity: 0.35; cursor: default; }
+        .exo-tier-badge.optimal { background-color: var(--accent); color: #061208; }
+        .exo-tier-badge.defendable { background-color: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .exo-tier-badge.risque { background-color: rgba(255, 92, 92, 0.2); color: #ff5c5c; }
+        .exo-feedback p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+        .exo-nav { display: flex; justify-content: space-between; margin-top: 28px; }
+        .exo-nav button:disabled { opacity: 0.3; cursor: default; }
         .exo-summary-grid {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
         .exo-summary-tile {
             flex: 1;
-            background-color: rgba(255,255,255,0.03);
-            border-radius: 10px;
-            padding: 14px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
             text-align: center;
         }
-        .exo-summary-tile .num { font-family: 'Oswald', sans-serif; font-size: 1.6rem; margin-top: 4px; }
+        .exo-summary-tile .num { font-family: 'Oswald', sans-serif; font-size: 1.8rem; margin-top: 4px; color: var(--accent); }
         .exo-summary-row {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            padding: 12px 0;
+            gap: 12px;
+            padding: 14px 0;
             border-top: 1px solid var(--border);
         }
         .exo-summary-row .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
-        .exo-summary-row .label { font-size: 0.78rem; color: var(--text-muted); margin: 0; }
-        .exo-summary-row .txt { font-size: 0.9rem; margin: 2px 0 0; }
+        .exo-summary-row .label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-dim); margin: 0; }
+        .exo-summary-row .txt { font-size: 0.92rem; margin: 2px 0 0; }
     </style>
 </head>
 <body>

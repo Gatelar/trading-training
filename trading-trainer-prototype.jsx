@@ -1013,8 +1013,20 @@ function CandlestickChart({
   function priceAtY(y) {
     return seriesRef.current ? seriesRef.current.coordinateToPrice(y) : null;
   }
+  // coordinateToTime renvoie null en dehors des barres chargées (ex: marge de
+  // droite créée par rightOffset). On se rabat alors sur l'index logique le
+  // plus proche, ramené dans la plage de données réellement affichée.
   function timeAtX(x) {
-    return chartRef.current ? chartRef.current.timeScale().coordinateToTime(x) : null;
+    const chart = chartRef.current;
+    if (!chart) return null;
+    const ts = chart.timeScale();
+    const direct = ts.coordinateToTime(x);
+    if (direct !== null) return direct;
+    const logical = ts.coordinateToLogical(x);
+    if (logical === null || logical === undefined) return null;
+    const maxIndex = (revealed ? candles.length : visibleCount) - 1;
+    const clamped = Math.max(0, Math.min(maxIndex, Math.round(logical)));
+    return candles[clamped] ? candles[clamped].date : null;
   }
   function xAtTime(time) {
     if (!chartRef.current || time === null || time === undefined) return null;
@@ -1051,6 +1063,7 @@ function CandlestickChart({
     const price = priceAtY(y);
     const time = timeAtX(x);
     if (price === null || time === null) return;
+    overlayRef.current?.setPointerCapture?.(e.pointerId);
     setDragStart({ time, price });
     setDragCurrent({ time, price });
   }

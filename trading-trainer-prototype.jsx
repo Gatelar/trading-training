@@ -1,4 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
+import ReactDOM from "react-dom/client";
+import { createChart, CandlestickSeries, ColorType, CrosshairMode, LineStyle } from "lightweight-charts";
 import {
   TrendingUp,
   TrendingDown,
@@ -20,14 +22,16 @@ import {
 } from "lucide-react";
 
 // ============ PALETTE (identique au reste du site) ============
-const C_BG = "#050605";
+const C_BG = "#10140f";
 const C_BG_SOFT = "#0c0f0c";
 const C_ACCENT = "#CDFC8A";
 const C_ACCENT_DIM = "#8fbf5a";
 const C_TEXT = "#f4f6f2";
-const C_TEXT_MUTED = "#9aa39a";
+const C_TEXT_MUTED = "#8A938B";
 const C_TEXT_DIM = "#5c655c";
 const C_BORDER = "#1c211c";
+const C_GRID = "rgba(205, 252, 138, 0.05)";
+const C_SCALE_BORDER = "rgba(205, 252, 138, 0.15)";
 
 // ============ TRADUCTION (FR/EN) ============
 // Partage la même clé localStorage que le reste du site (i18n.js) pour rester synchronisé.
@@ -168,8 +172,8 @@ function t(key, lang) {
   if (!entry) return key;
   return entry[lang] || entry.fr;
 }
-const C_UP = "#10b981";
-const C_DOWN = "#ef4444";
+const C_UP = "#CDFC8A";
+const C_DOWN = "#EF4444";
 const C_FIB = "#a78bfa";
 
 function mulberry32(a) {
@@ -784,8 +788,10 @@ const BIAS_ITEMS = {
 
 
 
-function isDrawingTooSmall(p1, p2) {
-  return Math.abs(p1.index - p2.index) < 1 && Math.abs(p1.price - p2.price) < 1e-9;
+// Convertit une bougie interne ({ i, date, open, high, low, close }) au format
+// attendu par lightweight-charts ({ time, open, high, low, close }).
+function toLwcCandle(c) {
+  return { time: c.date, open: c.open, high: c.high, low: c.low, close: c.close };
 }
 
 function CandlestickChart({
@@ -805,63 +811,218 @@ function CandlestickChart({
   onSetSupportPrice,
   onSetResistancePrice,
 }) {
-  const W = 1400;
-  const H = 640;
-  const padTop = 24;
-  const padBottom = 34;
-  const padRight = 84;
-  const innerW = W - padRight;
-  const innerH = H - padTop - padBottom;
+  const containerRef = useRef(null);
+  const overlayRef = useRef(null);
+  const chartRef = useRef(null);
+  const seriesRef = useRef(null);
+  const priceLinesRef = useRef({});
 
-  const shownCount = revealed ? candles.length : visibleCount;
-  const shown = candles.slice(0, shownCount);
-
-  const svgRef = useRef(null);
   const [activeTool, setActiveTool] = useState(null);
-  const [drawings, setDrawings] = useState([]);
+  const [drawings, setDrawings] = useState([]); // { type, p1: {time, price}, p2: {time, price}, id }
   const [dragStart, setDragStart] = useState(null);
   const [dragCurrent, setDragCurrent] = useState(null);
-  const [hover, setHover] = useState(null);
+  const [, forceRedraw] = useState(0);
+
   const isDragging = dragStart !== null;
+  const interactionMode = activeTool || riskMode || structureMode;
 
-  if (shown.length === 0) return null;
-
-  const lo = Math.min(...shown.map((c) => c.low));
-  const hi = Math.max(...shown.map((c) => c.high));
-  const pad = (hi - lo) * 0.12 || hi * 0.01 || 1;
-  const yMin = lo - pad;
-  const yMax = hi + pad;
-
-  const slot = innerW / candles.length;
-  const bodyW = Math.max(slot * 0.55, 1.5);
-
-  const yScale = (p) => padTop + (1 - (p - yMin) / (yMax - yMin)) * innerH;
-  const xScale = (i) => i * slot + slot / 2;
-
-  const tickCount = 6;
-  const gridValues = Array.from({ length: tickCount + 1 }, (_, k) => yMin + (k / tickCount) * (yMax - yMin));
-
-  const cutoffX = visibleCount * slot;
   const entryCandle = candles[visibleCount - 1];
   const lastCandle = candles[candles.length - 1];
   const lastUp = entryCandle && lastCandle ? lastCandle.close >= entryCandle.close : true;
 
-  // Étiquettes de dates sur l'axe X (réparties uniformément)
-  const axisLabelCount = 7;
-  const axisIndices = Array.from({ length: axisLabelCount }, (_, k) =>
-    Math.round((k / (axisLabelCount - 1)) * (candles.length - 1))
-  );
+  // ============ CRÉATION DU GRAPHIQUE (une seule fois) ============
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-  function pointFromEvent(e) {
-    const rect = svgRef.current.getBoundingClientRect();
-    const fracX = (e.clientX - rect.left) / rect.width;
-    const fracY = (e.clientY - rect.top) / rect.height;
-    const vx = fracX * W;
-    const vy = fracY * H;
-    const maxIndex = (revealed ? candles.length : visibleCount) - 1;
-    const clickedIndex = Math.max(0, Math.min(maxIndex, Math.round(vx / slot - 0.5)));
-    const clickedPrice = yMin + (1 - (vy - padTop) / innerH) * (yMax - yMin);
-    return { index: clickedIndex, price: clickedPrice };
+    const chart = createChart(containerRef.current, {
+      layout: {
+        background: { type: ColorType.Solid, color: C_BG },
+        textColor: C_TEXT_MUTED,
+        fontFamily: "'JetBrains Mono', Inter, sans-serif, monospace",
+      },
+      grid: {
+        vertLines: { color: C_GRID },
+        horzLines: { color: C_GRID },
+      },
+      crosshair: {
+        mode: CrosshairMode.Normal,
+        vertLine: { color: C_ACCENT, width: 1, style: LineStyle.Dashed, labelBackgroundColor: "#2a3228" },
+        horzLine: { color: C_ACCENT, width: 1, style: LineStyle.Dashed, labelBackgroundColor: "#2a3228" },
+      },
+      rightPriceScale: { borderColor: C_SCALE_BORDER },
+      timeScale: { borderColor: C_SCALE_BORDER, timeVisible: true, rightOffset: 3 },
+      localization: { priceFormatter: format },
+      // Le conteneur peut mesurer 0x0 au tout premier rendu (le layout flex n'est
+      // pas encore résolu) : on part d'une taille de repli non nulle, corrigée
+      // juste après par resizeToContainer().
+      width: containerRef.current.clientWidth || 800,
+      height: containerRef.current.clientHeight || 400,
+    });
+
+    const series = chart.addSeries(CandlestickSeries, {
+      upColor: C_UP,
+      downColor: C_DOWN,
+      borderVisible: false,
+      wickUpColor: C_UP,
+      wickDownColor: C_DOWN,
+    });
+
+    chartRef.current = chart;
+    seriesRef.current = series;
+
+    const redraw = () => forceRedraw((n) => n + 1);
+    chart.timeScale().subscribeVisibleTimeRangeChange(redraw);
+
+    function resizeToContainer() {
+      if (!containerRef.current) return;
+      const w = containerRef.current.clientWidth;
+      const h = containerRef.current.clientHeight;
+      if (w > 0 && h > 0) chart.resize(w, h);
+    }
+
+    // Le ResizeObserver couvre les redimensionnements normaux (fenêtre, mise en
+    // page). On y ajoute quelques relances ponctuelles juste après le montage :
+    // au tout premier rendu, le conteneur flex peut encore mesurer 0x0 le temps
+    // que la mise en page se stabilise, et un observer seul ne suffit pas
+    // toujours à rattraper ce cas.
+    const resizeObserver = new ResizeObserver(() => {
+      resizeToContainer();
+      redraw();
+    });
+    resizeObserver.observe(containerRef.current);
+
+    const settleTimers = [0, 60, 200, 500].map((delay) => setTimeout(resizeToContainer, delay));
+
+    return () => {
+      settleTimers.forEach(clearTimeout);
+      resizeObserver.disconnect();
+      chart.remove();
+      chartRef.current = null;
+      seriesRef.current = null;
+      priceLinesRef.current = {};
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ============ ALIMENTATION DES BOUGIES (avec révélation animée) ============
+  useEffect(() => {
+    const series = seriesRef.current;
+    if (!series || candles.length === 0) return;
+
+    if (!revealed) {
+      series.setData(candles.slice(0, visibleCount).map(toLwcCandle));
+      chartRef.current?.timeScale().fitContent();
+      return;
+    }
+
+    series.setData(candles.slice(0, visibleCount).map(toLwcCandle));
+    let cancelled = false;
+    let i = visibleCount;
+    function step() {
+      if (cancelled || i >= candles.length) return;
+      series.update(toLwcCandle(candles[i]));
+      i++;
+      timer = setTimeout(step, 22);
+    }
+    let timer = setTimeout(step, 22);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [candles, visibleCount, revealed]);
+
+  // ============ LIGNES DE PRIX HORIZONTALES (entrée/sortie, SL/TP, support/résistance) ============
+  useEffect(() => {
+    const series = seriesRef.current;
+    if (!series) return;
+
+    function upsertLine(key, price, options) {
+      const lines = priceLinesRef.current;
+      if (price === null || price === undefined) {
+        if (lines[key]) {
+          series.removePriceLine(lines[key]);
+          delete lines[key];
+        }
+        return;
+      }
+      if (lines[key]) {
+        lines[key].applyOptions({ price, ...options });
+      } else {
+        lines[key] = series.createPriceLine({ price, ...options });
+      }
+    }
+
+    upsertLine("entry", entryCandle ? entryCandle.close : null, {
+      color: C_ACCENT,
+      lineWidth: 1,
+      lineStyle: LineStyle.Dotted,
+      axisLabelVisible: true,
+      title: lang === "fr" ? "Entrée" : "Entry",
+    });
+    upsertLine("exit", revealed && lastCandle && lastCandle !== entryCandle ? lastCandle.close : null, {
+      color: lastUp ? C_UP : C_DOWN,
+      lineWidth: 1,
+      lineStyle: LineStyle.Solid,
+      axisLabelVisible: true,
+      title: lang === "fr" ? "Sortie" : "Exit",
+    });
+    upsertLine("stop", stopPrice, {
+      color: C_DOWN,
+      lineWidth: 2,
+      lineStyle: LineStyle.Dashed,
+      axisLabelVisible: true,
+      title: "SL",
+    });
+    upsertLine("tp", takeProfitPrice, {
+      color: C_UP,
+      lineWidth: 2,
+      lineStyle: LineStyle.Dashed,
+      axisLabelVisible: true,
+      title: "TP",
+    });
+    upsertLine("support", supportPrice, {
+      color: "#38bdf8",
+      lineWidth: 2,
+      lineStyle: LineStyle.Dotted,
+      axisLabelVisible: true,
+      title: t("supportTool", lang),
+    });
+    upsertLine("resistance", resistancePrice, {
+      color: "#fb923c",
+      lineWidth: 2,
+      lineStyle: LineStyle.Dotted,
+      axisLabelVisible: true,
+      title: t("resistanceTool", lang),
+    });
+  }, [entryCandle, lastCandle, revealed, lastUp, stopPrice, takeProfitPrice, supportPrice, resistancePrice, lang]);
+
+  // ============ DÉSACTIVE LE PAN/ZOOM PENDANT UN OUTIL DE TRACÉ / PLACEMENT ============
+  useEffect(() => {
+    chartRef.current?.applyOptions({
+      handleScroll: !interactionMode,
+      handleScale: !interactionMode,
+    });
+  }, [interactionMode]);
+
+  // ============ CONVERSIONS PIXEL <-> PRIX/TEMPS ============
+  function coordsFromEvent(e) {
+    const rect = containerRef.current.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+  function priceAtY(y) {
+    return seriesRef.current ? seriesRef.current.coordinateToPrice(y) : null;
+  }
+  function timeAtX(x) {
+    return chartRef.current ? chartRef.current.timeScale().coordinateToTime(x) : null;
+  }
+  function xAtTime(time) {
+    if (!chartRef.current || time === null || time === undefined) return null;
+    return chartRef.current.timeScale().timeToCoordinate(time);
+  }
+  function yAtPrice(price) {
+    if (!seriesRef.current || price === null || price === undefined) return null;
+    return seriesRef.current.priceToCoordinate(price);
   }
 
   function toggleTool(tool) {
@@ -871,51 +1032,58 @@ function CandlestickChart({
   }
 
   function handlePointerDown(e) {
-    if (structureMode && svgRef.current) {
-      const point = pointFromEvent(e);
-      if (structureMode === "support" && onSetSupportPrice) onSetSupportPrice(point.price);
-      if (structureMode === "resistance" && onSetResistancePrice) onSetResistancePrice(point.price);
+    const { x, y } = coordsFromEvent(e);
+    if (structureMode) {
+      const price = priceAtY(y);
+      if (price === null) return;
+      if (structureMode === "support" && onSetSupportPrice) onSetSupportPrice(price);
+      if (structureMode === "resistance" && onSetResistancePrice) onSetResistancePrice(price);
       return;
     }
-    if (riskMode && svgRef.current) {
-      const point = pointFromEvent(e);
-      if (riskMode === "stop" && onSetStopPrice) onSetStopPrice(point.price);
-      if (riskMode === "tp" && onSetTakeProfitPrice) onSetTakeProfitPrice(point.price);
+    if (riskMode) {
+      const price = priceAtY(y);
+      if (price === null) return;
+      if (riskMode === "stop" && onSetStopPrice) onSetStopPrice(price);
+      if (riskMode === "tp" && onSetTakeProfitPrice) onSetTakeProfitPrice(price);
       return;
     }
-    if (!activeTool || !svgRef.current) return;
-    svgRef.current.setPointerCapture(e.pointerId);
-    const point = pointFromEvent(e);
-    setDragStart(point);
-    setDragCurrent(point);
+    if (!activeTool) return;
+    const price = priceAtY(y);
+    const time = timeAtX(x);
+    if (price === null || time === null) return;
+    setDragStart({ time, price });
+    setDragCurrent({ time, price });
   }
 
   function handlePointerMove(e) {
-    if (!svgRef.current) return;
-    const point = pointFromEvent(e);
-    setHover(point);
-    if (isDragging) setDragCurrent(point);
-  }
-
-  function handlePointerLeave() {
-    setHover(null);
+    if (!isDragging) return;
+    const { x, y } = coordsFromEvent(e);
+    const price = priceAtY(y);
+    const time = timeAtX(x);
+    if (price === null || time === null) return;
+    setDragCurrent({ time, price });
   }
 
   function handlePointerUp() {
     if (!isDragging) return;
-    if (dragCurrent && !isDrawingTooSmall(dragStart, dragCurrent)) {
-      setDrawings((prev) => [...prev, { type: activeTool, p1: dragStart, p2: dragCurrent, id: `${Date.now()}-${Math.random()}` }]);
-      setActiveTool(null);
+    if (dragCurrent) {
+      const dx = Math.abs((xAtTime(dragCurrent.time) ?? 0) - (xAtTime(dragStart.time) ?? 0));
+      const dy = Math.abs((yAtPrice(dragCurrent.price) ?? 0) - (yAtPrice(dragStart.price) ?? 0));
+      if (dx > 6 || dy > 6) {
+        setDrawings((prev) => [...prev, { type: activeTool, p1: dragStart, p2: dragCurrent, id: `${Date.now()}-${Math.random()}` }]);
+        setActiveTool(null);
+      }
     }
     setDragStart(null);
     setDragCurrent(null);
   }
 
   function renderTrendLine(p1, p2, key, opacity = 1) {
-    const x1 = xScale(p1.index);
-    const y1 = yScale(p1.price);
-    const x2 = xScale(p2.index);
-    const y2 = yScale(p2.price);
+    const x1 = xAtTime(p1.time);
+    const y1 = yAtPrice(p1.price);
+    const x2 = xAtTime(p2.time);
+    const y2 = yAtPrice(p2.price);
+    if (x1 === null || y1 === null || x2 === null || y2 === null) return null;
     return (
       <g key={key} opacity={opacity}>
         <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={C_ACCENT} strokeWidth="1.5" />
@@ -926,20 +1094,23 @@ function CandlestickChart({
   }
 
   function renderFib(p1, p2, key, opacity = 1) {
-    const x1 = xScale(p1.index);
-    const x2 = xScale(p2.index);
+    const x1 = xAtTime(p1.time);
+    const x2 = xAtTime(p2.time);
+    if (x1 === null || x2 === null) return null;
     const leftX = Math.min(x1, x2);
+    const rightX = containerRef.current ? containerRef.current.clientWidth : Math.max(x1, x2) + 100;
     const levels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1];
     return (
       <g key={key} opacity={opacity}>
         {levels.map((lvl) => {
           const price = p1.price + (p2.price - p1.price) * lvl;
-          const y = yScale(price);
+          const y = yAtPrice(price);
+          if (y === null) return null;
           return (
             <g key={lvl}>
               <line
                 x1={leftX}
-                x2={innerW}
+                x2={rightX}
                 y1={y}
                 y2={y}
                 stroke={C_FIB}
@@ -957,8 +1128,7 @@ function CandlestickChart({
     );
   }
 
-  const showCrosshair = hover && !isDragging;
-  const hoverCandle = hover ? candles[hover.index] : null;
+  const nowX = entryCandle ? xAtTime(entryCandle.date) : null;
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -1000,179 +1170,34 @@ function CandlestickChart({
         )}
       </div>
 
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 relative">
+        <div ref={containerRef} className="w-full h-full" />
         <svg
-          ref={svgRef}
+          ref={overlayRef}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
-          onPointerLeave={handlePointerLeave}
-          viewBox={`0 0 ${W} ${H}`}
-          preserveAspectRatio="none"
-          className={`w-full h-full select-none touch-none ${activeTool || riskMode || structureMode ? "cursor-crosshair" : ""}`}
+          className={`absolute inset-0 w-full h-full select-none touch-none ${interactionMode ? "cursor-crosshair" : ""}`}
+          style={{ pointerEvents: interactionMode ? "auto" : "none" }}
           role="img"
           aria-label={t("chartAriaLabel", lang)}
         >
-          {gridValues.map((gv, k) => (
-            <g key={k}>
-              <line x1={0} x2={innerW} y1={yScale(gv)} y2={yScale(gv)} stroke={C_BORDER} strokeWidth="1" />
-              <text x={innerW + 8} y={yScale(gv) + 4} fontSize="13" fill={C_TEXT_MUTED} className="font-data">
-                {format(gv)}
-              </text>
+          {nowX !== null && (
+            <g pointerEvents="none">
+              <line x1={nowX} x2={nowX} y1={0} y2="100%" stroke={C_ACCENT} strokeWidth="1" strokeDasharray="3 4" opacity={revealed ? 0.35 : 0.75} />
+              {!revealed && (
+                <text x={nowX} y={14} fontSize="11" fill={C_ACCENT} textAnchor="middle" className="font-data">
+                  {t("now", lang)}
+                </text>
+              )}
             </g>
-          ))}
-
-          {axisIndices.map((idx, k) => {
-            const c = candles[idx];
-            if (!c) return null;
-            return (
-              <text key={k} x={xScale(idx)} y={H - 12} fontSize="12" fill={C_TEXT_MUTED} textAnchor="middle" className="font-data">
-                {formatAxisDate(c.date, lang)}
-              </text>
-            );
-          })}
-
-          <line
-            x1={cutoffX}
-            x2={cutoffX}
-            y1={padTop}
-            y2={padTop + innerH}
-            stroke={C_ACCENT}
-            strokeWidth="1"
-            strokeDasharray="3 4"
-            opacity={revealed ? 0.35 : 0.75}
-          />
-          {!revealed && (
-            <text x={cutoffX} y={padTop - 8} fontSize="11" fill={C_ACCENT} textAnchor="middle" className="font-data">
-              {t("now", lang)}
-            </text>
           )}
-
-          {shown.map((c, i) => {
-            const up = c.close >= c.open;
-            const color = up ? C_UP : C_DOWN;
-            const isNew = i >= visibleCount;
-            return (
-              <g key={c.i} className={isNew ? "candle-reveal" : ""} style={isNew ? { animationDelay: `${(i - visibleCount) * 22}ms` } : undefined}>
-                <line x1={xScale(i)} x2={xScale(i)} y1={yScale(c.high)} y2={yScale(c.low)} stroke={color} strokeWidth="1" />
-                <rect
-                  x={xScale(i) - bodyW / 2}
-                  y={Math.min(yScale(c.open), yScale(c.close))}
-                  width={bodyW}
-                  height={Math.max(Math.abs(yScale(c.close) - yScale(c.open)), 1)}
-                  fill={color}
-                />
-              </g>
-            );
-          })}
 
           {drawings.map((d) => (d.type === "trend" ? renderTrendLine(d.p1, d.p2, d.id) : renderFib(d.p1, d.p2, d.id)))}
 
           {isDragging &&
             dragCurrent &&
             (activeTool === "trend" ? renderTrendLine(dragStart, dragCurrent, "preview", 0.55) : renderFib(dragStart, dragCurrent, "preview", 0.55))}
-
-          {entryCandle && (
-            <g>
-              <line
-                x1={0}
-                x2={innerW}
-                y1={yScale(entryCandle.close)}
-                y2={yScale(entryCandle.close)}
-                stroke={C_ACCENT}
-                strokeWidth="1"
-                strokeDasharray="2 3"
-                opacity="0.5"
-              />
-              <rect x={innerW + 2} y={yScale(entryCandle.close) - 10} width={padRight - 4} height={20} fill={C_ACCENT} rx="2" />
-              <text
-                x={innerW + padRight / 2}
-                y={yScale(entryCandle.close) + 4.5}
-                fontSize="11.5"
-                fill={C_BG}
-                textAnchor="middle"
-                fontWeight="700"
-                className="font-data"
-              >
-                {format(entryCandle.close)}
-              </text>
-            </g>
-          )}
-
-          {revealed && lastCandle && lastCandle !== entryCandle && (
-            <g>
-              <rect x={innerW + 2} y={yScale(lastCandle.close) - 10} width={padRight - 4} height={20} fill={lastUp ? C_UP : C_DOWN} rx="2" />
-              <text
-                x={innerW + padRight / 2}
-                y={yScale(lastCandle.close) + 4.5}
-                fontSize="11.5"
-                fill={C_BG}
-                textAnchor="middle"
-                fontWeight="700"
-                className="font-data"
-              >
-                {format(lastCandle.close)}
-              </text>
-            </g>
-          )}
-
-          {stopPrice !== null && stopPrice !== undefined && (
-            <g>
-              <line x1={0} x2={innerW} y1={yScale(stopPrice)} y2={yScale(stopPrice)} stroke={C_DOWN} strokeWidth="1.5" strokeDasharray="5 3" opacity="0.85" />
-              <rect x={innerW + 2} y={yScale(stopPrice) - 9} width={padRight - 4} height={18} fill={C_DOWN} rx="2" />
-              <text x={innerW + padRight / 2} y={yScale(stopPrice) + 4} fontSize="10" fill="#fff" textAnchor="middle" fontWeight="700" className="font-data">
-                {format(stopPrice)}
-              </text>
-            </g>
-          )}
-
-          {takeProfitPrice !== null && takeProfitPrice !== undefined && (
-            <g>
-              <line x1={0} x2={innerW} y1={yScale(takeProfitPrice)} y2={yScale(takeProfitPrice)} stroke={C_UP} strokeWidth="1.5" strokeDasharray="5 3" opacity="0.85" />
-              <rect x={innerW + 2} y={yScale(takeProfitPrice) - 9} width={padRight - 4} height={18} fill={C_UP} rx="2" />
-              <text x={innerW + padRight / 2} y={yScale(takeProfitPrice) + 4} fontSize="10" fill="#050605" textAnchor="middle" fontWeight="700" className="font-data">
-                {format(takeProfitPrice)}
-              </text>
-            </g>
-          )}
-
-          {supportPrice !== null && supportPrice !== undefined && (
-            <g>
-              <line x1={0} x2={innerW} y1={yScale(supportPrice)} y2={yScale(supportPrice)} stroke="#38bdf8" strokeWidth="1.5" strokeDasharray="2 4" opacity="0.85" />
-              <rect x={innerW + 2} y={yScale(supportPrice) - 9} width={padRight - 4} height={18} fill="#38bdf8" rx="2" />
-              <text x={innerW + padRight / 2} y={yScale(supportPrice) + 4} fontSize="10" fill="#050605" textAnchor="middle" fontWeight="700" className="font-data">
-                {format(supportPrice)}
-              </text>
-            </g>
-          )}
-
-          {resistancePrice !== null && resistancePrice !== undefined && (
-            <g>
-              <line x1={0} x2={innerW} y1={yScale(resistancePrice)} y2={yScale(resistancePrice)} stroke="#fb923c" strokeWidth="1.5" strokeDasharray="2 4" opacity="0.85" />
-              <rect x={innerW + 2} y={yScale(resistancePrice) - 9} width={padRight - 4} height={18} fill="#fb923c" rx="2" />
-              <text x={innerW + padRight / 2} y={yScale(resistancePrice) + 4} fontSize="10" fill="#050605" textAnchor="middle" fontWeight="700" className="font-data">
-                {format(resistancePrice)}
-              </text>
-            </g>
-          )}
-
-          {/* ============ CURSEUR CROISÉ (CROSSHAIR) ============ */}
-          {showCrosshair && hoverCandle && (
-            <g pointerEvents="none">
-              <line x1={xScale(hover.index)} x2={xScale(hover.index)} y1={padTop} y2={padTop + innerH} stroke="#4a534a" strokeWidth="1" strokeDasharray="2 3" />
-              <line x1={0} x2={innerW} y1={yScale(hover.price)} y2={yScale(hover.price)} stroke="#4a534a" strokeWidth="1" strokeDasharray="2 3" />
-
-              <rect x={innerW + 2} y={yScale(hover.price) - 10} width={padRight - 4} height={20} fill="#2a3228" stroke={C_BORDER} rx="2" />
-              <text x={innerW + padRight / 2} y={yScale(hover.price) + 4.5} fontSize="11.5" fill={C_TEXT} textAnchor="middle" fontWeight="600" className="font-data">
-                {format(hover.price)}
-              </text>
-
-              <rect x={xScale(hover.index) - 40} y={H - 24} width={80} height={18} fill="#2a3228" stroke={C_BORDER} rx="2" />
-              <text x={xScale(hover.index)} y={H - 11.5} fontSize="11" fill={C_TEXT} textAnchor="middle" className="font-data">
-                {formatAxisDate(hoverCandle.date, lang)}
-              </text>
-            </g>
-          )}
         </svg>
       </div>
 
@@ -2603,4 +2628,10 @@ export default function App() {
       </div>
     </div>
   );
+}
+
+// ============ MONTAGE (chargé directement en .jsx, sans étape de build) ============
+const ttRootEl = document.getElementById("root");
+if (ttRootEl) {
+  ReactDOM.createRoot(ttRootEl).render(<App />);
 }

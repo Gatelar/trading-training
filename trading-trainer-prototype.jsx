@@ -152,6 +152,11 @@ const T = {
   structureClose: { fr: "Proche", en: "Close" },
   structureFar: { fr: "Loin", en: "Off" },
   structureNoPivot: { fr: "Pas de point de référence clair sur cette période", en: "No clear reference point over this period" },
+
+  // ---- Quiz d'actualité réelle (EUR/USD) ----
+  newsQuizTitle: { fr: "D'après toi, quel événement explique ce mouvement ?", en: "Which event do you think explains this move?" },
+  newsQuizCorrect: { fr: "✓ Exact —", en: "✓ Correct —" },
+  newsQuizIncorrect: { fr: "✗ En réalité —", en: "✗ Actually —" },
 };
 
 function t(key, lang) {
@@ -324,6 +329,36 @@ function getMacroEventsInWindow(windowCandles, visibleCount) {
   const startDate = visible[0].date;
   const endDate = visible[visible.length - 1].date;
   return MACRO_EVENTS_EURUSD.filter((ev) => ev.date >= startDate && ev.date <= endDate);
+}
+
+// ============ QUIZ "QUEL ÉVÉNEMENT EXPLIQUE CE MOUVEMENT ?" (EUR/USD, post-reveal) ============
+// Cherche un vrai événement BCE tombé pendant la période qui vient d'être révélée
+// (entre le point d'entrée et la fin du graphique) — pas avant, pour ne rien spoiler.
+function getMacroEventsInRevealedPeriod(candles, visibleCount) {
+  if (!candles.length || typeof MACRO_EVENTS_EURUSD === "undefined") return [];
+  const cutoffDate = candles[visibleCount - 1].date;
+  const endDate = candles[candles.length - 1].date;
+  return MACRO_EVENTS_EURUSD.filter((ev) => ev.date > cutoffDate && ev.date <= endDate).sort((a, b) => (a.date < b.date ? -1 : 1));
+}
+
+function shuffleWithRng(arr, rng) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function buildNewsQuiz(rng, candles, visibleCount) {
+  const actualEvents = getMacroEventsInRevealedPeriod(candles, visibleCount);
+  if (actualEvents.length === 0 || typeof MACRO_EVENTS_EURUSD === "undefined") return null;
+  const correct = actualEvents[0];
+  const pool = MACRO_EVENTS_EURUSD.filter((ev) => ev.date !== correct.date);
+  if (pool.length < 2) return null;
+  const distractors = shuffleWithRng(pool, rng).slice(0, 2);
+  const options = shuffleWithRng([correct, ...distractors], rng);
+  return { correct, options };
 }
 
 function formatAxisDate(dateStr, lang) {
@@ -1300,7 +1335,7 @@ function BiasCheckbox({ checked, onToggle, label }) {
   );
 }
 
-function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAnswerChange, biasChecked, onToggleBias, lang }) {
+function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAnswerChange, biasChecked, onToggleBias, lang, newsQuiz, newsQuizAnswer, onNewsQuizAnswer }) {
   const questions = (DEBRIEF_QUESTIONS[level] && (DEBRIEF_QUESTIONS[level][lang] || DEBRIEF_QUESTIONS[level].fr)) || [];
   const biasItems = (BIAS_ITEMS[level] && (BIAS_ITEMS[level][lang] || BIAS_ITEMS[level].fr)) || [];
   const smaResult = level === "experimente" ? computeSmaSignal(candles, visibleCount) : null;
@@ -1317,6 +1352,47 @@ function Debrief({ level, candles, visibleCount, actualUp, debriefAnswers, onAns
       <p className="text-[10px] font-data tracking-widest mb-3" style={{ color: C_TEXT_DIM }}>
         {t("debriefLabel", lang)}
       </p>
+
+      {newsQuiz && (
+        <div className="mb-4 p-3 rounded-lg border" style={{ borderColor: C_BORDER, backgroundColor: C_BG }}>
+          <p className="text-xs font-medium mb-2" style={{ color: C_TEXT }}>
+            {t("newsQuizTitle", lang)}
+          </p>
+          <div className="flex flex-col gap-2">
+            {newsQuiz.options.map((ev, i) => {
+              const isCorrectOption = ev.date === newsQuiz.correct.date;
+              const isPicked = newsQuizAnswer === i;
+              let optStyle = { borderColor: C_BORDER, color: C_TEXT_MUTED, backgroundColor: C_BG_SOFT };
+              if (newsQuizAnswer !== null) {
+                if (isCorrectOption) optStyle = { borderColor: C_UP, color: C_TEXT, backgroundColor: "rgba(16,185,129,0.08)" };
+                else if (isPicked) optStyle = { borderColor: C_DOWN, color: C_TEXT, backgroundColor: "rgba(239,68,68,0.08)" };
+              }
+              return (
+                <button
+                  key={i}
+                  disabled={newsQuizAnswer !== null}
+                  onClick={() => onNewsQuizAnswer(i)}
+                  className="text-left text-xs px-3 py-2 rounded-md border transition-colors"
+                  style={optStyle}
+                >
+                  {lang === "en" ? ev.title_en || ev.title : ev.title}
+                </button>
+              );
+            })}
+          </div>
+          {newsQuizAnswer !== null && (
+            <p className="text-xs mt-3 leading-relaxed" style={{ color: C_TEXT_MUTED }}>
+              <span style={{ color: newsQuiz.options[newsQuizAnswer].date === newsQuiz.correct.date ? C_UP : C_DOWN }}>
+                {newsQuiz.options[newsQuizAnswer].date === newsQuiz.correct.date ? t("newsQuizCorrect", lang) : t("newsQuizIncorrect", lang)}
+              </span>{" "}
+              <span className="font-data" style={{ color: C_TEXT }}>
+                {newsQuiz.correct.date}
+              </span>{" "}
+              — {lang === "en" ? newsQuiz.correct.detail_en || newsQuiz.correct.detail : newsQuiz.correct.detail}
+            </p>
+          )}
+        </div>
+      )}
 
       {smaResult && (
         <div className="mb-4 p-3 rounded-lg border" style={{ borderColor: C_BORDER, backgroundColor: C_BG }}>
@@ -1420,6 +1496,9 @@ function ExerciseScreen({
   onSetSupportPrice,
   onSetResistancePrice,
   onConfirmStructure,
+  seed,
+  newsQuizAnswer,
+  onNewsQuizAnswer,
 }) {
   const lv = LEVELS.find((l) => l.id === level);
   const d = DOMAINS.find((x) => x.id === domain);
@@ -1445,6 +1524,8 @@ function ExerciseScreen({
   const swingPoints = candles.length > 0 ? findSwingPoints(candles, visibleCount) : { swingHighs: [], swingLows: [] };
   const supportScore = structureConfirmed ? scoreStructurePlacement(supportPrice, swingPoints.swingLows) : null;
   const resistanceScore = structureConfirmed ? scoreStructurePlacement(resistancePrice, swingPoints.swingHighs) : null;
+
+  const newsQuiz = revealed && domain === "forex" && hasRealNews && candles.length > 0 ? buildNewsQuiz(mulberry32(seed + 12345), candles, visibleCount) : null;
 
   const volatility = candles.length > 0 ? computeVolatility(candles, visibleCount) : null;
   const rangeStats = candles.length > 0 ? computeRangeStats(candles, visibleCount, d.format) : null;
@@ -1913,6 +1994,9 @@ function ExerciseScreen({
               biasChecked={biasChecked}
               onToggleBias={onToggleBias}
               lang={lang}
+              newsQuiz={newsQuiz}
+              newsQuizAnswer={newsQuizAnswer}
+              onNewsQuizAnswer={onNewsQuizAnswer}
             />
 
             <button
@@ -2089,6 +2173,7 @@ export default function App() {
   const [supportPrice, setSupportPrice] = useState(null);
   const [resistancePrice, setResistancePrice] = useState(null);
   const [structureConfirmed, setStructureConfirmed] = useState(false);
+  const [newsQuizAnswer, setNewsQuizAnswer] = useState(null);
   const [sessionResults, setSessionResults] = useState([]);
   const [showSessionSummary, setShowSessionSummary] = useState(false);
 
@@ -2194,6 +2279,11 @@ export default function App() {
     setSupportPrice(null);
     setResistancePrice(null);
     setStructureConfirmed(false);
+    setNewsQuizAnswer(null);
+  };
+
+  const handleNewsQuizAnswer = (i) => {
+    setNewsQuizAnswer((cur) => (cur === null ? i : cur));
   };
 
   const handleDebriefAnswerChange = (i, value) => {
@@ -2430,6 +2520,9 @@ export default function App() {
             onSetSupportPrice={handleSetSupportPrice}
             onSetResistancePrice={handleSetResistancePrice}
             onConfirmStructure={handleConfirmStructure}
+            seed={seed}
+            newsQuizAnswer={newsQuizAnswer}
+            onNewsQuizAnswer={handleNewsQuizAnswer}
           />
         )}
         {screen === "sessionSummary" && (

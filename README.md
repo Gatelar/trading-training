@@ -89,9 +89,14 @@ trading-training/
 - [x] Mode séance : 5 exercices enchaînés dans le même niveau/marché, résumé avec P&L cumulé à la fin
 - [x] Exercice bonus "Gestion de trade en cours de route" (niveau Expérimenté) : 4 scénarios de décision en cours de trade, notation optimal/défendable/risqué
 - [x] Identification de structure (support/résistance) sur intermédiaire et expérimenté, avant le choix achat/vente, avec score de précision contre les vrais points pivots
+- [x] Quiz "quel événement explique ce mouvement" (EUR/USD, tous niveaux) intégré au debrief post-reveal
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
 - [ ] Vrai système de paiement pour l'abonnement
 - [ ] Revue de sécurité complète du site
+
+## Quiz "Quel événement explique ce mouvement ?" (EUR/USD)
+
+Exclusif à l'EUR/USD, intégré dans le debrief post-reveal, pour tous les niveaux. Après le reveal, si un vrai événement de décision BCE est tombé pendant la portion du graphique qui vient d'être dévoilée (`getMacroEventsInRevealedPeriod`), 3 options sont proposées : le vrai événement + 2 distracteurs pris au hasard dans la vraie base de données (`buildNewsQuiz`, mélange déterministe basé sur le seed de l'exercice). L'utilisateur devine lequel a causé le mouvement ; la bonne réponse et sa date/détail réels s'affichent après le choix. N'apparaît que si un événement réel est effectivement tombé dans la période révélée — sinon le bloc ne s'affiche pas.
 
 ## Identification de structure (support / résistance)
 

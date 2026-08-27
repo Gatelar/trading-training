@@ -58,10 +58,10 @@ function setMode(formKey, mode) {
 
     if (mode === 'forgot') {
         track.style.display = 'none';
-        forgotPanel.style.display = 'block';
+        if (forgotPanel) forgotPanel.style.display = 'block';
     } else {
         track.style.display = 'block';
-        forgotPanel.style.display = 'none';
+        if (forgotPanel) forgotPanel.style.display = 'none';
         track.classList.toggle('mode-phone', mode === 'phone');
         syncTrackHeight(formKey);
     }

@@ -1166,6 +1166,45 @@ function CandlestickChart({
     setDragCurrent(null);
   }
 
+  // Aperçu pendant le glisser : utilise directement les pixels bruts capturés
+  // à l'événement plutôt que de repasser par l'API temps/prix de la lib, pour
+  // un retour visuel toujours fidèle au curseur, même si le graphique n'a pas
+  // fini d'établir son état interne (cf. timeAtX plus haut).
+  function renderPreview(type, p1, p2) {
+    if (type === "trend") {
+      return (
+        <g opacity={0.55}>
+          <line x1={p1.px} y1={p1.py} x2={p2.px} y2={p2.py} stroke={C_ACCENT} strokeWidth="1.5" />
+          <circle cx={p1.px} cy={p1.py} r="3" fill={C_ACCENT} />
+          <circle cx={p2.px} cy={p2.py} r="3" fill={C_ACCENT} />
+        </g>
+      );
+    }
+    if (type === "rect") {
+      const left = Math.min(p1.px, p2.px);
+      const top = Math.min(p1.py, p2.py);
+      return (
+        <g opacity={0.55}>
+          <rect x={left} y={top} width={Math.abs(p2.px - p1.px)} height={Math.abs(p2.py - p1.py)} fill={C_ACCENT} fillOpacity="0.1" stroke={C_ACCENT} strokeWidth="1.5" />
+        </g>
+      );
+    }
+    if (type === "fib") {
+      const leftX = Math.min(p1.px, p2.px);
+      const rightX = containerRef.current ? containerRef.current.clientWidth : Math.max(p1.px, p2.px) + 100;
+      const levels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1];
+      return (
+        <g opacity={0.55}>
+          {levels.map((lvl) => {
+            const y = p1.py + (p2.py - p1.py) * lvl;
+            return <line key={lvl} x1={leftX} x2={rightX} y1={y} y2={y} stroke={C_FIB} strokeWidth="1" strokeDasharray={lvl === 0 || lvl === 1 ? "0" : "3 3"} opacity="0.75" />;
+          })}
+        </g>
+      );
+    }
+    return null;
+  }
+
   function renderTrendLine(p1, p2, key, opacity = 1) {
     const x1 = xAtTime(p1.time);
     const y1 = yAtPrice(p1.price);
@@ -1366,7 +1405,7 @@ function CandlestickChart({
 
           {drawings.map((d) => renderDrawing(d.type, d.p1, d.p2, d.id))}
 
-          {isDragging && dragCurrent && renderDrawing(activeTool, dragStart, dragCurrent, "preview", 0.55)}
+          {isDragging && dragCurrent && renderPreview(activeTool, dragStart, dragCurrent)}
         </svg>
       </div>
 

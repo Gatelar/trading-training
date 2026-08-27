@@ -1138,7 +1138,14 @@ function CandlestickChart({
       setActiveTool(null);
       return;
     }
-    overlayRef.current?.setPointerCapture?.(e.pointerId);
+    // setPointerCapture peut lever (NotFoundError) selon le navigateur/device
+    // (ex: certains trackpads) si le pointeur n'est plus reconnu comme actif
+    // à cet instant précis. Ce n'est qu'un confort (continuer à recevoir les
+    // événements si le curseur sort brièvement de la zone pendant le glisser)
+    // — une erreur ici ne doit surtout pas empêcher le tracé de démarrer.
+    try {
+      overlayRef.current?.setPointerCapture?.(e.pointerId);
+    } catch (err) {}
     setDragStart({ time, price, px: x, py: y });
     setDragCurrent({ time, price, px: x, py: y });
   }

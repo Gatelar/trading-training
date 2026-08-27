@@ -53,6 +53,9 @@ Deno.serve(async (req) => {
             status: subscription.status,
             plan: subscription.items.data[0]?.price?.nickname || null,
             current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            stripe_price_id: subscription.items.data[0]?.price?.id ?? null,
+            amount_cents: subscription.items.data[0]?.price?.unit_amount ?? null,
+            is_paused: subscription.pause_collection != null,
           });
         }
         break;
@@ -68,6 +71,9 @@ Deno.serve(async (req) => {
             status: subscription.status,
             plan: subscription.items.data[0]?.price?.nickname || null,
             current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            stripe_price_id: subscription.items.data[0]?.price?.id ?? null,
+            amount_cents: subscription.items.data[0]?.price?.unit_amount ?? null,
+            is_paused: subscription.pause_collection != null,
           });
         }
         break;

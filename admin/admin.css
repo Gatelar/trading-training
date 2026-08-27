@@ -1,0 +1,370 @@
+.admin-loading {
+    text-align: center;
+    padding: 140px 24px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.admin-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 24px 120px;
+}
+
+.admin-wrap h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: 14px 0 28px;
+}
+
+/* ============ ONGLETS ============ */
+.admin-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+}
+
+.admin-tab {
+    padding: 10px 20px;
+    background-color: var(--bg-card);
+    color: var(--text-muted);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-tab:hover {
+    border-color: var(--accent-dim);
+    color: var(--text);
+}
+
+.admin-tab.is-active {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #061208;
+}
+
+.admin-panel {
+    display: none;
+}
+
+.admin-panel.is-active {
+    display: block;
+    animation: fadeInSlide 0.25s ease-out;
+}
+
+.admin-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.admin-panel-head h2 {
+    font-size: 1.3rem;
+}
+
+/* ============ CARTES ============ */
+.admin-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    backdrop-filter: blur(var(--card-blur));
+    box-shadow: var(--shadow-card);
+    margin-bottom: 24px;
+}
+
+.admin-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+}
+
+/* ============ FILTRES / CHAMPS ============ */
+.admin-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.admin-input,
+.admin-select {
+    background-color: #090c09;
+    border: 1px solid var(--border-bright);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 9px 14px;
+}
+
+.admin-input:focus,
+.admin-select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+.admin-select-wide {
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.admin-field-label {
+    display: block;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* ============ TABLES ============ */
+.admin-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-card);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 12px 16px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.admin-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.admin-table tbody tr:hover {
+    background-color: var(--bg-card-hover);
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table-empty {
+    color: var(--text-dim);
+    text-align: center;
+    padding: 24px;
+}
+
+/* ============ BADGES ============ */
+.admin-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 2px 10px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.admin-tag-accent {
+    color: var(--accent);
+    background: rgba(205, 252, 138, 0.08);
+    border-color: rgba(205, 252, 138, 0.3);
+}
+
+.admin-tag-solid {
+    background-color: var(--accent);
+    color: #061208;
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.admin-tag-muted {
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--border);
+}
+
+.admin-tag-down {
+    color: var(--down);
+    background: rgba(255, 92, 92, 0.08);
+    border-color: rgba(255, 92, 92, 0.3);
+}
+
+/* ============ BOUTONS ============ */
+.admin-btn-sm {
+    padding: 10px 22px;
+    font-size: 0.85rem;
+}
+
+.admin-btn-danger:hover {
+    border-color: var(--down);
+    color: var(--down);
+    background-color: rgba(255, 92, 92, 0.08);
+    box-shadow: 0 4px 18px rgba(255, 92, 92, 0.15);
+}
+
+.admin-action-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.admin-btn-link {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.admin-btn-link:hover {
+    color: var(--accent-hover);
+}
+
+.admin-note {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 4px 0 0;
+}
+
+.admin-feedback {
+    font-size: 0.85rem;
+    margin-top: 10px;
+    min-height: 1.2em;
+}
+
+.admin-feedback.is-error {
+    color: var(--down);
+}
+
+.admin-feedback.is-success {
+    color: var(--accent);
+}
+
+/* ============ STATS (RÉGLAGES) ============ */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.admin-stat-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    backdrop-filter: blur(var(--card-blur));
+}
+
+.admin-stat-label {
+    display: block;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.admin-stat-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.7rem;
+    color: var(--text);
+}
+
+/* ============ MODALE ============ */
+.admin-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    padding: 24px;
+}
+
+.admin-modal {
+    width: 100%;
+    max-width: 440px;
+    background-color: #10140f;
+    border: 1px solid var(--border-bright);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    backdrop-filter: blur(var(--card-blur));
+    box-shadow: var(--shadow-card), 0 0 30px rgba(205, 252, 138, 0.08);
+    animation: fadeInSlide 0.2s ease-out;
+}
+
+.admin-modal h3 {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+}
+
+.admin-modal-field {
+    margin-bottom: 16px;
+}
+
+.admin-modal-field label {
+    display: block;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.admin-modal-field .admin-input,
+.admin-modal-field .admin-select {
+    width: 100%;
+}
+
+.admin-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+@media (max-width: 700px) {
+    .admin-wrap {
+        padding: 60px 16px 90px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 10px 12px;
+    }
+}

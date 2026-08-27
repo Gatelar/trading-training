@@ -107,10 +107,15 @@ html,body{
   if (session) {
     const { data: sub } = await supabaseClient
       .from('subscriptions')
-      .select('status')
+      .select('status, support_grace_until')
       .eq('user_id', session.user.id)
       .maybeSingle();
-    if (sub && (sub.status === 'active' || sub.status === 'trialing')) {
+    const isActive = sub && (
+      sub.status === 'active' ||
+      sub.status === 'trialing' ||
+      (sub.support_grace_until && new Date(sub.support_grace_until) > new Date())
+    );
+    if (isActive) {
       allow();
       return;
     }

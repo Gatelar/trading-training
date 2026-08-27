@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Training - Administration</title>
+    <link rel="stylesheet" href="../style.css?v=6">
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase-client.js"></script>
+    <script src="../i18n.js?v=2"></script>
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="../index.html" class="logo-container">
+            <img src="../logott.png" alt="Logo Trading Training" class="logo">
+        </a>
+        <div class="top-bar-right">
+            <div id="langToggle"></div>
+            <div class="top-bar-actions" id="topBarActions" data-prefix="../">
+                <a href="../authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
+            </div>
+        </div>
+    </header>
+
+    <p class="admin-loading" id="adminLoading" data-i18n="admin.loading">Chargement...</p>
+
+    <main id="adminRoot" class="admin-wrap" style="display:none;">
+        <span class="eyebrow" data-i18n="admin.eyebrow">Administration</span>
+        <h1 data-i18n="nav.admin">Administration</h1>
+
+        <nav class="admin-tabs" id="adminTabs">
+            <button class="admin-tab is-active" data-tab="users" data-i18n="admin.tabs.users">Clients</button>
+            <button class="admin-tab" data-tab="subscriptions" data-i18n="admin.tabs.subscriptions">Abonnements</button>
+            <button class="admin-tab" data-tab="promo" data-i18n="admin.tabs.promo">Codes promo</button>
+        </nav>
+
+        <!-- ============ ONGLET CLIENTS ============ -->
+        <section class="admin-panel is-active" id="panel-users">
+            <div class="admin-panel-head">
+                <h2 data-i18n="admin.users.title">Annuaire clients</h2>
+                <div class="admin-filters">
+                    <input type="text" id="usersSearch" class="admin-input" data-i18n-placeholder="admin.users.searchPlaceholder" placeholder="Rechercher par email...">
+                    <select id="usersRoleFilter" class="admin-select">
+                        <option value="" data-i18n="admin.users.filterAllRoles">Tous les rôles</option>
+                        <option value="SUPER_ADMIN" data-i18n="admin.role.super">Super admin</option>
+                        <option value="MANAGER" data-i18n="admin.role.manager">Manager</option>
+                        <option value="USER" data-i18n="admin.role.user">Client</option>
+                    </select>
+                    <select id="usersStatusFilter" class="admin-select">
+                        <option value="" data-i18n="admin.users.filterAllStatus">Tous les statuts</option>
+                        <option value="active" data-i18n="admin.status.active">Actif</option>
+                        <option value="trialing" data-i18n="admin.status.trialing">Essai</option>
+                        <option value="free" data-i18n="admin.status.free">Gratuit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="admin.users.colEmail">Email</th>
+                            <th data-i18n="admin.users.colRegistered">Inscrit le</th>
+                            <th data-i18n="admin.users.colRole">Rôle</th>
+                            <th data-i18n="admin.users.colStatus">Statut</th>
+                            <th data-i18n="admin.users.colActivity">Activité</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============ ONGLET ABONNEMENTS ============ -->
+        <section class="admin-panel" id="panel-subscriptions">
+            <div class="admin-panel-head">
+                <h2 data-i18n="admin.subscriptions.title">Overrides support</h2>
+            </div>
+            <div class="admin-card">
+                <label class="admin-field-label" data-i18n="admin.subscriptions.pickUser">Sélectionner un client</label>
+                <select id="subUserSelect" class="admin-select admin-select-wide"></select>
+                <p class="admin-note" id="subUserStatus"></p>
+                <div class="admin-action-row">
+                    <button class="btn-secondary" id="subPauseBtn" data-i18n="admin.subscriptions.pause">Mettre en pause</button>
+                    <button class="btn-secondary" id="subResumeBtn" data-i18n="admin.subscriptions.resume">Reprendre</button>
+                    <button class="btn-secondary admin-btn-danger" id="subCancelBtn" data-i18n="admin.subscriptions.cancel">Annuler</button>
+                    <button class="btn-secondary" id="subExtendBtn" data-i18n="admin.subscriptions.extend">Prolonger</button>
+                </div>
+                <p class="admin-feedback" id="subFeedback"></p>
+            </div>
+        </section>
+
+        <!-- ============ ONGLET CODES PROMO ============ -->
+        <section class="admin-panel" id="panel-promo">
+            <div class="admin-panel-head">
+                <h2 data-i18n="admin.promo.title">Codes promo</h2>
+                <button class="btn-primary admin-btn-sm" id="promoCreateBtn" data-i18n="admin.promo.createButton">Créer un code</button>
+            </div>
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="admin.promo.colCode">Code</th>
+                            <th data-i18n="admin.promo.colDiscount">Remise</th>
+                            <th data-i18n="admin.promo.colUsage">Utilisations</th>
+                            <th data-i18n="admin.promo.colExpires">Expiration</th>
+                            <th data-i18n="admin.promo.colStatus">Statut</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="promoTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============ ONGLET RÉGLAGES (SUPER_ADMIN uniquement) ============ -->
+        <section class="admin-panel" id="panel-settings" style="display:none;">
+            <div class="admin-panel-head">
+                <h2 data-i18n="admin.settings.title">Réglages Super Admin</h2>
+            </div>
+
+            <div class="admin-stats-grid" id="settingsStatsGrid"></div>
+
+            <div class="admin-card">
+                <h3 data-i18n="admin.settings.rolesTitle">Gestion des rôles</h3>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="admin.users.colEmail">Email</th>
+                                <th data-i18n="admin.users.colRole">Rôle</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rolesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h3 data-i18n="admin.settings.activityTitle">Journal d'activité</h3>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="admin.settings.activityActor">Auteur</th>
+                                <th data-i18n="admin.settings.activityAction">Action</th>
+                                <th data-i18n="admin.settings.activityTarget">Cible</th>
+                                <th data-i18n="admin.settings.activityWhen">Quand</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activityTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="admin-modal-backdrop" id="adminModalBackdrop" style="display:none;">
+        <div class="admin-modal" id="adminModal"></div>
+    </div>
+
+    <script src="../app.js"></script>
+    <script src="admin-modal.js"></script>
+    <script src="admin-init.js"></script>
+    <script src="admin-users.js"></script>
+    <script src="admin-subscriptions.js"></script>
+    <script src="admin-promo.js"></script>
+    <script src="admin-settings.js"></script>
+    <script src="../auth-state.js?v=3"></script>
+    <script src="../lang-toggle.js?v=3"></script>
+</body>
+</html>

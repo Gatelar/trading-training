@@ -14,7 +14,9 @@
         return (typeof I18N_DICT !== 'undefined' && I18N_DICT[key]) ? (I18N_DICT[key][lang] || I18N_DICT[key].fr) : key;
     }
 
-    function renderMenu(firstName) {
+    function renderMenu(firstName, role) {
+        const isStaff = role === 'MANAGER' || role === 'SUPER_ADMIN';
+        const adminLink = isStaff ? `<a href="${prefix}admin/admin.html">${tt('nav.admin')}</a>` : '';
         container.innerHTML = `
             <a href="${prefix}abonnement/abonnement.html" class="btn-secondary top-bar-plan">${tt('nav.subscription')}</a>
             <div class="account-menu">
@@ -22,6 +24,7 @@
                 <div class="account-dropdown" id="accountDropdown">
                     <a href="${prefix}compte/compte.html">${tt('nav.account')}</a>
                     <a href="${prefix}abonnement/abonnement.html">${tt('nav.subscription')}</a>
+                    ${adminLink}
                     <button id="logoutMenuBtn">${tt('nav.logout')}</button>
                 </div>
             </div>
@@ -48,14 +51,28 @@
         });
     }
 
-    supabaseClient.auth.getSession().then(({ data }) => {
+    supabaseClient.auth.getSession().then(async ({ data }) => {
         const session = data.session;
         if (!session) return;
 
         const email = session.user.email;
         const firstName = (session.user.user_metadata && session.user.user_metadata.full_name) || email.split('@')[0];
 
-        renderMenu(firstName);
-        window.addEventListener('tt:langchange', () => renderMenu(firstName));
+        // Réutilise le rôle déjà résolu par admin-init.js sur les pages admin
+        // (évite une seconde requête pour le même chargement de page).
+        let role = null;
+        if (window.__ttCachedRole && window.__ttCachedRole.userId === session.user.id) {
+            role = window.__ttCachedRole.role;
+        } else {
+            const { data: profile } = await supabaseClient
+                .from('profiles')
+                .select('role')
+                .eq('id', session.user.id)
+                .maybeSingle();
+            role = profile ? profile.role : null;
+        }
+
+        renderMenu(firstName, role);
+        window.addEventListener('tt:langchange', () => renderMenu(firstName, role));
     });
 })();

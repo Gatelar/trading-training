@@ -16,11 +16,15 @@
     // ============ STATUT ABONNEMENT ============
     const { data: sub } = await supabaseClient
         .from('subscriptions')
-        .select('status, plan')
+        .select('status, plan, support_grace_until')
         .eq('user_id', session.user.id)
         .maybeSingle();
 
-    const isActive = sub && (sub.status === 'active' || sub.status === 'trialing');
+    const isActive = sub && (
+        sub.status === 'active' ||
+        sub.status === 'trialing' ||
+        (sub.support_grace_until && new Date(sub.support_grace_until) > new Date())
+    );
     const planLabel = document.getElementById('planLabel');
     const planTag = document.getElementById('planTag');
     const quotaCard = document.getElementById('quotaCard');

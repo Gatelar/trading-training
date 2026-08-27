@@ -1395,7 +1395,7 @@ function CandlestickChart({
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           className={`absolute inset-0 w-full h-full select-none touch-none ${interactionMode ? "cursor-crosshair" : ""}`}
-          style={{ pointerEvents: interactionMode ? "auto" : "none" }}
+          style={{ pointerEvents: interactionMode ? "auto" : "none", zIndex: 5 }}
           role="img"
           aria-label={t("chartAriaLabel", lang)}
         >

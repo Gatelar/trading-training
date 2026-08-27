@@ -142,7 +142,7 @@ const T = {
   sessionProgress: { fr: "Exercice", en: "Exercise" },
   seeSessionSummary: { fr: "Voir le résumé de séance", en: "See session summary" },
   sessionSummaryTitle: { fr: "Résumé de séance", en: "Session summary" },
-  sessionSummarySubtitle: { fr: "5 exercices enchaînés — la régularité compte plus qu'un coup de chance isolé.", en: "5 exercises in a row — consistency matters more than a single lucky call." },
+  sessionSummarySubtitle: { fr: "{n} exercices enchaînés — la régularité compte plus qu'un coup de chance isolé.", en: "{n} exercises in a row — consistency matters more than a single lucky call." },
   sessionExercisesCount: { fr: "Exercices réalisés", en: "Exercises completed" },
   sessionWinRate: { fr: "Taux de réussite", en: "Win rate" },
   sessionCumulativeR: { fr: "R cumulé", en: "Cumulative R" },
@@ -2294,7 +2294,7 @@ function ExerciseScreen({
   );
 }
 
-const SESSION_LENGTH = 5;
+const SESSION_LENGTH = 20;
 
 function SessionSummaryScreen({ sessionResults, level, domain, onNewSession, onChangeMarket, lang }) {
   const d = DOMAINS.find((x) => x.id === domain);
@@ -2355,7 +2355,7 @@ function SessionSummaryScreen({ sessionResults, level, domain, onNewSession, onC
         {t("sessionSummaryTitle", lang)}
       </h1>
       <p className="mb-8" style={{ color: C_TEXT_MUTED }}>
-        {t("sessionSummarySubtitle", lang)}
+        {t("sessionSummarySubtitle", lang).replace("{n}", SESSION_LENGTH)}
       </p>
 
       <div className="grid grid-cols-2 gap-3 mb-6">

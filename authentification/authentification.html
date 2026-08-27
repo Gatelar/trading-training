@@ -24,20 +24,50 @@
                 <h2 data-i18n="auth.signInTitle">Connexion</h2>
                 <p class="form-subtitle" data-i18n="auth.signInSubtitle">Reprends ton entraînement là où tu l'as laissé.</p>
 
-                <div class="input-group">
-                    <input type="email" id="signInEmail" placeholder="Email" data-i18n="auth.emailPlaceholder" data-i18n-placeholder required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="signInPassword" placeholder="Mot de passe" data-i18n="auth.passwordPlaceholder" data-i18n-placeholder required>
+                <div class="auth-mode-tabs" data-tabs-for="signIn">
+                    <button type="button" class="mode-tab active" data-mode="password" data-i18n="auth.modeEmail">Email</button>
+                    <button type="button" class="mode-tab" data-mode="phone" data-i18n="auth.modePhone">Téléphone</button>
                 </div>
 
-                <a href="#" class="forgot-link" data-i18n="auth.forgotPassword">Mot de passe oublié ?</a>
+                <!-- Piste glissante Email <-> Téléphone (même animation que Connexion <-> Inscription) -->
+                <div class="auth-mode-track" data-track-for="signIn">
+                    <!-- Mode email + mot de passe -->
+                    <div class="auth-mode-panel" data-panel-for="signIn" data-mode-panel="password">
+                        <div class="input-group">
+                            <input type="email" id="signInEmail" placeholder="Email" data-i18n="auth.emailPlaceholder" data-i18n-placeholder>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="signInPassword" placeholder="Mot de passe" data-i18n="auth.passwordPlaceholder" data-i18n-placeholder>
+                        </div>
+                        <a href="#" class="forgot-link" id="forgotPasswordLink" data-i18n="auth.forgotPassword">Mot de passe oublié ?</a>
+                    </div>
+
+                    <!-- Mode téléphone (OTP par SMS) -->
+                    <div class="auth-mode-panel" data-panel-for="signIn" data-mode-panel="phone">
+                        <div class="input-group">
+                            <input type="tel" id="signInPhone" placeholder="+33 6 12 34 56 78" data-i18n="auth.phonePlaceholder" data-i18n-placeholder>
+                        </div>
+                        <div class="input-group" id="signInOtpGroup" style="display:none;">
+                            <input type="text" id="signInOtpCode" inputmode="numeric" autocomplete="one-time-code" placeholder="Code reçu par SMS" data-i18n="auth.otpPlaceholder" data-i18n-placeholder>
+                        </div>
+                        <button type="button" class="resend-link" id="signInResendOtp" style="display:none;" data-i18n="auth.resendCode">Renvoyer le code</button>
+                    </div>
+                </div>
+
+                <!-- Mode mot de passe oublié -->
+                <div class="auth-mode-panel" data-panel-for="signIn" data-mode-panel="forgot" style="display:none;">
+                    <p class="form-subtitle" data-i18n="auth.forgotSubtitle">Indique ton email, on t'envoie un lien pour choisir un nouveau mot de passe.</p>
+                    <div class="input-group">
+                        <input type="email" id="forgotEmail" placeholder="Email" data-i18n="auth.emailPlaceholder" data-i18n-placeholder>
+                    </div>
+                    <a href="#" class="forgot-link" id="backToSignInLink" data-i18n="auth.backToSignIn">← Retour à la connexion</a>
+                </div>
 
                 <p class="form-message" id="signInMessage"></p>
 
-                <button type="submit" class="btn-submit" data-i18n="auth.signInButton">Se connecter</button>
+                <button type="submit" class="btn-submit" id="signInSubmitBtn" data-i18n="auth.signInButton">Se connecter</button>
 
-                <button type="button" class="btn-google">
+                <button type="button" class="btn-google" data-oauth-for="signIn">
                     <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
                     <span data-i18n="auth.googleButton">Continuer avec Google</span>
                 </button>
@@ -51,21 +81,46 @@
                 <h2 data-i18n="auth.signUpTitle">Créer un compte</h2>
                 <p class="form-subtitle" data-i18n="auth.signUpSubtitle">Rejoins l'entraînement et progresse niveau par niveau.</p>
 
-                <div class="input-group">
-                    <input type="text" id="signUpName" placeholder="Nom" data-i18n="auth.namePlaceholder" data-i18n-placeholder required>
+                <div class="auth-mode-tabs" data-tabs-for="signUp">
+                    <button type="button" class="mode-tab active" data-mode="password" data-i18n="auth.modeEmail">Email</button>
+                    <button type="button" class="mode-tab" data-mode="phone" data-i18n="auth.modePhone">Téléphone</button>
                 </div>
-                <div class="input-group">
-                    <input type="email" id="signUpEmail" placeholder="Email" data-i18n="auth.emailPlaceholder" data-i18n-placeholder required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="signUpPassword" placeholder="Mot de passe (8 caractères min.)" data-i18n="auth.passwordMinPlaceholder" data-i18n-placeholder minlength="8" required>
+
+                <!-- Piste glissante Email <-> Téléphone (même animation que Connexion <-> Inscription) -->
+                <div class="auth-mode-track" data-track-for="signUp">
+                    <!-- Mode email + mot de passe -->
+                    <div class="auth-mode-panel" data-panel-for="signUp" data-mode-panel="password">
+                        <div class="input-group">
+                            <input type="text" id="signUpName" placeholder="Nom" data-i18n="auth.namePlaceholder" data-i18n-placeholder>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="signUpEmail" placeholder="Email" data-i18n="auth.emailPlaceholder" data-i18n-placeholder>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="signUpPassword" placeholder="Mot de passe (8 caractères min.)" data-i18n="auth.passwordMinPlaceholder" data-i18n-placeholder minlength="8">
+                        </div>
+                    </div>
+
+                    <!-- Mode téléphone (OTP par SMS) -->
+                    <div class="auth-mode-panel" data-panel-for="signUp" data-mode-panel="phone">
+                        <div class="input-group">
+                            <input type="text" id="signUpPhoneName" placeholder="Nom" data-i18n="auth.namePlaceholder" data-i18n-placeholder>
+                        </div>
+                        <div class="input-group">
+                            <input type="tel" id="signUpPhone" placeholder="+33 6 12 34 56 78" data-i18n="auth.phonePlaceholder" data-i18n-placeholder>
+                        </div>
+                        <div class="input-group" id="signUpOtpGroup" style="display:none;">
+                            <input type="text" id="signUpOtpCode" inputmode="numeric" autocomplete="one-time-code" placeholder="Code reçu par SMS" data-i18n="auth.otpPlaceholder" data-i18n-placeholder>
+                        </div>
+                        <button type="button" class="resend-link" id="signUpResendOtp" style="display:none;" data-i18n="auth.resendCode">Renvoyer le code</button>
+                    </div>
                 </div>
 
                 <p class="form-message" id="signUpMessage"></p>
 
-                <button type="submit" class="btn-submit" data-i18n="auth.signUpButton">S'inscrire</button>
+                <button type="submit" class="btn-submit" id="signUpSubmitBtn" data-i18n="auth.signUpButton">S'inscrire</button>
 
-                <button type="button" class="btn-google">
+                <button type="button" class="btn-google" data-oauth-for="signUp">
                     <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
                     <span data-i18n="auth.googleButton">Continuer avec Google</span>
                 </button>

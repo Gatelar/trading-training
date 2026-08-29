@@ -23,7 +23,7 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const ALLOWED_ACTIONS = new Set(["pause", "cancel", "resume"]);
+const ALLOWED_ACTIONS = new Set(["pause", "cancel", "resume", "grant_time"]);
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -31,10 +31,17 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { action, targetUserId } = await req.json();
+    const { action, targetUserId, days } = await req.json();
 
     if (!ALLOWED_ACTIONS.has(action) || !targetUserId) {
       return new Response(JSON.stringify({ error: "Requête invalide." }), {
+        status: 400,
+        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "grant_time" && (!Number.isFinite(days) || days <= 0)) {
+      return new Response(JSON.stringify({ error: "Nombre de jours invalide." }), {
         status: 400,
         headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
       });
@@ -86,6 +93,40 @@ Deno.serve(async (req) => {
         status: 403,
         headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
       });
+    }
+
+    if (action === "grant_time") {
+      // Acces offert (pas de Stripe implique) : on prolonge support_grace_until
+      // a partir de la date de grace existante si elle est encore future,
+      // sinon a partir de maintenant, pour que des appels successifs cumulent.
+      // upsert (onConflict: user_id) fonctionne meme si l'utilisateur n'a
+      // encore aucune ligne "subscriptions".
+      const { data: existingSub } = await supabaseAdmin
+        .from("subscriptions")
+        .select("support_grace_until")
+        .eq("user_id", targetUserId)
+        .maybeSingle();
+
+      const existingGrace = existingSub?.support_grace_until ? new Date(existingSub.support_grace_until) : null;
+      const base = existingGrace && existingGrace > new Date() ? existingGrace : new Date();
+      const newGrace = new Date(base.getTime() + days * 24 * 60 * 60 * 1000);
+
+      await supabaseAdmin.from("subscriptions").upsert(
+        { user_id: targetUserId, support_grace_until: newGrace.toISOString() },
+        { onConflict: "user_id" }
+      );
+
+      await supabaseAdmin.from("admin_activity_log").insert({
+        actor_user_id: user.id,
+        action: "subscription_grant_time",
+        target_user_id: targetUserId,
+        details: { days, supportGraceUntil: newGrace.toISOString() },
+      });
+
+      return new Response(
+        JSON.stringify({ supportGraceUntil: newGrace.toISOString() }),
+        { headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
+      );
     }
 
     const { data: targetSub } = await supabaseAdmin

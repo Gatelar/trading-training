@@ -75,8 +75,8 @@
         window.adminOpenModal(`
             <h3>${tt('admin.subscriptions.extendModalTitle')}</h3>
             <div class="admin-modal-field">
-                <label>${tt('admin.subscriptions.extendUntilLabel')}</label>
-                <input type="date" id="extendDateInput" class="admin-input">
+                <label>${tt('admin.subscriptions.extendDaysLabel')}</label>
+                <input type="number" id="extendDaysInput" class="admin-input" min="1" step="1" value="7">
             </div>
             <p class="admin-feedback" id="extendFeedback"></p>
             <div class="admin-modal-actions">
@@ -87,24 +87,39 @@
 
         document.getElementById('extendCancelBtn').addEventListener('click', window.adminCloseModal);
         document.getElementById('extendConfirmBtn').addEventListener('click', async () => {
-            const dateVal = document.getElementById('extendDateInput').value;
+            const days = parseInt(document.getElementById('extendDaysInput').value, 10);
             const fb = document.getElementById('extendFeedback');
-            if (!dateVal) return;
+            if (!Number.isFinite(days) || days <= 0) return;
 
             const targetUserId = userSelect.value;
-            const { error } = await supabaseClient
-                .from('subscriptions')
-                .update({ support_grace_until: new Date(dateVal + 'T23:59:59').toISOString() })
-                .eq('user_id', targetUserId);
+            const session = window.__ttAdminSession;
+            const confirmBtn = document.getElementById('extendConfirmBtn');
+            confirmBtn.disabled = true;
 
-            if (error) {
-                fb.textContent = error.message;
+            try {
+                const res = await fetch(`${SUPABASE_FUNCTIONS_URL}/admin-subscription-override`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${session.access_token}`,
+                    },
+                    body: JSON.stringify({ action: 'grant_time', targetUserId, days }),
+                });
+                const json = await res.json();
+                if (!res.ok || json.error) throw new Error(json.error || tt('admin.subscriptions.actionError'));
+
+                const row = directory.find((r) => r.id === targetUserId);
+                if (row) row.support_grace_until = json.supportGraceUntil;
+
+                window.adminCloseModal();
+                setFeedback(tt('admin.subscriptions.actionSuccess'), false);
+                updateStatusLine();
+            } catch (err) {
+                fb.textContent = err.message;
                 fb.className = 'admin-feedback is-error';
-                return;
+            } finally {
+                confirmBtn.disabled = false;
             }
-
-            window.adminCloseModal();
-            setFeedback(tt('admin.subscriptions.actionSuccess'), false);
         });
     });
 

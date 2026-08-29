@@ -177,6 +177,7 @@ const I18N_DICT = {
   "admin.subscriptions.extend": { fr: "Prolonger", en: "Extend" },
   "admin.subscriptions.extendModalTitle": { fr: "Prolonger l'accès", en: "Extend access" },
   "admin.subscriptions.extendUntilLabel": { fr: "Accès gratuit jusqu'au", en: "Free access until" },
+  "admin.subscriptions.extendDaysLabel": { fr: "Nombre de jours à ajouter", en: "Number of days to add" },
   "admin.subscriptions.confirmExtend": { fr: "Confirmer", en: "Confirm" },
   "admin.subscriptions.noSubscription": { fr: "Aucun abonnement Stripe pour ce compte.", en: "No Stripe subscription on file for this account." },
   "admin.subscriptions.actionSuccess": { fr: "Action effectuée.", en: "Action completed." },

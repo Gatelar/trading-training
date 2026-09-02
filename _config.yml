@@ -24,7 +24,11 @@ exclude:
   - README.md
 
   # --- Prototypes morts : jamais chargés par une page du site ---
-  - trading-trainer-prototype.jsx
+  # ATTENTION : ne pas ajouter trading-trainer-prototype.jsx ici. Malgré son
+  # nom, ce n'est pas un prototype : c'est le simulateur, chargé par
+  # trading-trainer.html à la ligne 182. L'exclure casse « Commencer
+  # l'entraînement » sur la page d'accueil. Il n'importe que des modules
+  # d'esm.sh, donc components/ et lib/utils.ts restent bien inutilisés.
   - components/
   - lib/utils.ts
   - concept-ruban.html

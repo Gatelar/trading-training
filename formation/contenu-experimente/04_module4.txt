@@ -1,0 +1,119 @@
+MOD: 4 | Le portefeuille | 14 minutes de lecture · 4 chapitres · 1 exercice | 14 min
+Objectif : tenir une limite d'exposition quand elle cesse d'être vérifiable de tête.
+
+H2: 4.1 Quand trois catégories ne suffisent plus
+
+HOOK:
+Avec trois positions, tu as trois paires à examiner et tu le fais de tête en cinq secondes. Avec sept, tu en as vingt et une — et tu ne le fais plus du tout.
+
+P: Le chapitre 5.2 de l'Intermédiaire t'a donné trois catégories de corrélation et une règle qui s'applique à une paire. Elle était suffisante parce qu'à deux ou trois positions, le nombre de paires reste inférieur au nombre de positions. Cette propriété s'arrête à trois, et elle s'arrête brutalement.
+
+P: Ce qui remplace l'examen des paires n'est pas un calcul plus fin. Un **groupe d'exposition** réunit les positions qui perdent dans le même scénario — c'est la question posée au chapitre 5.1 de l'Intermédiaire, transformée en outil de classement. Un scénario, contrairement à un coefficient, ne change pas de valeur pendant que tu le regardes.
+
+CASE: Trois paires, ou vingt et une
+Nombre de paires à examiner = n(n − 1) ÷ 2. **3 positions** : 3 paires. **5 positions** : 10. **7 positions** : **21**.
+À vingt secondes par paire, sept positions demandent **sept minutes de vérification avant chaque ordre**. Tu ne les feras pas, et tu auras raison de ne pas les faire.
+La méthode qui la remplace tient en trois lignes :
+**1.** Groupe tes positions par scénario perdant commun.
+**2.** Dans un groupe, **les risques s'additionnent** — trois positions à 1 % qui perdent ensemble exposent 3 %, comme le disait déjà le chapitre 5.1 de l'Intermédiaire.
+**3.** Entre groupes, applique les catégories : au-dessus de +0,3 le plus petit compte pour moitié, en dessous ils s'additionnent, et des sens opposés se retranchent.
+
+ERR: L'erreur classique
+Étendre la règle des paires à cinq positions en l'appliquant paire après paire. On obtient alors autant de résultats que d'ordres d'examen possibles, et c'est le plus flatteur qui finit par l'emporter — sans mauvaise foi, simplement parce qu'il arrive en dernier et qu'on s'arrête quand le chiffre passe. Le groupement, lui, ne dépend pas de l'ordre dans lequel tu regardes.
+
+KEY: À retenir
+- Le nombre de paires croît comme le carré. Sept positions : vingt et une paires.
+- Dans un groupe qui perd ensemble, les risques s'additionnent. Sans exception.
+- Entre groupes seulement, les trois catégories de corrélation s'appliquent.
+
+H2: 4.2 La corrélation bouge quand le marché bouge
+
+HOOK:
+Tu as classé tes deux positions à +0,15 au moment de passer les ordres. Elles ont touché leur stop dans la même heure. Les deux affirmations sont exactes, et c'est ça le problème.
+
+P: Une corrélation se mesure sur une fenêtre. Elle décrit ce qui s'est passé dans cette fenêtre, et elle décrira le régime précédent pendant toute la durée du suivant. Ce n'est pas un défaut de la mesure : c'est ce qu'une moyenne fait.
+
+P: Mancini, Ranaldo et Wrampelmeyer ont établi en 2013 que les épisodes d'illiquidité surviennent **simultanément** sur les paires de change, avec une forte communalité. Autrement dit, le moment où ta diversification devrait servir est précisément celui où elle est la moins présente.
+
+CASE: Le classement qui change de camp
+**Au moment des ordres** — long EUR/USD 1 %, long BTC/USD 1 %. Corrélation mesurée sur 90 jours : **+0,15**. Deux groupes distincts, on additionne : exposition annoncée **2 %**.
+**Trois semaines plus tard** — un épisode de tension fait monter le dollar et se vider les carnets. Les deux positions touchent leur stop dans la même heure. Elles n'étaient pas deux groupes : c'étaient deux paris contre le dollar.
+Perte réalisée : **2 %**. L'addition avait donc donné le bon chiffre.
+Ce qui aurait été faux, c'est de la remplacer par une demi-somme au vu du +0,15. Le coefficient n'était pas erroné — la fenêtre sur laquelle il était calculé ne contenait simplement pas l'épisode.
+
+ERR: L'erreur classique
+Allonger la fenêtre de calcul pour obtenir un coefficient « plus stable ». Une fenêtre longue ne stabilise pas la corrélation : elle ralentit son estimation, et te décrira le régime d'avant pendant tout celui d'après. Le chapitre 5.2 de l'Intermédiaire avait déjà tranché sur la précision ; ce chapitre ajoute que la lenteur se paie au pire moment.
+
+KEY: À retenir
+- Une corrélation décrit le passé de la fenêtre sur laquelle elle est calculée.
+- L'illiquidité arrive simultanément sur les paires. La diversification manque quand elle servirait.
+- Groupe par scénario partagé. Un scénario ne se réévalue pas pendant que le marché bouge.
+
+H2: 4.3 Refuser une position : l'ordre de priorité
+
+HOOK:
+Ta limite est atteinte et un très bon trade se présente. La question n'est pas de savoir s'il est bon : il l'est. C'est de savoir lequel des cinq tu refuses — et cette réponse doit exister avant la question.
+
+P: Trois règles de refus sont défendables, et il faut en choisir une seule. **Le dernier arrivé** : le trade qui se présente. **Le moins bon ratio** : celui dont le gain visé rapporté au risque est le plus faible. **Le plus gros groupe** : celui qui viendrait grossir le bloc le plus exposé.
+
+P: La première a un avantage que les deux autres n'ont pas : elle ne rouvre aucune position en cours. Les deux autres t'obligent à réévaluer des trades déjà ouverts, avec leur objectif et leur stop, au moment où un autre trade te fait envie. C'est la sixième règle du Débutant qui meurt là, pas ailleurs.
+
+CASE: Cinq positions, une limite
+Ouvertes : long EUR/USD 0,6 % · long GBP/USD 0,6 % · long BTC/USD 0,5 % · short USD/JPY 0,4 %.
+Groupe « le dollar baisse » : EUR/USD, GBP/USD et le short USD/JPY sont trois paris identiques. Somme : 0,6 + 0,6 + 0,4 = **1,6 %**.
+Groupe « crypto », faiblement corrélé au premier : **0,5 %**.
+Exposition totale : **2,1 %**. La limite de 2 % est dépassée **avant** que le cinquième trade ne se présente.
+Le cinquième ne se discute donc pas. Ce qui se discute, c'est ce que tu fais des 0,1 % en trop — et si ta réponse est « je réduis une position ouverte », relis la ligne précédente.
+
+ERR: L'erreur classique
+Faire de la place en réduisant une position en cours. L'arithmétique semble neutre : même exposition totale, un trade de plus. Elle ne l'est pas. Tu viens de renégocier une position ouverte au profit d'une position qui n'existe pas encore, et tu l'as fait avec un calcul plutôt qu'avec une émotion — ce qui la rend beaucoup plus difficile à repérer dans ton journal.
+
+KEY: À retenir
+- L'ordre de refus s'écrit avant, jamais au moment où un bon trade se présente.
+- Par défaut : le dernier arrivé. C'est le seul refus qui ne rouvre rien.
+- Réduire une position ouverte pour en loger une autre, c'est renégocier. La règle 6 l'interdit.
+
+H2: 4.4 Le plafond que tu ne peux plus vérifier à l'œil
+
+HOOK:
+« Vérifiable en cinq secondes avant chaque ordre », disait l'Intermédiaire de sa huitième règle. C'était vrai à trois positions. La règle ne dit nulle part ce qu'il faut faire quand ce n'est plus vrai.
+
+P: Un **tableau d'exposition** est une feuille tenue par toi, hors de la plateforme, avec une ligne par position ouverte et quatre colonnes : actif, sens, risque en pourcentage, groupe. Plus une ligne de total. Il se met à jour avant l'ordre, comme la taille de position.
+
+P: La huitième règle ne change pas et la huitième question de la checklist non plus. Ce qui change, c'est d'où vient la réponse : d'un tableau tenu, et non plus d'un souvenir. À trois positions, le souvenir suffisait ; à cinq, il produit systématiquement le chiffre le plus bas.
+
+CASE: Le tableau, et ce qu'il coûte
+Quatre colonnes, une ligne par position, une ligne de total.
+Mise à jour avant chaque ordre : **une ligne à écrire et une somme à refaire**, soit une vingtaine de secondes, quel que soit le nombre de positions.
+Sept minutes pour l'examen par paires du chapitre 4.1, vingt secondes pour le tableau : un rapport de **1 à 21**.
+Et surtout, un coût qui ne croît pas. C'est la seule propriété qui compte ici : une vérification dont le coût augmente avec le nombre de positions sera abandonnée exactement au moment où elle devient nécessaire.
+
+ERR: L'erreur classique
+Tenir le tableau dans l'interface du courtier. Elle affiche un risque position par position et ne connaît pas tes groupes — le chapitre 5.1 de l'Intermédiaire l'avait déjà établi. Elle a un second défaut, propre au réel : elle ne t'appartient pas. Le jour où tu changes de prestataire, ton tableau disparaît, et avec lui l'historique qui te dirait depuis quand ta limite est dépassée.
+
+KEY: À retenir
+- Quatre colonnes : actif, sens, risque, groupe. Et une ligne de total.
+- Vingt secondes avant chaque ordre, quel que soit le nombre de positions ouvertes.
+- Le tableau reste chez toi. Ce que tient la plateforme du courtier ne t'appartient pas.
+
+EX: Cinq positions, une limite
+
+EXF: Compétence évaluée
+Objectifs 30 et 31 : calculer l'exposition d'un portefeuille de plus de trois positions en tenant compte du sens et des groupes ; décider quelle position refuser quand la limite est atteinte, en citant la règle qui tranche.
+
+EXF: Consigne
+**Étape A.** Un portefeuille de six positions t'est présenté. Constitue les groupes, puis calcule l'exposition totale.
+**Étape B.** Le même portefeuille t'est présenté trois semaines plus tard, avec une matrice de corrélation qui a changé de catégorie sur deux couples. Recalcule, et dis si ta décision d'origine aurait été différente.
+**Étape C.** Un septième trade se présente alors que la limite est atteinte. Applique ta règle de refus, écrite à l'étape précédente, et nomme la règle du Débutant ou de l'Intermédiaire qui interdit les deux autres solutions.
+
+EXF: Ce que la plateforme doit fournir
+- Un écran portefeuille à six positions avec actif, **sens**, risque en pourcentage, et une zone de groupement par glisser-déposer — l'utilisateur constitue lui-même les groupes, la plateforme ne les propose jamais.
+- Une matrice de corrélation en trois couleurs, comme à l'exercice 5 de l'Intermédiaire, et un bouton « trois semaines plus tard » qui la modifie sans modifier les positions.
+- Un champ pour l'exposition totale, tolérance ±0,1 point, et un compteur du temps passé sur l'étape A, affiché seulement à la fin.
+- Étape C : trois solutions proposées — refuser le dernier arrivé, réduire une position ouverte, refuser le plus mauvais ratio — et un champ pour nommer la règle violée par la solution intermédiaire.
+- **Repli** si le glisser-déposer n'est pas disponible : groupes constitués par cases à cocher, mécanique et correction identiques.
+
+EXF: Correction commentée
+**Étape A.** Le piège est le short au milieu des longs, comme à l'Intermédiaire — mais il est ici inversé : le short USD/JPY **rejoint** le groupe des paris contre le dollar au lieu de le compenser, parce que c'est le dollar qui est vendu dans les deux cas. Un utilisateur qui applique mécaniquement « sens opposés, on retranche » se trompe de 0,8 point. Le sens se lit sur le scénario, pas sur le libellé de la paire.
+**Étape B.** La réponse attendue est que la décision d'origine **ne change pas**, et c'est contre-intuitif : deux couples ont changé de catégorie, donc quelque chose devrait bouger. Rien ne bouge, parce que les groupes ont été constitués sur des scénarios et que les scénarios n'ont pas changé. C'est tout l'enseignement du chapitre 4.2, et il ne se démontre qu'en le faisant deux fois.
+**Étape C.** « Réduire une position ouverte » est choisi par une large part des utilisateurs, parce que c'est la seule solution qui permette de prendre le bon trade. La règle violée est la sixième du Débutant — objectif et stop non renégociables — et la difficulté de l'exercice est de la nommer alors qu'aucun objectif ni aucun stop n'a été explicitement déplacé.

@@ -1,0 +1,57 @@
+COUV:
+Apprendre à lire un marché.
+Et à ne pas se ruiner en l'apprenant.
+
+SEC: Avertissement
+
+WARN: À lire avant tout le reste
+Le trading à effet de levier est une activité à risque élevé. La majorité des particuliers qui s'y engagent perd de l'argent.
+- Sur 14 799 clients français suivis pendant quatre ans par l'Autorité des marchés financiers, **89 % sont perdants**. La perte moyenne s'établit à 10 887 €, la perte médiane à 1 843 €.
+- Ce document est un **contenu pédagogique**. Il ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une incitation à ouvrir un compte chez qui que ce soit.
+- Aucun chapitre de ce parcours ne promet, ne suggère ni ne laisse espérer un gain. Les performances passées ne préjugent pas des performances futures.
+- L'intégralité des exercices se déroule dans le **simulateur TapeSense**, sur données de marché historiques rejouées. Aucun capital réel n'est engagé à aucun moment.
+
+P: Ce parcours s'appuie sur des sources publiques et vérifiables : les travaux de l'Autorité des marchés financiers et de l'ESMA, et la recherche universitaire sur les résultats réels des investisseurs particuliers. Les références complètes figurent en fin de document, avec leurs liens.
+
+P: Tu ne trouveras ici ni méthode gagnante, ni signal, ni configuration secrète. Tu trouveras la partie du métier que presque personne n'enseigne en premier, parce qu'elle n'est pas spectaculaire : combien risquer, où s'arrêter, et comment savoir si tu progresses.
+
+P: Si tu envisages un jour d'engager de l'argent réel, fais-le en connaissant les chiffres de la page que tu viens de lire. Pas en les ignorant.
+
+SECX: Sommaire
+
+NOTE: Six modules, environ 70 minutes de lecture au total, six exercices dans le simulateur. Le parcours se suit dans l'ordre : chaque module s'appuie sur le précédent.
+
+TOC:
+
+SEC: Comment suivre ce parcours
+
+P: Ce parcours n'est pas une encyclopédie du trading. C'est une progression, et elle est conçue pour être suivie dans un ordre précis.
+
+H3: L'ordre n'est pas négociable
+
+P: Le module 2 traite du risque avant que le module 3 ne touche à un graphique. Ce n'est pas une préférence de rédaction. Les données du module 1 montrent que ce qui distingue un compte qui survit d'un compte qui disparaît n'est presque jamais la qualité de l'analyse : c'est la taille des positions. Commencer par les graphiques, c'est apprendre à conduire en travaillant d'abord la peinture de la carrosserie.
+
+H3: Lis en plusieurs fois
+
+P: Chaque module tient en dix à treize minutes. Six modules d'affilée en une soirée, c'est une soirée perdue : tu retiendras le premier et le dernier. Un module par session, avec son exercice, est le bon rythme. Le parcours complet demande une à deux semaines.
+
+H3: L'exercice n'est pas un bonus
+
+P: Chaque module se termine par un exercice dans le simulateur. C'est là que se produit l'apprentissage — le texte ne fait que préparer le terrain. Une étude citée au module 1 a suivi des traders sur quatre ans et n'a mesuré aucune progression spontanée. La différence entre répéter et apprendre tient dans la correction immédiate. Les exercices existent pour ça.
+
+H3: Trois conventions utilisées partout
+
+UL:
+- **Le capital de référence est 1 000 €.** Tous les exemples chiffrés partent de cette somme, pour que tu puisses les comparer entre eux. Adapte les proportions à ton cas.
+- **Les marchés d'illustration sont EUR/USD et BTC/USD**, en unités de temps H1 et H4 — chaque bougie du graphique y résume une heure, ou quatre heures. Les exemples sont des cas d'école cohérents, construits pour l'enseignement, et non des relevés de marché réels.
+- **Aucun mot technique n'est employé avant d'avoir été défini.** Chaque terme reçoit sa définition en une ligne à sa première apparition dans les modules, et le glossaire en fin de document les reprend tous par ordre alphabétique.
+- **Tout se passe en simulation.** Le simulateur rejoue des données historiques. Le seul capital engagé dans ce parcours est ton attention.
+
+H3: Ce que tu sauras faire à la fin
+
+UL:
+- Calculer ce que tu risques, en euros, avant de passer un ordre.
+- Lire une **structure** de prix — l'enchaînement des hauts et des bas — sur un graphique dépourvu du moindre indicateur.
+- Écrire un **scénario** : ce que tu attends du marché, et le prix qui te donnerait tort.
+- Refuser une opération et dire quelle règle l'a refusée.
+- Tenir un journal et en extraire une erreur de processus.

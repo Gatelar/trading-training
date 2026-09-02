@@ -1,0 +1,51 @@
+COUV: Parcours|Intermédiaire
+Tu as des règles. Il te manque
+la méthode qui dit si elles marchent.
+
+SEC: Avertissement
+
+WARN: À lire avant tout le reste
+Le trading à effet de levier est une activité à risque élevé. La majorité des particuliers qui s'y engagent perd de l'argent.
+- Sur 14 799 clients français suivis quatre ans par l'Autorité des marchés financiers, **89 % sont perdants**, avec une perte médiane de 1 843 €. Ce constat du parcours Débutant n'est pas révisé par ce document : il en reste le cadre.
+- Ce document est un **contenu pédagogique**. Il ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une incitation à ouvrir un compte.
+- Aucun chapitre ne promet, ne suggère ni ne laisse espérer un gain. Les tests présentés ici servent à **écarter** des idées, pas à en valider.
+- L'intégralité du parcours se déroule en **simulation**, sur données historiques rejouées. Le passage en argent réel relève du parcours Expérimenté et n'est pas traité.
+
+P: Ce niveau ajoute des outils. C'est précisément ce qui le rend dangereux : un outil mal testé donne plus d'assurance qu'aucun outil, pour une justesse identique. Le parcours Débutant a démontré que multiplier les indicateurs produit des justifications, pas de la précision. Rien ici ne revient sur cette position.
+
+P: Ce que tu vas apprendre n'est donc pas à utiliser des indicateurs. C'est à décider lesquels méritent de rester sur ton écran — et la réponse, la plupart du temps, sera aucun.
+
+SEC: Ce que ce parcours suppose acquis
+
+P: Ce document ne réexplique rien. Il continue le parcours Débutant, dont il reprend le vocabulaire, les conventions et les règles. Si l'un des points ci-dessous ne t'évoque rien, retourne au chapitre indiqué avant d'aller plus loin.
+
+TABLE: 34,66 || Acquis | Chapitre du parcours Débutant
+Prix, spread, coûts, effet de levier | 1.1 à 1.4
+La notation en R et la règle du 1 % | 2.1 et 2.2
+Taille de position, stop à l'invalidation, drawdown | 2.3 à 2.5
+Chandelier, unités de temps, structure, zones | 3.1 à 3.4
+Pourquoi aucun indicateur au niveau débutant | 3.5
+Scénario, ratio gain/risque, espérance, checklist | 4.1 à 4.4
+Effet de disposition, surtrading, les sept règles | 5.1 à 5.4
+Journal, matrice conformité × résultat, les trois mesures | 6.1 à 6.3
+
+H3: Où tu en es censé être
+
+P: Tu as terminé le parcours Débutant et accumulé **au moins trente trades conformes** en simulation. Tu connais ton taux de conformité et ton R moyen. Tu n'as jamais engagé d'argent réel.
+
+P: Tu commences aussi à trouver que ça fonctionne. Le module 5 du Débutant t'a expliqué pourquoi c'est le moment le plus dangereux du parcours : une bonne série n'est pas une preuve de compétence, c'est un échantillon court. Ce niveau entier consiste à te donner les moyens de faire la différence.
+
+H3: Conventions inchangées
+
+UL:
+- **Capital de référence : 1 000 €.** Un R vaut 10 €, comme dans le Débutant, pour que les exemples des deux documents restent comparables.
+- **Marchés : EUR/USD et BTC/USD.** Trois unités de temps désormais — D1 pour le contexte, H4 pour la structure, H1 pour l'exécution.
+- **Tout se passe en simulation.** Le seul capital engagé reste ton attention.
+- **Les exemples chiffrés sont des cas d'école** construits pour l'enseignement, jamais des relevés de marché réels.
+- **Les termes du Débutant sont employés sans rappel.** Seuls les termes nouveaux sont définis à leur première apparition, et le glossaire final ne contient qu'eux.
+
+SECX: Sommaire
+
+NOTE: Six modules, environ 80 minutes de lecture, six exercices dans le simulateur. Comme dans le Débutant, l'ordre n'est pas négociable : la méthode de vérification arrive avant les outils qu'elle sert à vérifier.
+
+TOC:

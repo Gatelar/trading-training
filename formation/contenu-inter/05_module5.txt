@@ -1,0 +1,129 @@
+MOD: 5 | L'exposition réelle | 12 minutes de lecture · 4 chapitres · 1 exercice | 12 min
+Objectif : savoir ce que tu risques vraiment quand plusieurs positions sont ouvertes en même temps.
+
+H2: 5.1 Trois positions à 1 %, un risque à 3 %
+
+HOOK:
+Tu as trois positions ouvertes, chacune calibrée à 1 % selon la formule du chapitre 2.3 du Débutant. Tu crois risquer 1 %. Selon ce que tu as ouvert, tu risques entre 1 % et 3 %.
+
+P: Le calcul de taille du Débutant est exact. Il porte sur un trade isolé, et il devient insuffisant à la seconde où une deuxième position s'ouvre. Ce n'est pas une erreur du parcours précédent : un débutant n'a qu'une position à la fois, et lui parler de portefeuille aurait été prématuré.
+
+P: L'**exposition cumulée** est la perte que tu subirais si toutes tes positions ouvertes touchaient leur stop dans le même mouvement de marché. C'est une grandeur différente de la somme des risques affichés, et souvent très différente.
+
+P: La question qui la détermine tient en une ligne : **tes positions peuvent-elles perdre ensemble ?** Si la réponse est oui, elles n'en forment qu'une seule, quelle que soit la manière dont ta plateforme les compte.
+
+CASE: Trois portefeuilles, un seul affichage
+**A** — long EUR/USD 1 %, long GBP/USD 1 %, long AUD/USD 1 %. Trois paris contre le dollar. Un dollar qui monte les touche tous les trois. Exposition réelle : proche de **3 %**.
+**B** — long EUR/USD 1 %, long BTC/USD 1 %, short USD/JPY 1 %. Trois marchés apparemment différents — et trois positions qui perdent si le dollar monte. Exposition réelle : encore élevée.
+**C** — long EUR/USD 1 %, short GBP/USD 1 %. Les deux paris s'opposent en grande partie. Exposition réelle : nettement inférieure à 2 %, et le gain potentiel l'est aussi.
+Dans les trois cas, ta plateforme affiche « risque : 1 % par position ». Elle a raison position par position, et elle ne répond pas à la question posée.
+
+ERR: L'erreur classique
+Additionner des positions en croyant diversifier. Ouvrir trois paires majeures contre le dollar n'est pas de la diversification : c'est un triplement de mise sur une idée unique. Le Débutant a établi que le nombre d'ordres est corrélé à la perte ; ce chapitre en fournit un mécanisme précis.
+
+KEY: À retenir
+- La formule de taille du Débutant est exacte pour un trade isolé, insuffisante dès qu'il y en a deux.
+- L'exposition cumulée est ce que tu perds si toutes tes positions touchent leur stop ensemble.
+- Trois positions qui perdent dans le même scénario ne comptent que pour une.
+
+H2: 5.2 La corrélation
+
+HOOK:
+EUR/USD et GBP/USD évoluent ensemble avec un coefficient couramment mesuré entre +0,81 et +0,95. Ce chiffre suffit à transformer deux trades en un seul — et deux risques de 1 % en un risque de presque 2 %.
+
+P: La **corrélation** est une mesure comprise entre −1 et +1 du degré auquel deux actifs varient ensemble. À +1, ils se déplacent à l'identique. À 0, ils sont indépendants. À −1, ils se déplacent en sens opposé.
+
+P: Les paires majeures sont corrélées par construction, et non par hasard : EUR/USD et GBP/USD partagent le dollar comme contrepartie, donc toute variation du dollar se retrouve mécaniquement dans les deux. Côté crypto, la plupart des paires évoluent entre +0,6 et +0,9 avec le bitcoin — un portefeuille de dix cryptomonnaies est un portefeuille d'une seule.
+
+P: Tu n'as pas besoin d'un coefficient à trois décimales. Trois catégories suffisent, et elles t'évitent l'erreur d'ordre de grandeur, qui est la seule qui coûte cher.
+
+CASE: La règle en trois lignes
+**Au-dessus de +0,7** — un seul groupe. Deux trades à 1 % sur EUR/USD et GBP/USD perdent ensemble, donc leurs risques **s'additionnent** : ils comptent pour **2 %**, soit toute ta limite. Pour ouvrir les deux et garder de la marge, réduis chacun à 0,5 %.
+**Entre +0,3 et +0,7** — le second compte à moitié. Deux trades à 1 % comptent pour **1,5 %**.
+**En dessous de +0,3** — additionne normalement. Deux trades à 1 % comptent pour **2 %**.
+Et une correction qui prime sur tout : si les positions sont de **sens opposés**, une corrélation élevée **réduit** l'exposition au lieu de l'augmenter.
+Ce n'est pas exact au sens mathématique. C'est suffisant pour ne jamais se tromper d'un facteur trois.
+
+ERR: L'erreur classique
+Chercher la précision. Calculer un coefficient sur une fenêtre glissante donne une impression flatteuse de maîtrise — et ce coefficient change de toute façon selon la période retenue, parfois du simple au double. Trois catégories, appliquées systématiquement, valent mieux qu'un nombre exact appliqué une fois sur trois.
+
+KEY: À retenir
+- Au-dessus de +0,7 : un seul groupe, les risques s'additionnent. Entre +0,3 et +0,7 : le second compte à moitié. En dessous : additionne.
+- Les paires majeures partagent le dollar. Elles sont corrélées par construction.
+- Sens opposés et corrélation élevée : l'exposition diminue. Regarde toujours le sens avant le coefficient.
+
+H2: 5.3 Risque de séance, risque de portefeuille
+
+HOOK:
+Les sept règles du Débutant plafonnent ce que tu perds pendant une séance. Aucune ne plafonne ce que tu perds pendant que tu dors avec quatre positions ouvertes.
+
+P: Deux limites, deux objets distincts. Le **risque de séance** — deux pertes et la séance est terminée — plafonne les pertes **séquentielles**, celles qui s'enchaînent dans le temps parce que tu continues à trader.
+
+P: Le **risque de portefeuille** plafonne les pertes **simultanées**, celles qui arrivent ensemble sans que tu aies rien décidé de plus. Le Débutant ne l'a pas traité parce qu'il s'adressait à quelqu'un qui n'ouvrait qu'une position à la fois.
+
+P: Les deux sont nécessaires et aucune ne remplace l'autre. Une règle de séance parfaitement respectée ne te protège en rien si tes quatre positions touchent leur stop à trois heures du matin.
+
+CASE: Le trou dans les sept règles
+Séance parfaitement conforme : tu ouvres trois positions à 1 %, aucune ne touche son stop, tu fermes ta séance. Zéro perte, zéro règle enfreinte, zéro reproche à te faire.
+Pendant la nuit, une annonce fait monter le dollar. Tes trois positions — toutes longues sur des paires contre le dollar — touchent leur stop.
+Perte : **3 %**. Aucune des sept règles n'a été violée, parce qu'aucune des sept n'était conçue pour ce cas.
+Il te faut donc une huitième règle, et elle porte sur ce qui est **ouvert simultanément**, pas sur ce qui a été décidé successivement.
+
+ERR: L'erreur classique
+Croire que les sept règles couvrent tout. Elles couvraient la pratique d'un débutant à une position. Ta pratique a changé — c'est le propre de ce niveau — et une règle qui n'évolue pas avec la pratique qu'elle encadre cesse de protéger sans prévenir.
+
+KEY: À retenir
+- Risque de séance : les pertes qui s'enchaînent. Risque de portefeuille : celles qui arrivent ensemble.
+- Les sept règles du Débutant ne couvrent que le premier.
+- Ta pratique a changé. Tes règles doivent changer avec elle.
+
+H2: 5.4 La règle d'exposition cumulée
+
+HOOK:
+Une règle, un chiffre, vérifiable en cinq secondes avant chaque ordre. C'est la huitième, et elle complète les sept du chapitre 5.4 du Débutant sans en modifier aucune.
+
+CARD: La huitième règle
+**Exposition cumulée maximale : 2 %.**
+Elle se calcule en appliquant les trois catégories de corrélation à toutes les positions ouvertes, plus celle que tu envisages, et en tenant compte du sens de chacune.
+
+P: Le choix de 2 % n'est pas arbitraire. Il autorise deux positions indépendantes à 1 %, ou quatre positions corrélées à 0,5 %, et il plafonne la perte simultanée à deux fois la perte d'un trade isolé — un ordre de grandeur que le drawdown du chapitre 2.5 du Débutant rend supportable.
+
+P: Le calcul se fait **avant** l'ordre, comme la taille de position. Il devient la septième question de ta checklist, et il obéit à la même règle que les six autres : sans réponse, pas de trade.
+
+CASE: Quatre positions, un calcul de cinq secondes
+Ouvertes : long EUR/USD 0,5 % · long GBP/USD 0,5 % · long BTC/USD 0,5 %.
+EUR/USD et GBP/USD, corrélation au-dessus de +0,7, même sens : un seul groupe, dont les risques s'additionnent — **1 %** à elles deux.
+BTC/USD, corrélation faible avec les deux autres : s'ajoute pour **0,5 %**.
+Exposition actuelle : **1,5 %**.
+Tu envisages un long AUD/USD à 1 %. Corrélé au-dessus de +0,7 avec les deux premières et de même sens, il rejoint leur groupe : celui-ci passerait à 2 %, et l'exposition totale à **2,5 %**.
+Décision : soit tu le prends à **0,5 %** — le groupe monte à 1,5 %, l'exposition à 2 % pile — soit tu ne le prends pas. Il n'y a pas de troisième option.
+
+ERR: L'erreur classique
+Calculer l'exposition après avoir ouvert. Comme pour la taille de position au chapitre 2.3 du Débutant, l'ordre des opérations est la moitié de la règle : une exposition vérifiée après l'ordre ne protège de rien, elle constate.
+
+KEY: À retenir
+- Exposition cumulée maximale : 2 %. C'est la huitième règle.
+- Applique les trois catégories de corrélation à tout ce qui est ouvert, plus ce que tu envisages.
+- Le calcul se fait avant l'ordre. Il devient la septième question de ta checklist.
+
+EX: Ce que tu risques vraiment
+
+EXF: Compétence évaluée
+Objectif 23 : calculer l'exposition cumulée d'un ensemble de positions ouvertes en tenant compte de leur corrélation et de leur sens.
+
+EXF: Consigne
+**Étape A.** Un portefeuille de quatre positions ouvertes t'est présenté. Calcule son exposition cumulée.
+**Étape B.** Un cinquième trade t'est proposé. Dis s'il passe la règle des 2 % et, sinon, à quelle taille il passerait.
+**Étape C.** Trois portefeuilles affichant tous « 1 % par position » te sont donnés. Classe-les du plus exposé au moins exposé.
+
+EXF: Ce que la plateforme doit fournir
+- Un écran portefeuille listant quatre positions avec actif, **sens**, et risque en pourcentage. Le sens doit être aussi visible que le montant : c'est sur lui que porte le piège de l'exercice.
+- Une matrice de corrélation affichée **en trois couleurs** — au-dessus de +0,7, entre +0,3 et +0,7, en dessous — et non en coefficients numériques. L'exercice évalue l'application de la règle, pas la lecture d'un tableau de nombres.
+- Un champ de saisie pour l'exposition calculée, avec une tolérance de ±0,25 point.
+- Étape B : deux champs — « passe / ne passe pas » et « taille maximale acceptable ».
+- Étape C : trois portefeuilles à classer par glisser-déposer, affichant tous le même risque par position.
+
+EXF: Correction commentée
+**Étape A.** Le piège est la position vendeuse. Un short GBP/USD au milieu de longs EUR/USD **réduit** l'exposition, alors que la matrice affiche une corrélation élevée entre les deux paires. Corrélation forte plus sens opposés égale exposition réduite. C'est l'erreur la plus fréquente de l'exercice, et elle vient d'appliquer la règle des couleurs sans regarder la colonne « sens ».
+**Étape B.** Le cinquième trade ne passe pas à 1 % et passe à 0,5 %. Répondre « ne passe pas » sans donner la taille est incomplet : la compétence évaluée est précisément de savoir à quelle taille il passerait, parce que c'est cette réponse-là qui te permet de prendre le trade au lieu d'y renoncer.
+**Étape C.** Les trois portefeuilles affichent le même risque par position et présentent des expositions réelles de **1 %, 2 % et 3,5 %**. Le classement est le seul résultat qui compte ici, et son enseignement tient en une phrase : l'affichage de ta plateforme ne répond pas à la question que tu dois te poser.

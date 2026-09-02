@@ -1,0 +1,62 @@
+COUV: Parcours|Expérimenté
+Ce niveau ne t'apprend pas à passer
+en argent réel. Il t'apprend ce que ça change.
+
+SEC: Avertissement
+
+WARN: À lire avant tout le reste, et deux fois plutôt qu'une
+Ce parcours est le seul des trois qui traite de l'argent réel. Il ne t'y encourage pas et ne constitue pas une autorisation.
+- Sur 14 799 clients français suivis quatre ans par l'Autorité des marchés financiers, **89 % sont perdants**, avec une perte médiane de 1 843 €. Ce chiffre du parcours Débutant n'est révisé par aucune page de ce document.
+- Ce document est un **contenu pédagogique**. Il ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une incitation à ouvrir un compte auprès d'un quelconque prestataire.
+- **Le passage en argent réel n'est pas la suite du parcours.** Ce n'est ni un aboutissement, ni une promotion, ni la récompense de deux niveaux réussis. C'est une décision patrimoniale personnelle qui n'appartient pas à un cours.
+- **Pour la majorité des lecteurs, la conclusion correcte de ce document sera de rester en simulation plus longtemps.** Cette issue est traitée ici comme un résultat, pas comme un échec.
+- Aucun montant de capital n'est recommandé, aucun courtier n'est nommé, aucun chiffre fiscal n'est donné. Ces trois silences sont délibérés.
+
+P: Les deux premiers parcours se déroulaient intégralement en simulation, et leur pire conséquence était une heure perdue. Celui-ci décrit des décisions dont le résultat se compte en euros. Le ton ne change pas ; les conséquences, si.
+
+P: Tu n'y trouveras aucun chiffre de slippage présenté comme une norme, pour une raison simple : il n'en existe pas de mesure publiée et vérifiable pour un particulier. Tout ce que ce document t'apprend sur ce sujet, c'est à mesurer le tien.
+
+SEC: Ce que ce parcours suppose acquis
+
+P: Ce document ne réexplique rien et ne revient sur rien. Il continue deux parcours dont il reprend le vocabulaire, les conventions, les règles et les chiffres. Si l'une des lignes ci-dessous ne t'évoque rien, retourne au chapitre indiqué avant d'aller plus loin.
+
+TABLE: 46,27,27 || Acquis | Débutant | Intermédiaire
+Prix, spread, coûts, effet de levier | 1.1 à 1.4 | —
+Notation en R, règle du 1 %, taille, stop, drawdown | 2.1 à 2.5 | —
+Chandelier, unités de temps, structure, zones | 3.1 à 3.4 | —
+Scénario, ratio, espérance, checklist, sélectivité | 4.1 à 4.5 | —
+Disposition, surtrading, spirale, les sept règles | 5.1 à 5.4 | —
+Journal, matrice conformité × résultat, statistiques | 6.1 à 6.3 | —
+Erreur-type, taille d'échantillon, segmentation | — | 1.1 à 1.4
+Hypothèse testable, contrôle, surapprentissage, abandon | — | 2.1 à 2.5
+Indicateurs comme filtres testés, jamais comme signaux | — | 3.1 à 3.5
+Sortie partielle, stop suiveur, mise à l'équilibre | — | 4.1 à 4.5
+Corrélation, exposition cumulée, huitième règle | — | 5.1 à 5.4
+Document de système, revue mensuelle, fréquence | — | 6.1 à 6.5
+
+H3: Où tu en es censé être
+
+P: Tu remplis la condition posée par le chapitre 6.5 de l'Intermédiaire : un système écrit, **100 trades conformes sur la version en cours**, un R moyen au-dessus de ton critère d'abandon. Environ un an de pratique. Tu n'as jamais engagé un euro.
+
+P: Rien ne t'empêche de lire ces pages sans les 100 trades, et personne ne t'en empêchera. Elles traiteront alors de problèmes que tu n'as pas encore, avec la précision inutile d'une notice de machine que tu ne possèdes pas.
+
+P: Ta compétence actuelle est précisément ce qui te rend vulnérable ici. Tu as maintenant assez de méthode pour te croire prêt, et aucune expérience de ce que le réel ajoute. Les deux se conjuguent mal.
+
+H3: Conventions inchangées
+
+UL:
+- **Capital de référence : 1 000 €.** Un R vaut 10 €, comme dans les deux parcours précédents, pour que tous les exemples restent comparables.
+- **Marchés : EUR/USD et BTC/USD.** Trois unités de temps — D1 pour le contexte, H4 pour la structure, H1 pour l'exécution.
+- **Les exemples chiffrés sont des cas d'école** construits pour l'enseignement. Aucun n'est un relevé de marché réel, aucun n'est une mesure d'exécution effectuée chez un courtier.
+- **Les termes des deux glossaires précédents sont employés sans rappel.** Seuls les termes nouveaux sont définis à leur première apparition.
+- **Les exercices restent dans le simulateur.** Ce document ne te demande jamais d'ouvrir un compte pour le suivre.
+
+H3: Ce que ce parcours n'est pas
+
+P: Ce n'est pas un guide de passage en réel, et il ne contient pas de liste d'étapes à cocher pour y arriver. Chacun de ses six modules est écrit pour que tu puisses en sortir avec la réponse « pas encore », et deux d'entre eux sont écrits pour que ce soit la réponse la plus probable.
+
+SECX: Sommaire
+
+NOTE: Six modules, environ 87 minutes de lecture, six exercices. L'ordre compte : le coût d'exécution est mesuré avant qu'on parle de le supporter, et un système est arrêté avant qu'on parle de l'entourer d'une infrastructure.
+
+TOC:

@@ -1,0 +1,172 @@
+MOD: 2 | Le risque avant la méthode | 12 minutes de lecture · 5 chapitres · 1 exercice | 12 min
+Objectif : savoir combien tu risques avant même de savoir quoi acheter.
+
+CARD: Sept mots empruntés aux modules suivants
+Ce module parle de risque, et le risque se calcule sur un graphique. Voici le strict minimum pour suivre sans être bloqué. Chacun de ces mots est développé plus loin, à sa vraie place.
+- **Bougie** (ou chandelier) : le segment de graphique qui résume une période. Module 3.
+- **Sommet** et **creux** : un point haut ou bas visible sur le graphique, entouré de bougies moins hautes ou moins basses. Module 3.
+- **Structure** : l'enchaînement de ces sommets et de ces creux, qui dit si le marché monte, descend, ou tourne en rond. Module 3.
+- **H1** et **H4** : l'unité de temps du graphique. Chaque bougie y résume une heure, ou quatre heures. Module 3.
+- **Stop** : l'ordre automatique qui referme ta position à un prix fixé d'avance. Chapitre 2.4.
+- **Scénario** : ce que tu attends du marché, écrit avant d'entrer. Module 4.
+- **Invalidation** : le prix dont l'atteinte prouve que ce scénario était faux. Module 4.
+
+H2: 2.1 La seule question qui compte
+
+HOOK:
+Deux personnes prennent exactement le même trade. Même actif, même seconde, même prix. Six mois plus tard, l'une a doublé son compte et l'autre l'a vidé. Elles avaient la même analyse. Elles n'avaient pas la même taille de position.
+
+P: Le débutant se demande « où ça va ? ». C'est une question sans réponse fiable : personne, nulle part, ne la connaît. Elle occupe pourtant 95 % du contenu que tu trouveras sur le sujet.
+
+P: La question professionnelle est différente : **« combien je perds si j'ai tort ? »**. Elle a une réponse exacte, connue avant de cliquer, indépendante de ce que fera le marché. C'est la seule chose que tu contrôles réellement.
+
+P: Tu contrôles exactement trois variables : le montant que tu risques, le niveau à partir duquel tu abandonnes, et le fait d'entrer ou de ne pas entrer. Tu n'en contrôles aucune autre. Surtout pas le prix : celui-là ne t'appartient pas.
+
+P: On appelle **R** la somme que tu perds si ton scénario est faux. C'est ton unité de compte pour tout le reste du parcours.
+
+CASE: Ton unité de mesure
+Capital : 1 000 €. Risque choisi : 1 % par trade.
+1 R = **10 €**.
+Que tu traites EUR/USD ou BTC/USD, que le levier soit de 5 ou de 30, qu'il s'agisse de ton premier trade ou de ton centième : un trade met 10 € en jeu. Pas 9, pas 40.
+C'est la seule constante du parcours. Tout le reste s'ajuste autour d'elle.
+
+ERR: L'erreur classique
+Raisonner en taille de position — « je mets 500 € » — au lieu de raisonner en risque — « je risque 10 € ». Ces deux phrases n'ont aucun rapport entre elles. Une position de 500 € avec un stop à 2 % de distance ne risque que 10 €. La même position sans stop risque 500 €. La taille ne dit rien du risque.
+
+KEY: À retenir
+- La question n'est pas « où ça va », mais « combien je perds si j'ai tort ».
+- Ton risque s'exprime en pourcentage du capital, jamais en taille de position.
+- 1 R = la perte acceptée sur un trade. Compte en R à partir de maintenant.
+
+H2: 2.2 La règle du 1 %
+
+HOOK:
+Tout le monde répète « ne risque jamais plus de 1 % ». Presque personne n'explique d'où sort ce chiffre. Il sort d'une multiplication que tu peux faire toi-même, et qui prend deux minutes.
+
+P: Point de départ : même une méthode correcte enchaîne des pertes. Ce n'est pas un accident, c'est de l'arithmétique. Avec une chance sur deux de gagner, une série de sept pertes consécutives survient environ une fois tous les 128 trades — soit plusieurs fois par an pour quelqu'un qui trade régulièrement.
+
+P: La question n'est donc pas « comment éviter les séries de pertes » — tu ne peux pas. Elle est : **« quelle taille de risque rend une série de pertes survivable ? »**
+
+TABLE: 30,35,35 || Risque par trade | Capital après 10 pertes | Perte cumulée
+1 % | 904 € | −9,6 %
+2 % | 817 € | −18,3 %
+5 % | 599 € | −40,1 %
+10 % | 349 € | −65,1 %
+
+CASE: Le piège de la dernière ligne
+La ligne à 10 % ne demande pas seulement de regagner les 651 € perdus.
+Pour revenir à 1 000 € en partant de 349 €, il faut faire **+186 %**.
+La ligne à 1 %, elle, demande +10,6 % pour revenir à l'équilibre. La différence de départ était de neuf points de risque. La différence d'arrivée est de 176 points de performance à produire.
+
+ERR: L'erreur classique
+Augmenter le risque après une série de pertes, pour « se refaire ». L'arithmétique va exactement dans l'autre sens : c'est précisément au moment où le capital est bas que chaque euro risqué pèse le plus lourd dans le pourcentage. Doubler la mise après quatre pertes, c'est accélérer au moment où la route se rétrécit.
+
+KEY: À retenir
+- Une série de sept pertes est normale. Elle n'indique rien sur ta méthode.
+- À 1 % par trade, dix pertes coûtent 9,6 % du capital. À 10 %, elles en coûtent 65 %.
+- Plus la perte est profonde, plus le gain nécessaire pour l'effacer devient disproportionné.
+
+H2: 2.3 Calculer une taille de position
+
+HOOK:
+C'est le seul calcul obligatoire du parcours. Trois nombres entrent, un nombre sort, et ce nombre décide de ta survie plus sûrement que toute l'analyse que tu feras cette année.
+
+P: La formule tient en une ligne :
+
+CARD: La formule
+**Taille de position = (Capital × Risque en %) ÷ Distance jusqu'au stop**
+Le résultat est une quantité — un nombre d'unités de devise, une fraction de bitcoin. Pas un montant en euros.
+
+P: Il faut d'abord traduire la distance jusqu'au stop en argent. Sur EUR/USD, l'unité est le **pip** : la quatrième décimale, soit 0,0001. Pour une position de 10 000 unités, 1 pip vaut environ 1 $. Sur BTC/USD, il n'y a pas de pip : on raisonne directement en dollars par unité de bitcoin.
+
+CASE: Deux marchés, un seul calcul
+**EUR/USD.** Capital 1 000 €, risque 1 % = 10 €. Entrée à 1,0850, stop à 1,0820 : la distance est de **30 pips**.
+10 € ÷ 30 pips = 0,33 € par pip, soit une position d'environ **3 300 unités**.
+**BTC/USD.** Capital 1 000 €, risque 1 % = 10 €. Entrée à 62 000, stop à 61 000 : la distance est de **1 000 $**.
+10 € ÷ 1 000 $ = **0,01 BTC**, soit une position d'environ 620 $.
+Deux marchés qui n'ont rien à voir. Même risque : 10 €.
+
+ERR: L'erreur classique
+Choisir la taille d'abord et le stop ensuite. C'est l'ordre inverse du bon. Le débutant décide « je mets 200 € », place son stop là où ça lui semble raisonnable, et découvre son risque après coup — souvent après la perte. La taille est un **résultat**, pas une décision.
+
+KEY: À retenir
+- Taille = (Capital × Risque) ÷ Distance au stop. Aucune exception, aucun actif dispensé.
+- Le stop se choisit avant la taille, jamais l'inverse.
+- Un stop plus large n'augmente pas ton risque : il réduit ta taille.
+
+H2: 2.4 Où placer un stop
+
+HOOK:
+Tu places ton stop à 20 € de perte, parce que 20 €, c'est ce que tu es prêt à perdre aujourd'hui. Le marché ne connaît pas ton budget. Il est juste passé par là, et il t'a sorti au passage.
+
+P: Un **stop-loss** est un ordre automatique qui ferme ta position à un niveau défini à l'avance. Sa fonction n'est pas de limiter une somme : elle est de marquer le point à partir duquel **ton scénario est faux**. Si le prix l'atteint, ta raison d'être dans ce trade a disparu.
+
+P: Deux erreurs symétriques. Le stop trop serré : tu es sorti par la respiration normale du marché, alors que ton idée était bonne. Le stop trop large : ton scénario est mort depuis longtemps et tu continues à payer.
+
+P: Ordre de grandeur utile : sur EUR/USD en H1, une bougie ordinaire couvre 15 à 25 pips. Un stop placé à 5 pips sera touché par du **bruit** — le mouvement sans signification — et non par une invalidation.
+
+CASE: Deux stops pour la même idée
+Tu achètes à 1,0850. Le dernier creux visible sur le graphique est à 1,0822.
+**Stop à 1,0845 (5 pips).** Touché dans l'heure par une oscillation banale. Tu avais raison sur la direction et tu es sorti quand même. Perte : 10 €.
+**Stop à 1,0818 (32 pips, sous le creux).** Touché seulement si la structure du marché casse réellement. Taille correspondante : 10 € ÷ 32 = 0,31 € par pip, soit 3 100 unités. Perte si touché : 10 €.
+Le second stop est six fois plus large et **pas plus risqué**. La taille a absorbé la différence.
+
+ERR: L'erreur classique
+Déplacer le stop quand le prix s'en approche. C'est le geste unique qui transforme une perte de 10 € en perte de 200 €. Il se justifie toujours très bien sur le moment — « le niveau était mal placé », « ça va rebondir juste après ». Un stop déplacé n'est plus un stop. C'est un espoir avec un nom d'ordre.
+
+KEY: À retenir
+- Le stop se place là où ton scénario devient faux, pas là où ton budget est atteint.
+- Sous le dernier creux pour un achat, au-dessus du dernier sommet pour une vente.
+- Un stop ne se déplace jamais dans le sens de la perte. Jamais.
+
+H2: 2.5 Le drawdown
+
+HOOK:
+Ton compte ne monte pas en ligne droite, et il ne descend pas non plus. Entre les deux, il y a un creux. C'est dans ce creux que la plupart des gens abandonnent, ou font n'importe quoi.
+
+P: Le **drawdown** est l'écart entre le plus haut niveau qu'a atteint ton capital et son niveau actuel, exprimé en pourcentage. C'est une mesure de ce que tu subis, pas de ce que tu produis.
+
+P: Sa propriété désagréable est l'asymétrie. Perdre 50 % ne demande pas de gagner 50 % pour revenir : il faut en gagner 100. La perte et le rattrapage ne sont pas symétriques, et l'écart entre les deux se creuse vite.
+
+TABLE: 50,50 || Drawdown subi | Gain nécessaire pour revenir à l'équilibre
+−10 % | +11 %
+−20 % | +25 %
+−33 % | +50 %
+−50 % | +100 %
+−65 % | +186 %
+
+CASE: Ce que le 1 % achète vraiment
+À 1 % de risque par trade, il faut environ **69 pertes nettes consécutives** pour atteindre −50 % de drawdown.
+À 10 % de risque par trade, il en faut **7**.
+Sept. C'est le nombre de pertes d'affilée qu'une méthode correcte produit régulièrement, comme on l'a vu au chapitre 2.2. À 10 % de risque, la série normale devient un événement terminal.
+
+ERR: L'erreur classique
+Mesurer sa progression uniquement au solde du compte. Deux comptes affichant 1 100 € n'ont rien de comparable si le premier n'est jamais descendu sous 980 € et si le second est passé par 400 €. Le second a eu de la chance, et surtout : il ne le sait pas. Il attribuera ce résultat à sa méthode.
+
+KEY: À retenir
+- Le drawdown mesure ce que tu subis. Le solde mesure ce que tu montres.
+- −50 % exige +100 % pour revenir. L'asymétrie est le vrai adversaire.
+- Fixe ta limite de drawdown avant d'en avoir besoin, pas pendant.
+
+EX: Trois positions, un seul risque
+
+EXF: Compétence évaluée
+Objectifs 5 et 6 : calculer une taille de position à partir d'un capital, d'un risque de 1 % et d'une distance de stop ; placer un stop à un niveau justifié par la structure du graphique.
+
+EXF: Consigne
+**Partie A.** Trois situations te sont données. Pour chacune, calcule la taille de position qui correspond à un risque de 1 % sur un capital de 1 000 €.
+**Partie B.** Un graphique EUR/USD H1 t'est présenté avec trois niveaux de stop proposés. Choisis-en un, puis sélectionne la raison de ton choix.
+
+EXF: Ce que la plateforme doit fournir
+- Partie A : une calculatrice à quatre champs — capital (prérempli à 1 000 €, verrouillé), risque en % (prérempli à 1, verrouillé), prix d'entrée, prix du stop — et un champ de saisie libre pour la taille. Validation avec une tolérance de ±5 %.
+- Le calcul intermédiaire (distance en pips ou en dollars) est affiché automatiquement dès que l'entrée et le stop sont saisis. L'utilisateur doit voir la distance, pas la deviner.
+- Partie B : un graphique EUR/USD H1 nu, sans indicateur, montrant une trentaine de bougies avec un creux nettement identifiable. Trois niveaux de stop A, B et C tracés en pointillés. Sélection unique, puis un QCM de justification à trois options.
+- Aucun affichage du résultat futur du marché tant que la réponse n'est pas validée.
+
+EXF: Correction commentée
+**Partie A.**
+- *Cas 1 — EUR/USD, entrée 1,0850, stop 1,0820.* 30 pips. Taille : 3 300 unités.
+- *Cas 2 — EUR/USD, entrée 1,0850, stop 1,0790.* 60 pips. Taille : 1 650 unités. C'est le cas qui compte : le stop a doublé, la taille a été divisée par deux, et le risque n'a pas bougé d'un centime. La plupart des utilisateurs s'attendent à ce que le risque double.
+- *Cas 3 — BTC/USD, entrée 62 000, stop 61 000.* 1 000 $. Taille : 0,01 BTC.
+**Partie B.** La bonne réponse est le stop placé **sous le creux**.
+Pourquoi les deux autres sont tentants : le stop serré autorise une position beaucoup plus grosse, ce qui rend le trade plus excitant, et il affiche un chiffre de perte plus petit à l'écran — deux récompenses immédiates pour une décision mauvaise. Le stop très large, lui, donne une sensation de sécurité : on se sent « à l'abri d'être sorti ». En réalité, il fait payer une invalidation déjà consommée. Dans les deux cas, la sensation et le calcul vont dans des directions opposées.

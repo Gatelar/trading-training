@@ -1,0 +1,157 @@
+MOD: 6 | Ton système, écrit | 13 minutes de lecture · 5 chapitres · 1 exercice | 13 min
+Objectif : transformer un ensemble de règles en système mesurable et révisable.
+
+H2: 6.1 Ce qu'est un système
+
+HOOK:
+Un système tient sur une page. Si le tien en demande cinq, ce n'est pas un système : c'est une collection d'exceptions, et tu ne pourras jamais la tester.
+
+P: Un **système** est un ensemble de règles assez restreint pour être appliqué à l'identique sur un échantillon entier, et assez précis pour que deux personnes le lisant prennent la même décision devant le même graphique.
+
+P: Le test de qualité est empirique et sans appel : donne ton système à quelqu'un d'autre. S'il ne peut pas prendre les mêmes décisions que toi, ton système n'est pas écrit — il est dans ta tête, et ce qui est dans ta tête n'est pas mesurable.
+
+P: Six éléments le composent : périmètre, condition d'entrée, invalidation, gestion, exposition, critère d'abandon. Ce qu'il ne contient pas est tout aussi important : pas d'exceptions, pas de « sauf si », aucun appel au jugement.
+
+CASE: Le test de transmissibilité
+**Version A** — *« J'achète quand la structure H4 est haussière et que le prix revient sur une zone. »*
+Deux lecteurs, deux résultats. Quelle zone ? À quelle distance ? Avec quelle confirmation ? Chacun comblera les trous à sa façon, et toi le premier, différemment selon les jours.
+**Version B** — *« EUR/USD et BTC/USD, structure en H4, entrée en H1. J'achète si les deux derniers creux H4 montent et si le prix revient à moins de 10 pips d'une zone ayant produit au moins deux réactions. Invalidation sous le creux. Stop entre 1 et 3 ATR. Gestion : aucune intervention. Exposition cumulée maximale 2 %. »*
+Deux lecteurs, mêmes décisions dans la grande majorité des cas. La version B n'est pas plus longue. Elle est plus précise.
+
+ERR: L'erreur classique
+Confondre précision et complexité. Ajouter des règles ne rend pas un système plus précis : le plus souvent, ça multiplie les situations où deux d'entre elles se contredisent, et c'est ton humeur du moment qui tranche — c'est-à-dire exactement ce que le système existait pour empêcher.
+
+KEY: À retenir
+- Un système est transmissible : un autre lecteur prend les mêmes décisions que toi.
+- Six éléments : périmètre, entrée, invalidation, gestion, exposition, critère d'abandon.
+- Précision et complexité ne sont pas la même chose. Vise la première.
+
+H2: 6.2 Le document de système
+
+HOOK:
+Une page, six sections, une date. Ce document est le seul livrable du parcours Intermédiaire, et il vaut davantage que tout ce que tu as lu jusqu'ici.
+
+UL:
+- **Périmètre** — actifs, unités de temps, moments de la journée où tu opères.
+- **Entrée** — la condition, formulée pour être vérifiable par un tiers.
+- **Invalidation et stop** — où, et dans quelle plage d'ATR.
+- **Gestion** — une seule, appliquée à tous les trades.
+- **Exposition** — la limite cumulée et les catégories de corrélation.
+- **Critère d'abandon** — le R moyen en dessous duquel le système est revu, et sur quel échantillon.
+
+P: À ces six sections s'ajoutent deux informations d'en-tête qui transforment un document descriptif en instrument de mesure : la **date de dernière modification** et le **nombre de trades écoulés depuis**.
+
+P: Sans elles, tu ne sais pas sur combien de trades ta version actuelle a été appliquée — et le module 2 a établi que sans échantillon connu, aucun chiffre n'est interprétable.
+
+CASE: L'en-tête qui change tout
+*Version 4 · Modifiée le 12/03 · 47 trades depuis la dernière modification · Critère d'abandon : R moyen sous +0,10 R à 100 trades.*
+Cette seule ligne répond à trois questions immédiatement : sur quoi je mesure, depuis quand, et à partir de quel moment je m'inquiète.
+Sans elle, un système modifié trois fois en deux mois produit un journal de 120 trades qui ne mesure **aucune** des trois versions. Le chiffre existe, il ne décrit rien.
+
+ERR: L'erreur classique
+Modifier le document sans incrémenter la version ni remettre le compteur à zéro. C'est l'équivalent, à l'échelle du système, du trade non consigné : la modification a bien eu lieu, elle n'est pas traçable, et tu ne pourras jamais dire ce qu'elle a produit.
+
+KEY: À retenir
+- Six sections, une page, plus une date de modification et un compteur de trades.
+- Toute modification incrémente la version et remet le compteur à zéro.
+- Sans compteur, ton journal ne mesure aucune version en particulier.
+
+H2: 6.3 La revue mensuelle
+
+HOOK:
+Une fois par mois, marché fermé, trois questions et une décision. C'est court parce que c'est la seule façon que ce soit fait tous les mois.
+
+P: **Première question : quel est mon taux de conformité ?** En dessous de 90 %, la revue s'arrête ici et la décision porte sur la discipline. Le R moyen n'est même pas examiné — le chapitre 6.3 du Débutant a établi qu'il ne mesure rien tant que la conformité est basse.
+
+P: **Deuxième question : combien de trades depuis la dernière modification ?** En dessous de 100, aucune modification du système n'est autorisée, quel que soit le résultat affiché. Cette règle est la plus difficile à tenir et la plus rentable.
+
+P: **Troisième question : le R moyen est-il sous mon critère d'abandon ?** Si oui, le système est revu. Si non, rien ne change. Et dans tous les cas, relis le journal des idées abandonnées du chapitre 3.4 pour vérifier qu'aucune ne revient discrètement par la fenêtre.
+
+CASE: Trois mois, une seule révision
+**Mois 1** — conformité 78 %, 40 trades, R moyen +0,31 R. → *Corriger la discipline.* Le R moyen n'est pas discuté, il ne mesure rien à ce niveau de conformité.
+**Mois 2** — conformité 94 %, 71 trades, R moyen +0,08 R. → *Ne rien changer.* Le chiffre est mauvais et l'échantillon insuffisant. C'est de très loin la décision la plus difficile des trois.
+**Mois 3** — conformité 96 %, 112 trades, R moyen +0,04 R, critère fixé à +0,10 R. → *Réviser le système.* Là seulement, et pour la première fois.
+Trois mois de travail, une seule révision, intervenue au bout de 112 trades. C'est le rythme normal.
+
+ERR: L'erreur classique
+Réviser au mois 2. Le chiffre est décourageant, l'échantillon insuffisant, et la tentation à son maximum précisément parce que les deux se conjuguent. Réviser à ce moment détruit les 71 trades accumulés et repart de zéro — pour un système dont on ne saura jamais s'il fonctionnait.
+
+KEY: À retenir
+- Trois questions dans l'ordre : conformité, échantillon, résultat. On ne saute aucune marche.
+- Sous 100 trades depuis la dernière modification, aucune modification. Sans exception.
+- Une revue produit une seule décision écrite, jamais deux.
+
+H2: 6.4 Quand modifier, quand ne rien faire
+
+HOOK:
+La question n'est pas de savoir si ton système doit évoluer — il le doit. La question est de savoir quel événement autorise une modification, et il n'y en a que trois.
+
+P: **Premier déclencheur** : le critère d'abandon est atteint sur un échantillon suffisant. C'est le cas prévu, celui pour lequel le critère a été écrit.
+
+P: **Deuxième déclencheur** : une hypothèse a passé le protocole du module 2, contrôle compris. C'est le cas rare — la plupart des hypothèses meurent avant.
+
+P: **Troisième déclencheur** : ta pratique a changé au point que les règles ne la couvrent plus. L'exposition cumulée du module 5 en est l'exemple exact : elle n'existait pas tant que tu n'avais qu'une position ouverte.
+
+P: Tout le reste — une série de pertes, un article lu, une idée entendue, un mois décevant — n'autorise rien du tout. Et chaque modification remet le compteur à zéro : c'est le prix, et il doit être payé en connaissance de cause.
+
+CASE: Ce que coûte une modification, en semaines
+À trois trades conformes par semaine, cent trades demandent **33 semaines**.
+Un système modifié **tous les deux mois** n'atteint jamais son échantillon de mesure. Au bout d'un an : six versions, zéro mesure, et la conviction sincère d'avoir beaucoup travaillé.
+Un système modifié **une fois par an** produit environ 78 trades par version. C'est encore insuffisant, mais l'ordre de grandeur est enfin correct.
+Conclusion : la fréquence de modification maximale compatible avec la mesure est de l'ordre d'**une fois par an**. Ce chiffre surprend tout le monde, et il découle d'une simple division.
+
+ERR: L'erreur classique
+Modifier « juste un petit paramètre ». Un petit changement remet le compteur à zéro exactement comme un grand : le système appliqué après n'est plus celui d'avant, et les trades des deux périodes ne s'additionnent pas. Il n'existe aucune modification qui préserverait l'échantillon.
+
+KEY: À retenir
+- Trois déclencheurs légitimes : critère atteint, hypothèse validée, pratique changée.
+- Toute modification remet le compteur à zéro et coûte 33 semaines.
+- Une modification par an est la fréquence maximale compatible avec la mesure.
+
+H2: 6.5 Ce qui t'attend au parcours Expérimenté
+
+HOOK:
+Tu as un système écrit, une méthode pour le tester et une règle pour le réviser. Ce qui manque désormais n'est plus de la connaissance : c'est la confrontation à un environnement qui ne pardonne pas les approximations.
+
+P: Le parcours Expérimenté traite d'abord le **passage en argent réel** : le slippage, la qualité d'exécution, l'écart entre le prix demandé et le prix obtenu, et le protocole de réduction de taille au démarrage. Ce sont des problèmes que la simulation ne peut pas te poser.
+
+P: Il traite ensuite ce que le réel réintroduit d'un seul coup : l'intégralité du module 5 du Débutant — effet de disposition, surtrading, spirale après une perte — cette fois dans des conditions où l'erreur coûte immédiatement.
+
+P: Ce que l'Intermédiaire n'a pas couvert, pour que tu saches où chercher : le choix d'un courtier, la fiscalité, les produits autres que les paires de devises et les cryptomonnaies au comptant, et la gestion d'un portefeuille au-delà de trois positions.
+
+P: La condition d'entrée dans le parcours Expérimenté n'est pas une formalité : un système écrit, **100 trades conformes sur la version en cours**, et un R moyen au-dessus de ton critère d'abandon. Sans ces trois éléments, l'Expérimenté traiterait de problèmes que tu n'as pas encore.
+
+CASE: Le calendrier honnête, prolongé
+Le Débutant chiffrait **10 semaines** pour atteindre 30 trades conformes.
+L'Intermédiaire demande 100 trades sur une version stable, soit **33 semaines** supplémentaires au minimum — et ce calcul suppose qu'aucune révision n'intervienne entre-temps, ce qui est optimiste.
+Du premier chapitre du Débutant à la fin de l'Intermédiaire correctement pratiqué : **environ un an**.
+Cette durée n'est pas une posture pédagogique destinée à te faire patienter. C'est le résultat de la division du chapitre 2.2 par ton rythme de trades.
+
+ERR: L'erreur classique
+Passer au niveau suivant à la lecture plutôt qu'à la pratique. Tu peux lire le parcours Expérimenté demain matin, rien ne t'en empêche. Il ne te servira à rien tant que tu n'auras pas les 100 trades sur une version stable — pour exactement la même raison que le protocole du module 2 ne sert à rien sans échantillon.
+
+KEY: À retenir
+- Condition d'entrée au niveau Expérimenté : système écrit, 100 trades conformes, R moyen au-dessus du critère.
+- Le passage en réel réintroduit tout le comportement, dans des conditions plus dures.
+- Débutant et Intermédiaire correctement pratiqués : environ un an.
+
+EX: Écris ton système
+
+EXF: Compétence évaluée
+Objectif 24 : rédiger un document de système en une page et conduire une revue mensuelle aboutissant à une décision écrite.
+
+EXF: Consigne
+**Étape A.** Rédige ton document de système : six sections, une page.
+**Étape B.** Trois situations te sont présentées. Pour chacune, relis ton propre document et dis quelle décision il t'impose.
+**Étape C.** Un mois de journal t'est fourni. Conduis la revue : trois questions, une décision.
+
+EXF: Ce que la plateforme doit fournir
+- Étape A : un formulaire à six sections, **250 caractères maximum par section**. Cette limite est pédagogique et non technique : elle interdit matériellement le système à exceptions. Un en-tête automatique génère version, date et compteur de trades.
+- Étape B : trois situations graphiques, avec le document de l'utilisateur **affiché en permanence à côté**. Pour chacune, deux boutons — « je prends », « je ne prends pas » — et un troisième, essentiel : « **mon document ne tranche pas** ».
+- Étape C : un mois de journal fourni affichant conformité, nombre de trades depuis modification et R moyen, puis trois décisions possibles dont une seule est sélectionnable.
+- Si le journal Débutant de l'utilisateur est disponible, l'étape A pré-remplit le périmètre et la gestion à partir de ses trades réels. **Repli** : sections vides et un document d'exemple consultable en permanence.
+
+EXF: Correction commentée
+**Étape B.** Les trois situations sont choisies pour qu'au moins l'une ne soit pas tranchée par un document typique. Le résultat attendu n'est donc pas une bonne réponse : c'est le troisième bouton. La correction demande alors de compléter le document sur ce point précis — et c'est le vrai livrable de l'exercice. Un utilisateur qui n'appuie jamais sur « mon document ne tranche pas » a probablement répondu selon son intuition plutôt que selon son texte.
+**Étape C.** Le mois fourni affiche conformité 94 %, 71 trades depuis modification, R moyen +0,08 R, critère à +0,10 R. La bonne décision est **ne rien changer**, parce que l'échantillon est sous 100.
+C'est la reproduction exacte du « mois 2 » du chapitre 6.3, et c'est la décision que la majorité des utilisateurs refuse de prendre : le chiffre est sous le critère, et tout pousse à agir. La règle de l'échantillon existe pour couvrir ce cas et aucun autre — elle ne sert jamais quand les chiffres sont bons.

@@ -1,0 +1,118 @@
+MOD: 2 | Commencer petit, et l'écrire | 14 minutes de lecture · 4 chapitres · 1 exercice | 14 min
+Objectif : construire un palier de démarrage dont la fonction est de mesurer, et rien d'autre.
+
+H2: 2.1 La première taille n'est pas la taille du système
+
+HOOK:
+Ton document de système dit 1 %. Il a été rédigé par quelqu'un qui n'avait jamais payé un écart d'exécution de sa vie. Ce quelqu'un, c'est toi, il y a quelques mois.
+
+P: Un **palier de démarrage** est une période initiale pendant laquelle le risque par trade est volontairement inférieur à celui de ton système écrit, dans le seul but de mesurer ton coût d'exécution. Il a une question, une seule, et il se termine quand elle a sa réponse.
+
+P: Ce n'est pas une période d'essai, pas un galop d'entraînement, pas une mise en jambes. Ces trois formulations ont en commun de suggérer que le palier prépare quelque chose. Il ne prépare rien : il mesure une grandeur, et cette grandeur peut parfaitement conclure qu'il n'y a pas de suite.
+
+P: Le choix de la question n'est pas libre. Il découle d'un fait arithmétique désagréable, que le module 2 de l'Intermédiaire a déjà établi sous une autre forme : certaines grandeurs se mesurent en quelques semaines, d'autres ne se mesureront jamais.
+
+CASE: Vingt-cinq trades, ou mille six cents
+L'erreur-type vaut la dispersion divisée par la racine du nombre d'observations. Pour la ramener à une valeur voulue, il faut donc **le carré** du rapport entre les deux.
+**Mesurer ton coût d'exécution** — dispersion des écarts : 0,15 R. Précision voulue : 0,03 R. n = (0,15 ÷ 0,03)² = **25 trades**.
+**Mesurer ton espérance** — dispersion des résultats : 1,2 R. Même précision voulue : 0,03 R. n = (1,2 ÷ 0,03)² = **1 600 trades**.
+Soixante-quatre fois plus, pour la même précision. À trois trades conformes par semaine : **huit semaines** dans le premier cas, **plus de dix ans** dans le second.
+Le palier mesure la première grandeur. Il ne mesurera jamais la seconde.
+
+ERR: L'erreur classique
+Attendre du palier qu'il dise si le système fonctionne en réel. C'est la question que tout le monde se pose et la seule à laquelle vingt-cinq trades ne répondront pas — ni deux cents, ni cinq cents. Un palier qui prétend y répondre n'est plus une mesure : c'est une période d'observation sans critère, et le module 2 de l'Intermédiaire a un nom pour ça.
+
+KEY: À retenir
+- Le palier mesure l'exécution : 25 trades. Il ne mesure pas l'espérance : il en faudrait 1 600.
+- Un palier a une question unique et une fin définie par cette question.
+- Ce qui met fin à un palier est une mesure obtenue, jamais une impression acquise.
+
+H2: 2.2 Le palier de démarrage
+
+HOOK:
+Quatre lignes, écrites avant le premier ordre, datées. Écrites après, ce ne sont plus des règles : ce sont des commentaires sur ce qui s'est passé.
+
+P: Quatre éléments, et pas un de plus. **La fraction** du risque de ton système. **Le nombre de trades** minimal. **La grandeur mesurée**, nommée précisément. **Ce qui met fin au palier**, formulé de façon qu'un tiers puisse constater la fin sans t'interroger.
+
+P: La fraction est ton choix, mais elle n'est pas libre pour autant : elle doit passer un test. Le pire cas du palier — tous les trades perdants — doit rester sous le seuil d'arrêt que la septième règle du Débutant t'impose déjà. Une fraction qui échoue à ce test transformerait la mesure en incident.
+
+CASE: Le palier écrit, et son pire cas
+Système : risque 1 % par trade, soit 1 R = 10 €. **Palier au quart** : 2,50 € par trade.
+Durée : **25 trades conformes au minimum**, soit environ huit semaines.
+Grandeur mesurée : écart d'exécution à l'entrée et au stop, en R, relevés séparément.
+Pire cas borné : 25 trades tous perdants coûteraient 25 × 2,50 = **62,50 €**, soit **6,25 % du capital**.
+La septième règle du Débutant arrête tout à 10 % de drawdown mensuel. Le pire cas du palier passe donc **sous** ton propre seuil d'arrêt. C'est le critère qui valide une fraction, et c'est le seul.
+
+ERR: L'erreur classique
+Choisir la fraction d'après le montant qu'on se sent prêt à perdre. Le raisonnement paraît prudent, et il est inversé. La fraction se déduit d'un seuil que tu as déjà écrit et daté ; le montant qui semble supportable, lui, change avec la semaine, la fatigue et le dernier résultat. Tu as passé un an à te doter de règles pour ne plus décider comme ça.
+
+KEY: À retenir
+- Quatre lignes : fraction, nombre de trades, grandeur mesurée, fin du palier.
+- Le pire cas du palier doit rester sous ton seuil de drawdown. C'est ce qui valide la fraction.
+- La fin du palier n'autorise rien. Elle date un recalcul.
+
+H2: 2.3 Ce que ce palier mesure, et ce qu'il ne mesure pas
+
+HOOK:
+Vingt-cinq trades te donneront un chiffre solide et une illusion. Le chiffre, c'est ton coût d'exécution. L'illusion, c'est absolument tout le reste.
+
+P: Ce qu'il mesure vraiment : l'écart d'exécution à l'entrée, l'écart au stop, le comportement du spread à l'heure où tu opères, et une chose qu'aucune documentation ne te dira — si ta plateforme fait bien ce que tu crois qu'elle fait quand le prix se déplace vite.
+
+P: Ce qu'il ne mesure pas : ton espérance, le chapitre précédent l'a chiffré à 1 600 trades. Ni l'usure de ton système, qui est le sujet du module 5. Ni ton comportement sous perte réelle, et c'est le manque le plus sérieux des trois, parce que c'est celui que tu croiras avoir comblé.
+
+CASE: Ce que vingt-cinq trades ne contiennent pas
+Système à 45 % de trades gagnants. Probabilité que cinq trades consécutifs soient tous perdants : 0,55⁵ = **5,0 %**.
+Sur une séquence de 25 trades, la probabilité de voir apparaître au moins une telle série vaut **43 %**.
+Autrement dit : **plus d'un palier sur deux se déroule sans que tu rencontres ta pire série ordinaire.**
+Et si elle apparaît, elle coûte 5 × 2,50 = 12,50 €, soit 1,25 % du capital. Tu ne l'auras pas vraiment ressentie non plus.
+Sur une année complète à trois trades par semaine — 156 trades — cette même série a en revanche **98 %** de chances de survenir. Elle t'attend. Elle n'était simplement pas dans l'échantillon.
+
+ERR: L'erreur classique
+Conclure du calme du palier que le passage s'est bien passé. Vingt-cinq trades à un quart de taille produisent une expérience émotionnelle proche de zéro, et c'est voulu : le palier est conçu pour être supportable. Le prendre comme la preuve que le réel te convient revient à juger d'un vaccin sur l'absence de maladie pendant la semaine du rappel.
+
+KEY: À retenir
+- Le palier mesure l'exécution, le spread à ton heure, et le comportement réel de ta plateforme.
+- Il ne mesure ni ton espérance, ni l'usure du système, ni ton comportement sous perte.
+- Un palier calme n'est pas une information. C'est le résultat attendu par construction.
+
+H2: 2.4 Rester en simulation est une réponse
+
+HOOK:
+Sur les trois issues possibles d'un palier, deux s'écrivent « pas maintenant ». Ce n'est pas un travers de prudence pédagogique : c'est ce que produit l'arithmétique des deux chapitres précédents.
+
+P: Une décision de ne rien faire est une décision. Elle se date, elle s'écrit, elle nomme la mesure sur laquelle elle s'appuie, et elle dit ce qui devrait changer pour être revue. Sans ces quatre éléments, ce n'est pas une décision : c'est un report, et un report se rediscute chaque semaine.
+
+P: Sur 14 799 clients français suivis quatre ans par l'AMF, **89 % perdent de l'argent**. Rien de ce que tu viens de mesurer ne t'extrait de cette proportion. Tu as mesuré ton exécution — un paramètre technique, sur vingt-cinq trades. Tu n'as rien mesuré d'autre.
+
+CASE: Trois relevés, trois décisions
+**Relevé A** — brute +0,12 R, coût d'exécution mesuré 0,16 R, nette **−0,04 R**. Le système perd une fois exécuté. Décision : **retour en simulation**. Le palier a fait exactement son travail, pour 62,50 € au pire.
+**Relevé B** — brute +0,22 R, coût 0,09 R, nette **+0,13 R** sur 25 trades. Erreur-type : 1,2 ÷ √25 = **0,24 R**. Le chiffre est deux fois plus petit que son incertitude. Décision : **rien ne se conclut**.
+**Relevé C** — même résultat net, mais sur 140 trades. Erreur-type : 1,2 ÷ √140 = **0,10 R**. Le signe est établi. Décision : la mesure **ne s'oppose pas** à ce que tu engages de l'argent. Elle ne te le conseille pas, et elle ne dit rien de ce que tu peux te permettre de perdre — cette question-là n'appartient pas à ce document.
+
+ERR: L'erreur classique
+Lire la fin du palier comme un feu vert. Un palier ne délivre pas d'autorisation ; il retire une objection sur les cinq ou six que tu devrais avoir. Les autres — ton épargne, tes charges, ton horizon, ce que la perte totale de la somme changerait à ta vie — ne sont ni techniques ni mesurables ici, et aucun cours n'a les éléments pour en juger à ta place.
+
+KEY: À retenir
+- Deux issues sur trois, à ce stade, s'écrivent « pas maintenant ». C'est la proportion normale.
+- Une mesure favorable lève une objection parmi plusieurs. Elle n'en lève aucune autre.
+- Rester en simulation se décide, se date et s'écrit comme n'importe quelle autre décision.
+
+EX: Le palier que tu écris
+
+EXF: Compétence évaluée
+Objectif 27 : définir un palier de démarrage en taille réduite et écrire le critère de mesure — non de résultat — qui autorise sa réévaluation.
+
+EXF: Consigne
+**Étape A.** À partir de ton document de système, rédige ton palier : fraction, nombre de trades, grandeur mesurée, fin du palier.
+**Étape B.** Trois fractions te sont proposées avec ton seuil de drawdown. Dis lesquelles passent le test du pire cas, et pour celles qui échouent, donne le nombre de trades maximal qui les rendrait acceptables.
+**Étape C.** Trois relevés de fin de palier te sont présentés. Choisis pour chacun l'une des trois décisions, et justifie en citant la grandeur qui tranche.
+
+EXF: Ce que la plateforme doit fournir
+- Étape A : un formulaire à quatre champs, **120 caractères maximum** chacun, avec le document de système de l'utilisateur affiché en permanence à côté. Le champ « fin du palier » refuse toute saisie contenant un mot de résultat — « si ça marche », « si je suis à l'aise », « si je gagne » — et affiche pourquoi.
+- Étape B : trois fractions, le seuil de drawdown repris du profil, et un calculateur de pire cas visible mais **non pré-rempli**.
+- Étape C : trois relevés affichant espérance brute, coût d'exécution, nombre de trades et erreur-type calculée, avec trois décisions sélectionnables — « retour en simulation », « rien ne se conclut », « la mesure ne s'y oppose pas ».
+- Si le document de système de l'utilisateur existe, l'étape A pré-remplit le risque de référence. **Repli** : champs vides et un palier d'exemple consultable en permanence, avec un document de système fictif complet.
+
+EXF: Correction commentée
+**Étape B.** La fraction la plus grande échoue, et beaucoup d'utilisateurs la valident quand même parce que le montant en euros reste modeste. C'est le raisonnement inversé du chapitre 2.2 : le test ne porte pas sur ce qui semble supportable, il porte sur un seuil déjà écrit. La seconde partie de la question — le nombre de trades qui rendrait la fraction acceptable — est celle qui distingue une règle comprise d'une règle apprise.
+**Étape C.** Le relevé B est celui qui piège. Son espérance nette est franchement positive et le lecteur veut conclure ; son erreur-type est deux fois plus grande que lui. Répondre « la mesure ne s'y oppose pas » sur le relevé B est l'erreur la plus fréquente de tout ce module, et c'est exactement l'erreur du chapitre 1.1 de l'Intermédiaire, commise un an plus tard sur un enjeu réel.

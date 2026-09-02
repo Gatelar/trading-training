@@ -1,0 +1,161 @@
+MOD: 4 | La gestion de position | 14 minutes de lecture · 5 chapitres · 1 exercice | 14 min
+Objectif : décider ce qui se passe entre l'entrée et la sortie, et le mesurer au lieu de le ressentir.
+
+H2: 4.1 Le trade ne s'arrête pas à l'entrée
+
+HOOK:
+Le Débutant t'a appris à entrer et à poser un stop. Il a délibérément laissé de côté tout ce qui se passe entre les deux. C'est pourtant là que vit une part considérable de ton R moyen.
+
+P: Position ouverte, trois interventions sont possibles : ne rien faire, réduire la position, déplacer le stop. Chacune modifie l'espérance, et aucune n'est neutre — y compris la première, qui est un choix au même titre que les autres.
+
+P: Le principe qui gouverne le module tient en une phrase : **toute intervention en cours de trade se paie**. La question n'est jamais de savoir si elle coûte, mais si ce qu'elle rapporte dépasse ce qu'elle coûte. Cette question a une réponse chiffrable, et les quatre chapitres suivants la chiffrent.
+
+P: Reste une difficulté propre au sujet : l'intervention se décide position ouverte, sous tension. Le module 5 du Débutant a documenté ce que vaut ton jugement à cet instant. La conclusion s'impose d'elle-même — la règle de gestion s'écrit **avant** l'entrée, avec le stop et l'objectif.
+
+CASE: Le même trade, trois gestions
+EUR/USD, entrée 1,0852, stop 1,0838 — soit 14 pips, donc 1 R — objectif 1,0895, soit 43 pips, donc 3,1 R.
+Déroulé : le prix monte à 1,0880, redescend à 1,0845, puis atteint 1,0895.
+**Gestion A, ne rien faire** : le stop initial n'est jamais touché, l'objectif est atteint. **+3,1 R**.
+**Gestion B, sortie de la moitié à +1,5 R** : (0,5 × 1,5) + (0,5 × 3,1) = **+2,3 R**.
+**Gestion C, stop remonté à l'entrée dès +2 R** : le retour à 1,0845 passe sous 1,0852. Touché. **0 R**.
+Même trade, même lecture, même marché. De +3,1 R à zéro.
+
+ERR: L'erreur classique
+Juger une gestion sur ce trade-ci. Ici, ne rien faire gagne. Sur le trade suivant — où le prix redescend jusqu'au stop initial sans jamais atteindre l'objectif — la gestion C aurait économisé 1 R. Une gestion se juge sur une série, jamais sur un cas, et c'est précisément ce que les chapitres suivants mesurent.
+
+KEY: À retenir
+- Trois interventions possibles : rien, réduire, déplacer. Aucune n'est neutre.
+- La règle de gestion s'écrit avant l'entrée, au même titre que le stop et l'objectif.
+- Une gestion se juge sur une série. Un seul trade ne prouve rien, même spectaculaire.
+
+H2: 4.2 La sortie partielle
+
+HOOK:
+Sortir la moitié à mi-chemin. Le geste paraît prudent, il se justifie sans effort, et son effet sur ton R moyen se calcule exactement.
+
+P: La **sortie partielle** consiste à fermer une fraction de la position avant l'objectif. Elle réduit la variance et réduit l'espérance : c'est un échange, pas une amélioration.
+
+P: Ce qu'elle achète : du confort, et un taux de trades finissant positifs nettement plus élevé. Ce qu'elle vend : la partie droite de ta distribution, c'est-à-dire les trades qui allaient loin et qui financent tout le reste.
+
+P: Tu reconnais le mécanisme. C'est l'effet de disposition du chapitre 5.1 du Débutant, sous forme institutionnalisée. La différence tient à un détail décisif : ici, la décision est prise à froid et appliquée uniformément, ce qui la rend mesurable.
+
+CASE: Ce que le confort coûte, exactement
+100 trades, stop à 1 R, objectif à 3 R, 40 % de réussite.
+**Sans sortie partielle** : (0,40 × 3) − (0,60 × 1) = **+0,60 R** par trade.
+**Avec sortie de la moitié à +1,5 R**, sachant qu'un gagnant traverse forcément 1,5 R avant d'atteindre 3 R, et en supposant qu'un quart des perdants touche 1,5 R avant de revenir au stop :
+gagnants : 0,40 × [(0,5 × 1,5) + (0,5 × 3)] = **+0,90**
+perdants ayant touché 1,5 R : 0,60 × 0,25 × [(0,5 × 1,5) + (0,5 × −1)] = **+0,04**
+perdants n'ayant rien touché : 0,60 × 0,75 × (−1) = **−0,45**
+Total : **+0,49 R** par trade.
+Le prix du confort : **18 % de l'espérance**. Ce qu'il achète : le taux de trades finissant positifs passe de 40 % à 55 %.
+
+ERR: L'erreur classique
+Adopter la sortie partielle pour « sécuriser », sans avoir posé ce calcul. Le choix est parfaitement défendable — si tu sais qu'il te coûte 18 % de ton espérance et que tu juges la baisse de variance plus précieuse. Ce qui n'est pas défendable, c'est de l'adopter en croyant qu'il améliore le résultat.
+
+KEY: À retenir
+- La sortie partielle échange de l'espérance contre du confort. C'est un échange, pas un gain.
+- Dans un cas standard, elle coûte 18 % du R moyen et fait passer le taux de trades positifs de 40 % à 55 %.
+- Si tu l'adoptes, applique-la à tous les trades. Sinon tu ne mesures plus rien du tout.
+
+H2: 4.3 Le stop suiveur
+
+HOOK:
+Kaminski et Lo ont établi un résultat contre-intuitif : sous marche aléatoire, une règle de stop réduit toujours l'espérance ; en présence de momentum, elle en ajoute. Le stop suiveur n'est donc ni bon ni mauvais. Il est conditionnel.
+
+P: Un **stop suiveur** est un stop qui se déplace dans le sens du trade, jamais dans l'autre. À ne pas confondre avec le déplacement d'un stop dans le sens de la perte, que le chapitre 2.4 du Débutant interdit et qui reste interdit sans exception.
+
+P: Le résultat de Kaminski et Lo, transposé à ton échelle : si le prix se comporte comme une marche aléatoire, couper une position en cours de route retire de l'espérance, mécaniquement. Si le marché est en tendance persistante, le stop suiveur capture cette persistance et en ajoute.
+
+P: La conséquence opérationnelle est nette. Le stop suiveur s'applique en fonction du **régime**, pas de l'humeur. En tendance lisible au sens du chapitre 3.3 du Débutant, il a une chance d'ajouter. En absence de tendance, il retire — et il n'y a rien à régler pour corriger cela.
+
+CASE: La valeur est dans la condition, pas dans l'outil
+100 trades, deux régimes.
+**60 trades sans tendance** : le stop suiveur coupe en moyenne à +0,4 R des trades qui auraient fini à +0,6 R. Coût : −0,2 R × 60 = **−12 R**.
+**40 trades en tendance** : il laisse courir et capture +2,8 R en moyenne, contre +2,2 R à l'objectif fixe. Gain : +0,6 R × 40 = **+24 R**.
+**Appliqué partout** : −12 + 24 = **+12 R** sur 100 trades.
+**Appliqué uniquement en tendance** : **+24 R**, soit le double, pour le même outil et le même réglage.
+La valeur ne réside pas dans le stop suiveur. Elle réside dans sa condition d'application.
+
+ERR: L'erreur classique
+L'appliquer en toutes circonstances parce qu'il « protège les gains ». Sur les 60 trades sans tendance de l'exemple, il n'a rien protégé : il a converti des gains moyens en petits gains, ce qui est la définition exacte de l'effet de disposition — cette fois automatisé, donc appliqué sans même le remords qui l'accompagne d'habitude.
+
+KEY: À retenir
+- Le stop suiveur ajoute en tendance et retire en son absence. Ce n'est pas une préférence, c'est un résultat.
+- Il ne se déplace jamais dans le sens de la perte. La règle du Débutant est inchangée.
+- Sa valeur tient à sa condition d'application, pas à son réglage.
+
+H2: 4.4 La mise à l'équilibre
+
+HOOK:
+Remonter le stop à ton prix d'entrée dès que le trade est en gain. On appelle ça « se mettre à l'abri », ça ne semble rien coûter, et c'est le geste le plus cher de ce module.
+
+P: La **mise à l'équilibre** place un stop exactement à l'endroit où le bruit du marché ira le chercher. La raison est structurelle : ton prix d'entrée est un niveau que le marché vient de traverser. Il n'a aucune signification pour personne d'autre que toi, et le prix y revient très souvent avant de repartir.
+
+P: Le chapitre 2.4 du Débutant plaçait le stop à l'invalidation, c'est-à-dire à un niveau justifié par la structure. La mise à l'équilibre le remplace par un niveau arbitraire — et elle le fait au moment précis où le trade commence à fonctionner.
+
+P: Ce qu'elle achète est réel : la disparition du risque de perte sur ce trade. Ce qu'elle vend l'est tout autant : une part des trades qui allaient à l'objectif.
+
+CASE: Vingt et une pertes évitées, douze objectifs perdus
+100 trades, espérance de départ +0,60 R. Mise à l'équilibre déclenchée dès +1 R.
+Sur les 40 gagnants, **30 % repassent par le prix d'entrée** avant d'atteindre l'objectif : 12 trades passent de +3 R à **0 R**.
+Sur les 60 perdants, **35 % atteignent +1 R** avant de retomber : 21 trades passent de −1 R à **0 R**.
+Nouveau compte : 28 gagnants × 3 = +84 · 12 gagnants coupés = 0 · 21 perdants sauvés = 0 · 39 perdants × (−1) = −39.
+Total : **+45 R** sur 100 trades, soit +0,45 R par trade, contre +0,60 R sans rien faire.
+La sensation est excellente : 21 pertes évitées et un tiers des trades qui finissent à zéro. Le compte est inférieur de **25 %**.
+
+ERR: L'erreur classique
+Valider ce geste sur le souvenir des pertes évitées. Tu te rappelleras les 21 fois où le stop à l'équilibre t'a sauvé — elles ont produit un soulagement net et daté. Tu ne te rappelleras pas les 12 fois où il t'a coûté 3 R, parce que ces trades se sont refermés à zéro et n'ont laissé aucune trace émotionnelle. Le journal, lui, les a comptées.
+
+KEY: À retenir
+- Ton prix d'entrée n'a aucune signification structurelle. Y placer un stop, c'est le placer dans le bruit.
+- Dans un cas standard, la mise à l'équilibre coûte environ 25 % de l'espérance.
+- Elle laisse un souvenir favorable et un relevé défavorable. Le relevé a raison.
+
+H2: 4.5 Choisir et tenir
+
+HOOK:
+Trois gestions, trois chiffres. Aucune n'est la bonne réponse. La seule faute certaine consiste à en changer tous les quinze jours.
+
+P: Alterner les gestions rend l'échantillon ininterprétable. Trois gestions appliquées sur soixante trades produisent trois échantillons de vingt, et le chapitre 2.2 t'a montré qu'à cette taille, rien n'est mesurable — ni séparément, ni ensemble.
+
+P: La règle est donc : une gestion, écrite, appliquée à **tous** les trades, sur un échantillon suffisant, puis mesurée. Pour comparer deux gestions, on ne les alterne pas : on applique la première sur cent trades, on la mesure, puis la seconde.
+
+P: Il existe pourtant un raccourci, et il est excellent. Ajoute au journal du Débutant un huitième champ : le **plus haut atteint par le trade avant sa fermeture**, exprimé en R. Avec ce seul nombre, tu peux recalculer après coup ce qu'aurait produit n'importe quelle gestion, sans avoir eu à la vivre.
+
+CASE: Le champ qui vaut trois cents trades
+Journal du Débutant : sept champs, dont le résultat en R.
+Ajoute le huitième : **plus haut atteint, en R**, noté à la fermeture. Trois secondes par trade.
+Sur cent trades déjà réalisés, ce champ te permet de recalculer l'espérance qu'auraient produite la sortie partielle à 1,5 R, la mise à l'équilibre à 1 R, et le stop suiveur à 1 R de distance.
+Trois gestions comparées sur un échantillon que tu possèdes déjà, au lieu de trois cents trades supplémentaires et deux ans d'attente. C'est le meilleur rapport effort-information de tout le parcours.
+
+ERR: L'erreur classique
+Changer de gestion après une série défavorable. C'est le chapitre 6.2 du Débutant appliqué à la gestion : une série courte ne dit rien, et le changement remet le compteur d'échantillon à zéro. Au bout d'un an, tu auras essayé quatre gestions et tu ne sauras laquelle fonctionnait pour aucune des quatre.
+
+KEY: À retenir
+- Une gestion, appliquée à tous les trades, mesurée sur un échantillon suffisant.
+- Ajoute au journal le plus haut atteint en R : il rend toutes les gestions testables après coup.
+- Alterner les gestions ne produit pas de comparaison. Ça produit du bruit en trois morceaux.
+
+EX: Trois gestions, une seule série
+
+EXF: Compétence évaluée
+Objectifs 21 et 22 : calculer l'effet d'une sortie partielle sur le R moyen ; décider de l'application d'un stop suiveur selon le régime observé.
+
+EXF: Consigne
+**Étape A.** Sur un trade rejoué, observe les trois gestions appliquées en parallèle et note le R obtenu par chacune.
+**Étape B.** Choisis **une** gestion, puis applique-la aux 40 trades d'une série rejouée. Le choix est verrouillé pour toute la série.
+**Étape C.** La plateforme recalcule ce qu'auraient produit les deux autres sur exactement la même série.
+**Étape D.** Qualifie le régime de la série, et dis si le classement obtenu était prévisible.
+
+EXF: Ce que la plateforme doit fournir
+- Étape A : un rejeu unique avec les trois gestions calculées en parallèle et affichées côte à côte, R par R.
+- Étape B : 40 rejeux courts en accéléré. La gestion est choisie avant le premier trade et **verrouillée** jusqu'au dernier. C'est la contrainte pédagogique centrale de l'exercice : sans elle, l'utilisateur alterne et l'exercice n'enseigne rien.
+- L'enregistrement automatique, pour chaque trade, du **plus haut atteint en R** — le huitième champ du chapitre 4.5.
+- Étape C : recalcul automatique des deux gestions non retenues à partir des plus hauts enregistrés, avec affichage des trois espérances **et de l'erreur-type sur 40 trades**.
+- Étape D : un QCM de qualification du régime — tendance, absence de tendance, mixte — puis une question sur la cohérence entre ce régime et le classement obtenu.
+
+EXF: Correction commentée
+La série de 40 est construite en régime **mixte** : 24 trades sans tendance, 16 en tendance.
+Résultats attendus : ne rien faire ≈ +0,58 R · stop suiveur ≈ +0,61 R · mise à l'équilibre ≈ +0,44 R.
+Le classement n'est pas le point de l'exercice. Le point est l'écart entre les deux premières — 0,03 R — face à l'erreur-type sur 40 trades, qui vaut environ **0,30 R**. Aucune des trois gestions n'est distinguable des deux autres sur cet échantillon. La mise à l'équilibre est en retrait, mais même cet écart-là reste dans le bruit.
+La bonne réponse à l'étape D est donc : le régime était mixte, et 40 trades ne suffisent pas à trancher. La majorité des utilisateurs conclut que la gestion arrivée en tête est la meilleure — reproduisant sur la gestion l'erreur exacte que le module 1 avait diagnostiquée sur le R moyen. C'est délibéré : la même faute, commise deux fois à trois modules d'intervalle, est ce qui la rend mémorable.

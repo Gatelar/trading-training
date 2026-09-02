@@ -1,0 +1,157 @@
+MOD: 1 | Avant de toucher un graphique | 11 minutes de lecture · 5 chapitres · 1 exercice | 11 min
+Objectif : comprendre à quoi tu joues, et pourquoi la grande majorité des gens y perd.
+
+H2: 1.1 Ce que tu achètes réellement
+
+HOOK:
+Tu ouvres l'application. EUR/USD affiche 1,0850. Tu cliques sur « Acheter ». Question simple, et presque personne ne sait y répondre le premier jour : tu viens d'acheter quoi, exactement ?
+
+P: Pas des euros. Il n'y a pas de coffre, pas de billets, rien qui t'appartienne. Tu viens de passer un contrat avec ton courtier : si l'euro monte face au dollar, il te doit de l'argent ; s'il baisse, tu lui en dois. C'est tout.
+
+P: Deux mots que tu vas lire des centaines de fois. Une **position**, c'est ce contrat tant qu'il est ouvert. Un **trade**, c'est l'opération complète : l'ouverture, l'attente, la fermeture. Un trade se juge une fois refermé, jamais pendant.
+
+P: Le prix affiché n'est pas non plus une valeur. C'est le dernier accord trouvé entre un acheteur et un vendeur, il y a une fraction de seconde. Tu ne « prends pas position sur l'euro » : tu paries qu'un autre humain, plus tard, acceptera un prix différent.
+
+P: Et il n'y a pas un prix, il y en a deux. Un prix auquel tu peux acheter, un autre auquel tu peux vendre, toujours un peu plus bas. L'écart entre les deux s'appelle le **spread**. Tu entres toujours du mauvais côté.
+
+CASE: Le coût de la première seconde
+EUR/USD affiche 1,08495 à la vente et 1,08505 à l'achat. Tu achètes, donc à 1,08505.
+Tu changes d'avis dans la seconde et tu revends : à 1,08495. Le marché n'a pas bougé d'un cheveu, et tu as perdu **1 pip** — le pip est la quatrième décimale d'une paire de devises, soit 0,0001 sur EUR/USD. C'est l'unité dans laquelle se comptent les distances sur ce marché.
+Sur une position de 10 000 unités, 1 pip vaut environ 1 $. Vingt allers-retours dans la journée : 20 $. Vingt jours de marché : **400 $**.
+Sur un capital de 1 000 $, tu dois gagner 40 % dans l'année pour simplement rentrer dans tes frais.
+
+ERR: L'erreur classique
+Le débutant regarde *le* prix, pas *les deux* prix. Il croit être à l'équilibre dès que son ordre est passé. En réalité, chaque trade démarre en perte du montant du spread — et il ne compte jamais ce que ça représente sur un mois.
+
+KEY: À retenir
+- Tu ne détiens rien : tu as un contrat contre ton courtier.
+- Il y a toujours deux prix. Tu achètes au plus haut, tu vends au plus bas.
+- Chaque trade commence en perte. Plus tu en ouvres, plus cette perte s'accumule.
+
+H2: 1.2 Qui est en face de toi
+
+HOOK:
+Ton courtier t'offre une plateforme, des graphiques en temps réel, parfois une prime de bienvenue et un accompagnement téléphonique. Personne ne fait ça par philanthropie. Alors : d'où vient l'argent ?
+
+P: De trois endroits. Des commissions prélevées sur chaque transaction. Du spread, cet écart entre les deux prix. Et des frais de report, facturés chaque nuit où tu gardes une position ouverte.
+
+P: Ce n'est pas illégitime : c'est un service, et il se paie. Ce qui compte, c'est la forme de ce coût. Il est **certain et régulier**, alors que ton gain est incertain et irrégulier. Le courtier gagne quand tu trades. Pas quand tu gagnes.
+
+P: Maintenant, une nuance que tu n'entendras nulle part ailleurs, et qui va te retirer ton excuse préférée avant même que tu l'aies inventée. L'AMF a mesuré la part des frais dans les pertes des clients : **14,2 %**. Le reste — les 85,8 % — vient des décisions du client. Ton courtier n'est pas ton problème principal. Toi, si.
+
+CASE: Ce que coûte l'attente
+Tu gardes une position de 10 000 $ ouverte pendant 30 nuits. Le frais de report est de 0,02 % par nuit, soit 2 $.
+30 nuits × 2 $ = **60 $**.
+Sur un capital de 1 000 $, cela représente 6 % du compte. Le marché n'a pas bougé. Tu n'as rien fait de mal. Tu as juste attendu.
+
+ERR: L'erreur classique
+Garder une position perdante « le temps que ça revienne ». Chaque nuit ajoute un coût, et la position dont tu espères le retour est celle que tu paies le plus longtemps. En trading à effet de levier, le temps n'est pas neutre : il est facturé.
+
+KEY: À retenir
+- Ton courtier est rémunéré à l'activité, pas à ta performance.
+- Les frais expliquent 14,2 % des pertes. Le reste, ce sont les décisions.
+- Une position gardée longtemps coûte de l'argent chaque nuit, même à l'arrêt.
+
+H2: 1.3 Les chiffres qu'on ne te montre pas
+
+HOOK:
+Avant d'apprendre quoi que ce soit, tu dois savoir dans quelle statistique tu viens d'entrer. Ce chapitre est le plus désagréable du parcours. C'est aussi le seul que je te demande de ne jamais oublier.
+
+P: En 2014, l'Autorité des marchés financiers a fait ce que personne n'avait fait avant : elle a demandé aux courtiers agréés en France les résultats réels de leurs clients. Pas des courtiers frauduleux — des acteurs légaux, régulés, ceux dont tu vois les publicités.
+
+P: 14 799 clients actifs. Quatre années. Le résultat : **89 % de perdants**. Perte moyenne par client : 10 887 €. Perte totale de l'échantillon : 161 millions d'euros.
+
+P: La moyenne ment un peu, et dans un sens qui t'intéresse. Elle est tirée vers le bas par quelques désastres. Le chiffre à retenir est la **médiane : 1 843 €**. C'est le sort du client ordinaire — celui qui n'a pas fait de folie, qui a simplement joué quelques mois et arrêté. Tu as beaucoup plus de chances d'être celui-là.
+
+CASE: La forme de la distribution
+Sur les 14 799 clients de l'étude :
+722 clients (4,9 %) ont perdu **plus de 50 000 €** chacun, pour un total de 102 millions d'euros.
+121 clients (0,8 %) ont gagné **plus de 24 000 €** chacun, pour un total d'environ 10 millions d'euros.
+La queue des pertes pèse **dix fois** la queue des gains. Ce n'est pas un jeu équilibré dont tu prendrais un côté au hasard : les rares grands gagnants ne compensent pas, même de loin, les rares grands perdants.
+
+ERR: L'erreur classique
+« Ces gens-là ne savaient pas ce qu'ils faisaient. Moi, je vais me former. » L'étude a isolé les 1 881 clients actifs *chaque année* pendant quatre ans — les plus expérimentés de l'échantillon. Résultat : 87,56 % de perdants, et une perte moyenne de 26 745 €. Plus ils duraient, plus ils perdaient. L'AMF conclut à l'absence d'effet d'apprentissage.
+
+KEY: À retenir
+- 89 % des clients français perdent. Le client médian perd 1 843 €.
+- L'expérience seule n'améliore rien : c'est mesuré, pas supposé.
+- Ce parcours ne prétend pas inverser ces chiffres. Il te donne les rares variables sur lesquelles tu peux réellement agir.
+
+H2: 1.4 L'effet de levier
+
+HOOK:
+Un courtier te propose de déposer 1 000 € et de faire bouger 30 000 € sur le marché. Présenté comme ça, ça ressemble à un cadeau. C'est un accélérateur — et un accélérateur fonctionne dans les deux sens.
+
+P: L'**effet de levier** est le rapport entre la taille de ta position et l'argent que tu as réellement déposé. Levier 30 : 1 000 € pilotent 30 000 €. La conséquence est purement arithmétique, il n'y a rien à interpréter : un mouvement de 1 % du marché devient 30 % de ton capital.
+
+P: Voilà le point que presque tout le monde manque. Le levier ne change pas la probabilité que tu aies raison. Il ne rend pas ton analyse meilleure ni pire. Il change une seule chose : **la vitesse à laquelle tu es éliminé quand tu as tort**.
+
+P: En Europe, ton courtier ferme automatiquement tes positions quand ton compte tombe sous un seuil réglementaire. Ce mécanisme ne te protège pas de la perte. Il protège de la dette. Nuance importante.
+
+P: Regarde ce que produit exactement le même mouvement de marché — une baisse de 1 % — selon le levier choisi, pour un capital de 1 000 €.
+
+TABLE: Levier | Position pour 1 000 € | Perte si le marché baisse de 1 %
+×1 | 1 000 € | 10 €, soit 1 % du capital
+×5 | 5 000 € | 50 €, soit 5 %
+×30 | 30 000 € | 300 €, soit 30 %
+×100 | 100 000 € | 1 000 €, soit la totalité
+
+CASE: L'ordre de grandeur qui compte
+EUR/USD parcourt en moyenne **0,5 à 0,7 % dans une journée ordinaire**. Pas un krach, pas une annonce surprise : une séance banale.
+Avec un levier ×100, cette séance banale représente 50 à 70 % de ton capital.
+Tu n'as donc besoin ni d'une erreur d'analyse, ni d'un événement exceptionnel pour disparaître. Il suffit d'un mardi.
+
+ERR: L'erreur classique
+Choisir le levier maximum parce qu'il est disponible. Le levier n'est pas un réglage de performance qu'on pousserait au maximum comme le volume d'une enceinte. Il est le **résultat** d'un calcul que tu apprendras au module suivant — jamais un choix par défaut, jamais une préférence.
+
+KEY: À retenir
+- Levier ×30 : 1 % de marché devient 30 % de ton capital.
+- Le levier ne modifie pas ta justesse, seulement ta vitesse d'élimination.
+- Tu ne choisis jamais un levier. Tu calcules une taille de position, et le levier en découle.
+
+H2: 1.5 Ce que ce parcours va — et ne va pas — t'apprendre
+
+HOOK:
+Tu ne trouveras dans les pages qui suivent ni signal, ni configuration gagnante, ni indicateur réputé secret. Autant te dire tout de suite ce qui va remplacer tout ça.
+
+P: Cinq compétences, et elles sont toutes vérifiables. Calculer ce que tu risques avant de cliquer. Lire un graphique nu. Écrire un scénario qu'un prix précis peut démentir. Refuser un trade et nommer la règle qui l'a refusé. Tenir un journal et en extraire une erreur de processus.
+
+P: Ce que tu ne trouveras pas : une méthode qui gagne, des indicateurs techniques, des figures chartistes exotiques, et le moindre avis sur ce que tu devrais acheter. Les indicateurs arrivent au parcours Intermédiaire, accompagnés de la seule chose qui les rende utiles — une méthode pour les tester.
+
+CASE: Regarde comment le temps est réparti
+Sur les 70 minutes du parcours : **13 minutes** sont consacrées à la lecture de graphique, et **35 minutes** au risque, à la décision et au comportement.
+C'est exactement l'inverse de la formation moyenne, qui consacre l'essentiel de son volume à l'entrée en position — c'est-à-dire au seul moment du processus qui n'a jamais distingué un compte survivant d'un compte disparu.
+
+ERR: L'erreur classique
+Sauter directement au module 3 parce que « les graphiques, c'est le vrai trading ». Les données du chapitre 1.3 disent le contraire, et elles le disent sur 14 799 personnes : ce n'est pas la finesse de l'analyse qui sépare les survivants des autres, c'est la taille de leurs positions.
+
+KEY: À retenir
+- Aucun indicateur dans ce parcours. Le graphique nu d'abord.
+- L'ordre des modules *est* le contenu : risque, puis lecture, puis décision.
+- Tout se passe en simulation. Le seul capital en jeu ici est ton attention.
+
+EX: Le coût de départ
+
+EXF: Compétence évaluée
+Objectifs 1 et 2 : expliquer ce qu'est un prix, un spread et un contrat contre le courtier ; calculer l'impact d'un mouvement de 1 % du marché pour trois niveaux de levier.
+
+EXF: Consigne
+**Partie A.** Six affirmations te sont présentées une par une. Pour chacune : vrai ou faux.
+**Partie B.** Ton capital est de 1 000 €. Pour trois niveaux de levier, calcule la perte en euros et en pourcentage du capital si le marché baisse de 1 %.
+
+EXF: Ce que la plateforme doit fournir
+- Écran sans graphique. Cet exercice ne doit contenir aucune donnée de marché : il porte sur des mécanismes, pas sur une lecture.
+- Partie A : six cartes vrai/faux présentées séquentiellement, sans retour en arrière, avec affichage de la correction après chaque réponse.
+- Partie B : un tableau à trois lignes (levier ×5, ×30, ×100) et deux colonnes de saisie numérique — perte en €, perte en %. Validation avec une tolérance de ±1 € et ±0,5 point.
+- Le capital de 1 000 € est affiché en permanence dans un bandeau supérieur, non modifiable.
+
+EXF: Correction commentée
+**Partie A.** Les six affirmations et leur réponse :
+- *« En achetant EUR/USD, je possède des euros. »* — Faux. Tu détiens un contrat contre ton courtier. Tentant parce que le vocabulaire de la plateforme dit « acheter ».
+- *« Si le marché ne bouge pas, je ne perds rien. »* — Faux. Le spread est prélevé à l'ouverture, les frais de report chaque nuit.
+- *« Le courtier gagne quand je perds. »* — Faux dans le cas général, et c'est la réponse la plus souvent ratée. Le courtier est rémunéré à l'activité : commissions, spread, report. Ton résultat ne le concerne qu'indirectement.
+- *« Les frais expliquent la plus grande partie des pertes des clients. »* — Faux : 14,2 % selon l'AMF. Tentant parce que c'est l'explication la plus confortable.
+- *« Les clients les plus expérimentés perdent nettement moins. »* — Faux. 87,56 % de perdants chez les clients actifs quatre ans d'affilée.
+- *« Le levier augmente mes chances d'avoir raison. »* — Faux. Il n'agit que sur l'amplitude, jamais sur la probabilité.
+**Partie B.** Levier ×5 : 50 €, soit 5 %. Levier ×30 : 300 €, soit 30 %. Levier ×100 : 1 000 €, soit 100 %.
+La troisième ligne est la seule qui compte vraiment. Beaucoup d'utilisateurs la calculent juste et en tirent la conclusion inverse de la bonne : « il suffit de ne pas se tromper ». Non. Elle signifie qu'une **journée ordinaire** sur EUR/USD — pas un krach, pas une surprise — suffit à effacer le compte. La question n'est pas d'éviter l'erreur. Elle est de survivre à la normale.

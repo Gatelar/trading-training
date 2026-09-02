@@ -1,0 +1,104 @@
+SEC: Carte de séance
+
+NOTE: Elle remplace celle du parcours Débutant : les sept règles sont inchangées, une huitième s'ajoute, et trois blocs nouveaux apparaissent. À imprimer et à garder à côté de l'écran.
+
+CARD: Les sept règles du Débutant — inchangées
+- Risque fixe de 1 % par trade, jamais ajusté en cours de séance.
+- Trois trades au maximum par séance.
+- Deux pertes : la séance est terminée.
+- Trente minutes d'attente après toute perte.
+- Aucun ordre sans les réponses de la checklist.
+- Objectif et stop non renégociables une fois la position ouverte.
+- Drawdown de 10 % sur le mois : arrêt complet et revue du journal.
+
+CARD: La huitième règle — ajoutée par ce parcours
+**Exposition cumulée maximale : 2 %.**
+Elle plafonne les pertes simultanées, là où les sept précédentes ne plafonnaient que les pertes successives. Elle se vérifie avant chaque ordre, jamais après.
+
+CARD: La checklist, désormais à sept questions
+- La structure est-elle lisible en H4 ? Sinon, je n'entre pas.
+- Où est mon invalidation, en prix ?
+- Quelle taille ce stop impose-t-il pour 1 % ?
+- Le stop est-il entre 1 et 3 ATR ? Sinon, je justifie.
+- Quel est le ratio gain/risque ? Sous 1,5, je n'entre pas.
+- Combien de trades ai-je déjà pris aujourd'hui ?
+- **Quelle est mon exposition cumulée, ce trade inclus ? Au-dessus de 2 %, je réduis ou je renonce.**
+
+CARD: Le protocole de test, en sept étapes
+Hypothèse — périmètre, grandeur, seuil · Échantillon et coupure chronologique · Essais autorisés · Critère d'abandon · Construction · **Contrôle, consulté une seule fois** · Décision écrite et datée.
+Une étape sautée annule le test. Le nombre d'essais se note avant, pas après.
+
+CARD: Les trois catégories de corrélation
+Au-dessus de **+0,7** : un seul groupe, les risques s'additionnent · Entre **+0,3 et +0,7** : le second compte à moitié · En dessous de **+0,3** : additionne.
+Sens opposés et corrélation élevée : l'exposition **diminue**. Regarde toujours le sens avant le coefficient.
+
+CARD: Le document de système
+Périmètre · Entrée · Invalidation et stop · Gestion · Exposition · Critère d'abandon.
+En-tête : **version, date de modification, trades écoulés depuis**.
+Toute modification incrémente la version et remet le compteur à zéro.
+
+TABLE: 25,25,25,25 || Effet cherché | Trades requis | Ratio R/R | Réussite mini
+0,5 R | 58 | 1R | 50 %
+0,3 R | 160 | 1,5R | 40 %
+0,2 R | 361 | 2R | 33 %
+0,1 R | 1 444 | 3R | 25 %
+
+SEC: Glossaire
+
+NOTE: Seuls les termes introduits par ce parcours figurent ci-dessous. Pour les notions du niveau Débutant — R, spread, drawdown, structure, espérance, conformité, checklist, journal — reporte-toi au glossaire de ce document-là.
+
+GLOSS:
+ATR :: *Average true range*. Moyenne de l'amplitude réelle des n dernières bougies. Mesure une distance habituelle ; ne prédit rien. Sert à vérifier qu'un stop se situe entre 1 et 3 ATR.
+Corrélation :: Mesure entre −1 et +1 du degré auquel deux actifs varient ensemble. Au-delà de +0,7, deux positions de même sens comptent pour une seule.
+Critère d'abandon :: Valeur fixée à l'avance en dessous de laquelle une idée testée est jetée. Rend le test symétrique ; sans lui, seuls les résultats favorables concluent.
+Échantillon de construction :: Partie des données sur laquelle on cherche et on ajuste. On peut s'y tromper autant de fois que nécessaire.
+Échantillon de contrôle :: Partie des données réservée à la vérification, consultée une seule fois. Y retourner après un ajustement le détruit.
+Erreur-type :: Incertitude restante sur une moyenne, compte tenu du nombre d'observations. Vaut l'écart-type divisé par la racine carrée de l'effectif.
+Exposition cumulée :: Perte subie si toutes les positions ouvertes touchaient leur stop dans le même mouvement. Différente de la somme des risques affichés.
+Filtre :: Condition qui retire des trades d'un ensemble déjà constitué par la lecture. Ne crée jamais un trade. S'évalue sur la qualité de ce qu'il retire.
+Gestion de position :: Ensemble des décisions prises entre l'entrée et la sortie. Toute intervention modifie l'espérance ; aucune n'est neutre.
+Hypothèse testable :: Énoncé comportant un périmètre, une grandeur mesurée et un seuil chiffré. Sans seuil, tout résultat confirme.
+Mise à l'équilibre :: Déplacement du stop au prix d'entrée dès qu'un seuil de gain est atteint. Place le stop dans le bruit ; coûte environ 25 % de l'espérance dans un cas standard.
+Moyenne mobile :: Moyenne des n dernières clôtures. Retarde d'environ la moitié de sa période. Ne peut pas signaler un retournement, seulement confirmer une durée.
+Régime de marché :: État dominant du marché sur la période observée — tendance ou absence de tendance. Détermine si un stop suiveur ajoute ou retire de l'espérance.
+RSI :: Indicateur comparant la moyenne des hausses à celle des baisses sur n périodes, ramené sur une échelle de 0 à 100. Mesure une répartition récente, pas une valeur.
+Segmentation :: Découpage d'un journal selon un critère unique, pour comparer les sous-échantillons. Un seul critère à la fois. Produit une hypothèse, jamais une décision.
+Sortie partielle :: Fermeture d'une fraction de la position avant l'objectif. Réduit la variance et l'espérance. Coûte environ 18 % du R moyen dans un cas standard.
+Stop suiveur :: Stop qui se déplace dans le sens du trade, jamais dans l'autre. Ajoute en tendance, retire en son absence.
+Surapprentissage :: Ajustement d'une règle au bruit d'un échantillon plutôt qu'à sa structure. Croît avec le nombre de configurations essayées.
+Système :: Ensemble de règles assez restreint pour être appliqué à l'identique sur un échantillon, et assez précis pour qu'un tiers prenne les mêmes décisions.
+Tick volume :: Nombre de changements de prix enregistrés par un courtier. Affiché comme « volume » sur le forex au comptant, où aucun volume centralisé n'existe. N'est pas un volume de marché.
+Transmissibilité :: Propriété d'un système qu'un autre lecteur peut appliquer sans te poser de question. Test de qualité principal d'un document de système.
+
+SEC: Mentions et sources
+
+H3: Nature de ce document
+
+P: Contenu pédagogique destiné à l'apprentissage. Ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une analyse financière au sens réglementaire, ni une incitation à ouvrir un compte auprès d'un quelconque prestataire.
+
+P: Les exemples chiffrés sont des cas d'école construits pour l'enseignement. Ils ne reproduisent pas des relevés de marché réels et ne doivent pas être utilisés comme tels. Les résultats de tests présentés dans les chapitres 2.3, 3.4 et 4.3 sont des illustrations pédagogiques, non des mesures effectuées sur des données de marché.
+
+P: Le trading à effet de levier est une activité à risque élevé : la majorité des particuliers y perd de l'argent, et les performances passées ne préjugent pas des performances futures. Aucun chapitre ne promet, ne suggère ni ne laisse espérer un gain.
+
+P: L'intégralité du parcours se déroule dans le simulateur TapeSense, sur données historiques rejouées. Aucun capital réel n'est engagé.
+
+H3: Sources citées
+
+UL:
+- **C.-H. Park & S. H. Irwin**, *What Do We Know About the Profitability of Technical Analysis?*, Journal of Economic Surveys, 2007. Revue de 95 études modernes : 56 positives, 20 négatives, 19 mitigées ; les auteurs relèvent des problèmes systématiques de *data snooping*, de sélection ex post des règles et d'estimation des coûts.
+- **R. Sullivan, A. Timmermann & H. White**, *Data-Snooping, Technical Trading Rule Performance, and the Bootstrap*, The Journal of Finance, octobre 1999. Univers élargi de règles techniques appliqué à un siècle de données du Dow Jones ; faible profitabilité sur la période hors échantillon.
+- **P. Bajgrowicz & O. Scaillet**, *Technical Trading Revisited: False Discoveries, Persistence Tests, and Transaction Costs*, Journal of Financial Economics, 2012. 7 846 règles sur le Dow Jones de 1897 à 2011 : sélection ex ante impossible, performance effacée par de faibles coûts de transaction.
+- **D. H. Bailey, J. M. Borwein, M. López de Prado & Q. J. Zhu**, *Pseudo-Mathematics and Financial Charlatanism: The Effects of Backtest Overfitting on Out-of-Sample Performance*, Notices of the American Mathematical Society, 2014. « If only five years of data are available, no more than forty-five independent model configurations should be tried… »
+- **C. R. Harvey, Y. Liu & H. Zhu**, *… and the Cross-Section of Expected Returns*, The Review of Financial Studies, janvier 2016. 316 facteurs catalogués ; seuil statistique usuel jugé insuffisant en présence de tests multiples.
+- **K. M. Kaminski & A. W. Lo**, *When Do Stop-Loss Rules Stop Losses?*, Journal of Financial Markets, mars 2014. Sous marche aléatoire, une règle de stop simple réduit l'espérance ; en présence de momentum, elle en ajoute.
+- **Autorité des marchés financiers**, *Étude des résultats des investisseurs particuliers sur le trading de CFD et de Forex en France*, 13 octobre 2014. Reprise du parcours Débutant.
+
+H3: Liens
+
+UL:
+- onlinelibrary.wiley.com — Park & Irwin (2007) et Sullivan, Timmermann & White (1999)
+- sciencedirect.com — Bajgrowicz & Scaillet (2012)
+- papers.ssrn.com/sol3/papers.cfm?abstract_id=2308659 — Bailey, Borwein, López de Prado & Zhu (2014)
+- academic.oup.com/rfs/article/29/1/5/1843824 — Harvey, Liu & Zhu (2016)
+- dspace.mit.edu — Kaminski & Lo (2014)
+- amf-france.org — étude 2014 sur le trading de CFD et de Forex en France

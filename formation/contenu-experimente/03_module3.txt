@@ -1,0 +1,132 @@
+MOD: 3 | Le comportement, sous contrainte réelle | 15 minutes de lecture · 4 chapitres · 1 exercice | 15 min
+Objectif : reconnaître le retour simultané des trois biais du Débutant, et leur opposer un protocole d'arrêt.
+
+H2: 3.1 Ce que 1 R devient quand c'est de l'argent
+
+HOOK:
+Dix euros ne sont rien. Sauf que ce ne sont plus dix euros : c'est la première preuve datée que ta méthode peut te coûter quelque chose, et elle porte ton nom.
+
+P: En simulation, R était une unité de compte. Elle rendait les résultats comparables et les émotions absentes — c'était même son objet, et le Débutant l'a introduite pour ça au chapitre 2.1. En réel, la même unité devient un signal, et un signal se traite, qu'on le veuille ou non.
+
+P: Le module 5 du Débutant t'a décrit trois comportements documentés, que tu as ensuite repérés dans ton journal, un par un, à froid, plusieurs jours après. C'est la seule façon dont la simulation pouvait te les faire rencontrer. Ce n'est pas la façon dont ils se présentent.
+
+CASE: La série qui t'attend
+Système à 45 % de trades gagnants. Probabilité que cinq trades consécutifs soient tous perdants : 0,55⁵ = **5,0 %**.
+Sur les 25 trades d'un palier : **43 %** de chances d'en rencontrer une.
+Sur 156 trades — une année à trois par semaine : **98 %**.
+Cinq pertes consécutives à 1 % coûtent **5 R**, soit 50 € sur un capital de 1 000 €. Le montant est petit et l'événement est ordinaire.
+Ce n'est pas le montant qui pose problème. C'est qu'il arrive accompagné de la conviction que quelque chose vient de casser — et cette conviction-là n'était pas dans ta simulation.
+
+ERR: L'erreur classique
+Traiter la première série réelle comme une information sur le système. Elle n'en est pas une : le module 1 de l'Intermédiaire a établi qu'une série de cette longueur relève de la variance et ne se distingue de rien du tout. Ce qu'elle t'apprend est ailleurs — sur toi — et ça ne se lit dans aucun relevé.
+
+KEY: À retenir
+- Cinq pertes consécutives : 5 % de chances à chaque trade, 98 % sur une année complète.
+- La série est prévue par ton système. Ce qui ne l'était pas, c'est son effet sur toi.
+- Une série de cette longueur ne dit rien du système. L'Intermédiaire l'a chiffré au module 1.
+
+H2: 3.2 Les trois biais ne reviennent pas séparément
+
+HOOK:
+Les trois biais arrivent ensemble, dans la même séance, et dans un ordre qui a sa logique. Tu les avais rencontrés un par un dans ton journal, à froid, plusieurs jours après les faits.
+
+P: La chaîne commence toujours pareil. Une perte conforme, sans faute. Le trade suivant part bien, et tu le refermes tôt pour « sécuriser » — c'est l'effet de disposition, et il paraît raisonnable puisqu'il transforme un gain flottant en gain acquis.
+
+P: Sauf qu'un gain de 0,4 R ne compense pas une perte de 1,0 R. L'écart restant demande un troisième trade, qui n'était pas dans le plan de la séance : c'est le surtrading. Et quand celui-là échoue à son tour, la taille du quatrième devient la seule variable qui puisse encore refermer l'écart avant la fermeture.
+
+P: Chaque maillon se présente comme la réparation raisonnable du précédent. C'est ce qui les rend difficiles à voir de l'intérieur : au moment où tu les commets, tu n'es pas en train de céder, tu es en train de corriger.
+
+CASE: Une séance, quatre trades
+**Trade 1** — conforme, sans faute. Résultat : **−1,0 R**.
+**Trade 2** — entrée conforme, objectif écrit à +2,0 R, refermé à **+0,4 R** pour sécuriser. Effet de disposition.
+**Trade 3** — hors checklist, pris pour revenir à l'équilibre. **−1,0 R**. Surtrading.
+**Trade 4** — taille doublée. **−2,0 R**. Spirale.
+Séance : −1,0 + 0,4 − 1,0 − 2,0 = **−3,6 R**, soit 3,6 % du capital.
+Ce que tes règles prévoyaient : « deux pertes, la séance est terminée » fermait la journée après le trade 3, à **−1,6 R**.
+Écart entre la séance vécue et la séance prévue : **2,0 R**, soit ce qu'un système à +0,18 R produit en moyenne sur onze trades.
+
+ERR: L'erreur classique
+Chercher laquelle des trois erreurs a coûté le plus cher. La question est mal posée : elles ne s'additionnent pas, elles s'enchaînent. Le trade 4 n'existe que parce que le 3 a échoué, et le 3 n'existe que parce que le 2 a rapporté 0,4 R au lieu de 2,0 R. Corriger le dernier maillon ne fait que déplacer le point de rupture d'un cran.
+
+KEY: À retenir
+- Les trois biais du module 5 du Débutant forment une chaîne, pas une liste.
+- Chaque maillon se présente comme la réparation raisonnable du précédent.
+- La règle qui coupe la chaîne est la plus ancienne : deux pertes, la séance est terminée.
+
+H2: 3.3 Le protocole d'arrêt : seuil, durée, reprise
+
+HOOK:
+Tes huit règles ferment une séance. Aucune ne ferme un compte. Tant que tout se déroulait en simulation, cette différence n'avait aucune conséquence.
+
+P: Un **protocole d'arrêt** est une règle écrite à l'avance qui suspend toute activité réelle au-delà d'un seuil, pour une durée fixée, avec une condition de reprise qu'un tiers pourrait vérifier. Trois éléments, tous chiffrés ou datés, aucun laissé à l'appréciation du moment. C'est la **neuvième règle**, et elle complète la septième sans la remplacer : celle-ci dit quand s'arrêter, la neuvième dit pour combien de temps et à quelle condition on reprend.
+
+P: Le seuil est la partie difficile, et l'erreur y est systématiquement dans le même sens : trop serré. Un seuil placé à l'intérieur de la dispersion ordinaire de ton système se déclenchera sur un système parfaitement sain, régulièrement, et tu finiras par le contourner — puis par le supprimer.
+
+CASE: Deux seuils, un seul qui tient
+Système dont les résultats ont un écart-type de 1,2 R par trade. Sur une fenêtre de 20 trades, l'écart-type de la **somme** vaut 1,2 × √20 = **5,4 R**.
+**Seuil A — arrêt à −5 R.** Il se situe à l'intérieur d'un écart-type de dispersion ordinaire. Il se déclenchera sur du bruit, souvent, et sans rien signaler.
+**Seuil B — arrêt à −10 R**, soit 10 % du capital : le seuil que la septième règle du Débutant t'impose déjà. À près de deux écarts-types, il ne répond plus au bruit.
+Et le coût de l'arrêt : durée fixée, plus la condition de reprise. Vingt trades conformes en simulation, à trois par semaine, font **près de sept semaines**.
+Un seuil trop serré te met à l'arrêt en permanence. C'est le stop dans le bruit du chapitre 2.4 du Débutant, transposé à l'échelle du compte.
+
+ERR: L'erreur classique
+Écrire la condition de reprise en termes d'état intérieur. « Je reprends quand je me sens à nouveau lucide » n'est pas vérifiable, et sera vérifié favorablement dès le lendemain matin. Une condition de reprise est un acte constatable de l'extérieur : un nombre de trades conformes en simulation, une revue écrite, une date. Exactement le critère de transmissibilité du chapitre 6.1 de l'Intermédiaire.
+
+KEY: À retenir
+- Trois éléments : un seuil, une durée, une condition de reprise vérifiable de l'extérieur.
+- Un seuil à moins d'un écart-type de la dispersion se déclenche sur du bruit.
+- La condition de reprise est un acte daté, jamais un état ressenti.
+
+H2: 3.4 Les règles que le réel oblige à réécrire
+
+HOOK:
+Sur les huit règles que tu appliques, six passent en réel sans changer d'une virgule. Les deux autres cessent de protéger sans prévenir — et ce ne sont pas celles auxquelles on pense.
+
+TABLE: 56,44 || Règle | Ce que le réel en fait
+Risque fixe de 1 % par trade | Inchangée
+Trois trades au maximum par séance | Inchangée
+Deux pertes : la séance est terminée | Inchangée, et devient la plus utile des huit
+Trente minutes d'attente après toute perte | **À rechiffrer** : le déclencheur change
+Aucun ordre sans les réponses de la checklist | Inchangée — la checklist, elle, passe à huit questions
+Objectif et stop non renégociables | Inchangée
+Drawdown de 10 % sur le mois : arrêt complet | **Complétée** par la neuvième règle, chapitre 3.3
+Exposition cumulée maximale de 2 % | Inchangée, et toujours aveugle au saut de cotation
+
+P: La règle des trente minutes a été écrite pour une perte qui ne coûtait rien. Son déclencheur est le fait de perdre. En réel, ce qui détermine le temps dont tu as besoin n'est pas le fait de perdre : c'est le montant perdu, et il varie d'un facteur trois dans une même journée.
+
+CASE: La règle des trente minutes, mesurée
+Relève dans ton journal le délai entre la clôture d'un trade perdant et l'ordre suivant.
+**En simulation** : délai médian de 34 minutes. La règle est respectée sans effort, parce que rien ne pousse à la contourner.
+**En réel, sur les journées à deux pertes** : délai médian de 9 minutes. La règle n'a pas été abandonnée — elle a été contournée une fois, puis à chaque fois.
+Le correctif n'est pas d'allonger la durée, qui serait contournée pareil. C'est de changer le déclencheur : **trente minutes après une perte de 1 R, la séance entière après 2 R cumulés dans la journée.**
+Ce chiffre, tu ne l'obtiens qu'en relevant le délai. C'est un dixième champ de journal — et celui-là est facultatif, contrairement au neuvième.
+
+ERR: L'erreur classique
+Réécrire les huit règles d'un coup au moment du passage. Une règle réécrite avant d'avoir été mise en défaut est une règle écrite sur une supposition. Six des huit tiennent telles quelles ; les modifier toutes ensemble revient à changer le système sur huit points sans échantillon, ce que le chapitre 6.4 de l'Intermédiaire interdit déjà pour un seul.
+
+KEY: À retenir
+- Six règles sur huit passent en réel sans modification. N'y touche pas.
+- La règle des trente minutes change de déclencheur : le montant perdu, pas le fait de perdre.
+- La septième règle est complétée par la neuvième : seuil, durée, condition de reprise.
+
+EX: Ta séance, dégradée
+
+EXF: Compétence évaluée
+Objectifs 28 et 29 : reconnaître dans son propre journal un comportement du module 5 du Débutant réapparu sous contrainte réelle et nommer la règle qui le couvre ; rédiger un protocole d'arrêt et l'appliquer à une séance dégradée.
+
+EXF: Consigne
+**Étape A.** Une séance de quatre trades se déroule en temps contraint, avec exécution dégradée et un résultat courant affiché en euros, pas en R. À chaque décision, tu choisis. La séance ne se met pas en pause.
+**Étape B.** La séance terminée, ton propre journal du parcours Débutant est ouvert à côté du relevé de la séance. Identifie dans les deux le même comportement, et nomme la règle qui le couvre.
+**Étape C.** Rédige ton protocole d'arrêt — seuil, durée, condition de reprise — puis rejoue la séance de l'étape A avec ce protocole actif.
+
+EXF: Ce que la plateforme doit fournir
+- Étape A : une séance **non interruptible**, chronométrée, avec le résultat courant affiché **en euros**. C'est le seul écran de tout le parcours où le R disparaît, et c'est délibéré : le module 3 porte sur ce que fait cette conversion.
+- Une exécution dégradée active, dont l'un des quatre trades subit un écart marqué à la sortie au stop.
+- Étape B : import du journal Débutant de l'utilisateur, avec surlignage des trades dont le résultat s'écarte de l'objectif écrit. **Repli** si le journal est absent ou compte moins de 30 trades conformes : un journal fourni, présenté comme celui d'un autre utilisateur, avec la même mécanique — reprise exacte du repli de l'exercice 1 de l'Intermédiaire.
+- Étape C : formulaire à trois champs, le champ « reprise » refusant les formulations d'état, et un calculateur d'écart-type de la somme sur 20 trades, affiché mais non pré-rempli.
+- **Repli** si l'exécution dégradée n'est pas disponible : la séance se joue en exécution parfaite, chronomètre et affichage en euros conservés. L'essentiel du module 3 survit ; l'écart d'exécution du trade 4, non.
+
+EXF: Correction commentée
+**Étape A.** La séance est construite pour que la sortie anticipée du trade 2 soit **récompensée immédiatement** : le prix revient effectivement contre la position juste après. C'est le piège central, et il est honnête — l'effet de disposition n'est pas une bêtise, c'est un geste qui a raison souvent et qui coûte quand même. Le relevé montre ensuite le prix atteignant l'objectif quarante minutes plus tard.
+**Étape B.** L'erreur fréquente est de nommer la spirale, qui est spectaculaire et arrive en dernier. Le comportement présent **dans les deux journaux** est l'effet de disposition, beaucoup plus discret, et c'est le premier maillon. Un utilisateur qui ne trouve rien dans son journal Débutant a probablement cherché une faute grave là où il fallait chercher un écart de 0,3 R répété quinze fois.
+**Étape C.** Un seuil sous 6 R déclenche l'arrêt dès la séance de l'étape A, ce qui semble être le bon résultat et ne l'est pas : le calculateur montre qu'à 1,2 R d'écart-type, ce seuil se déclencherait aussi sur une série ordinaire. La bonne réponse arrête la séance par la règle des deux pertes, pas par le protocole. Le protocole, lui, ne sert jamais dans une seule séance.

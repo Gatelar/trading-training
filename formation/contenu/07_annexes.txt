@@ -1,0 +1,105 @@
+SEC: Carte de séance
+
+NOTE: Une page, à imprimer et à garder à côté de l'écran. Elle ne contient rien de nouveau : uniquement ce qui doit être disponible sans réfléchir.
+
+CARD: Les sept règles
+- Risque fixe de 1 % par trade, jamais ajusté en cours de séance.
+- Trois trades au maximum par séance.
+- Deux pertes : la séance est terminée.
+- Trente minutes d'attente après toute perte.
+- Aucun ordre sans les six réponses de la checklist.
+- Objectif et stop non renégociables une fois la position ouverte.
+- Drawdown de 10 % sur le mois : arrêt complet et revue du journal.
+
+CARD: Les trois formules
+**Taille de position** = (Capital × Risque en %) ÷ Distance jusqu'au stop
+**Taux de réussite minimal** = 1 ÷ (1 + Ratio gain/risque)
+**Espérance** = (taux de réussite × gain moyen) − (taux d'échec × perte moyenne)
+
+CARD: La checklist, avant chaque ordre
+- La structure est-elle lisible en H4 ? Sinon, je n'entre pas.
+- Où est mon invalidation, en prix ?
+- Quelle taille ce stop impose-t-il pour 1 % ?
+- Quel est le ratio gain/risque ? Sous 1,5, je n'entre pas.
+- Ce trade ressemble-t-il à mes trades précédents ?
+- Combien de trades ai-je déjà pris aujourd'hui ?
+Une seule réponse manquante annule le trade.
+
+CARD: Le journal, après chaque ordre
+Date et heure · Actif et unité de temps · Scénario écrit avant l'entrée · Invalidation et objectif · Taille et risque en R · Résultat en R · **Conforme : oui / non**
+Le dernier champ est le seul qui produise de l'apprentissage.
+
+TABLE: 25,25,25,25 || Ratio | Réussite mini | Drawdown | Gain pour revenir
+1R | 50 % | −10 % | +11 %
+1,5R | 40 % | −20 % | +25 %
+2R | 33 % | −33 % | +50 %
+3R | 25 % | −50 % | +100 %
+
+SEC: Glossaire
+
+GLOSS:
+Bougie :: Voir *chandelier*.
+Bruit :: Mouvement de prix sans conséquence, produit par l'activité normale du marché. Un stop trop serré est touché par le bruit, pas par une invalidation.
+CFD :: *Contract for difference*. Contrat par lequel le courtier et le client échangent la différence de prix d'un actif entre l'ouverture et la fermeture, sans que l'actif soit détenu. Produit visé par les études de l'AMF et de l'ESMA citées dans ce parcours.
+Chandelier :: Représentation graphique d'une période, résumant quatre valeurs : ouverture, plus haut, plus bas, clôture.
+Checklist :: Liste de questions à réponse obligatoire, remplie avant tout ordre. Une réponse manquante annule le trade.
+Clôture :: Dernier prix traité pendant la période couverte par une bougie.
+Conformité :: Fait qu'un trade ait respecté l'intégralité de la checklist. Se note oui ou non, indépendamment du résultat.
+Corps :: Partie rectangulaire d'un chandelier, comprise entre l'ouverture et la clôture. Mesure la conviction du mouvement.
+Courtier :: Intermédiaire auprès duquel la position est ouverte. Rémunéré à l'activité — commissions, spread, frais de report — et non à la performance du client.
+Creux :: Bougie dont le plus bas est inférieur à celui des bougies voisines. Point de référence pour placer un stop d'achat.
+Drawdown :: Écart entre le plus haut niveau atteint par le capital et son niveau actuel, en pourcentage. Mesure ce que l'on subit.
+Effet de disposition :: Tendance documentée à réaliser ses gains trop tôt et à différer ses pertes. Mesurée par Odean en 1998.
+Effet de levier :: Rapport entre la taille d'une position et le capital réellement déposé. Multiplie l'amplitude des variations, jamais la probabilité d'avoir raison.
+Espérance :: Gain moyen d'un trade, tous résultats confondus, exprimé en R. Seule mesure décrivant un système complet.
+Frais de report :: Coût facturé chaque nuit pour le maintien d'une position à effet de levier. Aussi appelé financement ou *swap*.
+Indicateur technique :: Formule appliquée aux prix pour en produire un résumé graphique. N'ajoute aucune information : il en retire.
+Invalidation :: Prix dont l'atteinte prouve que le scénario était faux. Détermine le placement du stop.
+Mèche :: Trait fin sortant du corps d'un chandelier. Marque un niveau atteint puis abandonné — un refus.
+Ouverture :: Premier prix traité pendant la période couverte par une bougie.
+Pip :: Plus petite variation usuelle d'une paire de devises, soit 0,0001 sur EUR/USD. Vaut environ 1 $ pour 10 000 unités.
+Plan de trade :: Ensemble écrit avant l'entrée : scénario, entrée, invalidation, objectif, taille.
+Position :: Contrat ouvert auprès du courtier, tant qu'il n'est pas refermé. Sa *taille* est la quantité engagée, et se calcule ; elle ne se choisit pas.
+Pratique délibérée :: Répétition d'une tâche précise, à la limite de sa compétence, avec correction immédiate portant sur l'exécution.
+R :: Unité de risque. 1 R est la perte acceptée sur un trade. Tous les résultats se notent en R, jamais en euros.
+Ratio gain/risque :: Gain visé divisé par le risque accepté. Détermine le taux de réussite minimal nécessaire.
+Résistance :: Zone située au-dessus du prix où des vendeurs sont déjà intervenus.
+Scénario :: Attente formulée en prix, assortie d'une invalidation et d'un objectif. Se distingue d'une opinion par le fait qu'un prix peut la démentir.
+Sommet :: Bougie dont le plus haut dépasse celui des bougies voisines. Point de référence pour placer un stop de vente.
+Spread :: Écart entre le prix d'achat et le prix de vente affichés simultanément. Coût prélevé dès l'ouverture de la position.
+Stop-loss :: Ordre automatique fermant la position à un niveau défini à l'avance. Se place à l'invalidation, jamais au budget.
+Structure :: Enchaînement des sommets et des creux. Détermine l'un des trois états : haussier, baissier, ou aucun.
+Support :: Zone située sous le prix où des acheteurs sont déjà intervenus.
+Surtrading :: Fait de passer un nombre d'ordres supérieur à ce que l'information détenue justifie. Corrélé aux pertes dans toutes les études citées.
+Trade :: Opération complète, de l'ouverture à la fermeture de la position. Se juge une fois refermé, jamais pendant.
+Unité de temps :: Durée que résume chaque bougie. H1 pour une heure, H4 pour quatre heures.
+Variance :: Dispersion normale des résultats autour de leur moyenne. Une série de pertes relève de la variance tant qu'elle reste dans ce que la méthode produit habituellement.
+
+SEC: Mentions et sources
+
+H3: Nature de ce document
+
+P: Ce document est un contenu pédagogique destiné à l'apprentissage. Il ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une analyse financière au sens réglementaire, ni une incitation à ouvrir un compte auprès d'un quelconque prestataire.
+
+P: Les exemples chiffrés qu'il contient sont des cas d'école construits pour l'enseignement. Ils ne reproduisent pas des relevés de marché réels et ne doivent pas être utilisés comme tels.
+
+P: Aucun chapitre de ce parcours ne promet, ne suggère ni ne laisse espérer un gain. Le trading à effet de levier est une activité à risque élevé : la majorité des particuliers y perd de l'argent, et les performances passées ne préjugent pas des performances futures.
+
+P: L'intégralité des exercices se déroule dans le simulateur TapeSense, sur données historiques rejouées. Aucun capital réel n'est engagé à aucune étape du parcours.
+
+H3: Sources citées
+
+UL:
+- **Autorité des marchés financiers**, *Étude des résultats des investisseurs particuliers sur le trading de CFD et de Forex en France*, 13 octobre 2014. Échantillon de 14 799 clients actifs de prestataires agréés, période 2009–2012. Taux de clients perdants supérieur à 89 %, résultat moyen de −10 887 €, résultat médian de −1 843 €, résultat total de −161 115 493 €. Frais prélevés par les intermédiaires : 14,2 % des pertes.
+- **ESMA**, décision d'intervention sur les produits, communiqué du 27 mars 2018. « 74-89 % of retail accounts typically lose money on their investments, with average losses per client ranging from €1,600 to €29,000. »
+- **F. Chague, R. De-Losso, B. Giovannetti**, *Day Trading for a Living?*, Universidade de São Paulo et FGV EESP, 2019–2020. Cohortes 2013–2015 sur le marché à terme brésilien : parmi les personnes ayant persisté plus de 300 jours, 97 % perdent de l'argent, 0,4 % gagnent plus qu'un employé de guichet bancaire. « We find no evidence of learning by day trading. »
+- **B. Barber, T. Odean**, *Trading Is Hazardous to Your Wealth: The Common Stock Investment Performance of Individual Investors*, The Journal of Finance, avril 2000. 66 465 ménages, 1991–1996 : rendement annuel de 16,4 % pour le ménage moyen, 11,4 % pour le quintile le plus actif, 17,9 % pour le marché.
+- **T. Odean**, *Are Investors Reluctant to Realize Their Losses?*, The Journal of Finance, octobre 1998. Dix mille comptes de courtage : les positions gagnantes sont vendues 1,5 à 2 fois plus souvent que les positions perdantes.
+
+H3: Liens
+
+UL:
+- amf-france.org — étude 2014 sur le trading de CFD et de Forex en France
+- esma.europa.eu — communiqué du 27 mars 2018 sur les CFD et options binaires
+- ideas.repec.org/p/spa/wpaper/2019wpecon47.html — Chague, De-Losso, Giovannetti
+- faculty.haas.berkeley.edu/odean — travaux de Brad Barber et Terrance Odean

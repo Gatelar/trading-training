@@ -1,0 +1,144 @@
+MOD: 5 | Un avantage qui disparaît | 16 minutes de lecture · 5 chapitres · 1 exercice | 16 min
+Objectif : trancher entre variance et dégradation au moyen d'un test écrit avant l'observation.
+
+H2: 5.1 Série défavorable ou dégradation : la question mal posée
+
+HOOK:
+Trente trades sans rien gagner. Tu veux savoir si ton avantage a disparu. Cette question n'a pas de réponse — pas parce qu'elle est difficile, parce qu'elle est posée après.
+
+P: Une **dégradation** est la disparition durable de l'avantage d'un système. Une série défavorable est une suite de résultats négatifs qui relève de la variance. Les deux produisent le même relevé, le même sentiment et la même envie de faire quelque chose.
+
+P: Rien dans tes données ne les sépare. C'est un fait arithmétique, pas un manque de méthode, et il ne se corrige pas en regardant mieux. Ce qui les sépare est ailleurs : dans le fait qu'un seuil ait été écrit avant, ou ne l'ait pas été.
+
+CASE: Cinquante trades qui ne prouvent rien
+Système à **+0,15 R** d'espérance nette, écart-type de **1,2 R** par trade.
+Sur 50 trades, la somme attendue vaut 50 × 0,15 = **+7,5 R**, et l'écart-type de cette somme vaut 1,2 × √50 = **8,5 R**.
+Une séquence de 50 trades qui se termine à **0 R** se situe donc à 0,9 écart-type sous l'attendu. Parfaitement ordinaire.
+Combien de trades pour détecter une chute de +0,15 R à zéro ? En reprenant le tableau du chapitre 2.2 de l'Intermédiaire : environ **640 trades**, soit plus de **quatre ans** à trois trades par semaine.
+La conclusion est à accepter une fois pour toutes : **tu ne détecteras jamais statistiquement la disparition de ton propre avantage.** Ce module porte sur ce qu'on fait en le sachant.
+
+ERR: L'erreur classique
+Chercher la réponse dans un découpage du journal. Segmenter jusqu'à trouver le mois où ça s'est gâté produira toujours une date, puisqu'il en existe forcément une. Le chapitre 1.3 de l'Intermédiaire a nommé ce geste ; ici il est aggravé, parce que la date trouvée sert ensuite à justifier un arrêt ou son report, et que les deux se paient comptant.
+
+KEY: À retenir
+- Série et dégradation expliquent les mêmes données. Rien dans le relevé ne les sépare.
+- Détecter la disparition d'un avantage de 0,15 R demanderait plus de quatre ans.
+- Ce qui tranche n'est pas dans les données. C'est la date à laquelle le seuil a été écrit.
+
+H2: 5.2 Ce que la recherche établit sur la durée de vie d'un avantage
+
+HOOK:
+Ton avantage va se réduire. Ce n'est pas un pronostic sur toi : c'est le résultat le mieux documenté du domaine, mesuré sur des centaines de stratégies, et il a un ordre de grandeur.
+
+P: On appelle **décote hors échantillon** la perte de performance constatée quand une règle est appliquée à des données qui n'ont pas servi à la construire. McLean et Pontiff l'ont mesurée en 2016 sur les 97 variables dont la littérature affirmait qu'elles prédisaient les rendements d'actions : **−26 %** hors échantillon, **−58 %** après publication.
+
+P: Falck, Rej et Thesmar ont prolongé le travail en 2021. L'année de publication explique à elle seule **30 %** de la variance de cette décote, chaque année ajoutant environ cinq points. Autrement dit, l'usure n'est ni rare ni accidentelle : elle est la règle, et elle s'accélère.
+
+P: Ces travaux portent sur des anomalies actions publiées, pas sur ton système, et rien n'autorise à transporter leur coefficient tel quel. Ils donnent un ordre de grandeur — voilà à quoi ressemble une décote ordinaire quand on passe des données d'hier à celles de demain — et pas une valeur.
+
+CASE: Une décote appliquée, et ce qu'elle vaut
+Ton système : espérance brute mesurée **+0,18 R**, coût d'exécution mesuré **0,14 R**.
+Applique la décote hors échantillon de 26 % : 0,18 × 0,74 = **+0,133 R**.
+Retranche le coût d'exécution : 0,133 − 0,14 = **−0,007 R**.
+Trois chiffres, deux opérations, et le résultat change de signe.
+**Ce calcul n'est pas une prédiction.** C'est un test de sensibilité : il dit qu'une décote de l'ordre de celle qu'on observe partout ailleurs suffirait à annuler ton avantage. Il ne dit pas qu'elle surviendra.
+
+ERR: L'erreur classique
+Transformer le test de sensibilité en pronostic — ou, tout aussi souvent, écarter la décote parce qu'« elle ne porte pas sur mon marché ». Les deux gestes ont la même cause : vouloir un chiffre là où il n'y a qu'un ordre de grandeur. Le premier te fait arrêter un système qui va bien, le second t'en fait garder un qui ne va plus.
+
+KEY: À retenir
+- McLean et Pontiff, 2016 : −26 % hors échantillon, −58 % après publication, sur 97 variables.
+- Ce n'est pas un coefficient à appliquer à ton système. C'est un ordre de grandeur.
+- Un avantage qui ne survit pas à une décote de 26 % n'a aucune marge.
+
+H2: 5.3 Le test écrit avant l'observation
+
+HOOK:
+Un critère d'arrêt sans taux de fausse alarme n'est pas un critère : c'est une phrase. Le calculer prend deux minutes et change presque toujours le seuil qu'on s'apprêtait à écrire.
+
+P: Quatre éléments, comme le critère d'abandon du chapitre 2.5 de l'Intermédiaire, mais sur un autre objet. **La grandeur** mesurée. **Le seuil** chiffré. **La fenêtre** sur laquelle on mesure. **L'action** déclenchée, écrite au présent de l'indicatif.
+
+P: Le **taux de fausse alarme** d'un critère est la probabilité qu'il se déclenche alors que le système est sain. Il dépend du seuil, mais aussi de la fenêtre — celle qu'on ne pense jamais à écrire — et le chapitre suivant montre que la seconde pèse plus lourd que le premier.
+
+CASE: Le taux de fausse alarme d'un seuil
+Critère envisagé : « si le R moyen net des **100 derniers trades conformes** passe sous **0 R**, j'arrête. »
+Système sain à +0,15 R d'espérance nette, écart-type 1,2 R. Sur 100 trades, l'erreur-type de la moyenne vaut 1,2 ÷ √100 = **0,12 R**.
+Le seuil se trouve donc à (0,15 − 0) ÷ 0,12 = **1,25 erreur-type** sous l'espérance. La probabilité de le franchir par pur hasard vaut environ **10,6 %**.
+Une chance sur neuf, **à chaque fois que tu regardes**. En regardant tous les mois sur une fenêtre glissante, tu arrêteras un système parfaitement sain à peu près une fois par an.
+Le correctif ne porte pas sur le seuil. Il porte sur la fenêtre.
+
+ERR: L'erreur classique
+Écrire le critère au moment où on en a besoin. Un critère rédigé pendant une série défavorable est toujours calibré pour ne pas se déclencher tout de suite : c'est ce qu'on cherche à cet instant, et c'est ce qu'on obtient. Le critère d'abandon de l'Intermédiaire s'écrit avant le test pour exactement la même raison, et le module 2 avait déjà refusé de rendre le bouton actif sans lui.
+
+KEY: À retenir
+- Quatre éléments : la grandeur, le seuil, la fenêtre, l'action.
+- Tout seuil a un taux de fausse alarme. Calcule-le avant de l'écrire, pas après.
+- Un critère rédigé pendant une série défavorable est calibré pour ne pas se déclencher.
+
+H2: 5.4 Le critère d'arrêt de système
+
+HOOK:
+Le critère d'abandon tue une hypothèse en test, et ça ne coûte rien. Le critère d'arrêt ferme un système en production, et ça coûte trente-trois semaines. Confondre les deux revient à payer le second prix pour la première décision.
+
+P: Le **critère d'arrêt de système** porte sur un système qui tourne, avec de l'argent engagé et un journal en cours. Le critère d'abandon portait sur une idée en cours d'évaluation, dont l'échec ne laissait qu'une ligne datée dans le journal des tests.
+
+P: La différence de coût impose une différence de calibrage. Un critère d'abandon peut se permettre d'être sévère : jeter une bonne idée coûte une idée. Un critère d'arrêt sévère jette un système et huit mois de simulation avant toute reprise.
+
+CASE: Des fenêtres qui ne se recouvrent pas
+Une **fenêtre disjointe** est une fenêtre d'évaluation qui ne partage aucun trade avec la précédente.
+Même critère, même seuil. Une seule modification : il n'est évalué **qu'une fois par tranche de 100 nouveaux trades**, jamais sur une fenêtre glissante.
+À 156 trades par an, cela fait **1,56 évaluation par an**.
+Fausses alarmes attendues : 1,56 × 10,6 % = **0,17 par an**, soit un arrêt injustifié tous les **six ans** environ — contre un par an avec la fenêtre glissante.
+Le seuil n'a pas bougé d'un centième. Le taux de fausse alarme a été divisé par plus de sept, uniquement parce qu'on a cessé de regarder en permanence.
+Et le prix d'un arrêt, lui, ne bouge pas non plus : 100 trades conformes en simulation avant toute reprise, soit les **33 semaines** du chapitre 6.4 de l'Intermédiaire.
+
+ERR: L'erreur classique
+Arrêter le système et laisser courir les positions ouvertes. L'arrêt porte sur la décision d'ouvrir, pas sur ce qui est déjà engagé — c'est vrai, et c'est insuffisant. Trois positions qui courent sous un système arrêté produisent exactement la situation du module 3 : des décisions de gestion prises sans règle active, sur des trades qu'on n'ouvrirait plus aujourd'hui. Le critère doit dire ce qu'il advient d'elles.
+
+KEY: À retenir
+- Critère d'abandon : une hypothèse en test. Critère d'arrêt : un système en production.
+- Évalue sur des fenêtres qui ne se recouvrent pas. Le seuil ne change pas, la fausse alarme si.
+- Le critère écrit ce qu'il advient des positions déjà ouvertes. Sinon elles décident seules.
+
+H2: 5.5 Arrêter n'est pas échouer
+
+HOOK:
+Un système arrêté peut être retesté l'an prochain. Un capital perdu ne revient pas par le même chemin, et l'arithmétique de ce retour figure dans les annexes du Débutant depuis ton premier jour.
+
+P: Les deux erreurs possibles n'ont pas le même prix, et c'est ce déséquilibre qui doit gouverner ton seuil. Arrêter à tort coûte des semaines, un chiffre connu et borné à l'avance. Ne pas arrêter à temps coûte du capital, et cette dépense-là n'a pas de borne écrite.
+
+CASE: Le prix de l'hésitation
+Le tableau des annexes du Débutant donne le gain nécessaire pour revenir au point de départ.
+Arrêt à **−10 %** : il faut ensuite **+11 %**. Le retour est presque symétrique.
+Attendre **−33 %** : il faut **+50 %**. Attendre **−50 %** : il faut **+100 %**.
+Entre les deux premières lignes, l'écart n'est pas de 23 points de perte. C'est le passage d'un retour presque symétrique à un retour qui exige la moitié du capital en plus.
+Un arrêt injustifié coûte 33 semaines de simulation, tous les six ans environ. Un arrêt trop tardif coûte un capital qu'aucune règle ne reconstitue.
+
+ERR: L'erreur classique
+Traiter l'arrêt comme une remise en cause de l'année écoulée. Le système arrêté t'a laissé un document daté, un journal complet et une mesure d'exécution qui te sont acquis — le chapitre 6.4 de l'Intermédiaire appelle précisément cela un déclencheur légitime. Ce qui se perdrait, c'est de ne pas arrêter et de ne plus pouvoir dire, dans un an, ce qui fonctionnait.
+
+KEY: À retenir
+- Les deux erreurs n'ont pas le même prix : l'une coûte des semaines, l'autre du capital.
+- Un arrêt injustifié : 33 semaines, tous les six ans. C'est un prix connu et borné.
+- Revenir en simulation après un arrêt est le déroulement prévu, pas un accident de parcours.
+
+EX: Le système que tu arrêtes
+
+EXF: Compétence évaluée
+Objectifs 32 et 33 : distinguer une série défavorable d'une dégradation au moyen d'un test écrit avant l'observation ; écrire et dater un critère d'arrêt de système, distinct du critère d'abandon.
+
+EXF: Consigne
+**Étape A.** Deux séquences de 60 trades te sont présentées, sans étiquette. L'une provient d'un système sain traversant une série défavorable, l'autre d'un système dont l'espérance a réellement chuté. Dis laquelle est laquelle.
+**Étape B.** Rédige ton critère d'arrêt : grandeur, seuil, fenêtre, action. Le calculateur affiche le taux de fausse alarme de ce que tu écris, en direct.
+**Étape C.** Ton propre relevé — ou celui fourni en repli — est passé au critère que tu viens d'écrire, sur fenêtre glissante puis sur fenêtres disjointes. Compare les deux réponses.
+
+EXF: Ce que la plateforme doit fournir
+- Deux séquences de 60 trades générées avec des espérances réellement différentes, affichées en courbe de capital et en relevé. Aucune étiquette, aucun indice, et un bouton « je ne peux pas savoir ».
+- Étape B : quatre champs, plus un calculateur de taux de fausse alarme qui prend l'écart-type du système de l'utilisateur et se met à jour à chaque frappe. Le champ « fenêtre » propose glissante ou disjointe, sans valeur par défaut.
+- Étape C : les statistiques réelles de l'utilisateur — R moyen net, écart-type, nombre de trades sur la version en cours. **Repli** si elles sont absentes ou portent sur moins de 100 trades : un relevé fourni de 240 trades, présenté comme celui d'un autre utilisateur, et l'exercice se déroule à l'identique.
+- Un export du critère rédigé, daté, directement ajoutable au document de système de l'Intermédiaire.
+
+EXF: Correction commentée
+**Étape A.** La bonne réponse est **« je ne peux pas savoir »**, et c'est le seul exercice de tout le parcours dont la bonne réponse est un refus de répondre. Les deux séquences sont construites pour être indiscernables sur 60 trades : le chapitre 5.1 a montré qu'il en faudrait environ 640. Un utilisateur qui tranche a nécessairement tranché sur autre chose que les données — le plus souvent sur la forme de la courbe, qui est exactement ce que le module 1 de l'Intermédiaire lui apprenait déjà à ne pas lire.
+**Étape B.** Le seuil spontanément écrit est presque toujours trop haut, et le calculateur affiche alors un taux de fausse alarme supérieur à 25 %. La correction ne dit pas quel seuil écrire : elle demande de le baisser jusqu'à ce que le taux soit acceptable **pour toi**, et de noter la valeur retenue. C'est ta tolérance qui est le paramètre libre, pas la statistique.
+**Étape C.** Les deux fenêtres donnent des réponses différentes sur le même relevé dans une majorité des cas. C'est le résultat attendu et il est déstabilisant : il montre qu'une part de ta décision d'arrêt tient à la fréquence à laquelle tu regardes, et non à ce que fait ton système. Choisir la fenêtre disjointe n'est pas une astuce pour arrêter moins souvent — c'est refuser que la fréquence d'observation entre dans la décision.

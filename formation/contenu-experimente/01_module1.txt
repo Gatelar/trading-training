@@ -1,0 +1,126 @@
+MOD: 1 | Le prix que tu obtiens | 14 minutes de lecture · 4 chapitres · 1 exercice | 14 min
+Objectif : mesurer ce que la simulation ne t'a jamais facturé, et refaire ton espérance avec.
+
+H2: 1.1 Ce que la simulation ne t'a jamais facturé
+
+HOOK:
+Ton relevé affiche 140 trades conformes et un R moyen positif. Il repose sur une hypothèse que tu n'as jamais eu l'occasion de vérifier : que le prix demandé et le prix obtenu sont le même nombre.
+
+P: Le **slippage**, ou **écart d'exécution**, est la différence entre le prix auquel tu demandes une transaction et celui auquel elle est conclue. En simulation il vaut zéro par construction. En réel il vaut ce qu'il vaut, et personne ne peut te dire à l'avance combien.
+
+P: Le Débutant t'a fait payer deux coûts : le spread au chapitre 1.2, les frais de report au chapitre 1.4. Il en manquait un troisième, invisible tant qu'un moteur de simulation te sert le prix affiché. Celui-là ne se déduit d'aucune grille tarifaire : il se mesure.
+
+P: Un **ordre au marché** s'exécute au meilleur prix disponible à l'instant où il arrive, quel qu'il soit. Ton stop-loss est un ordre au marché muni d'un déclencheur. Le prix que tu inscris dessus est l'endroit où il se réveille, pas l'endroit où il te sert.
+
+CASE: Ce qu'un pip vaut sur ton trade
+Capital 1 000 €, risque 1 % : **1 R = 10 €**. EUR/USD, stop à 20 pips de l'entrée.
+Taille = 10 € ÷ 0,0020 = **5 000 unités**.
+Un pip sur 5 000 unités vaut 5 000 × 0,0001 = **0,50 €**, soit **0,05 R**.
+Un pip perdu à l'entrée et un pip perdu à la sortie coûtent donc **0,10 R par aller-retour**. Sur 100 trades : **10 R**, soit 100 €.
+Si ton R moyen simulé vaut +0,15 R, tes 100 trades valaient +15 R. Il en reste **+5 R**.
+Ce calcul n'estime pas ton slippage : il mesure ta **sensibilité** à lui. Remplace « un pip » par ce que tu auras mesuré au chapitre 1.2.
+
+ERR: L'erreur classique
+Raisonner en pourcentage du prix. Un pip sur EUR/USD représente environ 0,009 % du cours — un chiffre rassurant, et sans rapport avec la question posée. Ce qui compte est l'écart rapporté à ton stop, pas au prix : avec un stop à 20 pips, un pip vaut **5 % de ton risque**. Le même écart, sur un stop à 100 pips, en vaudrait 1 %.
+
+KEY: À retenir
+- L'écart d'exécution se compte en fraction de ton stop, jamais en pourcentage du prix.
+- Stop à 20 pips : un pip vaut 0,05 R. Dix pips valent la moitié d'un trade perdant.
+- Un stop est un ordre au marché muni d'un déclencheur, pas une garantie de prix.
+
+H2: 1.2 Le mesurer au lieu de le croire
+
+HOOK:
+Tu ne trouveras le chiffre ni ici ni ailleurs : les seules mesures publiques viennent d'entreprises qui vendent leur exécution. La tienne s'obtient en vingt-cinq trades, et c'est la seule qui te concerne.
+
+P: Ajoute au journal un **neuvième champ** : l'écart d'exécution en R, signé. Il se calcule à partir de deux prix que ta plateforme connaît déjà — celui que tu as demandé, celui que tu as obtenu — et il se note comme tout le reste, en R.
+
+P: Mesure l'entrée et la sortie **séparément**. Ce ne sont pas les mêmes événements : à l'entrée tu choisis ton moment et rien ne t'attend. Au stop, tu es exécuté à la seconde précise où le prix se déplace contre toi, dans une file d'attente qui penche toute du même côté.
+
+P: Cette asymétrie est une conséquence de la mécanique, pas le résultat d'une étude. Ne la crois pas sur parole : tes deux colonnes te diront en vingt-cinq trades si elle apparaît chez toi, à ton heure, sur ta taille.
+
+CASE: Six exécutions, un chiffre
+Même système, stop à 20 pips, donc 1 pip = 0,05 R.
+**À l'entrée** — écarts relevés : 0, −1, +1, 0, −1, +1 pip. Somme : **0 pip**.
+**À la sortie au stop** — écarts relevés : −1, −4, 0, −2, −1, −9 pips. Somme : **−17 pips**, soit −0,85 R sur six trades, soit **−0,14 R par trade**.
+Ton R moyen simulé de +0,20 R devient **+0,06 R** (0,20 − 0,14).
+Maintenant retire le −9 : les cinq autres sorties coûtent −8 pips, soit −0,08 R par trade. **Un seul trade sur six porte la moitié du coût total.**
+
+ERR: L'erreur classique
+Prendre la médiane. Elle vaut −1,5 pip dans ce relevé et donne une image confortable et fausse. L'espérance est une moyenne : c'est la moyenne qui entre dans son calcul. La médiane sert à autre chose, et c'est utile aussi — elle t'apprend que ton coût habituel n'est pas ton coût moyen, et donc qu'un mois sans mauvaise exécution ne prouve rien du tout.
+
+KEY: À retenir
+- Neuvième champ du journal : l'écart d'exécution en R, signé, entrée et sortie séparées.
+- La moyenne entre dans l'espérance. La médiane te dit seulement à quoi ressemble un jour ordinaire.
+- Vingt-cinq trades suffisent pour ce chiffre-là. Le chapitre 2.1 explique pourquoi si peu.
+
+H2: 1.3 Les moments où le prix saute
+
+HOOK:
+Un stop te protège d'un mouvement. Il ne te protège pas d'un trou. La différence entre les deux se rencontre une ou deux fois par an, et elle se règle en une seconde.
+
+P: Un **saut de cotation** est un intervalle de prix dans lequel aucune transaction n'a eu lieu : le marché cote 40 000, puis 38 800, et rien entre les deux. Ton stop placé au milieu n'a pas été ignoré. Il a été déclenché, puis exécuté au premier prix disponible.
+
+P: Ce n'est pas un accident de marché exotique. Andersen, Bollerslev, Diebold et Vega ont établi en 2003 que les surprises d'annonce macroéconomique produisent des sauts de moyenne conditionnelle sur le change au comptant, en quelques minutes, avec un effet plus marqué pour les mauvaises nouvelles.
+
+P: Trois familles couvrent la quasi-totalité des cas : les annonces programmées, dont tu connais l'heure à l'avance ; l'ouverture hebdomadaire du change, qui digère un week-end d'informations ; les heures creuses en crypto, où le marché reste ouvert sans rester liquide.
+
+CASE: Le stop qui n'a pas servi
+BTC/USD à 40 000. Capital 1 000 €, risque 1 % : 1 R = 10 €. Stop à 400 sous l'entrée.
+Taille = 10 ÷ 400 = **0,025 BTC**. À cette taille, 400 de mouvement valent bien 1 R.
+Une heure creuse, le prix passe de 40 000 à 38 800 sans qu'aucune transaction n'ait lieu entre les deux. Ton stop à 39 600 est déclenché, puis exécuté à 38 800.
+Perte = 0,025 × 1 200 = **30 €**, soit **3 R**.
+Trois fois le risque calculé, sur un trade parfaitement conforme. La huitième règle de l'Intermédiaire plafonne l'exposition cumulée à 2 % : ce trade seul vient d'en coûter 3 %.
+
+ERR: L'erreur classique
+Croire que le stop borne la perte. Il la borne quand le prix traverse tous les niveaux, ce qui est le cas l'immense majorité du temps — et c'est exactement pour cela que la croyance survit si bien. Les jours où il ne borne rien sont, par construction, les jours où le mouvement est grand. La protection disparaît au moment précis où elle servirait.
+
+KEY: À retenir
+- Un saut de cotation traverse ton stop sans s'y arrêter. Ta perte n'est plus bornée par ton calcul.
+- Trois familles : annonces programmées, ouverture hebdomadaire, heures creuses en crypto.
+- L'exposition cumulée et le saut sont deux risques distincts. Aucune règle ne couvre les deux.
+
+H2: 1.4 Ton espérance, recalculée
+
+HOOK:
+Tu as un R moyen, un critère d'abandon et 140 trades. Il te manque une soustraction — et elle suffit à faire passer ton système du bon au mauvais côté de ton propre critère.
+
+P: L'**espérance nette** est ton espérance brute diminuée du coût d'exécution moyen que tu as mesuré. C'est elle, et elle seule, qui décrit ce que ton système produirait en réel. La brute décrit ce qu'il a produit dans un environnement qui ne facture rien.
+
+P: Le critère d'abandon du chapitre 2.5 de l'Intermédiaire a été écrit sur la grandeur brute, faute d'autre chose. Il doit être réécrit sur la nette, et cette réécriture est une modification du document de système : elle incrémente la version et remet le compteur de trades à zéro.
+
+CASE: Le même système, deux fois
+**Espérance brute** : +0,18 R sur 140 trades conformes. Critère d'abandon : +0,10 R. Le système passe.
+**Coût d'exécution mesuré** : 0,14 R par trade, entrée et sortie confondues.
+**Espérance nette** : 0,18 − 0,14 = **+0,04 R**. Le système ne passe plus.
+**Et l'incertitude** : avec un écart-type de 1,2 R sur 140 trades, l'erreur-type vaut 1,2 ÷ √140 = **0,10 R**.
++0,04 R plus ou moins 0,10 R ne se distingue pas de zéro. La conclusion n'est donc pas « mon système est mauvais ». C'est **« je ne sais pas »**, que le chapitre 1.4 de l'Intermédiaire décrit comme le résultat le plus fréquent d'une analyse honnête.
+
+ERR: L'erreur classique
+Retrancher le coût et conserver le critère. Celui-ci a été écrit pour une grandeur brute ; l'appliquer tel quel à une grandeur nette le durcit d'un coup, sans que tu l'aies décidé ni daté. C'est une modification de système déguisée en calcul — la forme la plus discrète de la modification non tracée du chapitre 6.2 de l'Intermédiaire.
+
+KEY: À retenir
+- Espérance nette = espérance brute − coût d'exécution mesuré. C'est elle qui se compare au critère.
+- Réécris le critère sur la nette, incrémente la version, remets le compteur à zéro.
+- Un résultat net contenu dans son erreur-type ne conclut rien, dans aucun sens.
+
+EX: Le même trade, deux prix
+
+EXF: Compétence évaluée
+Objectifs 25 et 26 : mesurer l'écart entre prix demandé et prix obtenu et l'exprimer en R ; recalculer l'espérance d'un système en y intégrant ce coût, et conclure.
+
+EXF: Consigne
+**Étape A.** Douze décisions te sont présentées et exécutées en simulation parfaite. Relève le R moyen du relevé.
+**Étape B.** Les douze mêmes décisions sont rejouées, à l'identique, avec une exécution dégradée. Pour chacune, relève l'écart entre prix demandé et prix obtenu, à l'entrée puis à la sortie, et convertis-le en R.
+**Étape C.** Calcule l'espérance nette, compare-la au critère d'abandon fourni, et choisis ta conclusion parmi trois formulations imposées.
+
+EXF: Ce que la plateforme doit fournir
+- Un moteur d'exécution dégradée paramétrable, **asymétrique** entre l'entrée et la sortie au stop, tirant les écarts dans une distribution à queue épaisse : au moins l'un des douze trades doit porter un écart très supérieur aux onze autres.
+- Deux colonnes affichées en permanence, **prix demandé** et **prix obtenu**, et une troisième calculée automatiquement en R.
+- Un champ de saisie pour l'écart moyen en R, tolérance ±0,02 R, et un second pour l'espérance nette.
+- Étape C : trois conclusions sélectionnables — « passe le critère », « ne passe pas le critère », « ne conclut rien » — l'erreur-type étant affichée à côté.
+- **Repli** si l'exécution dégradée n'est pas disponible : deux relevés pré-calculés présentés côte à côte, la soustraction restant à la charge de l'utilisateur. L'énoncé doit alors dire explicitement que l'écart est lu et non vécu, et que c'est une perte pédagogique.
+
+EXF: Correction commentée
+**Étape B.** Le piège est le trade à écart extrême. Beaucoup d'utilisateurs le traitent comme une anomalie et le retirent du calcul — geste naturel, et faux : c'est un coût réellement subi, et l'écarter revient à mesurer son exécution en excluant les moments où elle est mauvaise. Le relevé est construit pour que ce seul trade porte environ la moitié du coût total.
+**Étape C.** La bonne réponse est **« ne conclut rien »**. L'espérance nette calculée est positive, mais inférieure à son erreur-type. « Passe le critère » est tentant parce que le nombre est du bon côté ; « ne passe pas » l'est tout autant chez les lecteurs prudents. Les deux commettent la même faute — conclure sur un chiffre plus petit que son incertitude — et le module 1 de l'Intermédiaire l'interdit depuis 100 trades.

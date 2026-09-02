@@ -1,0 +1,163 @@
+MOD: 2 | Tester au lieu d'espérer | 15 minutes de lecture · 5 chapitres · 1 exercice | 15 min
+Objectif : disposer d'un protocole qui tranche entre une idée qui fonctionne et une idée qui plaît.
+
+H2: 2.1 Une hypothèse, pas une intuition
+
+HOOK:
+« Les ventes marchent moins bien » n'est pas testable. « Sur EUR/USD en H1, mes ventes ont un R moyen inférieur d'au moins 0,3 R à mes achats » l'est. Trois précisions séparent les deux formulations.
+
+P: Une hypothèse exploitable comporte un **périmètre** — quel actif, quelle unité de temps, dans quelles conditions —, une **grandeur mesurée** — R moyen, taux de réussite, taux de conformité — et un **seuil chiffré**.
+
+P: Le seuil est celui qu'on oublie, et c'est le seul qui rende le test réel. Sans lui, n'importe quel résultat confirme : une amélioration de 0,01 R suffira à te faire dire que ça marche.
+
+P: Tu reconnais la propriété. Le chapitre 4.1 du Débutant exigeait qu'un scénario puisse être démenti par un prix précis. C'est la même exigence, appliquée à une règle plutôt qu'à un trade : une hypothèse qu'aucun résultat ne peut réfuter n'est pas une hypothèse.
+
+CASE: La même idée, trois fois
+**« Le RSI aide. »** Ni périmètre, ni grandeur, ni seuil. Rien à tester.
+**« Le RSI améliore mes résultats. »** Une grandeur vague, aucun seuil. Tout résultat positif confirmera, y compris +0,01 R.
+**« Sur EUR/USD en H4, filtrer mes achats par un RSI supérieur à 50 augmente mon R moyen d'au moins 0,25 R sur 100 trades. »** Périmètre, grandeur, seuil, échantillon. Réfutable, donc testable.
+La troisième formulation prend vingt secondes de plus à écrire. C'est la seule qui produira une information.
+
+ERR: L'erreur classique
+Formuler l'hypothèse après avoir vu les données. C'est la faute la plus discrète de ce niveau : tu regardes ton journal, tu remarques quelque chose, tu formules, puis tu « testes » — sur les données mêmes qui ont suggéré l'idée. Le test ne peut que confirmer. Il ne mesure rien d'autre que ta capacité à repérer un motif que tu viens de repérer.
+
+KEY: À retenir
+- Une hypothèse testable = périmètre + grandeur mesurée + seuil chiffré.
+- Sans seuil, tout résultat confirme.
+- L'hypothèse s'écrit avant de regarder les données qui la testeront.
+
+H2: 2.2 L'échantillon
+
+HOOK:
+Trente trades, cent trades, cinq cents. Ces nombres circulent sans justification. Voici d'où ils sortent — et surtout pourquoi celui dont tu as besoin dépend entièrement de la taille de l'effet que tu cherches.
+
+P: La logique est celle du chapitre 1.1, retournée. Tu sais que l'incertitude sur une moyenne vaut deux erreurs-types. Pour qu'un effet soit détectable, il faut donc que cet effet dépasse deux erreurs-types.
+
+P: Cela donne une condition simple : **n supérieur à (2 × écart-type ÷ effet)²**. Avec l'écart-type de 1,9 R installé au module 1, elle se calcule de tête.
+
+TABLE: 40,30,30 || Effet que tu cherches | Trades nécessaires | Durée à 3 trades/semaine
+0,5 R | 58 | 5 mois
+0,3 R | 160 | 1 an
+0,2 R | 361 | 2 ans et demi
+0,1 R | 1 444 | 9 ans
+
+CASE: La ligne qui devrait te faire renoncer
+Un effet de **0,1 R** demande environ **1 444 trades**. À trois trades conformes par semaine, c'est **neuf années**.
+Cet effet existe peut-être. Il est peut-être même réel et stable. Tu ne le vérifieras jamais : le temps qu'il te faudrait pour l'établir dépasse la durée de vie de la plupart des méthodes, et de la plupart des traders particuliers.
+La conclusion n'est pas décourageante, elle est libératrice : tu peux cesser de chercher des raffinements. Seuls les effets grossiers sont à ta portée.
+
+ERR: L'erreur classique
+Chercher de petits avantages. Le niveau intermédiaire est attiré par le réglage fin — un filtre qui ajoute 0,1 R, une condition supplémentaire qui améliore « un peu ». Même parfaitement réels, ces effets sont invérifiables à ton échelle. Un avantage que tu ne peux pas mesurer n'est pas un avantage, c'est une croyance.
+
+KEY: À retenir
+- n > (2 × écart-type ÷ effet)². Retiens la forme, pas la formule.
+- Un effet de 0,3 R demande environ 160 trades, soit un an à ton rythme.
+- En dessous de 0,2 R, rien n'est mesurable à ton échelle. N'en cherche pas.
+
+H2: 2.3 Couper ses données en deux
+
+HOOK:
+Tu construis ta règle sur des données. Tu la testes sur les mêmes données. Elle fonctionne. Évidemment qu'elle fonctionne : tu l'as fabriquée pour ça.
+
+P: La parade tient en deux mots. L'**échantillon de construction** est celui où tu cherches, où tu ajustes, où tu as le droit de te tromper autant de fois que tu veux. L'**échantillon de contrôle** est celui où tu vérifies — et tu ne le regardes qu'une fois.
+
+P: Cette unicité est la règle entière. Si tu retournes ajuster ta règle après avoir vu le contrôle, il cesse d'être un contrôle : il rejoint l'échantillon de construction, et tu n'as plus rien pour vérifier quoi que ce soit.
+
+P: La coupure se fait **par le temps**, jamais au hasard. Les marchés changent de comportement selon les époques ; un découpage aléatoire mélange les périodes et flatte systématiquement le résultat, parce que chaque morceau contient un peu de tout.
+
+CASE: L'écart qui mesure ton ajustement
+200 situations rejouées sur EUR/USD, coupées chronologiquement : les 140 premières en construction, les 60 dernières en contrôle.
+Règle ajustée sur la construction : **+0,61 R**.
+La même règle appliquée au contrôle : **+0,12 R**.
+L'écart entre les deux n'est pas un accident : c'est la mesure de ce que ton ajustement a fabriqué. Sur les 0,61 R obtenus, environ 0,49 R étaient du bruit taillé sur mesure.
+Reste 0,12 R. Sur 60 trades, l'erreur-type vaut 0,25 R. Ce résidu est indiscernable de zéro.
+
+ERR: L'erreur classique
+Recommencer après un mauvais contrôle. « Je réajuste un peu et je retesterai. » À cette seconde précise, ton contrôle est mort et tu n'as plus aucun moyen de vérifier la nouvelle version. Il te faut alors de nouvelles données, pas de nouveaux réglages — et des données, tu n'en as pas en réserve.
+
+KEY: À retenir
+- Construction et contrôle. La coupure se fait par le temps, jamais au hasard.
+- Le contrôle se regarde une seule fois. Après, il n'existe plus.
+- L'écart entre les deux mesure exactement ce que ton ajustement a fabriqué.
+
+H2: 2.4 Le surapprentissage
+
+HOOK:
+Bailey et ses coauteurs ont établi un chiffre qui devrait figurer sur l'écran d'accueil de tous les logiciels de test : avec cinq ans de données, quarante-cinq essais suffisent à produire une stratégie brillante et parfaitement vide.
+
+P: Le **surapprentissage** consiste à ajuster une règle au bruit d'un échantillon plutôt qu'à sa structure. Le mécanisme est mécanique : chaque configuration essayée augmente la probabilité qu'au moins l'une d'elles paraisse excellente par pur hasard.
+
+P: L'énoncé exact, tiré de leurs travaux : *« If only five years of data are available, no more than forty-five independent model configurations should be tried or we are almost guaranteed to produce strategies with an annualized Sharpe ratio in-sample of 1 but an expected Sharpe ratio out-of-sample of zero. »*
+
+P: La conséquence pratique est brutale. **Le nombre d'essais est une donnée du test**, au même titre que le résultat. Un test dont on ignore le nombre de configurations essayées n'est pas interprétable — pas « moins fiable » : pas interprétable du tout.
+
+P: Deux autres travaux confirment l'ordre de grandeur. Bajgrowicz et Scaillet ont testé **7 846 règles** sur 114 ans du Dow Jones : aucun investisseur n'aurait pu sélectionner à l'avance les futures meilleures, et la performance mesurée est intégralement effacée par des coûts de transaction même faibles. Harvey, Liu et Zhu, sur 316 facteurs, montrent qu'un seuil statistique habituel devient insuffisant dès que les tests se multiplient.
+
+CASE: Compte tes essais, tu vas être surpris
+Tu décides de tester « une moyenne mobile ». Une seule idée, en apparence.
+Périodes essayées : 20, 50, 100, 200. → **4**
+Unités de temps : H1 et H4. → × 2 = **8**
+Filtre au-dessus ou en dessous de la moyenne. → × 2 = **16**
+Deux actifs : EUR/USD et BTC/USD. → × 2 = **32**
+Tu n'as testé « qu'une moyenne mobile », et tu viens de faire **32 essais**. La limite de Bailey pour cinq ans de données est à 45. Tu y es presque, et tu n'as encore ajouté aucun autre outil.
+
+ERR: L'erreur classique
+Ne pas compter les essais abandonnés. Les configurations que tu as essayées puis écartées comptent toutes, sans exception. C'est précisément parce qu'elles ont été écartées que celle qui reste paraît bonne — elle est la meilleure d'un concours dont tu as oublié de compter les participants.
+
+KEY: À retenir
+- Le nombre de configurations essayées est une donnée du test. Note-le avant de commencer.
+- Cinq ans de données, quarante-cinq essais : au-delà, le résultat est du bruit habillé.
+- Une configuration abandonnée compte autant qu'une configuration retenue.
+
+H2: 2.5 Le critère d'abandon
+
+HOOK:
+Écris ce qui te ferait renoncer, avant de commencer. Sans cette ligne, tu ne testes rien : tu cherches une raison de continuer, et tu finiras par la trouver.
+
+P: Le **critère d'abandon** est la valeur, fixée à l'avance, en dessous de laquelle l'idée est jetée. Sa fonction est de rendre le test symétrique : sans lui, seuls les résultats favorables déclenchent une conclusion, et les autres déclenchent un réajustement.
+
+P: Il porte sur trois choses simultanément, et les trois se décident avant : le **seuil de résultat**, la **taille d'échantillon**, et le **nombre d'essais autorisés**. Dépasser l'un des trois annule le test.
+
+P: C'est l'invalidation du chapitre 4.1 du Débutant, transposée d'un cran. Là, tu écrivais le prix qui te donnerait tort sur un trade. Ici, tu écris le chiffre qui te donnera tort sur une idée.
+
+CASE: Quatre lignes qui valent plus que le test
+**Hypothèse** — sur EUR/USD H4, filtrer les achats par une moyenne mobile 50 augmente le R moyen d'au moins 0,3 R.
+**Échantillon** — 200 situations, coupées 140 / 60 par ordre chronologique.
+**Essais autorisés** — 4 périodes au maximum. Au-delà, le test est annulé et non recommencé.
+**Critère d'abandon** — si le contrôle donne moins de +0,15 R d'amélioration, l'idée est jetée et n'est pas réessayée avant six mois.
+Ces quatre lignes prennent trois minutes. Elles valent davantage que les deux heures de test qui suivent, parce qu'elles seules empêchent le test de se transformer en recherche de confirmation.
+
+ERR: L'erreur classique
+Assouplir le critère quand le résultat s'en approche. « 0,14 R, c'est presque 0,15 R. » Un critère assoupli une fois ne contraindra plus jamais, et tu viens de dépenser 200 situations irremplaçables pour rien. Le seuil a justement été fixé à froid pour que cette discussion n'ait pas lieu à chaud.
+
+KEY: À retenir
+- Écris le seuil, l'échantillon et le nombre d'essais autorisés avant de lancer.
+- Un test sans critère d'abandon n'est pas un test.
+- Note la date d'abandon d'une idée. C'est ce qui t'empêche de la réessayer dans trois semaines.
+
+EX: Le test que tu ne truques pas
+
+EXF: Compétence évaluée
+Objectifs 15, 16, 17 et 18 : formuler une hypothèse testable, séparer construction et contrôle, compter ses essais, écrire et respecter un critère d'abandon.
+
+EXF: Consigne
+**Étape A.** Formule ton hypothèse : périmètre, grandeur mesurée, seuil.
+**Étape B.** Fixe l'échantillon, le nombre d'essais autorisés et le critère d'abandon.
+**Étape C.** Le simulateur rejoue 140 situations. Tu appliques ta règle sur chacune.
+**Étape D.** Le simulateur rejoue les 60 situations de contrôle. Une seule fois.
+**Étape E.** Conclus : je garde, ou j'abandonne — avec le chiffre.
+Puis la plateforme compare ton résultat à ce qu'aurait produit le hasard sur le même échantillon.
+
+EXF: Ce que la plateforme doit fournir
+- Un formulaire d'hypothèse à trois champs contraints. Le bouton de validation reste **inactif tant que le seuil chiffré est vide**.
+- Un compteur d'essais affiché en permanence, incrémenté automatiquement à chaque modification de paramètre et **jamais réinitialisable**.
+- Le rejeu de 140 situations en construction : pour chacune, l'utilisateur décide « je prends / je ne prends pas », et le résultat en R s'affiche après sa réponse.
+- Le rejeu des 60 situations de contrôle, accessible **une seule fois**, verrouillé définitivement après consultation.
+- **La comparaison au hasard**, qui est le cœur de l'exercice : la plateforme rejoue le même échantillon de contrôle avec une décision aléatoire, 200 fois, et affiche la distribution des R moyens obtenus. Le résultat de l'utilisateur est positionné dans cette distribution.
+- **Repli** si le rejeu interactif de 200 situations est trop lourd : un jeu de 200 résultats pré-calculés, l'utilisateur décidant sur des situations statiques présentées en série. La comparaison au hasard doit être conservée dans tous les cas — sans elle, l'exercice perd tout son enseignement.
+
+EXF: Correction commentée
+Le contrôle donne un résultat nettement inférieur à la construction. C'est construit ainsi, et c'est représentatif.
+Le point de bascule est la comparaison au hasard. Sur les 200 tirages aléatoires, la distribution des R moyens s'étale typiquement de −0,4 à +0,4 R. Le résultat de l'utilisateur tombe presque toujours à l'intérieur — c'est-à-dire qu'il est indiscernable d'une décision prise au hasard sur les mêmes situations.
+La conclusion attendue est **j'abandonne**. La majorité des utilisateurs écrit pourtant « je garde », pour deux raisons cumulées : le chiffre est positif, et l'exercice a coûté du temps. C'est exactement le biais que le critère d'abandon existe pour neutraliser — et ce critère avait été écrit à l'étape B, par l'utilisateur lui-même, vingt minutes plus tôt.
+Le second enseignement est dans le compteur. La plupart des utilisateurs arrivent à l'étape D avec plus de vingt essais au compteur, sans en avoir eu conscience. La plateforme le leur rappelle à l'écran final, avec la limite de 45 du chapitre 2.4.

@@ -1,0 +1,175 @@
+MOD: 6 | Travailler comme un professionnel | 12 minutes de lecture · 5 chapitres · 1 exercice | 12 min
+Objectif : installer la boucle de correction sans laquelle l'expérience n'enseigne rien.
+
+H2: 6.1 Le journal de trading
+
+HOOK:
+L'AMF a isolé 1 881 clients actifs quatre années de suite. Leur taux de perte n'a pas baissé : 87,56 %. L'expérience seule n'enseigne rien — c'est mesuré. Ce qui enseigne, c'est la trace écrite qu'on en garde.
+
+P: La mémoire ne suffit pas, et pour une raison précise : elle est reconstruite. Tu te souviens de la conclusion, pas de la décision — et la conclusion contamine rétrospectivement le souvenir de la décision. Un trade gagnant devient une bonne idée ; un trade perdant, une erreur. Dans les deux cas, la reconstruction efface l'information utile.
+
+P: Le relevé de compte ne suffit pas davantage : il donne les résultats, jamais les raisons. Sept champs, en revanche, suffisent — à condition de les remplir au bon moment.
+
+UL:
+- Date et heure d'entrée.
+- Actif et unité de temps.
+- Scénario en une phrase, **écrit avant l'entrée**.
+- Invalidation et objectif, en prix.
+- Taille de position et risque en R.
+- Résultat en R, jamais en euros.
+- Conformité : le trade respectait-il les six questions de la checklist ? Oui ou non.
+
+P: Le septième champ est le seul qui produise de l'apprentissage. Les six premiers décrivent ; celui-là juge le processus, indépendamment de ce qu'a fait le marché. C'est aussi le plus facile à négliger, précisément parce qu'il est le seul à pouvoir te donner tort quand tu as gagné.
+
+CASE: Une entrée complète
+*12/03, 14 h 20 · EUR/USD H1 · Retour dans la zone 1,0850–1,0844 en tendance H4 haussière, reprise attendue vers 1,0898 · Invalidation 1,0838, objectif 1,0895 · 7 100 unités, 1 R = 10 € · Résultat : −1 R · Conforme : oui.*
+Ce trade est **perdant et conforme**. Il n'appelle aucune correction, aucune remise en question, aucun ajustement de méthode.
+C'est la distinction que développe le chapitre suivant, et c'est la plus difficile à accepter du parcours entier.
+
+ERR: L'erreur classique
+Consigner les résultats en euros. « −40 € » ne se compare à rien : ni à tes autres trades, dont le risque variait, ni à ton capital d'il y a six mois, qui n'était pas le même. « −1 R » se compare à tout. Le journal en euros produit de l'émotion ; le journal en R produit des statistiques.
+
+KEY: À retenir
+- Sept champs, dont un seul porte sur le processus. C'est celui qui compte.
+- Le scénario s'écrit avant l'entrée, sinon il est réécrit par le résultat.
+- Tout se note en R. Jamais en euros.
+
+H2: 6.2 Décision et résultat
+
+HOOK:
+Quatre trades, quatre issues. Deux méritent une correction, deux n'en méritent aucune — et ce ne sont pas les deux perdants.
+
+P: Croiser la conformité de la décision et la nature du résultat produit quatre cas, dont deux sont contre-intuitifs. C'est cette grille, et non le solde du compte, qui indique sur quoi travailler le mois suivant.
+
+TABLE: 34,33,33 || | Résultat gagnant | Résultat perdant
+**Décision conforme** | Rien à faire. Répéter. | Rien à corriger. C'est le coût normal de l'activité.
+**Décision non conforme** | Le cas dangereux : le résultat récompense l'infraction. | Le cas facile : la douleur et l'erreur coïncident.
+
+P: La case la plus mal traitée est « conforme et perdant ». Elle représente la majorité de tes trades — un système à 40 % de réussite en produit six sur dix — et c'est celle que tout le monde s'acharne à corriger, parce qu'elle fait mal.
+
+P: La case la plus coûteuse est « non conforme et gagnant ». Rien ne signale l'erreur : le compte monte, la sensation est bonne, et le comportement s'inscrit dans les habitudes. On appelle *resulting* le fait de juger une décision à son issue. Sur un échantillon court, l'issue est majoritairement du bruit.
+
+CASE: Un mois de quarante trades
+**Trente trades conformes** : 12 gagnants à +3R, 18 perdants à −1R, soit 36 − 18 = **+18 R**.
+**Dix trades non conformes** : 4 gagnants à +1,5R, 6 perdants à −2,2R — les stops ayant été déplacés. Soit 6 − 13,2 = **−7,2 R**.
+Bilan du mois : **+10,8 R**.
+Les dix trades hors cadre ont retiré 40 % de la performance. Et les quatre gagnants qu'ils contiennent sont exactement la raison pour laquelle ils seront répétés le mois suivant.
+
+ERR: L'erreur classique
+Réviser sa méthode après une série de pertes conformes. C'est la réaction la plus fréquente et la plus destructrice qui soit : elle remplace un système à espérance positive par un système non testé, au moment précis où le premier traversait sa variance normale. Deux mois plus tard, la même chose recommence avec le nouveau.
+
+KEY: À retenir
+- Conforme et perdant : aucune correction. C'est le coût de l'activité.
+- Non conforme et gagnant : à traiter en priorité, malgré le résultat.
+- Ne change jamais de méthode sur la base d'une série courte.
+
+H2: 6.3 Lire ses propres statistiques
+
+HOOK:
+Après trente trades, ton journal contient plus d'information sur toi que n'importe quelle formation. Encore faut-il savoir quels trois nombres en extraire, et dans quel ordre les lire.
+
+P: Trois nombres, et pas un de plus.
+
+UL:
+- **Le taux de conformité** — trades conformes divisés par trades totaux. La seule mesure que tu contrôles entièrement, donc la première à corriger. Vise au-delà de 90 %.
+- **Le R moyen par trade** — l'espérance du module 4, calculée exclusivement sur les trades conformes. C'est la mesure de ta méthode, à condition qu'elle porte sur des trades qui l'appliquaient vraiment.
+- **La série de pertes maximale** — à comparer avec ta limite de drawdown. Si elle en approche, ce n'est pas la méthode qui est en cause : c'est ton risque par trade qui est trop élevé pour elle.
+
+P: L'ordre de lecture n'est pas négociable, et il découle du premier point : tant que la conformité est basse, le R moyen ne mesure pas ta méthode, il mesure ton indiscipline. Sous **30 trades conformes**, aucune des trois valeurs n'est interprétable — c'est la limite la plus systématiquement ignorée par les débutants.
+
+CASE: Un relevé de quarante-cinq trades
+Conformité : 31 / 45 = **69 %**.
+R moyen sur l'ensemble des 45 trades : **+0,05 R** — soit à peu près rien.
+R moyen sur les 31 trades conformes : **+0,52 R**.
+Série de pertes maximale : 6.
+Lecture : la méthode possède une espérance nettement positive, et quatorze trades hors cadre l'ont ramenée à zéro. Le travail du mois suivant ne porte donc pas sur la méthode — elle fonctionne. Il porte entièrement sur les quatorze.
+
+ERR: L'erreur classique
+Calculer ses statistiques sur l'ensemble des trades. Mélanger conformes et non conformes produit une moyenne qui ne décrit aucun système existant : ni celui que tu as conçu, ni celui que tu as appliqué. On en conclut alors que « la méthode ne marche pas », alors qu'elle n'a jamais été mise à l'épreuve.
+
+KEY: À retenir
+- Trois mesures : conformité, R moyen sur les conformes, série de pertes maximale.
+- Rien n'est interprétable sous 30 trades conformes.
+- Corrige la conformité avant de toucher à la méthode.
+
+H2: 6.4 La pratique délibérée
+
+HOOK:
+Répéter mille trades n'apprend rien : c'est mesuré, sur quatre ans en France et sur trois années de cohortes au Brésil. Ce qui apprend, c'est une répétition avec correction immédiate et objectif étroit. La différence entre les deux tient dans l'organisation, pas dans le talent.
+
+P: La **pratique délibérée** désigne la répétition d'une tâche précise, située à la limite de sa compétence actuelle, assortie d'un retour immédiat portant sur l'exécution et non sur le résultat. C'est le seul régime d'entraînement dont l'efficacité soit établie dans les disciplines complexes.
+
+P: Appliquée au trading, cette définition exclut deux pratiques extrêmement répandues : trader « pour voir », et travailler plusieurs compétences en même temps. Dans les deux cas, le retour d'information devient inexploitable, puisqu'on ne sait plus ce qu'il évalue.
+
+UL:
+- Une seule compétence par session — repérer des creux, *ou* calculer une taille, jamais les deux.
+- Vingt répétitions au minimum sur données historiques rejouées.
+- Correction après chaque répétition, jamais à la fin de la session.
+- Aucune tenue de score en euros pendant l'entraînement.
+- Une note écrite en fin de session : ce qui a été difficile, en une phrase.
+
+P: Le simulateur est ce qui rend cette structure possible. Il compresse en une heure un échantillon de situations qui demanderait des mois à se présenter en temps réel — et il autorise l'erreur, ce qu'aucun compte réel ne fait.
+
+CASE: Deux façons de dépenser dix heures
+**Option A** — dix heures de trading en simulation, toutes compétences mêlées. Environ **25 décisions**, chacune évaluée sur son résultat, aucune isolée.
+**Option B** — dix sessions d'une heure, une compétence par session. Environ **200 répétitions**, chacune corrigée immédiatement.
+Même temps investi. Huit fois plus de répétitions, et un retour qui porte sur l'exécution plutôt que sur le hasard.
+C'est la différence entre jouer et s'entraîner.
+
+ERR: L'erreur classique
+Confondre temps d'écran et entraînement. Observer un marché pendant quatre heures sans tâche définie ne produit aucun apprentissage mesurable, quel que soit le sérieux de l'observateur. La durée n'est pas la variable qui compte : c'est la densité de corrections.
+
+KEY: À retenir
+- Une compétence par session, vingt répétitions minimum, correction immédiate.
+- Le simulateur sert à densifier les répétitions, pas à simuler des gains.
+- Temps d'écran et entraînement ne sont pas la même chose.
+
+H2: 6.5 Après ce parcours
+
+HOOK:
+Tu sais maintenant calculer un risque, lire une structure et refuser un trade. Il te manque la seule chose qu'aucun texte ne pourra jamais te donner : un échantillon.
+
+P: **Étape 1 — trente trades conformes en simulation, sans objectif de gain.** Le seul chiffre suivi est le taux de conformité. Le résultat n'a aucune importance à ce stade, et le regarder serait même contre-productif.
+
+P: **Étape 2 — mesure du R moyen sur ces trente trades conformes.** S'il est négatif, la méthode se révise. S'il est positif, l'échantillon s'étend à cent trades avant toute conclusion, parce que trente ne suffisent pas à distinguer une méthode d'une série de chance.
+
+P: **Étape 3 — le parcours Intermédiaire**, qui introduit les indicateurs techniques accompagnés de la seule chose qui les rende exploitables : une méthode pour les tester. La question laissée ouverte au chapitre 3.5 y trouve sa réponse.
+
+P: Et ce que ce parcours n'a délibérément pas traité, pour que tu saches ce qu'il te reste à chercher ailleurs : le choix d'un courtier, la fiscalité, les conditions d'un éventuel passage en réel, et tous les produits autres que les paires de devises et les cryptomonnaies au comptant.
+
+CASE: Le calendrier, sans arrondi favorable
+À trois trades conformes par semaine — le rythme qu'impose la sélectivité du module 4 — trente trades demandent environ **dix semaines**. Cent trades en demandent **trente-trois**.
+Toute promesse de compétence en trente jours entre en contradiction directe avec cette division. Ce n'est pas une position morale sur le sérieux des formations : c'est le résultat de 30 ÷ 3.
+
+ERR: L'erreur classique
+Passer en réel dès que la simulation devient rentable. Une rentabilité constatée sur trente trades est majoritairement du bruit. Et l'exécution en argent réel réintroduit d'un coup l'intégralité du module 5 — effet de disposition, surtrading, spirale après perte — qui n'a strictement rien à voir avec la qualité de ton analyse.
+
+KEY: À retenir
+- Trente trades conformes avant toute conclusion, cent avant toute confiance.
+- Le seul chiffre à suivre au départ est le taux de conformité.
+- Dix semaines au minimum. Le calcul est arithmétique, pas moral.
+
+EX: Le trade que tu ne corrigeras pas
+
+EXF: Compétence évaluée
+Objectifs 11 et 12 : consigner un trade et en extraire une erreur de processus, distincte d'un mauvais résultat.
+
+EXF: Consigne
+Quatre trades déjà exécutés te sont présentés, avec leur graphique et leur résultat.
+**1.** Complète les champs manquants du journal pour chacun.
+**2.** Place chaque trade dans la grille conformité / résultat.
+**3.** Désigne le seul trade qui exige une correction, et écris cette correction en une phrase.
+
+EXF: Ce que la plateforme doit fournir
+- Quatre rejouages courts de 30 bougies H1, avec les niveaux d'entrée, de stop, d'objectif et la sortie effective tracés sur le graphique.
+- Un formulaire de journal à sept champs, dont cinq préremplis en lecture seule. Deux champs restent à saisir : la conformité (oui / non) et le résultat en R.
+- Une grille 2 × 2 en glisser-déposer pour le classement.
+- Un champ de texte de 150 caractères pour la correction, et un seul — l'exercice consiste aussi à n'en désigner qu'un.
+
+EXF: Correction commentée
+- **Trade A** — conforme, perdant, −1 R. Aucune correction. C'est le trade que la grande majorité des utilisateurs veut corriger, et c'est le cœur de l'exercice : rien n'a échoué. Le stop a fonctionné exactement comme prévu, le scénario a été démenti par le marché, le processus était intact.
+- **Trade B** — conforme, gagnant, +3 R. Aucune correction. Facile.
+- **Trade C** — non conforme, stop déplacé après l'entrée, perdant, −2,4 R. Tout le monde trouve celui-ci : la faute et la douleur coïncident.
+- **Trade D** — non conforme, quatrième trade de la journée alors que la limite est de trois, **gagnant, +2 R**. C'est la seule bonne réponse à la troisième question.
+Le résultat est positif, donc rien ne signale l'erreur : ni le solde, ni la sensation, ni le graphique. C'est exactement pour cette raison qu'elle sera répétée — et qu'elle finira par tomber sur une série défavorable. La correction attendue porte sur la règle enfreinte, jamais sur le résultat obtenu.
+Si tu as désigné le trade C, tu as trouvé une erreur réelle mais déjà évidente. Si tu as désigné le trade D, tu viens d'utiliser le journal pour ce à quoi il sert.

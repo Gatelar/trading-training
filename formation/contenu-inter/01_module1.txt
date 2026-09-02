@@ -1,0 +1,138 @@
+MOD: 1 | Ce que ton journal sait déjà | 13 minutes de lecture · 4 chapitres · 1 exercice | 13 min
+Objectif : faire parler les trente trades que tu as déjà, avant d'ajouter quoi que ce soit.
+
+CARD: Six mots employés avant leur chapitre
+Ce parcours commence par tes données, puis par la méthode, et seulement ensuite par les outils. Quelques mots arrivent donc avant le chapitre qui les développe. Voici le minimum pour ne jamais rester bloqué.
+- **Système** : l'ensemble de tes règles pris comme un tout. Défini précisément au chapitre 6.1.
+- **Surapprentissage** : ajuster une règle au hasard d'un échantillon plutôt qu'à sa structure. Chapitre 2.4.
+- **Régime de marché** : l'état dominant du marché sur une période — tendance, ou absence de tendance. Chapitre 4.3.
+- **Filtre** : une condition qui retire des trades d'un ensemble déjà constitué par ta lecture. Chapitre 3.3.
+- **Moyenne mobile** : la moyenne des n dernières clôtures. Chapitre 3.1.
+- **RSI** : indicateur ramenant la répartition récente des hausses et des baisses sur une échelle de 0 à 100. Chapitre 3.1.
+
+H2: 1.1 Trente trades, et ce qu'ils ne disent pas
+
+HOOK:
+Tu as trente trades conformes et un R moyen positif. Le Débutant t'avait demandé d'attendre ce moment pour conclure. Il t'a menti par omission : trente trades ne concluent rien. Ils autorisent seulement à commencer à regarder.
+
+P: La raison tient à une asymétrie entre les deux chiffres que tu suis. Le **taux de conformité** dépend de toi seul : trente observations suffisent largement à savoir si tu appliques tes règles. Le **R moyen** dépend du marché, et le marché est bruyant. Sur trente trades, il produit un chiffre, pas une mesure.
+
+P: C'est exactement pourquoi le chapitre 6.3 du Débutant t'imposait de corriger la conformité en premier. Ce n'était pas une question de discipline morale : c'était la seule des deux grandeurs qu'un petit échantillon permette de mesurer.
+
+P: L'outil qui sépare les deux s'appelle l'**erreur-type** : l'incertitude qui reste sur une moyenne, compte tenu du nombre d'observations. Elle vaut l'écart-type des résultats divisé par la racine carrée du nombre de trades.
+
+CASE: Ton R moyen, avec sa marge
+Sur une série à 1R de perte et 3R de gain, l'écart-type des résultats vaut environ **1,9 R**. C'est le chiffre à retenir, il sert dans tout le parcours.
+**Sur 30 trades** : erreur-type = 1,9 ÷ √30 = **0,35 R**. Pour un R moyen affiché de +0,52 R, l'intervalle à deux erreurs-types va de **−0,18 à +1,22 R**. Il contient zéro. Ton système pourrait être perdant.
+**Sur 100 trades** : erreur-type = 1,9 ÷ √100 = **0,19 R**. Le même +0,52 R donne un intervalle de **+0,14 à +0,90 R**. Le signe est enfin établi.
+Le chiffre affiché n'a pas bougé. Ce qui a changé, c'est ce que tu as le droit d'en dire.
+
+ERR: L'erreur classique
+Annoncer son R moyen comme un fait. Trente trades donnent un nombre exact — c'est bien ce qui s'est passé — et une mesure fausse — ce n'est pas ce qui se passera. Les deux affirmations coexistent, et confondre la première avec la seconde est la faute fondatrice de ce niveau.
+
+KEY: À retenir
+- Trente trades mesurent ta conformité, pas ton espérance.
+- Erreur-type = écart-type ÷ racine de n. Quadrupler l'échantillon divise l'incertitude par deux.
+- Tant que ton intervalle contient zéro, tu n'as rien démontré.
+
+H2: 1.2 Série ou signal
+
+HOOK:
+Six pertes d'affilée. Tu modifies quelque chose. C'est là que la plupart des gens détruisent un système qui fonctionnait — et le calcul dit qu'ils avaient tort de bouger.
+
+P: Le chapitre 6.2 du Débutant te demandait de ne pas changer de méthode sur une série courte. Il te le demandait au nom du bon sens. Tu peux désormais le vérifier au lieu de le croire.
+
+P: Le principe : avant d'attribuer un sens à un motif, demande-toi combien d'occasions ce motif avait de survenir. Une série de six pertes est spectaculaire quand elle t'arrive. Elle est banale quand on compte le nombre de positions où elle pouvait démarrer.
+
+P: Le calcul exact est fastidieux ; une approximation suffit largement pour l'usage qu'on en fait ici, et elle donne le bon ordre de grandeur.
+
+CASE: Ce que la variance produit toute seule
+Système à 40 % de réussite, donc 60 % de pertes. Sur une séquence de 100 trades :
+Probabilité qu'une série d'**au moins 6 pertes consécutives** apparaisse quelque part : environ **84 %**.
+Probabilité pour une série d'**au moins 8** : environ **47 %**.
+Autrement dit : une série de six est presque garantie sur cent trades, et une série de huit tombe à pile ou face. Ce ne sont pas des accidents. Ce sont les motifs que produit un système parfaitement sain.
+*(Approximation de Poisson sur le nombre de séries attendues. L'ordre de grandeur est fiable, la décimale ne l'est pas.)*
+
+ERR: L'erreur classique
+Chercher une explication à une série. Le cerveau est excellent pour trouver des causes, et il en trouvera : un changement de volatilité, une actualité, une baisse d'attention. Ces explications sont plausibles, gratuites, et le plus souvent fausses. Le seul test valable est le nombre d'occasions.
+
+KEY: À retenir
+- Une série de six pertes sur cent trades est attendue dans plus de huit cas sur dix.
+- Avant d'interpréter un motif, compte combien d'occasions il avait de survenir.
+- Le signal d'alerte n'est jamais une série : c'est un écart qui persiste sur un sous-échantillon entier.
+
+H2: 1.3 Segmenter son journal
+
+HOOK:
+Ton R moyen global est un mélange. Il additionne tes achats et tes ventes, tes deux actifs, tes matins et tes soirs. Séparer ce mélange une seule fois t'apprend plus que trois mois de trades supplémentaires.
+
+P: La **segmentation** consiste à découper ton échantillon selon un critère unique et à comparer les sous-échantillons obtenus. Les critères utiles à ce niveau sont peu nombreux : le sens de la position, l'actif, le moment de la journée, le régime de marché, la conformité.
+
+P: Une contrainte gouverne tout l'exercice : **un seul critère à la fois**. Deux critères croisés sur soixante trades produisent des cases de quinze, où le chapitre 1.1 t'a montré que l'incertitude dépasse largement l'effet cherché.
+
+P: Et un écart entre deux sous-échantillons ne se compare pas à zéro. Il se compare à l'erreur-type de la différence, qui vaut l'écart-type multiplié par la racine de la somme des inverses des effectifs.
+
+CASE: Un écart qui n'en est peut-être pas un
+Journal de 60 trades conformes, R moyen global **+0,45 R**.
+Segmenté par sens : **achats** (34 trades) **+0,78 R** · **ventes** (26 trades) **+0,02 R**.
+Écart apparent : **0,76 R**. Impressionnant.
+Erreur-type de la différence : 1,9 × √(1/34 + 1/26) = 1,9 × 0,26 = **0,49 R**.
+L'écart vaut donc **1,5 erreur-type**. C'est suggestif. Ce n'est pas établi — il faudrait deux erreurs-types, soit un écart de 0,98 R.
+Conclusion : on écrit l'hypothèse, on ne touche à rien, et on la teste au module suivant.
+
+ERR: L'erreur classique
+Segmenter jusqu'à trouver. En découpant assez longtemps, un sous-échantillon brillant finit toujours par apparaître. C'est le surapprentissage du module 2 appliqué à ton propre journal — et c'est sa forme la plus séduisante, parce que ce sont tes données et que tu leur fais confiance.
+
+KEY: À retenir
+- Un seul critère de segmentation à la fois. Jamais deux croisés.
+- Un écart se compare à son erreur-type, jamais à zéro.
+- Une segmentation produit une hypothèse. Elle ne produit pas une décision.
+
+H2: 1.4 Ce que tu ne peux pas conclure
+
+HOOK:
+Le résultat le plus fréquent d'une bonne analyse de journal est « je ne sais pas encore ». Ce n'est pas un échec de l'analyse. C'est ce qu'elle est censée produire la plupart du temps.
+
+P: Trois conclusions sont possibles au sortir d'une analyse. Un **effet établi** — rare. Une **hypothèse à tester** — fréquent. Et **rien** — le cas le plus courant de tous. Savoir nommer le troisième est la compétence de ce module.
+
+P: La difficulté n'est pas technique, elle est psychologique. Tu viens de passer du temps sur cette analyse, et la tentation est de produire une conclusion proportionnelle à l'effort fourni. Une heure de travail semble mériter mieux que « rien ».
+
+P: Ce que la retenue achète est pourtant considérable : elle laisse ton système intact assez longtemps pour qu'il devienne mesurable. C'est la conformité du Débutant, transposée à l'échelle du mois.
+
+CASE: Un module entier, zéro décision
+Reprends les trois analyses conduites ici.
+**Le R moyen sur 30 trades** : intervalle contenant zéro. Aucune décision.
+**La série de six pertes** : attendue dans 84 % des cas. Aucune décision.
+**La segmentation par sens** : écart à 1,5 erreur-type. Une hypothèse, pas une décision.
+Trois analyses, un module de travail, **zéro modification**. Une seule ligne à écrire : *« hypothèse : ventes moins performantes que achats, à tester »*.
+C'est le rendement normal de ce travail. Il paraît faible. Il est très supérieur à celui d'une modification injustifiée.
+
+ERR: L'erreur classique
+Transformer une hypothèse en règle. Entre « les ventes semblent moins bien marcher » et « je ne vends plus », il y a exactement le protocole du module suivant. Sauter cette étape revient à ajouter une règle non testée à un système qui en comptait sept testées.
+
+KEY: À retenir
+- Trois conclusions possibles : effet établi, hypothèse à tester, rien. La troisième domine.
+- Une analyse qui ne conclut pas a fait son travail.
+- Écris l'hypothèse. Ne change pas la règle.
+
+EX: Ce que dit vraiment ton relevé
+
+EXF: Compétence évaluée
+Objectifs 13 et 14 : déterminer si un écart relève de la variance ou d'un effet réel ; segmenter un journal selon un critère unique et comparer les sous-échantillons.
+
+EXF: Consigne
+**Étape A.** Un journal de 60 trades t'est fourni. Calcule le R moyen et son erreur-type, puis dis si le signe du résultat est établi.
+**Étape B.** Segmente ce journal selon un critère au choix parmi trois. Compare les deux sous-échantillons et exprime l'écart en erreurs-types.
+**Étape C.** Applique la même démarche à ton propre journal du parcours Débutant, puis choisis ta conclusion parmi trois formulations imposées.
+
+EXF: Ce que la plateforme doit fournir
+- Un journal fourni de 60 trades en table triable, reprenant les sept champs du Débutant plus deux colonnes : sens de la position et session.
+- Une calculatrice intégrée qui affiche R moyen, écart-type et erreur-type dès que la sélection change. L'utilisateur choisit la sélection, la machine calcule : la compétence évaluée est l'interprétation, pas l'arithmétique.
+- Un seul critère de segmentation activable à la fois. L'interface **refuse** le second et affiche pourquoi.
+- Étape C : import du journal Débutant de l'utilisateur. **Repli obligatoire** si ce journal est indisponible ou compte moins de 30 trades conformes — un second journal fourni, présenté comme celui d'un autre utilisateur, avec la même mécanique. L'exercice doit rester complet dans les deux cas.
+- Trois formulations de conclusion sélectionnables — « effet établi », « hypothèse à tester », « rien de concluant » — plus un champ libre de 120 caractères.
+
+EXF: Correction commentée
+**Étape A.** R moyen +0,45 R, erreur-type 0,25 R, intervalle de −0,04 à +0,94 R. Le signe **n'est pas** établi. La majorité des utilisateurs répond que si, parce que le chiffre est positif et que soixante trades paraissent beaucoup. Soixante trades, ce n'est pas beaucoup.
+**Étape B.** Par sens, l'écart vaut 1,5 erreur-type : hypothèse. Par actif, l'écart est faible : rien. Par session, le piège est ailleurs — le sous-échantillon « soir » ne compte que 9 trades, et son erreur-type dépasse 0,6 R. Choisir ce critère et en tirer une conclusion est l'erreur attendue, et l'interface doit afficher l'effectif assez gros pour que l'utilisateur ne puisse pas dire qu'il ne l'avait pas vu.
+**Étape C.** Pour la quasi-totalité des utilisateurs, les seules réponses correctes sont « hypothèse à tester » ou « rien de concluant ». Cocher « effet établi » sur trente à soixante trades est faux, quel que soit le chiffre obtenu — et c'est vrai même si le chiffre est excellent. Surtout s'il est excellent.

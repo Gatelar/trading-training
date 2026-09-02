@@ -1,0 +1,171 @@
+MOD: 4 | Construire une décision | 12 minutes de lecture · 5 chapitres · 1 exercice | 12 min
+Objectif : transformer une lecture de graphique en scénario chiffré, et ce scénario en décision.
+
+H2: 4.1 Scénario, invalidation, objectif
+
+HOOK:
+« Je pense que ça va monter » n'est pas un scénario. C'est une opinion — et une opinion ne peut pas avoir tort, elle peut seulement être déçue. La différence n'est pas rhétorique : elle décide de ce que tu feras dans deux heures.
+
+P: Un scénario exploitable comporte trois éléments, tous écrits **avant** l'entrée. Ce que tu attends, formulé en termes de prix et non d'intention. Le niveau qui prouvera que tu t'es trompé, appelé **invalidation**. Le niveau où tu prends ton gain, appelé objectif.
+
+P: La propriété qui distingue un scénario d'une opinion est la falsifiabilité : il doit exister un prix précis dont l'atteinte signifie « j'avais tort ». Sans ce prix, tu n'as rien écrit d'exploitable, et tu découvriras ta position perdante sans jamais pouvoir dire à quel moment elle a cessé d'être valable.
+
+P: La conséquence pratique est une chaîne, et l'ordre des maillons n'est pas négociable. L'invalidation détermine le stop. Le stop détermine la taille — c'est la formule du module 2. L'objectif détermine le ratio du chapitre suivant. Tout découle de trois lignes écrites à froid.
+
+CASE: Un scénario complet, du premier au dernier nombre
+EUR/USD en H4, structure haussière, dernier creux à 1,0844. Prix actuel : 1,0868.
+**Scénario** : le prix revient dans la zone 1,0844–1,0850 et repart vers le dernier sommet, 1,0898.
+**Invalidation** : clôture H4 sous 1,0838, c'est-à-dire sous le creux qui soutient la structure.
+**Entrée** : 1,0852. **Objectif** : 1,0895.
+Risque : 14 pips. Gain visé : 43 pips.
+Taille pour 1 % sur 1 000 € : 10 € ÷ 14 = 0,71 € par pip, soit environ **7 100 unités**.
+Aucun de ces nombres n'a été choisi par confort. Chacun découle du précédent.
+
+ERR: L'erreur classique
+Écrire l'objectif en premier. Le débutant décide combien il veut gagner, puis cherche l'entrée qui rendrait ce gain possible. L'ordre correct part de l'invalidation, seul élément que le marché fournit — les deux autres viennent de toi, et l'un d'eux vient surtout de ton envie.
+
+KEY: À retenir
+- Trois lignes écrites avant l'entrée : attente, invalidation, objectif.
+- Un scénario qu'aucun prix ne peut démentir n'est pas un scénario.
+- L'invalidation vient du graphique. L'objectif s'en déduit. Jamais l'inverse.
+
+H2: 4.2 Ratio gain/risque et seuil d'équilibre
+
+HOOK:
+Avoir raison souvent ne suffit pas. On peut gagner sept trades sur dix et terminer l'année en perte. Deux minutes de calcul suffisent à comprendre pourquoi — et à ne plus jamais juger une méthode sur son taux de réussite.
+
+P: Le **ratio gain/risque**, noté R/R, rapporte le gain visé au risque accepté. Un trade qui risque 10 € pour en viser 30 est un trade à 3R. C'est une donnée connue avant l'entrée, contrairement au résultat.
+
+P: De ce ratio se déduit une valeur beaucoup plus intéressante : le taux de réussite minimal en dessous duquel tu perds de l'argent. La formule est courte.
+
+CARD: Le seuil d'équilibre
+**Taux de réussite minimal = 1 ÷ (1 + R/R)**
+En dessous de ce taux, une méthode perd. Au-dessus, elle gagne. Le calcul se fait avant d'entrer, pas après cent trades.
+
+TABLE: 40,60 || Ratio gain/risque | Taux de réussite nécessaire pour être à l'équilibre
+1R | 50 %
+1,5R | 40 %
+2R | 33 %
+3R | 25 %
+5R | 17 %
+
+CASE: Ce que le tableau signifie vraiment
+À **3R**, tu peux te tromper trois fois sur quatre et rester à l'équilibre. C'est une marge d'erreur considérable, et elle est offerte par la structure du trade, pas par ta perspicacité.
+À **0,5R**, il te faut 67 % de réussite — un niveau que presque personne ne tient sur la durée.
+Et ces seuils sont **bruts** : ils ignorent le spread et les frais de report du module 1. Une fois ces coûts intégrés, un trade théoriquement à l'équilibre est un trade réellement perdant.
+
+ERR: L'erreur classique
+Viser petit pour « sécuriser ». Prendre systématiquement 5 pips de gain en risquant 20 pips produit une longue série de trades gagnants et un compte qui descend. La sensation est excellente — on a raison presque à chaque fois — et le relevé est mauvais. C'est le piège le plus confortable du métier, parce que rien dans l'expérience vécue ne signale l'erreur.
+
+KEY: À retenir
+- Taux de réussite minimal = 1 ÷ (1 + R/R). Calcule-le avant d'entrer.
+- En dessous de 1,5R, les frais absorbent l'avantage.
+- Un fort taux de réussite avec un R/R faible est une manière lente de perdre.
+
+H2: 4.3 L'espérance
+
+HOOK:
+Quelqu'un qui a raison 40 % du temps peut gagner de l'argent chaque année. Quelqu'un qui a raison 70 % du temps peut se ruiner. La différence tient dans une multiplication que tu peux poser en trente secondes.
+
+P: L'**espérance** est le gain moyen que produit un trade, tous résultats confondus. Elle réunit les deux variables que les débutants examinent séparément : la fréquence des gains et leur ampleur.
+
+CARD: La formule
+**Espérance = (taux de réussite × gain moyen) − (taux d'échec × perte moyenne)**
+Exprimée en R, elle donne directement ce que rapporte un trade en moyenne. C'est le seul chiffre qui décrive un système complet.
+
+CASE: Deux profils, deux conclusions inverses
+**Profil A** — 40 % de réussite, gain moyen 3R, perte moyenne 1R.
+(0,40 × 3) − (0,60 × 1) = 1,20 − 0,60 = **+0,60 R par trade**.
+**Profil B** — 70 % de réussite, gain moyen 0,4R, perte moyenne 1R.
+(0,70 × 0,4) − (0,30 × 1) = 0,28 − 0,30 = **−0,02 R par trade**.
+Sur 200 trades : A se trompe 120 fois et gagne environ 120 R. B a raison 140 fois et perd, avant même de compter le spread.
+Le profil qui donne la meilleure impression au quotidien est celui qui vide le compte.
+
+ERR: L'erreur classique
+Juger une méthode sur son taux de réussite. C'est le chiffre le plus visible, le plus facile à raconter, et le moins informatif de tous. Isolé, il ne dit strictement rien : il n'a de sens qu'accompagné du R moyen.
+
+KEY: À retenir
+- Espérance = (réussite × gain moyen) − (échec × perte moyenne), en R.
+- Une espérance faiblement positive et répétée bat une méthode brillante et rare.
+- Ne juge jamais un système sur son taux de réussite seul.
+
+H2: 4.4 La checklist pré-ordre
+
+HOOK:
+Le moment où tu es le moins capable de juger est précisément celui où ton doigt est sur le bouton. La checklist existe pour que la décision soit déjà prise quand ce moment arrive.
+
+P: Son rôle n'est pas d'améliorer tes trades : c'est d'éliminer ceux que tu prends par réflexe. Elle déplace la décision d'un instant chargé émotionnellement vers un moment froid, où les critères ont été fixés sans enjeu.
+
+UL:
+- La structure est-elle lisible en H4 ? Si la réponse est « aucune tendance », je n'entre pas.
+- Où se situe mon invalidation, en prix ?
+- Quelle taille ce stop impose-t-il pour un risque de 1 % ?
+- Quel est le ratio gain/risque ? En dessous de 1,5, je n'entre pas.
+- Ce trade ressemble-t-il à mes trades précédents, ou est-ce une exception ?
+- Combien de trades ai-je déjà pris aujourd'hui ?
+
+P: La règle d'usage est brutale et c'est ce qui la rend efficace : **une seule réponse manquante annule le trade**. Pas de pondération, pas de compensation entre critères, pas de « presque ».
+
+CASE: Un bon trade refusé
+Évaluation d'une configuration réelle, question par question.
+Structure H4 lisible : **oui**, haussière. Invalidation : **oui**, 1,0838. Taille pour 1 % : **oui**, 7 100 unités. Ratio gain/risque : **oui**, 43 ÷ 14 = 3,1. Conforme aux trades précédents : **oui**.
+Trades déjà pris aujourd'hui : **4**, pour une limite fixée à 3. **Non.**
+Résultat : **trade refusé**.
+Ce trade était peut-être gagnant. La règle n'existe pas pour optimiser celui-ci : elle existe pour supprimer les trente trades du même type qui suivront, dont la plupart ne vaudront rien.
+
+ERR: L'erreur classique
+Adapter la checklist au trade. Dès qu'une réponse manque, la tentation est de reformuler la question plutôt que de renoncer. Une checklist modifiée pendant une session ne filtre plus rien : elle se contente d'enregistrer ce que tu avais décidé de faire.
+
+KEY: À retenir
+- Six questions, toutes obligatoires. Une seule manquante annule le trade.
+- Elle se remplit avant le clic, pas pendant.
+- Elle ne se modifie qu'en dehors des heures de marché.
+
+H2: 4.5 Le trade que tu ne prends pas
+
+HOOK:
+L'étude de l'AMF a mesuré une relation d'une simplicité désarmante sur 14 799 clients : plus ils passaient d'ordres, plus ils perdaient. Pas de seuil, pas d'exception, pas de catégorie épargnée. Une droite.
+
+P: Ne pas entrer est une décision, pas une absence de décision. Elle a un coût nul et une valeur mesurable : elle évite l'espérance négative des configurations moyennes, qui constituent l'écrasante majorité de ce que tu verras.
+
+P: La sélectivité est donc une variable de performance au même titre que le R/R. Sur une vingtaine de configurations repérées dans une semaine, trois ou quatre passent réellement la checklist. Les seize autres ne sont pas des occasions manquées : ce sont des trades à espérance faible que tu as eu la chance de ne pas prendre.
+
+P: Reste l'obstacle réel, qui n'est pas technique. Une séance sans trade donne l'impression de n'avoir rien fait. C'est une illusion complète : la sélectivité *est* le travail, et elle est même la partie la plus difficile à tenir.
+
+CASE: Deux semaines, même méthode, même personne
+**Semaine 1** — 4 trades, tous conformes : +2R, −1R, +3R, −1R. Résultat : **+3R**.
+**Semaine 2** — 14 trades, dont 10 pris par ennui. Les 4 conformes produisent le même +3R. Les 10 autres rapportent en moyenne −0,2R chacun, soit −2R, auxquels s'ajoute le spread de dix allers-retours.
+Résultat : **+1R au mieux**.
+Les dix trades supplémentaires ont coûté les deux tiers de la performance de la semaine. Ils ont aussi occupé l'essentiel du temps passé devant l'écran.
+
+ERR: L'erreur classique
+Mesurer sa journée au nombre de trades pris. Personne ne se sent productif après quatre heures d'observation sans un seul ordre. C'est pourtant, très souvent, la séance la plus rentable de la semaine — et la seule qui ne laisse aucune trace dans le relevé.
+
+KEY: À retenir
+- Ne pas entrer est une décision, et elle se consigne comme les autres.
+- Trois à quatre configurations conformes par semaine, pas quatorze.
+- Une séance sans trade n'est pas une séance perdue.
+
+EX: Le plan avant le clic
+
+EXF: Compétence évaluée
+Objectifs 8, 9 et 10 : calculer un ratio gain/risque, rédiger un plan de trade complet, refuser un trade en nommant la règle qui le refuse.
+
+EXF: Consigne
+Un graphique EUR/USD t'est présenté en H4 et en H1.
+**1.** Remplis le plan de trade : scénario, entrée, invalidation, objectif.
+**2.** Vérifie le ratio gain/risque calculé automatiquement.
+**3.** Passe la checklist en six points, puis prends ta décision finale.
+
+EXF: Ce que la plateforme doit fournir
+- Un écran scindé, H4 en haut et H1 en bas, sur le même actif et la même période.
+- Un formulaire à quatre champs : scénario en texte libre (200 caractères), puis entrée, invalidation et objectif — ces trois derniers saisis au clavier ou en cliquant directement sur le graphique.
+- Un affichage en direct de la taille de position et du R/R dès que les trois prix sont renseignés. L'utilisateur doit voir le R/R évoluer pendant qu'il déplace son objectif : c'est la meilleure façon d'installer le chapitre 4.2.
+- Les six items de la checklist en cases à cocher, avec un compteur « trades pris aujourd'hui » **préréglé à 3** et non modifiable.
+- Un bouton de décision finale à deux issues : « Je prends » / « Je ne prends pas ».
+
+EXF: Correction commentée
+Le R/R attendu est d'au moins 1,5 et la taille doit correspondre à un risque de 1 % sur 1 000 €. Ces deux points sont vérifiés automatiquement et ne constituent pas la difficulté de l'exercice.
+La difficulté est ailleurs, et elle est délibérée. Le compteur est à 3, donc la sixième question de la checklist échoue, donc **le trade doit être refusé** — même si les cinq autres réponses sont excellentes, et elles le sont.
+La majorité des utilisateurs valide quand même. Non par distraction, mais parce que le trade est objectivement bon et que la règle paraît accessoire à cet instant précis. C'est exactement la situation que la règle existe pour couvrir : elle n'a aucune utilité face aux mauvais trades, que tu écarterais de toute façon. Elle n'a d'utilité que face aux beaux.
+Un bon plan de trade refusé reste un bon plan de trade. Il se consigne au journal avec la mention « non pris », et il compte dans tes statistiques du module 6.

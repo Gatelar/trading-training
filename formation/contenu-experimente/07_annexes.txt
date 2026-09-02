@@ -1,0 +1,176 @@
+SEC: Ce que ce parcours modifie
+
+NOTE: Cette section existe parce que le parcours Intermédiaire avait périmé des fiches du Débutant sans le dire. Tout ce que le présent document ajoute, change ou corrige figure ci-dessous, et nulle part ailleurs.
+
+H3: Les règles : de huit à neuf
+
+TABLE: 44,20,36 || Règle | État | Où
+Risque fixe de 1 % par trade | Inchangée | Débutant 2.2
+Trois trades au maximum par séance | Inchangée | Débutant 5.4
+Deux pertes : la séance est terminée | Inchangée | Débutant 5.4
+Attente après une perte | **Modifiée** | Expérimenté 3.4
+Aucun ordre sans les réponses de la checklist | Inchangée | Débutant 4.4
+Objectif et stop non renégociables | Inchangée | Débutant 5.4
+Drawdown de 10 % sur le mois : arrêt complet | Inchangée | Débutant 2.5
+Exposition cumulée maximale de 2 % | Inchangée | Intermédiaire 5.4
+Protocole d'arrêt : durée et reprise | **Ajoutée** | Expérimenté 3.3
+
+P: La quatrième règle change de déclencheur, pas de nature : trente minutes après une perte de 1 R, la séance entière au-delà de 2 R cumulés dans la journée. La neuvième complète la septième — celle-ci dit quand s'arrêter, celle-là pour combien de temps et à quelle condition on reprend.
+
+H3: La checklist : de sept à huit questions
+
+P: Les sept questions de l'Intermédiaire sont conservées mot pour mot. Une huitième s'ajoute en dernière position : **une annonce programmée ou une ouverture hebdomadaire tombe-t-elle pendant la durée prévue de ce trade ?** Elle découle du chapitre 1.3 et se répond en consultant un calendrier, pas un graphique.
+
+P: La septième question — l'exposition cumulée — ne change pas d'énoncé, mais change de source. Sa réponse vient désormais du tableau d'exposition du chapitre 4.4, et non plus de la mémoire. À trois positions la mémoire suffisait ; à cinq, elle produit systématiquement le chiffre le plus bas.
+
+H3: Le journal : de huit à neuf champs
+
+P: Le neuvième champ est l'**écart d'exécution en R**, signé, relevé séparément à l'entrée et à la sortie. Il est obligatoire dès le premier trade réel : sans lui, l'espérance nette du chapitre 1.4 ne peut pas être calculée, et le critère d'abandon continue de porter sur une grandeur qui n'existe qu'en simulation.
+
+P: Un dixième champ est proposé et reste **facultatif** : le délai entre la clôture d'un trade perdant et l'ordre suivant. Il sert à une seule chose, chiffrer le contournement de la quatrième règle, et il ne sert qu'à ceux qui la contournent.
+
+H3: Le document de système : deux critères au lieu d'un
+
+UL:
+- Le **critère d'abandon** est réécrit sur l'espérance **nette**. Cette réécriture incrémente la version et remet le compteur de trades à zéro, comme toute modification.
+- Un **critère d'arrêt de système** s'y ajoute : grandeur, seuil, fenêtre, action, plus le sort des positions ouvertes.
+- La fenêtre du critère d'arrêt est **disjointe** — une évaluation par tranche de 100 nouveaux trades, jamais glissante.
+- Le **palier de démarrage** y est versé s'il existe : fraction, nombre de trades, grandeur mesurée, fin du palier.
+- La **décision datée** du chapitre 6.5 s'y verse également, et se relit à chaque revue mensuelle.
+
+H3: L'exposition, désormais énoncée à l'identique dans les deux documents
+
+P: Le chapitre 5.2 de l'Intermédiaire écrivait que deux positions à 1 % fortement corrélées « comptent pour 1 % », ce que contredisait son propre chapitre 5.1 — trois positions qui perdent ensemble exposent environ 3 %. La formulation de 5.1 a été retenue, et l'Intermédiaire corrigé en conséquence.
+
+P: La règle est donc unique dans les trois parcours : **dans un groupe qui perd ensemble, les risques s'additionnent**, et la limite de 2 % s'applique à cette somme. Si tu détiens une version de l'Intermédiaire antérieure à cette correction, ce sont son chapitre 5.2, son chapitre 5.4 et sa carte de séance qu'il faut relire.
+
+SEC: Carte de séance consolidée
+
+NOTE: Elle remplace la carte du Débutant et celle de l'Intermédiaire, et fait autorité pour les trois niveaux. Une page, à imprimer, à garder à côté de l'écran. Rien de nouveau n'y figure : uniquement ce qui doit être disponible sans réfléchir.
+
+CARD: Les neuf règles
+- Risque fixe de 1 % par trade, jamais ajusté en cours de séance.
+- Trois trades au maximum par séance.
+- Deux pertes : la séance est terminée.
+- Trente minutes après une perte de 1 R ; la séance entière au-delà de 2 R cumulés.
+- Aucun ordre sans les réponses de la checklist.
+- Objectif et stop non renégociables une fois la position ouverte.
+- Drawdown de 10 % sur le mois : arrêt complet et revue du journal.
+- Exposition cumulée maximale : 2 %, vérifiée avant l'ordre.
+- **Protocole d'arrêt : seuil, durée, condition de reprise, écrits avant.**
+
+CARD: La checklist, à huit questions
+- La structure est-elle lisible en H4 ? Sinon, je n'entre pas.
+- Où est mon invalidation, en prix ?
+- Quelle taille ce stop impose-t-il pour 1 % ?
+- Le stop est-il entre 1 et 3 ATR ? Sinon, je justifie.
+- Quel est le ratio gain/risque ? Sous 1,5, je n'entre pas.
+- Combien de trades ai-je déjà pris aujourd'hui ?
+- Quelle est mon exposition cumulée, ce trade inclus ? Réponse lue sur le tableau.
+- **Une annonce ou une ouverture hebdomadaire tombe-t-elle pendant ce trade ?**
+
+CARD: Le journal, à neuf champs
+Date et heure · Actif et unité de temps · Scénario écrit avant l'entrée · Invalidation et objectif · Taille et risque en R · Plus haut atteint en R · Résultat en R · **Conforme : oui / non** · **Écart d'exécution en R, entrée et sortie**
+Champ facultatif : délai entre une perte et l'ordre suivant.
+
+CARD: Les formules
+**Taille de position** = (Capital × Risque en %) ÷ Distance jusqu'au stop
+**Taux de réussite minimal** = 1 ÷ (1 + Ratio gain/risque)
+**Espérance** = (taux de réussite × gain moyen) − (taux d'échec × perte moyenne)
+**Espérance nette** = Espérance brute − Coût d'exécution mesuré
+**Erreur-type** = écart-type ÷ racine du nombre de trades
+**Trades pour une précision voulue** = (écart-type ÷ précision)²
+
+CARD: L'exposition, au-delà de trois positions
+**1.** Groupe les positions par scénario perdant commun.
+**2.** Dans un groupe, les risques **s'additionnent**.
+**3.** Entre groupes : au-dessus de +0,3 le plus petit compte pour moitié, en dessous ils s'additionnent, sens opposés ils se retranchent.
+**4.** Tiens le tableau — actif, sens, risque, groupe, total — hors de la plateforme, mis à jour avant l'ordre.
+Refus par défaut quand la limite est atteinte : **le dernier arrivé**. Jamais en réduisant une position ouverte.
+
+CARD: Le palier de démarrage
+Fraction du risque · Nombre de trades · Grandeur mesurée · Ce qui met fin au palier.
+Le pire cas du palier doit rester **sous** ton seuil de drawdown. Vingt-cinq trades suffisent à mesurer l'exécution ; mille six cents seraient nécessaires pour l'espérance.
+La fin du palier n'autorise rien : elle date un recalcul.
+
+CARD: Le protocole de test, en sept étapes
+Hypothèse — périmètre, grandeur, seuil · Échantillon et coupure chronologique · Essais autorisés · Critère d'abandon · Construction · **Contrôle, consulté une seule fois** · Décision écrite et datée.
+Une étape sautée annule le test. Le nombre d'essais se note avant, pas après.
+
+CARD: Le document de système, et ses deux critères
+Périmètre · Entrée · Invalidation et stop · Gestion · Exposition · Critère d'abandon, sur l'espérance **nette** · **Critère d'arrêt : grandeur, seuil, fenêtre disjointe, action, sort des positions ouvertes.**
+En-tête : version, date de modification, trades écoulés depuis. Toute modification remet le compteur à zéro.
+
+TABLE: 25,25,25,25 || Ratio | Réussite mini | Drawdown | Gain pour revenir
+1R | 50 % | −10 % | +11 %
+1,5R | 40 % | −20 % | +25 %
+2R | 33 % | −33 % | +50 %
+3R | 25 % | −50 % | +100 %
+
+TABLE: 25,25,25,25 || Effet cherché | Trades requis | Grandeur | Trades requis
+0,5 R | 58 | Coût d'exécution à 0,03 R | 25
+0,3 R | 160 | Espérance à 0,03 R | 1 600
+0,2 R | 361 | Chute de 0,15 R détectée | 640
+0,1 R | 1 444 | Un an de pratique | 156
+
+SEC: Glossaire
+
+NOTE: Seuls les termes introduits par ce parcours figurent ci-dessous. Pour les notions du Débutant — R, spread, drawdown, structure, espérance, conformité, checklist, journal — et pour celles de l'Intermédiaire — ATR, corrélation, erreur-type, exposition cumulée, filtre, surapprentissage, système — reporte-toi aux glossaires de ces deux documents.
+
+GLOSS:
+Avertissement standardisé :: Mention par laquelle un prestataire publie le pourcentage de ses comptes clients particuliers qui perdent de l'argent. Produite par le prestataire lui-même, et vérifiable avant d'ouvrir quoi que ce soit.
+Clôture automatique :: Fermeture d'office des positions lorsque les fonds tombent à 50 % de la marge minimale requise. Sur 1 000 € au levier maximal, elle intervient après une perte de 91,7 %.
+Critère d'arrêt de système :: Seuil écrit à l'avance au-delà duquel un système en production est arrêté. Distinct du critère d'abandon, qui porte sur une hypothèse en test et ne coûte qu'une idée.
+Décote hors échantillon :: Perte de performance constatée quand une règle est appliquée à des données qui n'ont pas servi à la construire. Ordre de grandeur documenté : −26 %.
+Dégradation :: Disparition durable de l'avantage d'un système. Indiscernable d'une série défavorable sur tout échantillon que tu produiras.
+Écart d'exécution :: Différence entre le prix demandé et le prix obtenu. Vaut zéro en simulation par construction. Se compte en fraction du stop, jamais en pourcentage du prix.
+Espérance nette :: Espérance brute diminuée du coût d'exécution mesuré. Seule grandeur à comparer au critère une fois de l'argent engagé.
+Fenêtre disjointe :: Fenêtre d'évaluation ne partageant aucun trade avec la précédente. Réduit le taux de fausse alarme sans toucher au seuil.
+Groupe d'exposition :: Ensemble de positions qui perdent dans le même scénario. À l'intérieur d'un groupe, les risques s'additionnent.
+Ordre au marché :: Ordre exécuté au meilleur prix disponible à l'instant où il arrive. Un stop-loss est un ordre au marché muni d'un déclencheur.
+Palier de démarrage :: Période initiale à risque réduit dont l'unique objet est de mesurer le coût d'exécution. Sa fin date un recalcul et n'autorise rien.
+Protection contre le solde négatif :: Garantie, compte par compte, que la perte ne peut excéder les fonds déposés. Instaurée après les soldes débiteurs de janvier 2015.
+Protocole d'arrêt :: Neuvième règle : seuil, durée, condition de reprise vérifiable de l'extérieur. Un seuil à moins d'un écart-type de la dispersion se déclenche sur du bruit.
+Registre :: Relevé exhaustif, factuel et exportable de toutes les opérations, tenu pour un tiers. Ne remplace pas le journal et n'en découle pas.
+Saut de cotation :: Intervalle de prix dans lequel aucune transaction n'a eu lieu. Le stop y est déclenché puis exécuté plus loin : la perte cesse d'être bornée par ton calcul.
+Slippage :: Voir *écart d'exécution*.
+Tableau d'exposition :: Feuille tenue hors plateforme — actif, sens, risque, groupe, total — mise à jour avant chaque ordre en une vingtaine de secondes.
+Taux de fausse alarme :: Probabilité qu'un critère se déclenche alors que le système est sain. Dépend du seuil, et davantage encore de la fenêtre.
+
+SEC: Mentions et sources
+
+H3: Nature de ce document
+
+P: Contenu pédagogique destiné à l'apprentissage. Ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une analyse financière au sens réglementaire, ni une incitation à ouvrir un compte auprès d'un quelconque prestataire.
+
+P: Le trading à effet de levier est une activité à risque élevé. La majorité des particuliers qui s'y engagent perd de l'argent : 89 % des 14 799 clients français suivis par l'AMF sur quatre ans. Les performances passées ne préjugent pas des performances futures, et le capital engagé peut être perdu en totalité.
+
+P: Ce parcours ne recommande à aucun moment d'engager de l'argent réel, ne présente ce passage ni comme un aboutissement ni comme une étape attendue, et ne recommande aucun montant de capital. Aucun prestataire n'y est nommé. Aucun chiffre fiscal n'y figure : le chapitre 6.4 est daté de septembre 2026 et renvoie explicitement à un professionnel.
+
+P: Les exemples chiffrés sont des cas d'école construits pour l'enseignement. Les écarts d'exécution des chapitres 1.2 et 1.4, les relevés du chapitre 2.4 et les séances du module 3 sont des illustrations pédagogiques, non des mesures effectuées chez un prestataire. Les exercices se déroulent dans le simulateur TapeSense.
+
+H3: Sur l'absence de chiffre de slippage
+
+P: Ce document ne cite aucune valeur d'écart d'exécution mesurée, parce qu'aucune mesure publiée, vérifiable et indépendante n'a pu être identifiée pour un particulier sur ce type de produit. Les valeurs qui circulent proviennent d'entreprises vendant leur propre exécution. Le parcours enseigne donc la mesure, et non le chiffre.
+
+H3: Sources citées
+
+UL:
+- **Autorité des marchés financiers**, *Étude des résultats des investisseurs particuliers sur le trading de CFD et de Forex en France*, 13 octobre 2014. 14 799 clients, 2009–2012 : plus de 89 % de perdants, résultat médian de −1 843 €.
+- **ESMA**, mesures d'intervention sur les produits, 2018 : levier plafonné de 30:1 à 2:1 selon le sous-jacent, clôture automatique à 50 % de la marge, protection contre le solde négatif par compte, avertissement standardisé. Mesures ensuite reprises par les autorités nationales.
+- **T. G. Andersen, T. Bollerslev, F. X. Diebold & C. Vega**, *Micro Effects of Macro Announcements: Real-Time Price Discovery in Foreign Exchange*, American Economic Review, 93(1), 2003. Les surprises d'annonce produisent des sauts de moyenne conditionnelle, avec asymétrie en défaveur des mauvaises nouvelles.
+- **L. Mancini, A. Ranaldo & J. Wrampelmeyer**, *Liquidity in the Foreign Exchange Market: Measurement, Commonality, and Risk Premiums*, The Journal of Finance, 68(5), 2013. Coûts d'illiquidité mesurés et forte communalité entre paires.
+- **R. D. McLean & J. Pontiff**, *Does Academic Research Destroy Stock Return Predictability?*, The Journal of Finance, 2016. 97 variables : −26 % hors échantillon, −58 % après publication.
+- **A. Falck, A. Rej & D. Thesmar**, *Why and how systematic strategies decay*, 2021. L'année de publication explique 30 % de la variance de la décote de Sharpe, environ cinq points par an.
+- **Janvier 2015, abandon du plancher EUR/CHF** : soldes clients débiteurs annoncés par FXCM à hauteur de 225 M$, mise en administration d'Alpari UK le 19 janvier 2015. Analyse de l'épisode : Bank of England, Staff Working Paper 711, Breedon, Chen, Ranaldo & Vause.
+
+H3: Liens
+
+UL:
+- amf-france.org — étude 2014 sur le trading de CFD et de Forex en France
+- esma.europa.eu — mesures d'intervention sur les CFD, 2018
+- aeaweb.org/articles?id=10.1257/000282803321455151 — Andersen, Bollerslev, Diebold & Vega (2003)
+- onlinelibrary.wiley.com/doi/abs/10.1111/jofi.12053 — Mancini, Ranaldo & Wrampelmeyer (2013)
+- onlinelibrary.wiley.com/doi/abs/10.1111/jofi.12365 — McLean & Pontiff (2016)
+- arxiv.org/abs/2105.01380 — Falck, Rej & Thesmar (2021)
+- bankofengland.co.uk — Staff Working Paper 711, épisode du franc suisse

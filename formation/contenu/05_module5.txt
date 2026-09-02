@@ -1,0 +1,131 @@
+MOD: 5 | Ce qui se passe dans ta tête | 11 minutes de lecture · 4 chapitres · 1 exercice | 11 min
+Objectif : reconnaître dans ton propre relevé trois comportements documentés, et leur opposer une règle.
+
+H2: 5.1 L'effet de disposition
+
+HOOK:
+Tu clôtures un gain de 12 € avec soulagement. Tu laisses courir une perte de 40 € en te disant que ça va revenir. Ce comportement porte un nom, il a été mesuré sur dix mille comptes, et il te concerne — la question n'est pas de savoir si tu y échapperas, mais quelle règle tu lui opposeras.
+
+P: L'**effet de disposition** désigne la tendance à réaliser ses gains trop tôt et à différer la réalisation de ses pertes. Terrance Odean l'a établi en 1998 sur dix mille comptes de courtage : à situation comparable, les investisseurs vendent leurs positions gagnantes une fois et demie à deux fois plus souvent que leurs positions perdantes.
+
+P: Le mécanisme est asymétrique et parfaitement compréhensible. Une position gagnante non clôturée est une source d'inquiétude permanente ; la clôturer convertit une incertitude désagréable en certitude agréable. Une position perdante non clôturée, elle, reste une perte « sur le papier » — la fermer la rend définitive, et surtout, la rend vraie.
+
+P: L'effet produit est mécanique : des gains moyens systématiquement plus petits que les pertes moyennes. Autrement dit, une dégradation structurelle du ratio gain/risque, indépendante de la qualité de l'analyse. Le module 4 démontrait qu'un R/R dégradé suffit à faire perdre une méthode juste. C'est exactement ce qui se produit ici.
+
+CASE: Une méthode rentable, rendue perdante par son exécution
+Vingt trades, méthode correcte, stop à 1R et objectif à 3R, taux de réussite de 40 %.
+**Exécution conforme** : 8 gains à 3R, 12 pertes à 1R, soit 24 − 12 = **+12 R**.
+**Exécution avec effet de disposition** : les gains sont coupés en moyenne à 1,2R, et deux pertes sont laissées filer jusqu'à 2,5R.
+8 × 1,2 = 9,6 R. Pertes : 10 × 1 + 2 × 2,5 = 15 R. Résultat : **−5,4 R**.
+La méthode n'a pas changé d'un iota. L'analyse était identique. Seule l'exécution a bougé, et elle a transformé +12 R en −5,4 R.
+
+ERR: L'erreur classique
+Appeler cela de la prudence. « Je sécurise mes gains » est la formulation présentable d'un comportement qui, une fois mesuré, détruit l'espérance. La prudence a toute sa place en trading — elle s'exerce dans la taille de position, décidée avant l'entrée. Pas dans la sortie anticipée, décidée sous tension.
+
+KEY: À retenir
+- Tu couperas tes gains et tu laisseras courir tes pertes. C'est documenté, pas hypothétique.
+- L'effet de disposition dégrade le R/R sans jamais toucher à l'analyse.
+- Seule contre-mesure fiable : objectif et stop fixés avant l'entrée, non renégociés après.
+
+H2: 5.2 Surtrading et excès de confiance
+
+HOOK:
+Sur 14 799 clients français, ceux qui passaient le plus d'ordres perdaient le plus. Sur 66 465 ménages américains, les plus actifs ont sous-performé le marché de plus de six points par an. Deux échantillons, deux continents, deux décennies d'écart, la même droite.
+
+P: Barber et Odean ont examiné les comptes de 66 465 ménages américains entre 1991 et 1996. Le ménage moyen obtient 16,4 % par an ; le quintile le plus actif, 11,4 % ; le marché, 17,9 %. L'écart ne s'explique pas par de mauvais choix de titres : il s'explique par le **volume d'activité lui-même**.
+
+P: L'explication retenue par les auteurs est l'excès de confiance. Chacun surestime la qualité de son information et sous-estime la part du hasard dans ses réussites — ce qui conduit à agir plus souvent que ne le justifierait l'information réellement détenue.
+
+P: S'y ajoute un mécanisme d'auto-renforcement particulièrement difficile à désamorcer. Un gain est attribué à la compétence ; une perte, aux circonstances. L'échantillon des souvenirs est donc biaisé dans une seule direction, et la confiance continue de monter alors même que le relevé de compte descend. Les deux courbes se croisent sans jamais se rencontrer.
+
+CASE: Les trois mesures de l'AMF vont dans le même sens
+Sur les 14 799 clients suivis quatre ans :
+Ceux ayant passé **au moins 250 ordres** représentent 52 % de la population étudiée et perdent en moyenne **18 741 €**.
+Ceux dont la **taille moyenne d'ordre dépasse 10 000 €** représentent 62 % de la population et perdent en moyenne **14 876 €**.
+Nombre d'ordres, taille moyenne, volume cumulé : les trois mesures donnent le même résultat, et aucune sous-population n'y échappe.
+
+ERR: L'erreur classique
+Interpréter une bonne série comme une montée de niveau. C'est le moment précis où la taille des positions augmente, « puisque ça marche ». Statistiquement, cette augmentation intervient juste avant le retour à la moyenne — c'est-à-dire au pire moment possible, et pour une raison qui semble excellente.
+
+KEY: À retenir
+- L'activité elle-même est corrélée à la perte. Le nombre d'ordres est une variable de risque.
+- Une bonne série n'est pas une preuve de compétence : c'est un échantillon court.
+- Fixe ta taille et ton nombre de trades hors séance, quand rien n'est en jeu.
+
+H2: 5.3 La spirale après une perte
+
+HOOK:
+La perte de 10 € ne t'a rien fait. Ce qui t'a fait quelque chose, c'est de constater que tu t'étais trompé. Les vingt minutes qui suivent sont, statistiquement, les plus coûteuses de ta journée.
+
+P: La séquence est stéréotypée et se déroule en quatre temps. La perte. Le besoin de réparation immédiate. L'entrée hors checklist, sur une configuration qui n'aurait pas passé le filtre une heure plus tôt. Et l'augmentation de taille, destinée à « compenser en un seul trade ».
+
+P: Chaque étape est individuellement défendable. C'est l'enchaînement qui vide un compte, et il est d'autant plus difficile à interrompre que chaque maillon paraît raisonnable pris isolément.
+
+P: Le point de bascule est identifiable et il est **linguistique**. Tant que tu penses « −1 R », tu es à l'intérieur du système : la perte a une unité, une place dans une série, une signification statistique. Dès que tu penses « −10 €, il me faut 10 € », tu es sorti du système et tu poursuis une somme. Le changement d'unité précède toujours le changement de comportement.
+
+CASE: Quarante minutes
+**Trade 1**, conforme, prévu au plan : **−1 R**.
+**Trade 2**, six minutes plus tard, hors checklist, taille doublée pour rattraper : **−2 R**.
+**Trade 3**, quinze minutes après, taille quadruplée : **−4 R**.
+Total : **−7 R**, soit sept séances normales de travail effacées en quarante minutes.
+Le seul des trois qui faisait partie du plan est celui qui a coûté le moins cher.
+
+ERR: L'erreur classique
+Croire qu'on saura reconnaître cet état au moment où il se produit. On ne le reconnaît pas — c'est la définition même de l'état. La contre-mesure ne peut donc pas prendre la forme d'une décision prise pendant. Elle doit être une règle mécanique, posée avant, et qui s'applique sans que tu aies à juger de sa pertinence sur le moment.
+
+KEY: À retenir
+- Après une perte, la contre-mesure est un délai, pas un effort de volonté : aucun ordre pendant trente minutes.
+- Deux pertes dans la séance : la séance est terminée. Sans exception, sans évaluation.
+- Si tu comptes en euros et non en R, tu n'es déjà plus en train de trader.
+
+H2: 5.4 Des règles qui tiennent
+
+HOOK:
+Toutes les règles de ce module partagent une propriété : elles s'écrivent quand le marché est fermé et s'appliquent sans jugement quand il est ouvert. Une règle qui exige une évaluation au moment de s'appliquer n'est pas une règle — c'est une intention.
+
+P: Le principe est simple à formuler et difficile à tenir : externaliser la décision hors de l'état émotionnel qui la fausse. Les règles qui survivent à l'usage partagent trois propriétés — elles sont **numériques**, **vérifiables sans interprétation**, et **posées à l'avance**.
+
+UL:
+- Risque fixe de 1 % par trade, jamais ajusté en cours de séance.
+- Trois trades au maximum par séance.
+- Deux pertes : la séance est terminée.
+- Trente minutes d'attente après toute perte.
+- Aucun ordre sans les six réponses de la checklist.
+- Objectif et stop non renégociables une fois la position ouverte.
+- Drawdown de 10 % sur le mois : arrêt complet et revue du journal.
+
+P: Ces sept règles ne constituent pas une méthode. Elles n'ont aucune prétention à générer un gain. Leur fonction est plus modeste et plus décisive : permettre à une méthode, quelle qu'elle soit, d'être testée sur un échantillon suffisant avant que le compte ne disparaisse.
+
+CASE: Ce que coûte l'absence de la septième règle
+Capital de 1 000 €, risque de 1 %, trois trades par séance, arrêt à deux pertes. La perte maximale d'une séance est donc de 2 %.
+**Sans règle mensuelle** : vingt séances consécutivement perdantes ramènent le capital à 667 €, soit un drawdown de **−33 %**.
+**Avec la règle des 10 %** : l'arrêt se déclenche à la sixième séance perdante, drawdown contenu autour de **−11 %**.
+Même méthode, même série de malchance, même risque par trade. La seule différence est une ligne écrite un dimanche soir.
+
+ERR: L'erreur classique
+Écrire les règles sans écrire ce qui se passe quand on les enfreint. Une règle sans conséquence attachée est un souhait. La conséquence n'a pas besoin d'être punitive — consigner l'infraction dans le journal suffit largement, à condition que ce soit systématique et que le chiffre soit relu à la fin du mois.
+
+KEY: À retenir
+- Une règle utile est numérique, vérifiable, et écrite marché fermé.
+- Sept règles suffisent. Au-delà, aucune n'est réellement appliquée.
+- Attache à chaque règle une conséquence écrite, même minime.
+
+EX: Quatre situations, une règle
+
+EXF: Compétence évaluée
+Objectifs 10 et 12 : refuser un trade en nommant la règle qui le refuse ; reconnaître un biais documenté dans une situation concrète.
+
+EXF: Consigne
+Quatre situations te sont présentées l'une après l'autre. Pour chacune : **je prends** ou **je ne prends pas**, puis sélectionne dans la liste la règle qui justifie ta décision.
+
+EXF: Ce que la plateforme doit fournir
+- Quatre cartes séquentielles, sans retour en arrière possible. L'impossibilité de revenir fait partie de l'exercice : elle reproduit la condition réelle.
+- Chaque carte comporte un mini-graphique H1 statique, et un bandeau d'état affichant en permanence : capital, nombre de trades pris aujourd'hui, résultat de la séance en cours, minutes écoulées depuis le dernier trade.
+- Deux boutons de décision, puis une liste déroulante contenant les sept règles du module. La règle doit être choisie **après** la décision, jamais avant.
+- Aucune indication de ce qu'a fait le marché ensuite. Cet exercice évalue une décision, pas un résultat.
+
+EXF: Correction commentée
+- **Situation 1** — configuration conforme, aucun trade pris, séance à l'équilibre. Réponse : *je prends*. Règle invoquée : checklist complète. C'est la seule des quatre où entrer est correct.
+- **Situation 2** — configuration conforme, deux pertes déjà encaissées dans la séance. Réponse : *je ne prends pas*. Règle : deux pertes, séance terminée. La configuration proposée est objectivement la meilleure des quatre, et c'est entièrement délibéré : une règle qui ne résiste pas à une belle configuration ne sert à rien, puisque c'est le seul moment où elle est mise à l'épreuve.
+- **Situation 3** — configuration moyenne, ratio gain/risque à 1,2, aucun trade pris. Réponse : *je ne prends pas*. Règle : ratio minimum de 1,5. Le piège ici est l'absence de tout autre obstacle : rien dans le bandeau d'état ne s'oppose au trade, et il faut aller chercher le seul chiffre qui le disqualifie.
+- **Situation 4** — configuration conforme, dernier trade perdant il y a huit minutes. Réponse : *je ne prends pas*. Règle : trente minutes d'attente. Rien n'interdit ce trade sur le fond ; seul le délai le bloque. C'est la situation que les utilisateurs valident le plus souvent, et c'est précisément la deuxième marche de la séquence décrite au chapitre 5.3.

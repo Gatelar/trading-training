@@ -1,0 +1,155 @@
+MOD: 3 | Les indicateurs, enfin | 15 minutes de lecture · 5 chapitres · 1 exercice | 15 min
+Objectif : poser un outil sur une lecture qui tient déjà, et savoir lequel jeter.
+
+H2: 3.1 Ce qu'un indicateur calcule
+
+HOOK:
+Trois indicateurs, trois formules, trois lignes. Tu vas constater qu'aucune ne contient d'information que tu n'aies pas déjà sous les yeux depuis le module 3 du Débutant.
+
+P: Une **moyenne mobile** de période n est la moyenne des n dernières clôtures. Un **RSI** de période n compare la moyenne des hausses à celle des baisses sur ces n périodes et ramène le rapport sur une échelle de 0 à 100. Un **ATR** — *average true range* — est la moyenne de l'amplitude réelle des n dernières bougies.
+
+P: Le point commun saute aux yeux dès qu'on les écrit : chacun est une fonction des quatre nombres du chapitre 3.1 du Débutant. Aucun n'accède à une donnée supplémentaire, et chacun en perd — c'est la définition d'un résumé.
+
+P: Le point de séparation compte davantage. Moyenne mobile et RSI prétendent dire quelque chose sur la direction à venir. L'ATR ne prétend rien : il mesure une distance passée. C'est ce qui en fait le seul des trois utilisable sans protocole.
+
+CASE: Le retard d'une moyenne, en heures
+Une moyenne mobile 50 sur des bougies H4 résume 50 × 4 = **200 heures**, soit environ huit jours de marché.
+Le prix se déplace ; la moyenne le suit avec un retard structurel de l'ordre de la moitié de sa période, soit **environ quatre jours**.
+Conséquence directe : une moyenne mobile **ne peut pas** signaler un retournement. Elle peut seulement confirmer qu'un mouvement dure depuis un moment.
+Ce n'est pas un défaut de réglage qu'un meilleur paramètre corrigerait. C'est la définition d'une moyenne.
+
+ERR: L'erreur classique
+Chercher le bon réglage. La question « moyenne 50 ou moyenne 200 ? » suppose qu'il existe une réponse stable dans le temps. Elle a surtout la propriété de générer des essais — et le chapitre 2.4 vient de te dire ce que chaque essai coûte au crédit de ton résultat final.
+
+KEY: À retenir
+- Moyenne mobile, RSI et ATR sont des fonctions des quatre mêmes nombres. Aucun n'ajoute d'information.
+- Une moyenne mobile retarde d'environ la moitié de sa période. C'est structurel, pas réglable.
+- Un outil qui mesure et un outil qui prétend prédire ne s'emploient pas de la même façon.
+
+H2: 3.2 Mesurer n'est pas prédire
+
+HOOK:
+L'ATR ne te dira jamais où va le prix. Il te dit de combien il bouge habituellement — et cette information-là, tu peux l'utiliser dès aujourd'hui, sans test préalable.
+
+P: Le chapitre 2.4 du Débutant plaçait le stop sous le dernier creux. Ce placement reste correct et n'est pas révisé. Il ignore simplement une variable : la même distance en pips ne représente pas le même risque d'être touchée selon la volatilité du moment.
+
+P: L'ATR fournit cette variable. La règle d'usage tient en une comparaison : un stop à moins de **1 ATR** sera touché par le bruit ordinaire ; un stop au-delà de **3 ATR** paie une invalidation trop lointaine. Entre les deux, la distance est cohérente avec ce que fait le marché en ce moment.
+
+P: Un mot sur le **volume**, puisque tu le verras partout ailleurs. Sur BTC/USD, le volume échangé est une donnée réelle, mesurée par les plateformes. Sur EUR/USD au comptant, il n'existe aucun volume centralisé : ce que ton graphique affiche est un **tick volume**, c'est-à-dire le nombre de changements de prix enregistrés par ton seul courtier. C'est une mesure d'activité chez un intermédiaire, pas un volume de marché. Ce parcours ne construit rien dessus, et tu sais désormais pourquoi.
+
+CASE: Le même stop, deux marchés différents
+EUR/USD en H1, **ATR 14 = 22 pips**.
+Stop à 12 pips = **0,55 ATR** — il sera touché par une bougie ordinaire, sans qu'aucune invalidation ne se soit produite.
+Stop à 32 pips = **1,45 ATR**, placé sous le dernier creux. Cohérent avec les deux critères.
+Stop à 80 pips = **3,6 ATR** — la structure ne le justifie pas ; tu paies l'incertitude de quelqu'un d'autre.
+Trois semaines plus tard, l'ATR tombe à 11 pips. Le même stop de 32 pips vaut désormais **2,9 ATR** : trop large pour le contexte. Ta distance n'a pas bougé, le marché si.
+
+ERR: L'erreur classique
+Fixer une distance de stop une fois pour toutes. « Je mets toujours 30 pips » ignore que 30 pips valent 1,4 ATR un jour et 3 ATR un autre. Le Débutant t'a appris à ne pas caler ton stop sur ton budget ; ce niveau ajoute une interdiction : ne le cale pas non plus sur une habitude.
+
+KEY: À retenir
+- L'ATR mesure une distance habituelle. Il ne prédit rien, et c'est exactement sa qualité.
+- Compare toujours ton stop à l'ATR du moment : entre 1 et 3, sinon justifie.
+- Le volume affiché en forex n'est pas un volume de marché. Ne construis aucune règle dessus.
+
+H2: 3.3 Le filtre
+
+HOOK:
+Un indicateur ne te dit pas quoi prendre. Au mieux, il te dit quoi ne pas prendre — ce qui est déjà considérable, puisque le chapitre 4.5 du Débutant a montré que la sélectivité est une variable de performance à part entière.
+
+P: Un **filtre** est une condition qui retire des trades d'un ensemble déjà constitué par ta lecture. Il ne crée jamais de trade, et cette contrainte n'est pas décorative : elle est ce qui empêche l'outil de redevenir un signal.
+
+P: La séquence correcte est fixée et le filtre y occupe la dernière place. Lecture de structure (Débutant 3.3), puis scénario et invalidation (4.1), puis checklist (4.4), puis filtre. Rien ne remonte dans cet ordre.
+
+P: Cette position a une conséquence méthodologique qu'on oublie systématiquement. Un filtre ne peut pas être évalué sur les trades gagnants qu'il apporte — il n'en apporte aucun. Il s'évalue sur ce qu'il **retire** : les trades supprimés étaient-ils moins bons que la moyenne ?
+
+CASE: Ce qu'un filtre retire, et ce qu'il coûte
+Échantillon de 100 trades, R moyen **+0,40 R**.
+Le filtre en retire **30**.
+Les 30 trades retirés avaient un R moyen de **−0,10 R**. Les 70 restants : **+0,61 R**.
+Le filtre a donc fonctionné sur cet échantillon. Reste à savoir si ce résultat survit au chapitre 2.3, et ce n'est pas acquis.
+Note aussi le prix : 30 % des occasions supprimées. À trois trades conformes par semaine, tu passes à 2,1 — et le temps nécessaire pour mesurer quoi que ce soit augmente d'un tiers.
+
+ERR: L'erreur classique
+Utiliser un filtre pour entrer. Dès l'instant où tu te surprends à penser « le RSI vient de repasser au-dessus de 50, j'achète », tu as inversé la séquence. Le filtre est devenu un déclencheur, et tu viens de contredire tout ce que le module 3 du Débutant a établi. L'inversion est facile à repérer : elle se produit quand l'outil te donne une idée au lieu d'en retirer une.
+
+KEY: À retenir
+- Un filtre soustrait. Il n'ajoute jamais un trade.
+- Il s'évalue sur la qualité de ce qu'il retire, pas sur ce qu'il laisse passer.
+- Il coûte des occasions, donc du temps de mesure. Compte ce coût avant de l'adopter.
+
+H2: 3.4 Passer un outil au protocole
+
+HOOK:
+Voici le test complet, du premier au dernier pas, sur un cas concret. Il prend une heure. C'est la seule heure de ce parcours qui te dira si un outil mérite de rester sur ton écran.
+
+P: Le protocole reprend intégralement le module 2, dans l'ordre : hypothèse, échantillon et coupure, essais autorisés, critère d'abandon, construction, contrôle consulté une fois, décision écrite. Sept étapes, aucune facultative.
+
+P: Ce qui suit est un test réel dans son déroulement complet, y compris sa conclusion — qui est la conclusion la plus fréquente de tous les tests de ce type.
+
+CASE: Un test, de bout en bout
+**Hypothèse** — sur EUR/USD H4, ne prendre les achats que si le prix est au-dessus de sa moyenne mobile 50 augmente le R moyen d'au moins 0,3 R.
+**Échantillon** — 200 situations, 140 en construction, 60 en contrôle, coupées par le temps.
+**Essais autorisés** — 3 périodes : 20, 50, 100.
+**Critère d'abandon** — moins de +0,15 R sur le contrôle, l'idée est jetée et non réessayée avant six mois.
+**Construction** — moyenne 20 : +0,18 R · moyenne 50 : **+0,44 R** · moyenne 100 : +0,31 R. Trois essais consommés, on retient la 50.
+**Contrôle**, consulté une seule fois : **+0,09 R**.
+**Décision** — en dessous du critère. **Jeté**, avec la date, dans le journal des tests.
+
+ERR: L'erreur classique
+Garder quand même, « parce que 0,09 reste positif ». Sur 60 trades de contrôle, l'erreur-type vaut environ 0,25 R : un résultat de +0,09 R est rigoureusement indiscernable de zéro. Le critère avait été fixé à 0,15 R précisément pour que cette discussion n'ait pas lieu maintenant, alors que tu viens de passer une heure sur ce test.
+
+KEY: À retenir
+- Sept étapes, dans l'ordre, avant qu'un outil ne reste sur ton écran.
+- La plupart des idées meurent au contrôle. C'est le fonctionnement normal, pas un échec.
+- Note la date d'abandon. C'est ce qui t'empêche de retester la même chose en boucle.
+
+H2: 3.5 Le coût de chaque outil
+
+HOOK:
+Chaque outil que tu ajoutes a un prix, et il ne se paie pas en euros. Il se paie en occasions, en essais et en attention — trois monnaies dont tu disposes en quantité très limitée.
+
+P: **Coût en occasions.** Un filtre qui retire 30 % des trades allonge d'environ 43 % le temps nécessaire pour atteindre un échantillon donné. Le chapitre 2.2 t'a montré ce que représente ce temps.
+
+P: **Coût en essais.** Chaque outil multiplie le nombre de configurations à explorer. Deux outils à quatre réglages chacun ne font pas huit combinaisons, ils en font seize — et le compteur du chapitre 2.4 monte d'autant.
+
+P: **Coût en attention.** Un écran chargé rallonge la décision et affaiblit la checklist, dont le chapitre 4.4 du Débutant a établi qu'elle ne vaut que si elle s'applique mécaniquement. Un outil de plus, c'est une question de plus à laquelle répondre sous tension.
+
+CASE: Le second filtre que tu n'ajouteras pas
+Tu as un filtre en place. Tu envisages un second.
+**Occasions** — le premier retire 30 %, le second retire 25 % de ce qui reste. Il te demeure 52,5 % des trades : à trois par semaine, tu tombes à **1,6**.
+**Essais** — 4 réglages × 4 réglages = **16 configurations**, contre 4 auparavant.
+**Échantillon nécessaire** pour mesurer l'effet du second : 160 trades pour un effet de 0,3 R. À 1,6 trade par semaine, cela fait **deux ans**.
+Le second filtre n'est pas une mauvaise idée. Il est simplement invérifiable à ton échelle — ce qui, d'après le chapitre 2.2, revient au même.
+
+ERR: L'erreur classique
+Empiler parce que chaque ajout paraît raisonnable isolément. Aucun outil pris séparément ne semble coûteux. C'est le produit des trois coûts qui l'est, et ce produit reste invisible tant qu'on décide un ajout à la fois.
+
+KEY: À retenir
+- Trois coûts : occasions, essais, attention. Les trois se chiffrent.
+- Un outil à la fois. Testé, puis gardé ou jeté, avant d'en envisager un autre.
+- Si l'effet d'un ajout demande deux ans à mesurer, tu ne l'ajoutes pas.
+
+EX: L'outil que tu jettes
+
+EXF: Compétence évaluée
+Objectifs 19 et 20 : décrire ce que calcule un indicateur et ce qu'il ne peut pas faire ; soumettre un filtre au protocole complet et conclure.
+
+EXF: Consigne
+**Étape A.** Choisis un filtre parmi trois et règle son paramètre.
+**Étape B.** Remplis la fiche de test — hypothèse, échantillon, essais autorisés, critère d'abandon — avant tout accès aux données.
+**Étape C.** Applique le filtre sur l'échantillon de construction.
+**Étape D.** Consulte le contrôle. Une fois.
+**Étape E.** Décide, en confrontant ton résultat au critère que tu as écrit à l'étape B.
+
+EXF: Ce que la plateforme doit fournir
+- Trois filtres proposés — moyenne mobile, RSI, position du prix dans l'ATR — chacun avec un paramètre réglable dans une plage fermée.
+- Une fiche de test à quatre champs. Le bouton « lancer » reste **inactif tant que le critère d'abandon est vide**.
+- Un compteur d'essais visible, incrémenté à chaque changement de paramètre, non réinitialisable.
+- Un échantillon de 200 situations pré-calculées sur EUR/USD H4, coupé 140 / 60 par ordre chronologique. Le contrôle se verrouille après une consultation.
+- Un écran final affichant, côte à côte : R moyen de construction, R moyen de contrôle, **erreur-type du contrôle**, et le critère écrit par l'utilisateur à l'étape B, recopié tel quel.
+
+EXF: Correction commentée
+Les trois filtres sont calibrés pour produire un contrôle situé entre +0,05 et +0,15 R — donc à la limite ou en dessous de tout critère raisonnable, et dans tous les cas indiscernable de zéro avec une erreur-type de 0,25 R sur soixante trades.
+La bonne réponse est **j'abandonne**, pour les trois. Ce n'est pas un piège : c'est le taux de survie réel des idées de ce type, et le chapitre 3.4 l'annonçait explicitement.
+Deux erreurs sont attendues. La première : garder le filtre qui a rendu +0,15 R exactement, en arrondissant mentalement le critère dans le bon sens. La seconde, plus grave : **relancer avec un autre paramètre après un mauvais contrôle**. La plateforme l'autorise délibérément, incrémente le compteur, et le rappelle à l'écran final — à ce stade, le contrôle a été consulté, il n'existe plus, et le second test ne vaut rigoureusement rien. C'est la démonstration la plus efficace du chapitre 2.3, parce que l'utilisateur vient de la produire lui-même.

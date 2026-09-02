@@ -1,0 +1,151 @@
+MOD: 3 | Lire un graphique nu | 13 minutes de lecture · 5 chapitres · 1 exercice | 13 min
+Objectif : extraire de l'information d'un graphique sans le secours du moindre indicateur.
+
+H2: 3.1 Le chandelier japonais
+
+HOOK:
+Un chandelier ne dit pas où va le prix. Il dit qui a gagné la dernière bataille, et avec quelle marge. C'est infiniment moins séduisant, et infiniment plus utile.
+
+P: Chaque chandelier résume quatre valeurs et rien d'autre : l'**ouverture**, la **clôture**, le **plus haut** et le **plus bas** atteints pendant la période. Le rectangle central — le corps — représente la distance entre l'ouverture et la clôture. Les traits qui en sortent — les mèches — marquent les extrêmes.
+
+P: La lecture utile porte sur ce que les mèches racontent. Une mèche signale un endroit où le prix est allé et **d'où il a été repoussé**. C'est un refus, pas un passage. Le marché y a testé un niveau et n'a pas réussi à s'y installer.
+
+P: Le corps, lui, mesure la conviction. Un corps ample indique qu'un camp a tenu du début à la fin de la période. Un corps minuscule encadré de deux longues mèches indique l'inverse : beaucoup de mouvement, aucune décision.
+
+CASE: Une heure de marché, lue correctement
+Bougie H1 sur EUR/USD. Ouverture 1,0840 · plus haut 1,0872 · plus bas 1,0836 · clôture 1,0842.
+Le prix a monté de **32 pips**, puis a rendu l'intégralité du mouvement pour clôturer 2 pips au-dessus de son ouverture.
+Amplitude parcourue : 36 pips. Progrès net : 2 pips.
+Lecture : les acheteurs ont dépensé une heure entière pour presque rien, et ils ont laissé derrière eux une mèche haute de 30 pips. Ce niveau, 1,0872, vient d'être refusé. Il servira de repère.
+
+ERR: L'erreur classique
+Nommer les figures avant de lire les nombres. Le débutant apprend « marteau », « doji », « avalement », puis cherche ces formes sur le graphique — et il en trouve, forcément, parce qu'il y en a partout. Une bougie isolée ne prédit rien : elle décrit. La question productive n'est pas « quelle figure est-ce ? » mais « où le prix a-t-il été refusé ? ».
+
+KEY: À retenir
+- Quatre nombres suffisent : ouverture, plus haut, plus bas, clôture.
+- Une mèche marque un refus. Le prix y est allé et n'y est pas resté.
+- Décris la bougie avant de la nommer. La description est plus riche que l'étiquette.
+
+H2: 3.2 L'unité de temps
+
+HOOK:
+Le même marché, à la même seconde, peut être simultanément en tendance haussière et en tendance baissière. Il suffit de changer d'unité de temps. Ce n'est pas une contradiction du marché, c'est une question d'échelle d'observation.
+
+P: L'**unité de temps** désigne la durée que résume chaque bougie. En H1, une bougie couvre une heure ; en H4, quatre heures. Les données sous-jacentes sont rigoureusement identiques : seul le niveau d'agrégation change.
+
+P: Ce qui varie, en revanche, c'est le rapport entre le signal et le bruit. Plus l'unité est courte, plus tu observes de mouvements qui n'auront aucune conséquence. Tu ne vois pas plus de choses : tu vois les mêmes choses découpées plus finement, et donc davantage d'occasions apparentes d'agir.
+
+P: La convention de travail retenue dans ce parcours attribue un rôle distinct à chaque unité. Le **H4 établit le contexte** — où se situent les grandes zones, quelle est la direction dominante. Le **H1 situe l'exécution** — où placer l'entrée, où poser le stop. Les deux ne votent pas : ils répondent à deux questions différentes.
+
+CASE: La même journée, deux découpages
+**En H1** : 24 bougies, amplitude moyenne d'environ 18 pips, une dizaine d'alternances entre bougies haussières et baissières.
+**En H4** : 6 bougies, amplitude moyenne d'environ 45 pips, le plus souvent une seule direction lisible.
+Les données sont les mêmes à la virgule près. Le nombre de moments où l'on peut se croire obligé d'agir a été divisé par quatre.
+
+ERR: L'erreur classique
+Descendre en unité de temps quand on est indécis. Le réflexe paraît raisonnable — regarder de plus près pour mieux voir. Le résultat est mécanique : davantage de bougies, davantage de mouvements, davantage de justifications disponibles pour entrer. Or l'étude de l'AMF est sans ambiguïté sur ce point : plus un client passe d'ordres, plus il perd.
+
+KEY: À retenir
+- H4 pose le contexte, H1 situe l'exécution. Deux rôles, jamais deux avis.
+- Une unité plus courte n'ajoute pas d'information : elle ajoute du bruit.
+- Face au doute, monte d'une unité de temps. Jamais l'inverse.
+
+H2: 3.3 Sommets, creux et structure
+
+HOOK:
+Retire tout du graphique. Il te reste des sommets et des creux. C'est suffisant pour répondre à la seule question qui précède toute décision : ce marché va-t-il quelque part, ou tourne-t-il en rond ?
+
+P: Un **sommet** est une bougie dont le plus haut dépasse celui des bougies qui l'entourent. Un **creux** est son symétrique vers le bas. Ce sont des faits observables, sans marge d'interprétation.
+
+P: De leur enchaînement découlent trois états, et trois seulement. La **tendance haussière** : des sommets de plus en plus hauts *et* des creux de plus en plus hauts. La **tendance baissière** : des sommets de plus en plus bas *et* des creux de plus en plus bas. Et l'**absence de tendance**, dès que la double condition n'est pas remplie.
+
+P: Ce troisième état mérite une attention particulière, parce qu'il est le plus fréquent et le plus mal traité. L'absence de tendance n'est pas une phase intermédiaire à interpréter finement en attendant que la direction se précise : c'est un état à part entière, celui où le débutant perd le plus, précisément parce qu'il y cherche une direction qui n'existe pas encore.
+
+CASE: Une structure lue sans rien d'autre que des nombres
+Séquence relevée sur EUR/USD en H4 :
+creux 1,0790 · sommet 1,0865 · creux 1,0812 · sommet 1,0898 · creux 1,0844.
+Les creux montent : 1,0790 < 1,0812 < 1,0844. Les sommets montent : 1,0865 < 1,0898.
+La double condition est remplie : **structure haussière**, sans ambiguïté et sans le moindre outil.
+Ce qui suit se lit d'avance : un prochain creux au-dessus de 1,0844 confirme la structure ; un creux en dessous ouvre le doute.
+
+ERR: L'erreur classique
+Forcer la lecture. Sur un graphique sans structure, on trouve toujours deux points qui montent — à condition de bien choisir lesquels. Le test est binaire et il ne se négocie pas : si tu dois hésiter sur les points à retenir, la réponse est « absence de tendance ». L'hésitation est l'information.
+
+KEY: À retenir
+- Trois états possibles : haussier, baissier, aucun. Le troisième est le plus courant.
+- Une tendance exige les sommets *et* les creux dans le même sens.
+- Si la lecture demande un effort d'interprétation, c'est qu'il n'y a rien à lire.
+
+H2: 3.4 Zones de support et de résistance
+
+HOOK:
+Une ligne tracée sur un graphique n'exerce aucun pouvoir sur le marché. Ce qui en exerce, c'est le fait que des milliers de participants observent la même zone et y ont laissé des ordres.
+
+P: Un **support** est une zone située sous le prix où des acheteurs sont déjà intervenus par le passé. Une **résistance** est son symétrique au-dessus. Le mot important est *zone* : le prix ne réagit pas à un chiffre exact mais à une bande de quelques pips, parce que les participants ne placent pas tous leurs ordres au même endroit.
+
+P: Trois critères déterminent la crédibilité d'une zone : le nombre de fois où le prix y a réagi, la netteté du rejet — c'est-à-dire la longueur des mèches laissées — et sa fraîcheur. Une zone qui n'a pas été visitée depuis six mois décrit un marché qui n'existe plus.
+
+P: Une précision qui évite beaucoup de déceptions : une zone n'arrête pas le prix. Elle désigne un endroit où quelque chose est *susceptible* de se produire, ce qui n'a rien à voir avec un endroit où quelque chose *va* se produire. La différence entre ces deux formulations est exactement la différence entre un repère et une prédiction.
+
+CASE: Une zone qui s'use
+EUR/USD en H4, zone comprise entre 1,0800 et 1,0812. Le prix y est descendu trois fois.
+**Premier passage** : mèche basse de 18 pips — rejet franc.
+**Deuxième passage** : mèche de 12 pips.
+**Troisième passage** : mèche de 4 pips.
+La zone tient toujours, mais la réaction s'affaiblit à chaque visite : les vendeurs y rencontrent de moins en moins d'opposition. Une zone testée trop souvent finit par céder, et l'affaiblissement des mèches est le signal avancé de cette usure.
+
+ERR: L'erreur classique
+Tracer dix zones. Un graphique couvert de lignes garantit qu'il y en aura toujours une à proximité du prix, donc toujours une justification disponible au moment où l'envie d'entrer se présente. Deux zones par unité de temps suffisent : la plus proche au-dessus, la plus proche en dessous. Au-delà, tu ne construis plus une lecture, tu fabriques des permissions.
+
+KEY: À retenir
+- Une zone, pas une ligne. Quelques pips de large, jamais un chiffre exact.
+- Sa crédibilité tient au nombre et à la netteté des réactions passées.
+- Deux zones au maximum par unité de temps.
+
+H2: 3.5 Pourquoi aucun indicateur
+
+HOOK:
+Tu viens de lire quatre chapitres consacrés à la lecture de graphique sans croiser une seule moyenne mobile. Ce n'est pas un oubli, et ce n'est pas une position idéologique. C'est une question d'ordre.
+
+P: Un **indicateur technique** est une formule appliquée aux quatre nombres que tu sais désormais lire. Une moyenne mobile calcule une moyenne de clôtures ; un oscillateur compare des amplitudes récentes. Aucun n'accède à une donnée que le graphique ne contient pas. Par construction, un indicateur ne peut donc pas ajouter d'information : il en retire, puisque son rôle est de résumer.
+
+P: Le problème n'est pas l'outil, qui a sa place. Le problème est l'ordre dans lequel il arrive. Posé sur une lecture solide, un indicateur filtre : il élimine des configurations que tu aurais prises à tort. Posé sur rien, il **remplace** la lecture par une couleur, et transforme une question difficile en réponse binaire rassurante.
+
+P: S'y ajoute un effet documenté et systématique : multiplier les outils ne produit pas de meilleures décisions, mais de meilleures justifications. Avec suffisamment d'indicateurs à l'écran, il s'en trouve toujours un pour approuver ce que tu avais envie de faire.
+
+CASE: L'arithmétique de la justification
+Prends trois indicateurs, chacun dans l'un des deux états possibles — favorable à l'achat ou à la vente. Cela produit **huit combinaisons**.
+Une seule est un accord complet à l'achat. Une seule est un accord complet à la vente. Les **six autres** sont des désaccords.
+Autrement dit, dans 75 % des cas, l'outillage ne tranche pas. En pratique, le trader qui souhaite acheter retient les deux indicateurs qui vont dans son sens et qualifie le troisième de « en retard ».
+Les trois outils n'ont rien réglé. Ils ont fourni le matériau de la justification.
+
+ERR: L'erreur classique
+Chercher la combinaison d'indicateurs et de réglages qui aurait correctement lu les six derniers mois. Cette combinaison existe toujours — sur un historique donné, on finit forcément par en trouver une — et elle ne survit presque jamais au mois suivant. Le parcours Intermédiaire revient sur cette question avec la seule chose qui la rende sérieuse : une méthode pour tester au lieu d'espérer.
+
+KEY: À retenir
+- Un indicateur ne crée pas d'information : il en résume, donc il en perd.
+- Le graphique nu d'abord. Les outils ensuite, sur une lecture qui tient déjà.
+- Plus d'outils signifie plus de justifications disponibles, pas plus de justesse.
+
+EX: Lecture à froid
+
+EXF: Compétence évaluée
+Objectifs 3, 4 et 7 : lire un chandelier, justifier le choix d'une unité de temps, identifier une structure et deux zones sur un graphique nu.
+
+EXF: Consigne
+Un graphique EUR/USD en H4 t'est présenté, sans aucun outil.
+**1.** Qualifie la structure — haussière, baissière, ou aucune — et place les deux points qui justifient ta réponse.
+**2.** Trace la zone la plus proche au-dessus du prix, et la plus proche en dessous.
+**3.** Réponds : en H1, verrais-tu la même chose ?
+
+EXF: Ce que la plateforme doit fournir
+- Un graphique H4 nu de 60 bougies sur EUR/USD, présentant une structure haussière lisible avec une correction en partie droite. Aucun indicateur, aucune annotation préexistante.
+- Un outil « marquer un point » limité à deux usages, et un outil « tracer une zone » limité à deux usages, avec largeur ajustable. Ces limites sont volontaires et font partie de l'enseignement : l'outil doit refuser la troisième zone.
+- Une bascule H1 / H4 **verrouillée** jusqu'à la validation des questions 1 et 2. L'utilisateur ne doit pas pouvoir aller chercher en H1 la confirmation de ce qu'il n'a pas su lire en H4.
+- Un QCM à trois options pour la question 3.
+
+EXF: Correction commentée
+**Question 1.** Structure haussière. Les deux points attendus sont les **deux derniers creux**, et non les sommets.
+C'est le point pédagogique central de l'exercice : la majorité des utilisateurs marque les sommets, parce que ce sont eux que l'œil remarque. Or une tendance haussière ne se casse pas par ses sommets, elle se casse par ses creux — et c'est exactement là que se placera le stop calculé au module 2. Marquer les sommets, c'est regarder la partie du graphique qui n'entre dans aucune décision.
+**Question 2.** Une zone au-dessus, une en dessous, avec une tolérance de ±10 pips. Toute tentative d'en tracer une troisième est refusée par l'outil, sans message d'erreur autre que la limite affichée.
+**Question 3.** En H1, la partie droite du graphique paraît neutre, voire baissière. C'est le piège attendu, et la bonne réponse n'est pas « le H1 se trompe ». La bonne réponse est : **le H1 ne répond pas à cette question**. Une correction à l'intérieur d'une tendance haussière ressemble toujours à une tendance baissière quand on la regarde de trop près. Les deux unités ne sont pas en désaccord : elles n'ont pas été interrogées sur le même sujet.

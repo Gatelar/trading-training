@@ -1,0 +1,214 @@
+/* ============ LECTURE D'UN MODULE ============
+   Le PDF distingue ses encadrés par la couleur : bleu pour le cas chiffré,
+   ocre pour la carte. La palette du site est fermée à trois couleurs, alors
+   ici c'est la TYPOGRAPHIE qui code le sens — le cas chiffré passe en
+   JetBrains Mono, qui est déjà la police des chiffres du site. */
+
+.mo-shell {
+    display: grid;
+    grid-template-columns: 246px minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 64px);
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(26px, 4vw, 52px) clamp(20px, 5vw, 56px) clamp(60px, 8vw, 110px);
+}
+
+/* ---------- sommaire ---------- */
+.mo-aside { position: sticky; top: 26px; align-self: start; }
+.mo-aside-code {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: .18em; color: var(--accent-dim);
+}
+.mo-aside h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 21px;
+    margin: 7px 0 16px; line-height: 1.05;
+}
+.mo-aside ol { list-style: none; margin: 0; padding: 0; counter-reset: mo; }
+.mo-aside li { counter-increment: mo; }
+.mo-aside a {
+    display: flex; gap: 10px; padding: 8px 0; text-decoration: none;
+    color: var(--text-muted); font-size: 13px; line-height: 1.35;
+    border-bottom: 1px solid transparent; transition: color .2s ease;
+}
+.mo-aside a::before {
+    content: counter(mo, decimal-leading-zero); flex: none;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    color: var(--text-dim); padding-top: 2px;
+}
+.mo-aside a:hover { color: var(--text); }
+.mo-aside a.is-on { color: var(--accent); }
+.mo-aside a.is-on::before { color: var(--accent-dim); }
+
+/* ---------- en-tête du module ---------- */
+.mo-head { margin-bottom: 34px; }
+.mo-head .kicker {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: .18em; color: var(--accent-dim);
+}
+.mo-head h1 {
+    font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: -.01em;
+    font-size: clamp(27px, 3.4vw, 44px); line-height: 1.02; margin: 10px 0 0;
+}
+.mo-head .objectif {
+    color: var(--text-muted); font-weight: 300; line-height: 1.6;
+    margin: 13px 0 0; max-width: 58ch; font-size: 15px;
+}
+.mo-head .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px;
+    padding-top: 16px; border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted);
+}
+.mo-head .meta a { color: var(--accent); text-decoration: none; }
+.mo-head .meta a:hover { text-decoration: underline; }
+
+/* ---------- corps ---------- */
+.mo-body { max-width: 68ch; }
+.mo-loading { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+.mo-chap { padding-top: 26px; margin-top: 34px; border-top: 1px solid var(--border); }
+.mo-chap:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+.mo-chap > h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: -.005em;
+    font-size: clamp(20px, 2.2vw, 27px); line-height: 1.1; margin: 0 0 4px;
+}
+.mo-chap > h2 .num {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .16em; color: var(--accent-dim); margin-bottom: 6px;
+    font-weight: 400; text-transform: none;
+}
+.mo-chap h3 {
+    font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 15px;
+    letter-spacing: .04em; margin: 26px 0 -4px; color: var(--text);
+}
+
+.mo-body p {
+    color: var(--text); font-weight: 300; line-height: 1.72;
+    font-size: 15.5px; margin: 15px 0 0;
+}
+.mo-body strong { font-weight: 600; color: var(--text); }
+.mo-body em { font-style: italic; color: var(--text-muted); }
+
+/* accroche : filet à gauche, pas d'encadré */
+.mo-hook {
+    border-left: 2px solid var(--border-bright); padding-left: 18px;
+    margin: 20px 0 4px;
+}
+.mo-hook p {
+    font-size: 17px; line-height: 1.55; color: var(--text); font-weight: 300;
+    margin: 0;
+}
+
+.mo-body ul, .mo-body ol { margin: 15px 0 0; padding-left: 20px; }
+.mo-body li {
+    color: var(--text); font-weight: 300; line-height: 1.65;
+    font-size: 15px; margin-top: 7px;
+}
+.mo-body ul { list-style: none; padding-left: 0; }
+/* La puce est posée en absolu, pas en flex : sinon chaque <strong> du texte
+   devient un élément flex et se détache du reste de la phrase. */
+.mo-body ul > li { position: relative; padding-left: 22px; }
+.mo-body ul > li::before {
+    content: "—"; position: absolute; left: 0; top: 0; color: var(--accent-dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.65;
+}
+
+/* ---------- les encadrés ---------- */
+.mo-box {
+    margin: 24px 0 4px; padding: 17px 19px;
+    border-radius: var(--radius-md); border: 1px solid var(--border);
+    background: var(--bg-card);
+}
+.mo-box .label {
+    display: block; margin-bottom: 9px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--text-muted);
+}
+.mo-box p { margin: 6px 0 0; font-size: 14.5px; line-height: 1.62; }
+.mo-box p:first-of-type { margin-top: 0; }
+
+/* cas chiffré : c'est la police qui le distingue, pas une couleur de plus */
+.mo-box--case { border-left: 2px solid var(--border-bright); }
+.mo-box--case p {
+    font-family: 'JetBrains Mono', monospace; font-size: 12.8px; line-height: 1.75;
+    color: var(--text-muted);
+}
+.mo-box--case strong { color: var(--accent); font-weight: 500; }
+.mo-box--case .label { color: var(--accent-dim); }
+
+/* l'erreur classique : le seul endroit où le rouge a un sens */
+.mo-box--err { border-left: 2px solid var(--down); background: rgba(255, 92, 92, .05); }
+.mo-box--err .label { color: var(--down); }
+
+/* à retenir */
+.mo-box--key { border-left: 2px solid var(--accent); background: var(--accent-subtle); }
+.mo-box--key .label { color: var(--accent); }
+.mo-box--key ul { margin-top: 4px; }
+
+/* carte et avertissement */
+.mo-box--card { border-left: 2px solid var(--border-bright); }
+.mo-box--warn { border-left: 2px solid var(--down); background: rgba(255, 92, 92, .07); }
+.mo-box--warn .label { color: var(--down); }
+
+/* ---------- tableau ---------- */
+.mo-table-wrap { overflow-x: auto; margin: 22px 0 4px; }
+.mo-body table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+.mo-body th {
+    text-align: left; padding: 9px 12px 9px 0; color: var(--accent-dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: .12em; text-transform: uppercase; font-weight: 400;
+    border-bottom: 1px solid var(--border-bright); white-space: nowrap;
+}
+.mo-body td {
+    padding: 9px 12px 9px 0; color: var(--text-muted); font-weight: 300;
+    border-bottom: 1px solid var(--border); line-height: 1.5;
+}
+.mo-body td strong { color: var(--text); }
+
+/* ---------- exercice ---------- */
+.mo-ex { margin-top: 46px; padding-top: 28px; border-top: 2px solid var(--border-bright); }
+.mo-ex-kicker {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--accent);
+}
+.mo-ex h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 600;
+    font-size: clamp(19px, 2.1vw, 25px); margin: 9px 0 0; line-height: 1.1;
+}
+.mo-ex-field {
+    font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent-dim); margin: 24px 0 -6px;
+}
+
+/* ---------- navigation entre modules ---------- */
+.mo-next {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+    margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border);
+}
+.mo-next a {
+    display: block; text-decoration: none; max-width: 46%;
+    color: var(--text-muted); font-size: 13px;
+}
+.mo-next a span {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: .16em; color: var(--text-dim); margin-bottom: 5px;
+}
+.mo-next a b {
+    font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 16px;
+    color: var(--text); transition: color .2s ease;
+}
+.mo-next a:hover b { color: var(--accent); }
+.mo-next .suivant { text-align: right; margin-left: auto; }
+
+/* ---------- mur ---------- */
+.mo-wall { max-width: 620px; margin: clamp(40px, 8vw, 90px) auto; text-align: left; }
+
+@media (max-width: 900px) {
+    .mo-shell { grid-template-columns: 1fr; }
+    .mo-aside { position: static; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+    .mo-aside ol { display: flex; flex-wrap: wrap; gap: 0 18px; }
+    .mo-aside a { border: 0; }
+    .mo-next a { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mo-aside a, .mo-next a b { transition: none; }
+}

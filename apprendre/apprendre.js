@@ -245,8 +245,14 @@
                 num.className = 'fo-mod-num';
                 num.textContent = tt('fo.module', 'Module') + ' ' + m.numero;
 
+                // le titre ouvre le module : c'est la seule porte d'entrée
+                // vers la lecture, autant qu'elle soit là où l'oeil se pose
                 var h3 = document.createElement('h3');
-                h3.textContent = m.titre;
+                var lien = document.createElement('a');
+                lien.className = 'fo-mod-lien';
+                lien.href = 'module.html?p=' + p.slug + '&m=' + m.numero;
+                lien.textContent = m.titre;
+                h3.appendChild(lien);
 
                 var obj = document.createElement('p');
                 obj.className = 'fo-mod-obj';

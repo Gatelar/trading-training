@@ -281,3 +281,10 @@
 
 /* module retenu par la recherche */
 .fo-mod.is-trouve { border-color: var(--border-bright); }
+
+
+/* le titre du module ouvre la lecture ; la carte entière reste survolable */
+.fo-mod-lien { color: inherit; text-decoration: none; }
+.fo-mod-lien::after { content: ""; position: absolute; inset: 0; }
+.fo-mod:hover .fo-mod-lien { color: var(--accent); }
+.fo-mod-toggle, .fo-chaps { position: relative; z-index: 1; }

@@ -45,6 +45,17 @@ const I18N_DICT = {
   "fo.searchManyFound": { fr: "modules correspondent", en: "modules match" },
   "home.formationTeaser": { fr: "Chaque niveau a son parcours écrit : 18 modules, 83 chapitres, 4 h de lecture.", en: "Each level has its written track: 18 modules, 83 chapters, 4 h of reading." },
   "home.formationLink": { fr: "Voir la formation →", en: "See the training →" },
+  "mo.back": { fr: "← Retour à la formation", en: "← Back to training" },
+  "mo.loading": { fr: "Chargement…", en: "Loading…" },
+  "mo.case": { fr: "Cas chiffré", en: "Worked example" },
+  "mo.err": { fr: "L'erreur classique", en: "The classic mistake" },
+  "mo.key": { fr: "À retenir", en: "Key points" },
+  "mo.warn": { fr: "Avertissement", en: "Warning" },
+  "mo.exercise": { fr: "Exercice", en: "Exercise" },
+  "mo.prev": { fr: "← Module précédent", en: "← Previous module" },
+  "mo.next": { fr: "Module suivant →", en: "Next module →" },
+  "mo.error": { fr: "Le contenu n'a pas pu être chargé.", en: "The content could not be loaded." },
+  "mo.unknown": { fr: "Ce module est introuvable.", en: "This module was not found." },
   "nav.formation": { fr: "Formation", en: "Training" },
 
   // ---- Accueil ----

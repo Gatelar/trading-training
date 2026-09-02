@@ -1202,3 +1202,18 @@ html[lang="fr"] .lang-en { display: none !important; }
         flex-direction: column;
     }
 }
+
+
+/* ---------- renvoi vers la formation, sous les trois niveaux ---------- */
+.niveaux-formation {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px;
+    margin: 34px auto 0; padding-top: 26px; max-width: 1200px;
+    border-top: 1px solid var(--border);
+    font-size: 14px; color: var(--text-muted); font-weight: 300;
+}
+.niveaux-formation a {
+    color: var(--accent); text-decoration: none;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .06em;
+    border-bottom: 1px solid transparent; transition: border-color .2s ease;
+}
+.niveaux-formation a:hover { border-bottom-color: var(--accent); }

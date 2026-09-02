@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css?v=6">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    <script src="i18n.js?v=4"></script>
+    <script src="i18n.js?v=5"></script>
 </head>
 <body>
 
@@ -23,6 +23,7 @@
         <div class="top-bar-right">
             <div id="langToggle"></div>
             <div class="top-bar-actions" id="topBarActions">
+                <a href="apprendre/apprendre.html" class="btn-secondary top-bar-plan" data-i18n="nav.formation">Formation</a>
                 <a href="authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
             </div>
         </div>
@@ -255,6 +256,11 @@
                 </div>
             </a>
         </div>
+
+        <p class="niveaux-formation reveal">
+            <span data-i18n="home.formationTeaser">Chaque niveau a son parcours écrit : 18 modules, 83 chapitres, 4 h de lecture.</span>
+            <a href="apprendre/apprendre.html" data-i18n="home.formationLink">Voir la formation →</a>
+        </p>
     </section>
 
     <!-- ============ CTA FINAL ============ -->
@@ -283,7 +289,7 @@
     </footer>
 
     <script src="app.js"></script>
-    <script src="auth-state.js?v=3"></script>
+    <script src="auth-state.js?v=4"></script>
     <script src="lang-toggle.js?v=3"></script>
 </body>
 </html>

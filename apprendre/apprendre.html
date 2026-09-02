@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TapeSense — Formation</title>
+    <link rel="stylesheet" href="../style.css?v=6">
+    <link rel="stylesheet" href="apprendre.css?v=1">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../supabase-client.js"></script>
+    <script src="../i18n.js?v=5"></script>
+    <script src="../data/formation-index.js?v=1"></script>
+</head>
+<body>
+
+<header class="top-bar">
+    <a href="../index.html" class="logo-container">
+        <img src="../logott.png" alt="Logo TapeSense" class="logo">
+    </a>
+    <div class="top-bar-right">
+        <div id="langToggle"></div>
+        <div class="top-bar-actions" id="topBarActions" data-prefix="../">
+            <a href="../authentification/authentification.html" class="btn-login" data-i18n="nav.login">Se connecter</a>
+        </div>
+    </div>
+</header>
+
+<!-- ══════════ EN-TÊTE : le ruban, et rien d'autre ══════════ -->
+<section class="fo-hero" id="foHero">
+    <div class="fo-tape" id="foTape" aria-hidden="true"></div>
+    <div class="fo-hero-veil" aria-hidden="true"></div>
+
+    <div class="fo-hero-text">
+        <span class="eyebrow" data-i18n="fo.eyebrow">Formation</span>
+        <h1 data-i18n="fo.title" data-i18n-html>Trois parcours.<br>Aucun ne te dit que tu es prêt.</h1>
+        <p class="fo-lede" data-i18n="fo.lede">Dix-huit modules écrits pour être pratiqués, pas survolés. Le troisième traite de l'argent réel — et ne t'encourage pas à en engager.</p>
+    </div>
+
+    <!-- les trois plans du ruban servent aussi de sommaire -->
+    <nav class="fo-planes" id="foPlanes" aria-label="Parcours"></nav>
+</section>
+
+<!-- ══════════ RECHERCHE ══════════ -->
+<div class="fo-search-rail">
+    <form class="fo-search" id="foSearch" role="search" autocomplete="off">
+        <svg class="fo-search-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle><path d="M16.5 16.5 21 21"></path>
+        </svg>
+        <input type="search" id="foSearchInput" name="q"
+               data-i18n="fo.searchPlaceholder" data-i18n-placeholder
+               placeholder="Chercher un chapitre, une notion, une règle…"
+               aria-label="Chercher dans la formation">
+        <kbd class="fo-search-kbd">/</kbd>
+    </form>
+    <p class="fo-search-note" id="foSearchNote" data-i18n="fo.searchSoon">La recherche arrive. Les critères restent à définir.</p>
+</div>
+
+<!-- ══════════ LES TROIS BANDES ══════════ -->
+<main id="foBands"></main>
+
+<!-- ══════════ PIED ══════════ -->
+<footer class="site-footer">
+    <span data-i18n="home.footerTag">TapeSense</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="../app.js"></script>
+<script src="../auth-state.js?v=4"></script>
+<script src="../lang-toggle.js?v=3"></script>
+<script src="../lib/formation-gate.js?v=1"></script>
+<script src="apprendre.js?v=1"></script>
+</body>
+</html>

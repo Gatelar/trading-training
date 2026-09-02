@@ -1,0 +1,283 @@
+/* ============ FORMATION ============
+   Aucune couleur nouvelle : tout vient des tokens de style.css.
+   Trois bandes qui se densifient en descendant — la mise en page dit
+   elle-même que les niveaux ne s'équivalent pas. */
+
+/* ---------- en-tête ---------- */
+.fo-hero {
+    position: relative;
+    min-height: 78vh;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 clamp(20px, 5vw, 72px) clamp(36px, 5vw, 64px);
+    overflow: hidden;
+    isolation: isolate;
+}
+.fo-tape { position: absolute; inset: 0; z-index: 0; }
+.fo-tape canvas { display: block; }
+
+/* éteint le ruban vers le bas : le texte reste lisible, la bande suivante enchaîne */
+.fo-hero-veil {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg,
+        rgba(16, 20, 15, .72) 0%,
+        rgba(16, 20, 15, .10) 34%,
+        rgba(16, 20, 15, .80) 78%,
+        var(--bg) 100%);
+}
+
+.fo-hero-text { position: relative; z-index: 3; max-width: 34ch; }
+.fo-hero-text h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(30px, 4.6vw, 62px);
+    font-weight: 600; line-height: .98; letter-spacing: -.01em;
+    margin: 14px 0 0;
+}
+.fo-lede {
+    color: var(--text-muted); font-weight: 300; line-height: 1.6;
+    margin-top: 16px; max-width: 46ch; font-size: clamp(13px, 1.05vw, 15px);
+}
+
+/* ---------- les trois plans, à droite ---------- */
+.fo-planes {
+    position: absolute; z-index: 3; right: clamp(20px, 5vw, 72px);
+    top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 2px; text-align: right;
+}
+/* Voile à 0,70 sous le texte, éteint vers la gauche. Un rectangle à bord net
+   se lirait comme une carte posée sur le ruban ; un dégradé ne se voit pas. */
+.fo-planes::before {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    top: -26px; bottom: -26px; right: calc(-1 * clamp(20px, 5vw, 72px)); left: -120px;
+    background: linear-gradient(270deg,
+        rgba(16, 20, 15, .76) 0%,
+        rgba(16, 20, 15, .70) 46%,
+        rgba(16, 20, 15, .48) 76%,
+        rgba(16, 20, 15, 0) 100%);
+}
+.fo-plane {
+    display: block; border-right: 2px solid transparent;
+    padding: 13px 16px 13px 30px; cursor: pointer; opacity: .34;
+    text-decoration: none; color: inherit; background: none; border-left: 0;
+    border-top: 0; border-bottom: 0; font: inherit; text-align: right;
+    transition: border-color .35s ease, opacity .35s ease, transform .35s ease;
+}
+.fo-plane:hover, .fo-plane.is-on, .fo-plane:focus-visible {
+    opacity: 1; border-right-color: var(--accent); transform: translateX(-6px);
+    outline: none;
+}
+.fo-plane .code {
+    display: block; margin-bottom: 3px; color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .16em;
+}
+.fo-plane.is-on .code { color: var(--accent-dim); }
+.fo-plane .name {
+    display: block; font-family: 'Oswald', sans-serif; font-size: 19px; letter-spacing: .01em;
+}
+.fo-plane .meta {
+    display: block; margin-top: 4px; color: var(--text); opacity: .78;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+}
+
+/* ---------- recherche ---------- */
+.fo-search-rail {
+    padding: 0 clamp(20px, 5vw, 72px);
+    margin: -18px 0 clamp(40px, 6vw, 88px);
+    position: relative; z-index: 4;
+}
+.fo-search {
+    display: flex; align-items: center; gap: 12px; max-width: 620px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 0 14px;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+.fo-search:focus-within {
+    border-color: var(--border-bright);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+.fo-search-icon {
+    width: 17px; height: 17px; flex: none; fill: none;
+    stroke: var(--text-muted); stroke-width: 1.8; stroke-linecap: round;
+    transition: stroke .25s ease;
+}
+.fo-search:focus-within .fo-search-icon { stroke: var(--accent); }
+.fo-search input {
+    flex: 1; background: none; border: 0; outline: none; color: var(--text);
+    font-family: 'Inter', sans-serif; font-size: 14px; padding: 15px 0;
+}
+/* contraste vérifié : --text-muted vaut 5,87 sur --bg, il reste lisible au repos */
+.fo-search input::placeholder { color: var(--text-muted); }
+.fo-search-kbd {
+    flex: none; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-muted); border: 1px solid var(--border);
+    border-radius: 5px; padding: 2px 7px;
+}
+.fo-search-note {
+    margin: 9px 2px 0; font-size: 11.5px; color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ---------- les bandes ---------- */
+.fo-band {
+    position: relative;
+    padding: clamp(44px, 6vw, 92px) clamp(20px, 5vw, 72px);
+    border-top: 1px solid var(--border);
+}
+.fo-band-head {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px; align-items: end; margin-bottom: var(--fo-gap);
+}
+.fo-band-code {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .18em; color: var(--accent-dim);
+}
+.fo-band h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: -.01em;
+    font-size: var(--fo-titre); line-height: 1; margin: 10px 0 0;
+}
+.fo-band-accroche {
+    color: var(--text-muted); font-weight: 300; line-height: 1.6;
+    margin: 12px 0 0; max-width: 52ch; font-size: var(--fo-corps);
+}
+.fo-band-stats {
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: var(--text-muted); text-align: right; white-space: nowrap;
+}
+.fo-band-stats b { color: var(--text); font-weight: 500; }
+
+/* la densité est le seul paramètre qui change d'une bande à l'autre */
+.fo-band--1 { --fo-gap: 40px; --fo-titre: clamp(30px, 3.6vw, 50px); --fo-corps: 14.5px;
+              --fo-mod-gap: 20px; --fo-mod-pad: 22px; --fo-cols: 1; }
+.fo-band--2 { --fo-gap: 32px; --fo-titre: clamp(27px, 3.1vw, 43px); --fo-corps: 14px;
+              --fo-mod-gap: 14px; --fo-mod-pad: 18px; --fo-cols: 2; }
+.fo-band--3 { --fo-gap: 26px; --fo-titre: clamp(25px, 2.7vw, 37px); --fo-corps: 13.5px;
+              --fo-mod-gap: 9px;  --fo-mod-pad: 15px; --fo-cols: 3; }
+
+.fo-modules {
+    display: grid; gap: var(--fo-mod-gap);
+    grid-template-columns: repeat(var(--fo-cols), minmax(0, 1fr));
+}
+.fo-mod {
+    position: relative; padding: var(--fo-mod-pad);
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: background .25s ease, border-color .25s ease;
+}
+.fo-mod:hover { background: var(--bg-card-hover); border-color: var(--border-bright); }
+.fo-mod-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: .14em; color: var(--text-muted);
+}
+.fo-mod h3 {
+    font-family: 'Oswald', sans-serif; font-weight: 500; letter-spacing: .01em;
+    font-size: calc(var(--fo-corps) + 4px); line-height: 1.15; margin: 7px 0 0;
+}
+.fo-mod-obj {
+    color: var(--text-muted); font-weight: 300; line-height: 1.55;
+    margin: 8px 0 0; font-size: calc(var(--fo-corps) - 1.5px);
+}
+.fo-mod-meta {
+    display: flex; gap: 14px; margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-muted);
+}
+.fo-band--1 .fo-mod-obj { display: block; }
+.fo-band--3 .fo-mod-obj { display: none; }   /* la plus dense ne garde que l'essentiel */
+
+/* chapitres, dépliés à la demande */
+.fo-chaps {
+    margin: 12px 0 0; padding: 12px 0 0; border-top: 1px solid var(--border);
+    list-style: none; display: none;
+}
+.fo-mod.is-open .fo-chaps { display: block; }
+.fo-chaps li {
+    display: flex; gap: 10px; padding: 4px 0;
+    font-size: calc(var(--fo-corps) - 2px); color: var(--text-muted);
+}
+.fo-chaps b {
+    flex: none; font-family: 'JetBrains Mono', monospace; font-weight: 400;
+    color: var(--accent-dim); font-size: 10.5px; padding-top: 1px;
+}
+.fo-mod-toggle {
+    margin-top: 12px; background: none; border: 0; padding: 0; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .1em;
+    color: var(--accent-dim); text-transform: uppercase;
+}
+.fo-mod-toggle:hover { color: var(--accent); }
+
+/* ---------- état verrouillé ---------- */
+.fo-lock {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    margin-top: var(--fo-gap); padding: 16px 18px;
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background: var(--accent-subtle);
+}
+.fo-lock p { margin: 0; font-size: 13px; color: var(--text-muted); flex: 1 1 320px; line-height: 1.55; }
+.fo-lock b { color: var(--text); font-weight: 500; }
+
+/* ---------- mouvement ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .fo-plane, .fo-mod, .fo-search, .fo-search-icon { transition: none; }
+}
+@media (max-width: 980px) {
+    /* position: relative et non static — sinon le canvas, qui est positionné,
+       repasse devant et les niveaux disparaissent derrière le ruban. */
+    .fo-planes { position: relative; z-index: 3; inset: auto; transform: none;
+                 text-align: left; flex-direction: row; flex-wrap: wrap;
+                 gap: 0 4px; margin-top: 30px; }
+    /* le voile devient un bandeau plein largeur, la version en dégradé latéral
+       n'a plus de sens quand les étiquettes sont sur une ligne */
+    .fo-planes::before {
+        top: -14px; bottom: -14px; left: calc(-1 * clamp(20px, 5vw, 72px));
+        right: calc(-1 * clamp(20px, 5vw, 72px));
+        background: linear-gradient(180deg,
+            rgba(16, 20, 15, 0) 0%,
+            rgba(16, 20, 15, .82) 22%,
+            rgba(16, 20, 15, .82) 78%,
+            rgba(16, 20, 15, 0) 100%);
+    }
+    .fo-plane { text-align: left; padding: 10px 14px 10px 0;
+                border-right: 0; border-bottom: 2px solid transparent; opacity: .6; }
+    .fo-plane:hover, .fo-plane.is-on { transform: none;
+                border-right-color: transparent; border-bottom-color: var(--accent); }
+    .fo-hero { min-height: 0; padding-top: 42px; display: block; }
+    .fo-band--2, .fo-band--3 { --fo-cols: 1; }
+    .fo-band--3 .fo-mod-obj { display: block; }
+}
+@media (max-width: 620px) {
+    /* les statistiques passent sous l'accroche au lieu de la serrer */
+    .fo-band-head { grid-template-columns: 1fr; gap: 14px; }
+    .fo-band-stats { text-align: left; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+}
+
+/* ---------- mur : ce que voit un non-abonné ---------- */
+.fo-wall {
+    max-width: 720px;
+    margin: 0 auto clamp(56px, 8vw, 110px);
+    padding: clamp(28px, 4vw, 46px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+}
+.fo-wall h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 600;
+    font-size: clamp(21px, 2.4vw, 30px); line-height: 1.08; margin: 0;
+}
+.fo-wall p {
+    color: var(--text-muted); font-weight: 300; line-height: 1.6;
+    margin: 14px 0 0; font-size: 14px;
+}
+.fo-wall-stats {
+    display: flex; flex-wrap: wrap; gap: 12px 40px;
+    margin: 26px 0 28px; padding-top: 22px; border-top: 1px solid var(--border);
+}
+.fo-wall-stats b {
+    display: block; font-family: 'Oswald', sans-serif; font-weight: 500;
+    font-size: 26px; color: var(--accent); line-height: 1;
+}
+.fo-wall-stats span {
+    display: block; margin-top: 5px; color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .1em;
+}
+
+/* module retenu par la recherche */
+.fo-mod.is-trouve { border-color: var(--border-bright); }

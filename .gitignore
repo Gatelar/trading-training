@@ -1,3 +1,14 @@
 # Etat local de la CLI Supabase : contient project-ref et une chaine de
 # connexion Postgres avec mot de passe. Ne doit jamais etre versionne.
 supabase/.temp/
+
+# Cles d API locales. Ne doit jamais etre versionne.
+.env
+cle-api.txt
+
+# Images generees, regenerables a la demande.
+assets/genere/
+
+# Cache Python.
+__pycache__/
+*.pyc

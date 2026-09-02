@@ -18,10 +18,12 @@
         const isStaff = role === 'MANAGER' || role === 'SUPER_ADMIN';
         const adminLink = isStaff ? `<a href="${prefix}admin/admin.html">${tt('nav.admin')}</a>` : '';
         container.innerHTML = `
+            <a href="${prefix}apprendre/apprendre.html" class="btn-secondary top-bar-plan">${tt('nav.formation')}</a>
             <a href="${prefix}abonnement/abonnement.html" class="btn-secondary top-bar-plan">${tt('nav.subscription')}</a>
             <div class="account-menu">
                 <button class="btn-login" id="accountBtn"><span id="accountBtnName"></span> <span class="menu-caret">▾</span></button>
                 <div class="account-dropdown" id="accountDropdown">
+                    <a href="${prefix}apprendre/apprendre.html">${tt('nav.formation')}</a>
                     <a href="${prefix}compte/compte.html">${tt('nav.account')}</a>
                     <a href="${prefix}abonnement/abonnement.html">${tt('nav.subscription')}</a>
                     ${adminLink}

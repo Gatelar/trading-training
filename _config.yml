@@ -1,0 +1,35 @@
+# ============ PUBLICATION GITHUB PAGES ============
+# Ce fichier ne sert qu'à une chose : empêcher que le contenu de la formation
+# soit servi en clair. Sans lui, GitHub Pages publie tout le dépôt, et
+# n'importe qui télécharge les trois parcours sans être abonné :
+#
+#   /formation/contenu-experimente/01_module1.txt   ->  12 Ko, le module en texte
+#   /formation/TapeSense_Parcours_Experimente.pdf   ->  265 Ko, le parcours entier
+#   /supabase/sql/009_3_contenu_experimente.sql     ->  83 Ko, tous les chapitres
+#
+# Le contenu payant doit venir de Supabase, sous la RLS de la migration 008,
+# et de nulle part ailleurs.
+#
+# NE PAS ajouter de fichier .nojekyll à la racine : il désactiverait Jekyll,
+# donc ce fichier, donc les exclusions ci-dessous.
+
+exclude:
+  # --- Le contenu de la formation, sous toutes ses formes ---
+  - formation/            # sources .txt des trois parcours, PDF, scripts de rendu
+  - supabase/             # migrations : le 009 contient les 101 chapitres en clair
+
+  # --- Outils de développement, sans intérêt en ligne ---
+  - tools/                # génération d'images, prompts
+  - .claude/
+  - README.md
+
+  # --- Prototypes morts : jamais chargés par une page du site ---
+  - trading-trainer-prototype.jsx
+  - components/
+  - lib/utils.ts
+  - concept-ruban.html
+  - a.html
+
+# Rappel de ce qui reste publié, et c'est voulu :
+#   data/formation-index.js — titres, durées, nombre de chapitres. C'est le
+#   sommaire, il sert d'argument commercial et ne contient aucun texte de cours.

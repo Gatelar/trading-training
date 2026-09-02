@@ -12,3 +12,7 @@ assets/genere/
 # Cache Python.
 __pycache__/
 *.pyc
+
+# PDF des parcours : contenu reserve aux abonnes, il ne doit pas etre servi
+# en statique. Regenerable : python formation/render_formation.py --src ...
+formation/*.pdf

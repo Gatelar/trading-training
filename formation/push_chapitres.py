@@ -60,38 +60,61 @@ def chapitres_du_module(chemin):
     return numero_module, sortie
 
 
-def main():
-    lignes = [
-        "-- ============ CONTENU DES CHAPITRES ============",
-        "-- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.",
-        "-- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py",
-        "-- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.",
-        "",
-        "begin;",
-        "delete from public.formation_chapitres;",
-        "",
-    ]
-    total = 0
-    for slug, dossier in PARCOURS:
-        ordre = 0
-        for f in sorted(glob.glob(os.path.join(RACINE, "formation", dossier, "0[1-6]_*.txt"))):
-            num_mod, chaps = chapitres_du_module(f)
-            for c in chaps:
-                ordre += 1
-                total += 1
-                lignes.append(
-                    "insert into public.formation_chapitres "
-                    "(parcours, module, numero, titre, corps, ordre) values\n"
-                    "  ('%s', %d, '%s', '%s', '%s', %d);"
-                    % (slug, num_mod, echapper(c["numero"]), echapper(c["titre"]),
-                       echapper(c["corps"]), ordre))
-        lignes.append("")
-    lignes += ["commit;", ""]
+ENTETE = [
+    "-- ============ CONTENU DES CHAPITRES ============",
+    "-- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.",
+    "-- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py",
+    "-- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.",
+]
 
-    os.makedirs(os.path.dirname(SORTIE), exist_ok=True)
-    io.open(SORTIE, "w", encoding="utf-8").write("\n".join(lignes))
-    print("%d chapitres ecrits" % total)
-    print("%s  (%.0f Ko)" % (SORTIE, os.path.getsize(SORTIE) / 1024))
+
+def inserts(slug, dossier):
+    out, ordre = [], 0
+    for f in sorted(glob.glob(os.path.join(RACINE, "formation", dossier, "0[1-6]_*.txt"))):
+        num_mod, chaps = chapitres_du_module(f)
+        for c in chaps:
+            ordre += 1
+            out.append(
+                "insert into public.formation_chapitres "
+                "(parcours, module, numero, titre, corps, ordre) values\n"
+                "  ('%s', %d, '%s', '%s', '%s', %d);"
+                % (slug, num_mod, echapper(c["numero"]), echapper(c["titre"]),
+                   echapper(c["corps"]), ordre))
+    return out
+
+
+def ecrire(chemin, lignes):
+    os.makedirs(os.path.dirname(chemin), exist_ok=True)
+    io.open(chemin, "w", encoding="utf-8").write("\n".join(lignes))
+    return os.path.getsize(chemin) / 1024
+
+
+def main():
+    total, complet = 0, list(ENTETE) + ["", "begin;",
+                                        "delete from public.formation_chapitres;", ""]
+    dossier_sql = os.path.join(RACINE, "supabase", "sql")
+
+    for i, (slug, dossier) in enumerate(PARCOURS, 1):
+        lot = inserts(slug, dossier)
+        total += len(lot)
+        complet += lot + [""]
+
+        # Un fichier par parcours : l'editeur SQL du tableau de bord Supabase
+        # digere mal un collage de 250 Ko. Le premier vide la table, les
+        # suivants completent — donc a executer dans l'ordre.
+        part = list(ENTETE) + [
+            "-- Partie %d sur %d : parcours %s." % (i, len(PARCOURS), slug),
+            "-- A executer dans l'ordre : la partie 1 vide la table.",
+            "", "begin;"]
+        if i == 1:
+            part.append("delete from public.formation_chapitres;")
+        part += [""] + lot + ["", "commit;", ""]
+        ko = ecrire(os.path.join(dossier_sql, "009_%d_contenu_%s.sql" % (i, slug)), part)
+        print("  009_%d_contenu_%-14s %3d chapitres  %5.0f Ko" % (i, slug + ".sql", len(lot), ko))
+
+    complet += ["commit;", ""]
+    ko = ecrire(SORTIE, complet)
+    print("\n  009_formation_contenu.sql (complet) %d chapitres  %.0f Ko" % (total, ko))
 
 
 if __name__ == "__main__":

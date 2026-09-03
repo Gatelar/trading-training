@@ -18,20 +18,34 @@
     let directory = [];
 
     function populateSelect() {
+        // L'annuaire est relu après chaque octroi : sans mémoriser la sélection,
+        // le <select> retomberait sur le premier compte de la liste et l'admin
+        // lirait le statut de quelqu'un d'autre.
+        const selectionne = userSelect.value;
         userSelect.innerHTML = directory.map((row) => `<option value="${row.id}">${row.email}</option>`).join('');
+        if (selectionne && directory.some((row) => row.id === selectionne)) {
+            userSelect.value = selectionne;
+        }
         updateStatusLine();
     }
 
+    // Le délai de grâce s'affiche même sans statut d'abonnement : c'est
+    // exactement le cas des jours offerts à un compte qui n'a jamais payé.
+    // Le retour anticipé sur subscription_status vide masquait la seule
+    // information qui confirmait l'octroi.
     function updateStatusLine() {
         const row = directory.find((r) => r.id === userSelect.value);
         if (!row) { statusEl.textContent = ''; return; }
-        if (!row.subscription_status) {
-            statusEl.textContent = tt('admin.subscriptions.noSubscription');
-            return;
+        const bits = [];
+        if (row.subscription_status) {
+            bits.push(row.subscription_status);
+            if (row.is_paused) bits.push(tt('admin.status.paused'));
+        } else {
+            bits.push(tt('admin.subscriptions.noSubscription'));
         }
-        const bits = [row.subscription_status];
-        if (row.is_paused) bits.push(tt('admin.status.paused'));
-        if (row.support_grace_until) bits.push(`${tt('admin.subscriptions.extendUntilLabel')}: ${new Date(row.support_grace_until).toLocaleDateString()}`);
+        if (row.support_grace_until) {
+            bits.push(`${tt('admin.subscriptions.extendUntilLabel')}: ${new Date(row.support_grace_until).toLocaleDateString()}`);
+        }
         statusEl.textContent = bits.join(' · ');
     }
 
@@ -114,6 +128,12 @@
                 window.adminCloseModal();
                 setFeedback(tt('admin.subscriptions.actionSuccess'), false);
                 updateStatusLine();
+
+                // L'octroi crée la ligne subscriptions quand elle n'existait pas,
+                // avec le statut 'inactive' par défaut de la base. Sans cette
+                // relecture, le tableau des clients garderait son badge périmé
+                // jusqu'au prochain rechargement de la page.
+                window.dispatchEvent(new CustomEvent('admin:directory-refresh'));
             } catch (err) {
                 fb.textContent = err.message;
                 fb.className = 'admin-feedback is-error';

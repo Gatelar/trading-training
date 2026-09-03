@@ -101,30 +101,62 @@ Deno.serve(async (req) => {
       // sinon a partir de maintenant, pour que des appels successifs cumulent.
       // upsert (onConflict: user_id) fonctionne meme si l'utilisateur n'a
       // encore aucune ligne "subscriptions".
-      const { data: existingSub } = await supabaseAdmin
+      const { data: existingSub, error: readError } = await supabaseAdmin
         .from("subscriptions")
         .select("support_grace_until")
         .eq("user_id", targetUserId)
         .maybeSingle();
 
+      // Une lecture qui echoue n'est pas une absence de grace : la confondre
+      // avec null ferait repartir le cumul de maintenant, donc raccourcirait
+      // un acces encore en cours au lieu de le prolonger.
+      if (readError) {
+        return new Response(
+          JSON.stringify({ error: `Lecture de l'abonnement impossible : ${readError.message}` }),
+          { status: 500, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
+        );
+      }
+
       const existingGrace = existingSub?.support_grace_until ? new Date(existingSub.support_grace_until) : null;
       const base = existingGrace && existingGrace > new Date() ? existingGrace : new Date();
       const newGrace = new Date(base.getTime() + days * 24 * 60 * 60 * 1000);
 
-      await supabaseAdmin.from("subscriptions").upsert(
-        { user_id: targetUserId, support_grace_until: newGrace.toISOString() },
-        { onConflict: "user_id" }
-      );
+      // On relit la ligne ecrite, et c'est elle qu'on renvoie. Sans ca, une
+      // ecriture refusee (colonne not null ajoutee, contrainte, trigger)
+      // laissait repartir un succes construit en JavaScript : le panel
+      // affichait une date que la base n'avait jamais enregistree, et rien
+      // nulle part ne permettait de s'en apercevoir.
+      const { data: written, error: writeError } = await supabaseAdmin
+        .from("subscriptions")
+        .upsert(
+          {
+            user_id: targetUserId,
+            support_grace_until: newGrace.toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id" }
+        )
+        .select("support_grace_until")
+        .maybeSingle();
+
+      if (writeError || !written) {
+        return new Response(
+          JSON.stringify({
+            error: `Acces offert non enregistre : ${writeError?.message ?? "aucune ligne ecrite"}`,
+          }),
+          { status: 500, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
+        );
+      }
 
       await supabaseAdmin.from("admin_activity_log").insert({
         actor_user_id: user.id,
         action: "subscription_grant_time",
         target_user_id: targetUserId,
-        details: { days, supportGraceUntil: newGrace.toISOString() },
+        details: { days, supportGraceUntil: written.support_grace_until },
       });
 
       return new Response(
-        JSON.stringify({ supportGraceUntil: newGrace.toISOString() }),
+        JSON.stringify({ supportGraceUntil: written.support_grace_until }),
         { headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
       );
     }

@@ -39,6 +39,7 @@
         const info = statusInfo(row);
         if (info.key === 'admin.status.active') return 'active';
         if (info.key === 'admin.status.trialing') return 'trialing';
+        if (info.key === 'admin.status.grace') return 'grace';
         return 'free';
     }
 
@@ -102,4 +103,7 @@
     statusFilter.addEventListener('change', render);
 
     window.addEventListener('admin:ready', load);
+    // Demandé par l'onglet Abonnements après un octroi de jours : la base est la
+    // seule source de vérité pour le statut et le délai de grâce.
+    window.addEventListener('admin:directory-refresh', load);
 })();

@@ -300,10 +300,19 @@
         b.appendChild(p);
     }
 
-    async function charger(etat) {
-        if (etat !== 'actif') { mur(etat); return; }
+    // Ce que la base a donné au dernier chargement : le garder permet de
+    // re-rendre dans l'autre langue sans refaire la requête.
+    var DERNIER = { mur: null, erreur: null, chapitres: null };
 
-        var b = document.getElementById('moBody');
+    async function charger(etat) {
+        DERNIER = { mur: null, erreur: null, chapitres: null };
+
+        if (etat !== 'actif') {
+            DERNIER.mur = etat === 'anonyme' ? 'anonyme' : 'sans-abonnement';
+            rendreCorps();
+            return;
+        }
+
         var res = await supabaseClient
             .from('formation_chapitres')
             .select('numero, titre, corps, ordre')
@@ -312,18 +321,35 @@
             .order('ordre', { ascending: true });
 
         if (res.error) {
-            erreur(tt('mo.error', 'Le contenu n’a pas pu être chargé.') + ' ' + res.error.message);
+            DERNIER.erreur = res.error.message;
+            rendreCorps();
             return;
         }
         if (!res.data || !res.data.length) {
             // La RLS renvoie zéro ligne à un non-abonné : pas une erreur,
             // un refus. On le dit comme tel.
-            mur('sans-abonnement');
+            DERNIER.mur = 'sans-abonnement';
+            rendreCorps();
             return;
         }
 
+        DERNIER.chapitres = res.data;
+        rendreCorps();
+    }
+
+    // Rend le corps à partir de DERNIER, sans rien redemander au réseau.
+    function rendreCorps() {
+        if (DERNIER.mur) { mur(DERNIER.mur); return; }
+        if (DERNIER.erreur) {
+            erreur(tt('mo.error', 'Le contenu n’a pas pu être chargé.') + ' ' + DERNIER.erreur);
+            return;
+        }
+        // Rien reçu encore : le « Chargement… » de la page reste affiché.
+        if (!DERNIER.chapitres) return;
+
+        var b = document.getElementById('moBody');
         b.textContent = '';
-        res.data.forEach(function (c) {
+        DERNIER.chapitres.forEach(function (c) {
             if (c.numero === 'EX') {
                 var ex = document.createElement('section');
                 ex.className = 'mo-ex';
@@ -374,4 +400,17 @@
     }
 
     window.addEventListener('tt:formationaccess', function (e) { charger(e.detail.etat); });
+
+    // Changer de langue ne doit rien redemander au réseau : on re-rend
+    // l'en-tête, le sommaire, la navigation et le corps déjà reçu.
+    window.addEventListener('tt:langchange', function () {
+        if (!PARCOURS || !MODULE) {
+            erreur(tt('mo.unknown', 'Ce module est introuvable.'));
+            return;
+        }
+        enTete();
+        sommaire();
+        suite();
+        rendreCorps();
+    });
 })();

@@ -2,13 +2,15 @@
 -- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
--- Partie 2 sur 3 : parcours intermediaire.
+-- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
+-- Partie 2 sur 4 : parcours intermediaire, langue fr.
 -- A executer dans l'ordre : la partie 1 vide la table.
+-- Requiert la migration 011 : la colonne langue doit exister.
 
 begin;
 
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 1, '1.1', 'Trente trades, et ce qu''ils ne disent pas', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 1, '1.1', 'Trente trades, et ce qu''ils ne disent pas', 'HOOK:
 Tu as trente trades conformes et un R moyen positif. Le Débutant t''avait demandé d''attendre ce moment pour conclure. Il t''a menti par omission : trente trades ne concluent rien. Ils autorisent seulement à commencer à regarder.
 
 P: La raison tient à une asymétrie entre les deux chiffres que tu suis. Le **taux de conformité** dépend de toi seul : trente observations suffisent largement à savoir si tu appliques tes règles. Le **R moyen** dépend du marché, et le marché est bruyant. Sur trente trades, il produit un chiffre, pas une mesure.
@@ -30,8 +32,8 @@ KEY: À retenir
 - Trente trades mesurent ta conformité, pas ton espérance.
 - Erreur-type = écart-type ÷ racine de n. Quadrupler l''échantillon divise l''incertitude par deux.
 - Tant que ton intervalle contient zéro, tu n''as rien démontré.', 1);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 1, '1.2', 'Série ou signal', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 1, '1.2', 'Série ou signal', 'HOOK:
 Six pertes d''affilée. Tu modifies quelque chose. C''est là que la plupart des gens détruisent un système qui fonctionnait — et le calcul dit qu''ils avaient tort de bouger.
 
 P: Le chapitre 6.2 du Débutant te demandait de ne pas changer de méthode sur une série courte. Il te le demandait au nom du bon sens. Tu peux désormais le vérifier au lieu de le croire.
@@ -54,8 +56,8 @@ KEY: À retenir
 - Une série de six pertes sur cent trades est attendue dans plus de huit cas sur dix.
 - Avant d''interpréter un motif, compte combien d''occasions il avait de survenir.
 - Le signal d''alerte n''est jamais une série : c''est un écart qui persiste sur un sous-échantillon entier.', 2);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 1, '1.3', 'Segmenter son journal', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 1, '1.3', 'Segmenter son journal', 'HOOK:
 Ton R moyen global est un mélange. Il additionne tes achats et tes ventes, tes deux actifs, tes matins et tes soirs. Séparer ce mélange une seule fois t''apprend plus que trois mois de trades supplémentaires.
 
 P: La **segmentation** consiste à découper ton échantillon selon un critère unique et à comparer les sous-échantillons obtenus. Les critères utiles à ce niveau sont peu nombreux : le sens de la position, l''actif, le moment de la journée, le régime de marché, la conformité.
@@ -79,8 +81,8 @@ KEY: À retenir
 - Un seul critère de segmentation à la fois. Jamais deux croisés.
 - Un écart se compare à son erreur-type, jamais à zéro.
 - Une segmentation produit une hypothèse. Elle ne produit pas une décision.', 3);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 1, '1.4', 'Ce que tu ne peux pas conclure', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 1, '1.4', 'Ce que tu ne peux pas conclure', 'HOOK:
 Le résultat le plus fréquent d''une bonne analyse de journal est « je ne sais pas encore ». Ce n''est pas un échec de l''analyse. C''est ce qu''elle est censée produire la plupart du temps.
 
 P: Trois conclusions sont possibles au sortir d''une analyse. Un **effet établi** — rare. Une **hypothèse à tester** — fréquent. Et **rien** — le cas le plus courant de tous. Savoir nommer le troisième est la compétence de ce module.
@@ -104,8 +106,8 @@ KEY: À retenir
 - Trois conclusions possibles : effet établi, hypothèse à tester, rien. La troisième domine.
 - Une analyse qui ne conclut pas a fait son travail.
 - Écris l''hypothèse. Ne change pas la règle.', 4);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 1, 'EX', 'Ce que dit vraiment ton relevé', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 1, 'EX', 'Ce que dit vraiment ton relevé', 'EXF: Compétence évaluée
 Objectifs 13 et 14 : déterminer si un écart relève de la variance ou d''un effet réel ; segmenter un journal selon un critère unique et comparer les sous-échantillons.
 
 EXF: Consigne
@@ -124,8 +126,8 @@ EXF: Correction commentée
 **Étape A.** R moyen +0,45 R, erreur-type 0,25 R, intervalle de −0,04 à +0,94 R. Le signe **n''est pas** établi. La majorité des utilisateurs répond que si, parce que le chiffre est positif et que soixante trades paraissent beaucoup. Soixante trades, ce n''est pas beaucoup.
 **Étape B.** Par sens, l''écart vaut 1,5 erreur-type : hypothèse. Par actif, l''écart est faible : rien. Par session, le piège est ailleurs — le sous-échantillon « soir » ne compte que 9 trades, et son erreur-type dépasse 0,6 R. Choisir ce critère et en tirer une conclusion est l''erreur attendue, et l''interface doit afficher l''effectif assez gros pour que l''utilisateur ne puisse pas dire qu''il ne l''avait pas vu.
 **Étape C.** Pour la quasi-totalité des utilisateurs, les seules réponses correctes sont « hypothèse à tester » ou « rien de concluant ». Cocher « effet établi » sur trente à soixante trades est faux, quel que soit le chiffre obtenu — et c''est vrai même si le chiffre est excellent. Surtout s''il est excellent.', 5);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 2, '2.1', 'Une hypothèse, pas une intuition', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 2, '2.1', 'Une hypothèse, pas une intuition', 'HOOK:
 « Les ventes marchent moins bien » n''est pas testable. « Sur EUR/USD en H1, mes ventes ont un R moyen inférieur d''au moins 0,3 R à mes achats » l''est. Trois précisions séparent les deux formulations.
 
 P: Une hypothèse exploitable comporte un **périmètre** — quel actif, quelle unité de temps, dans quelles conditions —, une **grandeur mesurée** — R moyen, taux de réussite, taux de conformité — et un **seuil chiffré**.
@@ -147,8 +149,8 @@ KEY: À retenir
 - Une hypothèse testable = périmètre + grandeur mesurée + seuil chiffré.
 - Sans seuil, tout résultat confirme.
 - L''hypothèse s''écrit avant de regarder les données qui la testeront.', 6);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 2, '2.2', 'L''échantillon', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 2, '2.2', 'L''échantillon', 'HOOK:
 Trente trades, cent trades, cinq cents. Ces nombres circulent sans justification. Voici d''où ils sortent — et surtout pourquoi celui dont tu as besoin dépend entièrement de la taille de l''effet que tu cherches.
 
 P: La logique est celle du chapitre 1.1, retournée. Tu sais que l''incertitude sur une moyenne vaut deux erreurs-types. Pour qu''un effet soit détectable, il faut donc que cet effet dépasse deux erreurs-types.
@@ -173,8 +175,8 @@ KEY: À retenir
 - n > (2 × écart-type ÷ effet)². Retiens la forme, pas la formule.
 - Un effet de 0,3 R demande environ 160 trades, soit un an à ton rythme.
 - En dessous de 0,2 R, rien n''est mesurable à ton échelle. N''en cherche pas.', 7);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 2, '2.3', 'Couper ses données en deux', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 2, '2.3', 'Couper ses données en deux', 'HOOK:
 Tu construis ta règle sur des données. Tu la testes sur les mêmes données. Elle fonctionne. Évidemment qu''elle fonctionne : tu l''as fabriquée pour ça.
 
 P: La parade tient en deux mots. L''**échantillon de construction** est celui où tu cherches, où tu ajustes, où tu as le droit de te tromper autant de fois que tu veux. L''**échantillon de contrôle** est celui où tu vérifies — et tu ne le regardes qu''une fois.
@@ -197,8 +199,8 @@ KEY: À retenir
 - Construction et contrôle. La coupure se fait par le temps, jamais au hasard.
 - Le contrôle se regarde une seule fois. Après, il n''existe plus.
 - L''écart entre les deux mesure exactement ce que ton ajustement a fabriqué.', 8);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 2, '2.4', 'Le surapprentissage', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 2, '2.4', 'Le surapprentissage', 'HOOK:
 Bailey et ses coauteurs ont établi un chiffre qui devrait figurer sur l''écran d''accueil de tous les logiciels de test : avec cinq ans de données, quarante-cinq essais suffisent à produire une stratégie brillante et parfaitement vide.
 
 P: Le **surapprentissage** consiste à ajuster une règle au bruit d''un échantillon plutôt qu''à sa structure. Le mécanisme est mécanique : chaque configuration essayée augmente la probabilité qu''au moins l''une d''elles paraisse excellente par pur hasard.
@@ -224,8 +226,8 @@ KEY: À retenir
 - Le nombre de configurations essayées est une donnée du test. Note-le avant de commencer.
 - Cinq ans de données, quarante-cinq essais : au-delà, le résultat est du bruit habillé.
 - Une configuration abandonnée compte autant qu''une configuration retenue.', 9);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 2, '2.5', 'Le critère d''abandon', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 2, '2.5', 'Le critère d''abandon', 'HOOK:
 Écris ce qui te ferait renoncer, avant de commencer. Sans cette ligne, tu ne testes rien : tu cherches une raison de continuer, et tu finiras par la trouver.
 
 P: Le **critère d''abandon** est la valeur, fixée à l''avance, en dessous de laquelle l''idée est jetée. Sa fonction est de rendre le test symétrique : sans lui, seuls les résultats favorables déclenchent une conclusion, et les autres déclenchent un réajustement.
@@ -248,8 +250,8 @@ KEY: À retenir
 - Écris le seuil, l''échantillon et le nombre d''essais autorisés avant de lancer.
 - Un test sans critère d''abandon n''est pas un test.
 - Note la date d''abandon d''une idée. C''est ce qui t''empêche de la réessayer dans trois semaines.', 10);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 2, 'EX', 'Le test que tu ne truques pas', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 2, 'EX', 'Le test que tu ne truques pas', 'EXF: Compétence évaluée
 Objectifs 15, 16, 17 et 18 : formuler une hypothèse testable, séparer construction et contrôle, compter ses essais, écrire et respecter un critère d''abandon.
 
 EXF: Consigne
@@ -273,8 +275,8 @@ Le contrôle donne un résultat nettement inférieur à la construction. C''est 
 Le point de bascule est la comparaison au hasard. Sur les 200 tirages aléatoires, la distribution des R moyens s''étale typiquement de −0,4 à +0,4 R. Le résultat de l''utilisateur tombe presque toujours à l''intérieur — c''est-à-dire qu''il est indiscernable d''une décision prise au hasard sur les mêmes situations.
 La conclusion attendue est **j''abandonne**. La majorité des utilisateurs écrit pourtant « je garde », pour deux raisons cumulées : le chiffre est positif, et l''exercice a coûté du temps. C''est exactement le biais que le critère d''abandon existe pour neutraliser — et ce critère avait été écrit à l''étape B, par l''utilisateur lui-même, vingt minutes plus tôt.
 Le second enseignement est dans le compteur. La plupart des utilisateurs arrivent à l''étape D avec plus de vingt essais au compteur, sans en avoir eu conscience. La plateforme le leur rappelle à l''écran final, avec la limite de 45 du chapitre 2.4.', 11);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 3, '3.1', 'Ce qu''un indicateur calcule', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 3, '3.1', 'Ce qu''un indicateur calcule', 'HOOK:
 Trois indicateurs, trois formules, trois lignes. Tu vas constater qu''aucune ne contient d''information que tu n''aies pas déjà sous les yeux depuis le module 3 du Débutant.
 
 P: Une **moyenne mobile** de période n est la moyenne des n dernières clôtures. Un **RSI** de période n compare la moyenne des hausses à celle des baisses sur ces n périodes et ramène le rapport sur une échelle de 0 à 100. Un **ATR** — *average true range* — est la moyenne de l''amplitude réelle des n dernières bougies.
@@ -296,8 +298,8 @@ KEY: À retenir
 - Moyenne mobile, RSI et ATR sont des fonctions des quatre mêmes nombres. Aucun n''ajoute d''information.
 - Une moyenne mobile retarde d''environ la moitié de sa période. C''est structurel, pas réglable.
 - Un outil qui mesure et un outil qui prétend prédire ne s''emploient pas de la même façon.', 12);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 3, '3.2', 'Mesurer n''est pas prédire', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 3, '3.2', 'Mesurer n''est pas prédire', 'HOOK:
 L''ATR ne te dira jamais où va le prix. Il te dit de combien il bouge habituellement — et cette information-là, tu peux l''utiliser dès aujourd''hui, sans test préalable.
 
 P: Le chapitre 2.4 du Débutant plaçait le stop sous le dernier creux. Ce placement reste correct et n''est pas révisé. Il ignore simplement une variable : la même distance en pips ne représente pas le même risque d''être touchée selon la volatilité du moment.
@@ -320,8 +322,8 @@ KEY: À retenir
 - L''ATR mesure une distance habituelle. Il ne prédit rien, et c''est exactement sa qualité.
 - Compare toujours ton stop à l''ATR du moment : entre 1 et 3, sinon justifie.
 - Le volume affiché en forex n''est pas un volume de marché. Ne construis aucune règle dessus.', 13);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 3, '3.3', 'Le filtre', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 3, '3.3', 'Le filtre', 'HOOK:
 Un indicateur ne te dit pas quoi prendre. Au mieux, il te dit quoi ne pas prendre — ce qui est déjà considérable, puisque le chapitre 4.5 du Débutant a montré que la sélectivité est une variable de performance à part entière.
 
 P: Un **filtre** est une condition qui retire des trades d''un ensemble déjà constitué par ta lecture. Il ne crée jamais de trade, et cette contrainte n''est pas décorative : elle est ce qui empêche l''outil de redevenir un signal.
@@ -344,8 +346,8 @@ KEY: À retenir
 - Un filtre soustrait. Il n''ajoute jamais un trade.
 - Il s''évalue sur la qualité de ce qu''il retire, pas sur ce qu''il laisse passer.
 - Il coûte des occasions, donc du temps de mesure. Compte ce coût avant de l''adopter.', 14);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 3, '3.4', 'Passer un outil au protocole', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 3, '3.4', 'Passer un outil au protocole', 'HOOK:
 Voici le test complet, du premier au dernier pas, sur un cas concret. Il prend une heure. C''est la seule heure de ce parcours qui te dira si un outil mérite de rester sur ton écran.
 
 P: Le protocole reprend intégralement le module 2, dans l''ordre : hypothèse, échantillon et coupure, essais autorisés, critère d''abandon, construction, contrôle consulté une fois, décision écrite. Sept étapes, aucune facultative.
@@ -368,8 +370,8 @@ KEY: À retenir
 - Sept étapes, dans l''ordre, avant qu''un outil ne reste sur ton écran.
 - La plupart des idées meurent au contrôle. C''est le fonctionnement normal, pas un échec.
 - Note la date d''abandon. C''est ce qui t''empêche de retester la même chose en boucle.', 15);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 3, '3.5', 'Le coût de chaque outil', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 3, '3.5', 'Le coût de chaque outil', 'HOOK:
 Chaque outil que tu ajoutes a un prix, et il ne se paie pas en euros. Il se paie en occasions, en essais et en attention — trois monnaies dont tu disposes en quantité très limitée.
 
 P: **Coût en occasions.** Un filtre qui retire 30 % des trades allonge d''environ 43 % le temps nécessaire pour atteindre un échantillon donné. Le chapitre 2.2 t''a montré ce que représente ce temps.
@@ -392,8 +394,8 @@ KEY: À retenir
 - Trois coûts : occasions, essais, attention. Les trois se chiffrent.
 - Un outil à la fois. Testé, puis gardé ou jeté, avant d''en envisager un autre.
 - Si l''effet d''un ajout demande deux ans à mesurer, tu ne l''ajoutes pas.', 16);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 3, 'EX', 'L''outil que tu jettes', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 3, 'EX', 'L''outil que tu jettes', 'EXF: Compétence évaluée
 Objectifs 19 et 20 : décrire ce que calcule un indicateur et ce qu''il ne peut pas faire ; soumettre un filtre au protocole complet et conclure.
 
 EXF: Consigne
@@ -414,8 +416,8 @@ EXF: Correction commentée
 Les trois filtres sont calibrés pour produire un contrôle situé entre +0,05 et +0,15 R — donc à la limite ou en dessous de tout critère raisonnable, et dans tous les cas indiscernable de zéro avec une erreur-type de 0,25 R sur soixante trades.
 La bonne réponse est **j''abandonne**, pour les trois. Ce n''est pas un piège : c''est le taux de survie réel des idées de ce type, et le chapitre 3.4 l''annonçait explicitement.
 Deux erreurs sont attendues. La première : garder le filtre qui a rendu +0,15 R exactement, en arrondissant mentalement le critère dans le bon sens. La seconde, plus grave : **relancer avec un autre paramètre après un mauvais contrôle**. La plateforme l''autorise délibérément, incrémente le compteur, et le rappelle à l''écran final — à ce stade, le contrôle a été consulté, il n''existe plus, et le second test ne vaut rigoureusement rien. C''est la démonstration la plus efficace du chapitre 2.3, parce que l''utilisateur vient de la produire lui-même.', 17);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 4, '4.1', 'Le trade ne s''arrête pas à l''entrée', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 4, '4.1', 'Le trade ne s''arrête pas à l''entrée', 'HOOK:
 Le Débutant t''a appris à entrer et à poser un stop. Il a délibérément laissé de côté tout ce qui se passe entre les deux. C''est pourtant là que vit une part considérable de ton R moyen.
 
 P: Position ouverte, trois interventions sont possibles : ne rien faire, réduire la position, déplacer le stop. Chacune modifie l''espérance, et aucune n''est neutre — y compris la première, qui est un choix au même titre que les autres.
@@ -439,8 +441,8 @@ KEY: À retenir
 - Trois interventions possibles : rien, réduire, déplacer. Aucune n''est neutre.
 - La règle de gestion s''écrit avant l''entrée, au même titre que le stop et l''objectif.
 - Une gestion se juge sur une série. Un seul trade ne prouve rien, même spectaculaire.', 18);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 4, '4.2', 'La sortie partielle', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 4, '4.2', 'La sortie partielle', 'HOOK:
 Sortir la moitié à mi-chemin. Le geste paraît prudent, il se justifie sans effort, et son effet sur ton R moyen se calcule exactement.
 
 P: La **sortie partielle** consiste à fermer une fraction de la position avant l''objectif. Elle réduit la variance et réduit l''espérance : c''est un échange, pas une amélioration.
@@ -466,8 +468,8 @@ KEY: À retenir
 - La sortie partielle échange de l''espérance contre du confort. C''est un échange, pas un gain.
 - Dans un cas standard, elle coûte 18 % du R moyen et fait passer le taux de trades positifs de 40 % à 55 %.
 - Si tu l''adoptes, applique-la à tous les trades. Sinon tu ne mesures plus rien du tout.', 19);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 4, '4.3', 'Le stop suiveur', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 4, '4.3', 'Le stop suiveur', 'HOOK:
 Kaminski et Lo ont établi un résultat contre-intuitif : sous marche aléatoire, une règle de stop réduit toujours l''espérance ; en présence de momentum, elle en ajoute. Le stop suiveur n''est donc ni bon ni mauvais. Il est conditionnel.
 
 P: Un **stop suiveur** est un stop qui se déplace dans le sens du trade, jamais dans l''autre. À ne pas confondre avec le déplacement d''un stop dans le sens de la perte, que le chapitre 2.4 du Débutant interdit et qui reste interdit sans exception.
@@ -491,8 +493,8 @@ KEY: À retenir
 - Le stop suiveur ajoute en tendance et retire en son absence. Ce n''est pas une préférence, c''est un résultat.
 - Il ne se déplace jamais dans le sens de la perte. La règle du Débutant est inchangée.
 - Sa valeur tient à sa condition d''application, pas à son réglage.', 20);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 4, '4.4', 'La mise à l''équilibre', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 4, '4.4', 'La mise à l''équilibre', 'HOOK:
 Remonter le stop à ton prix d''entrée dès que le trade est en gain. On appelle ça « se mettre à l''abri », ça ne semble rien coûter, et c''est le geste le plus cher de ce module.
 
 P: La **mise à l''équilibre** place un stop exactement à l''endroit où le bruit du marché ira le chercher. La raison est structurelle : ton prix d''entrée est un niveau que le marché vient de traverser. Il n''a aucune signification pour personne d''autre que toi, et le prix y revient très souvent avant de repartir.
@@ -516,8 +518,8 @@ KEY: À retenir
 - Ton prix d''entrée n''a aucune signification structurelle. Y placer un stop, c''est le placer dans le bruit.
 - Dans un cas standard, la mise à l''équilibre coûte environ 25 % de l''espérance.
 - Elle laisse un souvenir favorable et un relevé défavorable. Le relevé a raison.', 21);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 4, '4.5', 'Choisir et tenir', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 4, '4.5', 'Choisir et tenir', 'HOOK:
 Trois gestions, trois chiffres. Aucune n''est la bonne réponse. La seule faute certaine consiste à en changer tous les quinze jours.
 
 P: Alterner les gestions rend l''échantillon ininterprétable. Trois gestions appliquées sur soixante trades produisent trois échantillons de vingt, et le chapitre 2.2 t''a montré qu''à cette taille, rien n''est mesurable — ni séparément, ni ensemble.
@@ -539,8 +541,8 @@ KEY: À retenir
 - Une gestion, appliquée à tous les trades, mesurée sur un échantillon suffisant.
 - Ajoute au journal le plus haut atteint en R : il rend toutes les gestions testables après coup.
 - Alterner les gestions ne produit pas de comparaison. Ça produit du bruit en trois morceaux.', 22);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 4, 'EX', 'Trois gestions, une seule série', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 4, 'EX', 'Trois gestions, une seule série', 'EXF: Compétence évaluée
 Objectifs 21 et 22 : calculer l''effet d''une sortie partielle sur le R moyen ; décider de l''application d''un stop suiveur selon le régime observé.
 
 EXF: Consigne
@@ -561,8 +563,8 @@ La série de 40 est construite en régime **mixte** : 24 trades sans tendance, 1
 Résultats attendus : ne rien faire ≈ +0,58 R · stop suiveur ≈ +0,61 R · mise à l''équilibre ≈ +0,44 R.
 Le classement n''est pas le point de l''exercice. Le point est l''écart entre les deux premières — 0,03 R — face à l''erreur-type sur 40 trades, qui vaut environ **0,30 R**. Aucune des trois gestions n''est distinguable des deux autres sur cet échantillon. La mise à l''équilibre est en retrait, mais même cet écart-là reste dans le bruit.
 La bonne réponse à l''étape D est donc : le régime était mixte, et 40 trades ne suffisent pas à trancher. La majorité des utilisateurs conclut que la gestion arrivée en tête est la meilleure — reproduisant sur la gestion l''erreur exacte que le module 1 avait diagnostiquée sur le R moyen. C''est délibéré : la même faute, commise deux fois à trois modules d''intervalle, est ce qui la rend mémorable.', 23);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 5, '5.1', 'Trois positions à 1 %, un risque à 3 %', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 5, '5.1', 'Trois positions à 1 %, un risque à 3 %', 'HOOK:
 Tu as trois positions ouvertes, chacune calibrée à 1 % selon la formule du chapitre 2.3 du Débutant. Tu crois risquer 1 %. Selon ce que tu as ouvert, tu risques entre 1 % et 3 %.
 
 P: Le calcul de taille du Débutant est exact. Il porte sur un trade isolé, et il devient insuffisant à la seconde où une deuxième position s''ouvre. Ce n''est pas une erreur du parcours précédent : un débutant n''a qu''une position à la fois, et lui parler de portefeuille aurait été prématuré.
@@ -584,8 +586,8 @@ KEY: À retenir
 - La formule de taille du Débutant est exacte pour un trade isolé, insuffisante dès qu''il y en a deux.
 - L''exposition cumulée est ce que tu perds si toutes tes positions touchent leur stop ensemble.
 - Trois positions qui perdent dans le même scénario ne comptent que pour une.', 24);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 5, '5.2', 'La corrélation', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 5, '5.2', 'La corrélation', 'HOOK:
 EUR/USD et GBP/USD évoluent ensemble avec un coefficient couramment mesuré entre +0,81 et +0,95. Ce chiffre suffit à transformer deux trades en un seul — et deux risques de 1 % en un risque de presque 2 %.
 
 P: La **corrélation** est une mesure comprise entre −1 et +1 du degré auquel deux actifs varient ensemble. À +1, ils se déplacent à l''identique. À 0, ils sont indépendants. À −1, ils se déplacent en sens opposé.
@@ -608,8 +610,8 @@ KEY: À retenir
 - Au-dessus de +0,7 : un seul groupe, les risques s''additionnent. Entre +0,3 et +0,7 : le second compte à moitié. En dessous : additionne.
 - Les paires majeures partagent le dollar. Elles sont corrélées par construction.
 - Sens opposés et corrélation élevée : l''exposition diminue. Regarde toujours le sens avant le coefficient.', 25);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 5, '5.3', 'Risque de séance, risque de portefeuille', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 5, '5.3', 'Risque de séance, risque de portefeuille', 'HOOK:
 Les sept règles du Débutant plafonnent ce que tu perds pendant une séance. Aucune ne plafonne ce que tu perds pendant que tu dors avec quatre positions ouvertes.
 
 P: Deux limites, deux objets distincts. Le **risque de séance** — deux pertes et la séance est terminée — plafonne les pertes **séquentielles**, celles qui s''enchaînent dans le temps parce que tu continues à trader.
@@ -631,8 +633,8 @@ KEY: À retenir
 - Risque de séance : les pertes qui s''enchaînent. Risque de portefeuille : celles qui arrivent ensemble.
 - Les sept règles du Débutant ne couvrent que le premier.
 - Ta pratique a changé. Tes règles doivent changer avec elle.', 26);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 5, '5.4', 'La règle d''exposition cumulée', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 5, '5.4', 'La règle d''exposition cumulée', 'HOOK:
 Une règle, un chiffre, vérifiable en cinq secondes avant chaque ordre. C''est la huitième, et elle complète les sept du chapitre 5.4 du Débutant sans en modifier aucune.
 
 CARD: La huitième règle
@@ -658,8 +660,8 @@ KEY: À retenir
 - Exposition cumulée maximale : 2 %. C''est la huitième règle.
 - Applique les trois catégories de corrélation à tout ce qui est ouvert, plus ce que tu envisages.
 - Le calcul se fait avant l''ordre. Il devient la septième question de ta checklist.', 27);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 5, 'EX', 'Ce que tu risques vraiment', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 5, 'EX', 'Ce que tu risques vraiment', 'EXF: Compétence évaluée
 Objectif 23 : calculer l''exposition cumulée d''un ensemble de positions ouvertes en tenant compte de leur corrélation et de leur sens.
 
 EXF: Consigne
@@ -678,8 +680,8 @@ EXF: Correction commentée
 **Étape A.** Le piège est la position vendeuse. Un short GBP/USD au milieu de longs EUR/USD **réduit** l''exposition, alors que la matrice affiche une corrélation élevée entre les deux paires. Corrélation forte plus sens opposés égale exposition réduite. C''est l''erreur la plus fréquente de l''exercice, et elle vient d''appliquer la règle des couleurs sans regarder la colonne « sens ».
 **Étape B.** Le cinquième trade ne passe pas à 1 % et passe à 0,5 %. Répondre « ne passe pas » sans donner la taille est incomplet : la compétence évaluée est précisément de savoir à quelle taille il passerait, parce que c''est cette réponse-là qui te permet de prendre le trade au lieu d''y renoncer.
 **Étape C.** Les trois portefeuilles affichent le même risque par position et présentent des expositions réelles de **1 %, 2 % et 3,5 %**. Le classement est le seul résultat qui compte ici, et son enseignement tient en une phrase : l''affichage de ta plateforme ne répond pas à la question que tu dois te poser.', 28);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 6, '6.1', 'Ce qu''est un système', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 6, '6.1', 'Ce qu''est un système', 'HOOK:
 Un système tient sur une page. Si le tien en demande cinq, ce n''est pas un système : c''est une collection d''exceptions, et tu ne pourras jamais la tester.
 
 P: Un **système** est un ensemble de règles assez restreint pour être appliqué à l''identique sur un échantillon entier, et assez précis pour que deux personnes le lisant prennent la même décision devant le même graphique.
@@ -701,8 +703,8 @@ KEY: À retenir
 - Un système est transmissible : un autre lecteur prend les mêmes décisions que toi.
 - Six éléments : périmètre, entrée, invalidation, gestion, exposition, critère d''abandon.
 - Précision et complexité ne sont pas la même chose. Vise la première.', 29);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 6, '6.2', 'Le document de système', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 6, '6.2', 'Le document de système', 'HOOK:
 Une page, six sections, une date. Ce document est le seul livrable du parcours Intermédiaire, et il vaut davantage que tout ce que tu as lu jusqu''ici.
 
 UL:
@@ -729,8 +731,8 @@ KEY: À retenir
 - Six sections, une page, plus une date de modification et un compteur de trades.
 - Toute modification incrémente la version et remet le compteur à zéro.
 - Sans compteur, ton journal ne mesure aucune version en particulier.', 30);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 6, '6.3', 'La revue mensuelle', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 6, '6.3', 'La revue mensuelle', 'HOOK:
 Une fois par mois, marché fermé, trois questions et une décision. C''est court parce que c''est la seule façon que ce soit fait tous les mois.
 
 P: **Première question : quel est mon taux de conformité ?** En dessous de 90 %, la revue s''arrête ici et la décision porte sur la discipline. Le R moyen n''est même pas examiné — le chapitre 6.3 du Débutant a établi qu''il ne mesure rien tant que la conformité est basse.
@@ -752,8 +754,8 @@ KEY: À retenir
 - Trois questions dans l''ordre : conformité, échantillon, résultat. On ne saute aucune marche.
 - Sous 100 trades depuis la dernière modification, aucune modification. Sans exception.
 - Une revue produit une seule décision écrite, jamais deux.', 31);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 6, '6.4', 'Quand modifier, quand ne rien faire', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 6, '6.4', 'Quand modifier, quand ne rien faire', 'HOOK:
 La question n''est pas de savoir si ton système doit évoluer — il le doit. La question est de savoir quel événement autorise une modification, et il n''y en a que trois.
 
 P: **Premier déclencheur** : le critère d''abandon est atteint sur un échantillon suffisant. C''est le cas prévu, celui pour lequel le critère a été écrit.
@@ -777,8 +779,8 @@ KEY: À retenir
 - Trois déclencheurs légitimes : critère atteint, hypothèse validée, pratique changée.
 - Toute modification remet le compteur à zéro et coûte 33 semaines.
 - Une modification par an est la fréquence maximale compatible avec la mesure.', 32);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 6, '6.5', 'Ce qui t''attend au parcours Expérimenté', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 6, '6.5', 'Ce qui t''attend au parcours Expérimenté', 'HOOK:
 Tu as un système écrit, une méthode pour le tester et une règle pour le réviser. Ce qui manque désormais n''est plus de la connaissance : c''est la confrontation à un environnement qui ne pardonne pas les approximations.
 
 P: Le parcours Expérimenté traite d''abord le **passage en argent réel** : le slippage, la qualité d''exécution, l''écart entre le prix demandé et le prix obtenu, et le protocole de réduction de taille au démarrage. Ce sont des problèmes que la simulation ne peut pas te poser.
@@ -802,8 +804,8 @@ KEY: À retenir
 - Condition d''entrée au niveau Expérimenté : système écrit, 100 trades conformes, R moyen au-dessus du critère.
 - Le passage en réel réintroduit tout le comportement, dans des conditions plus dures.
 - Débutant et Intermédiaire correctement pratiqués : environ un an.', 33);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('intermediaire', 6, 'EX', 'Écris ton système', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('intermediaire', 'fr', 6, 'EX', 'Écris ton système', 'EXF: Compétence évaluée
 Objectif 24 : rédiger un document de système en une page et conduire une revue mensuelle aboutissant à une décision écrite.
 
 EXF: Consigne

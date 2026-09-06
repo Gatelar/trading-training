@@ -45,7 +45,8 @@ def lire_module(chemin):
             mod = {"numero": int(num), "titre": titre, "meta": meta,
                    "minutes": int(re.search(r"\d+", court).group())}
             if corps:
-                objectif = re.sub(r"^Objectif\s*:\s*", "", corps[0]).strip()
+                # 'Objectif :' en francais, 'Goal:' en anglais.
+                objectif = re.sub(r"^(Objectif|Goal)\s*:\s*", "", corps[0]).strip()
         elif tag == "H2":
             m = re.match(r"^(\d+\.\d+)\s+(.*)$", tete.strip())
             if m:
@@ -58,6 +59,45 @@ def lire_module(chemin):
     return mod
 
 
+def lire_accroche(dossier):
+    """Sous-titre de couverture, repris du bloc COUV de l'ouverture."""
+    ouverture = os.path.join(dossier, "00_ouverture.txt")
+    if os.path.exists(ouverture):
+        for tag, tete, corps in blocs(ouverture):
+            if tag == "COUV":
+                return " ".join(corps).strip()
+    return ""
+
+
+def greffer_anglais(modules, dossier_en):
+    """Ajoute les champs _en, depuis l'arbre anglais du parcours s'il existe.
+
+    Les champs manquants restent absents : le site retombe alors sur le
+    francais, plutot que d'afficher un trou.
+    """
+    if not os.path.isdir(dossier_en):
+        return False
+    par_numero = {}
+    for f in sorted(glob.glob(os.path.join(dossier_en, "0[1-6]_*.txt"))):
+        m = lire_module(f)
+        if m:
+            par_numero[m["numero"]] = m
+
+    for mod in modules:
+        en = par_numero.get(mod["numero"])
+        if not en:
+            continue
+        mod["titre_en"] = en["titre"]
+        mod["objectif_en"] = en["objectif"]
+        if en["exercice"]:
+            mod["exercice_en"] = en["exercice"]
+        titres = dict((c["numero"], c["titre"]) for c in en["chapitres"])
+        for c in mod["chapitres"]:
+            if c["numero"] in titres:
+                c["titre_en"] = titres[c["numero"]]
+    return bool(par_numero)
+
+
 def lire_parcours(p):
     dossier = os.path.join(RACINE, "formation", p["src"])
     modules = []
@@ -66,18 +106,12 @@ def lire_parcours(p):
         if m:
             modules.append(m)
 
-    # sous-titre de couverture, repris du bloc COUV de l'ouverture
-    accroche = ""
-    ouverture = os.path.join(dossier, "00_ouverture.txt")
-    if os.path.exists(ouverture):
-        for tag, tete, corps in blocs(ouverture):
-            if tag == "COUV":
-                accroche = " ".join(corps).strip()
-                break
+    dossier_en = dossier + "-en"
+    anglais = greffer_anglais(modules, dossier_en)
 
-    return {
+    data = {
         "slug": p["slug"], "code": p["code"], "page": p["page"],
-        "accroche": accroche,
+        "accroche": lire_accroche(dossier),
         "modules": modules,
         "totalModules": len(modules),
         "totalChapitres": sum(len(m["chapitres"]) for m in modules),
@@ -87,6 +121,12 @@ def lire_parcours(p):
             "debutant": "Debutant", "intermediaire": "Intermediaire",
             "experimente": "Experimente"}[p["slug"]],
     }
+
+    if anglais:
+        data["accroche_en"] = lire_accroche(dossier_en)
+        data["langues"] = ["fr", "en"]
+
+    return data
 
 
 def main():
@@ -102,9 +142,10 @@ def main():
         "const FORMATION_INDEX = " + corps + ";\n")
 
     for p in data:
-        print("%-14s %d modules · %2d chapitres · %d exercices · %d min"
+        print("%-14s %d modules · %2d chapitres · %d exercices · %d min · %s"
               % (p["slug"], p["totalModules"], p["totalChapitres"],
-                 p["totalExercices"], p["minutes"]))
+                 p["totalExercices"], p["minutes"],
+                 " ".join(p.get("langues", ["fr"]))))
     print("\n%s  (%.1f Ko)" % (SORTIE, os.path.getsize(SORTIE) / 1024))
 
 

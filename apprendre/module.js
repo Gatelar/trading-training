@@ -8,10 +8,21 @@
 (function () {
     'use strict';
 
+    function langue() {
+        return typeof ttGetLang === 'function' ? ttGetLang() : 'fr';
+    }
+
     function tt(cle, repli) {
-        var lang = typeof ttGetLang === 'function' ? ttGetLang() : 'fr';
+        var lang = langue();
         var e = typeof I18N_DICT !== 'undefined' ? I18N_DICT[cle] : null;
         return e ? (e[lang] || e.fr) : repli;
+    }
+
+    // Champ de l'index dans la langue courante. Un parcours non traduit n'a
+    // pas de champ _en : il retombe sur le français, jamais sur du vide.
+    function loc(objet, champ) {
+        var l = langue();
+        return (l !== 'fr' && objet[champ + '_' + l]) || objet[champ];
     }
 
     var params = new URLSearchParams(location.search);
@@ -204,11 +215,11 @@
         k.textContent = PARCOURS.code + ' · ' + tt('fo.module', 'Module') + ' ' + MODULE.numero;
 
         var t = document.createElement('h1');
-        t.textContent = MODULE.titre;
+        t.textContent = loc(MODULE, 'titre');
 
         var o = document.createElement('p');
         o.className = 'objectif';
-        o.textContent = MODULE.objectif;
+        o.textContent = loc(MODULE, 'objectif');
 
         var meta = document.createElement('div');
         meta.className = 'meta';
@@ -221,7 +232,7 @@
         });
 
         h.appendChild(k); h.appendChild(t); h.appendChild(o); h.appendChild(meta);
-        document.title = MODULE.titre + ' — TapeSense';
+        document.title = loc(MODULE, 'titre') + ' — TapeSense';
     }
 
     function sommaire() {
@@ -240,7 +251,7 @@
             var li = document.createElement('li');
             var lien = document.createElement('a');
             lien.href = 'module.html?p=' + PARCOURS.slug + '&m=' + m.numero;
-            lien.textContent = m.titre;
+            lien.textContent = loc(m, 'titre');
             if (m.numero === NUM) lien.className = 'is-on';
             li.appendChild(lien);
             ol.appendChild(li);
@@ -262,7 +273,7 @@
             var s = document.createElement('span');
             s.textContent = label;
             var b = document.createElement('b');
-            b.textContent = m.titre;
+            b.textContent = loc(m, 'titre');
             a.appendChild(s); a.appendChild(b);
             return a;
         }
@@ -316,9 +327,11 @@
             return;
         }
 
+        // Toutes les langues arrivent dans la même réponse : basculer n'a
+        // donc rien à redemander au réseau.
         var res = await supabaseClient
             .from('formation_chapitres')
-            .select('numero, titre, corps, ordre')
+            .select('numero, titre, corps, ordre, langue')
             .eq('parcours', SLUG)
             .eq('module', NUM)
             .order('ordre', { ascending: true });
@@ -340,6 +353,15 @@
         rendreCorps();
     }
 
+    // Les chapitres de la langue courante, avec repli sur le français : un
+    // parcours non traduit se lit en français plutôt que pas du tout.
+    function chapitres() {
+        var l = langue();
+        var voulus = DERNIER.chapitres.filter(function (c) { return c.langue === l; });
+        if (voulus.length) return voulus;
+        return DERNIER.chapitres.filter(function (c) { return c.langue === 'fr'; });
+    }
+
     // Rend le corps à partir de DERNIER, sans rien redemander au réseau.
     function rendreCorps() {
         if (DERNIER.mur) { mur(DERNIER.mur); return; }
@@ -352,7 +374,7 @@
 
         var b = document.getElementById('moBody');
         b.textContent = '';
-        DERNIER.chapitres.forEach(function (c) {
+        chapitres().forEach(function (c) {
             if (c.numero === 'EX') {
                 var ex = document.createElement('section');
                 ex.className = 'mo-ex';

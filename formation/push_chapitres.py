@@ -17,6 +17,19 @@ PARCOURS = [("debutant", "contenu"), ("intermediaire", "contenu-inter"),
             ("experimente", "contenu-experimente")]
 
 
+def lots():
+    """(slug, langue, dossier) pour chaque source presente.
+
+    L'anglais d'un parcours vit dans le meme dossier suffixe '-en'. Absent,
+    il n'est simplement pas pousse : rien a configurer pour en ajouter un.
+    """
+    sortie = [(slug, "fr", dossier) for slug, dossier in PARCOURS]
+    for slug, dossier in PARCOURS:
+        if os.path.isdir(os.path.join(RACINE, "formation", dossier + "-en")):
+            sortie.append((slug, "en", dossier + "-en"))
+    return sortie
+
+
 def blocs(chemin):
     brut = io.open(chemin, encoding="utf-8").read()
     for morceau in re.split(r"\n\s*\n", brut):
@@ -65,10 +78,11 @@ ENTETE = [
     "-- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.",
     "-- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py",
     "-- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.",
+    "-- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.",
 ]
 
 
-def inserts(slug, dossier):
+def inserts(slug, langue, dossier):
     out, ordre = [], 0
     for f in sorted(glob.glob(os.path.join(RACINE, "formation", dossier, "0[1-6]_*.txt"))):
         num_mod, chaps = chapitres_du_module(f)
@@ -76,9 +90,9 @@ def inserts(slug, dossier):
             ordre += 1
             out.append(
                 "insert into public.formation_chapitres "
-                "(parcours, module, numero, titre, corps, ordre) values\n"
-                "  ('%s', %d, '%s', '%s', '%s', %d);"
-                % (slug, num_mod, echapper(c["numero"]), echapper(c["titre"]),
+                "(parcours, langue, module, numero, titre, corps, ordre) values\n"
+                "  ('%s', '%s', %d, '%s', '%s', '%s', %d);"
+                % (slug, langue, num_mod, echapper(c["numero"]), echapper(c["titre"]),
                    echapper(c["corps"]), ordre))
     return out
 
@@ -93,24 +107,27 @@ def main():
     total, complet = 0, list(ENTETE) + ["", "begin;",
                                         "delete from public.formation_chapitres;", ""]
     dossier_sql = os.path.join(RACINE, "supabase", "sql")
+    tout = lots()
 
-    for i, (slug, dossier) in enumerate(PARCOURS, 1):
-        lot = inserts(slug, dossier)
+    for i, (slug, langue, dossier) in enumerate(tout, 1):
+        lot = inserts(slug, langue, dossier)
         total += len(lot)
         complet += lot + [""]
 
-        # Un fichier par parcours : l'editeur SQL du tableau de bord Supabase
-        # digere mal un collage de 250 Ko. Le premier vide la table, les
-        # suivants completent — donc a executer dans l'ordre.
+        # Un fichier par parcours et par langue : l'editeur SQL du tableau de
+        # bord Supabase digere mal un collage de 250 Ko. Le premier vide la
+        # table, les suivants completent — donc a executer dans l'ordre.
+        nom = slug if langue == "fr" else "%s_%s" % (slug, langue)
         part = list(ENTETE) + [
-            "-- Partie %d sur %d : parcours %s." % (i, len(PARCOURS), slug),
+            "-- Partie %d sur %d : parcours %s, langue %s." % (i, len(tout), slug, langue),
             "-- A executer dans l'ordre : la partie 1 vide la table.",
+            "-- Requiert la migration 011 : la colonne langue doit exister.",
             "", "begin;"]
         if i == 1:
             part.append("delete from public.formation_chapitres;")
         part += [""] + lot + ["", "commit;", ""]
-        ko = ecrire(os.path.join(dossier_sql, "009_%d_contenu_%s.sql" % (i, slug)), part)
-        print("  009_%d_contenu_%-14s %3d chapitres  %5.0f Ko" % (i, slug + ".sql", len(lot), ko))
+        ko = ecrire(os.path.join(dossier_sql, "009_%d_contenu_%s.sql" % (i, nom)), part)
+        print("  009_%d_contenu_%-17s %3d chapitres  %5.0f Ko" % (i, nom + ".sql", len(lot), ko))
 
     complet += ["commit;", ""]
     ko = ecrire(SORTIE, complet)

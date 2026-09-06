@@ -10,10 +10,21 @@
 
     if (typeof FORMATION_INDEX === 'undefined') return;
 
+    function langue() {
+        return typeof ttGetLang === 'function' ? ttGetLang() : 'fr';
+    }
+
     function tt(cle, repli) {
-        var lang = typeof ttGetLang === 'function' ? ttGetLang() : 'fr';
+        var lang = langue();
         var e = typeof I18N_DICT !== 'undefined' ? I18N_DICT[cle] : null;
         return e ? (e[lang] || e.fr) : repli;
+    }
+
+    // Champ de l'index dans la langue courante. Un parcours non traduit n'a
+    // pas de champ _en : il retombe sur le français, jamais sur du vide.
+    function loc(objet, champ) {
+        var l = langue();
+        return (l !== 'fr' && objet[champ + '_' + l]) || objet[champ];
     }
 
     // ══════════ 1. LE RUBAN ══════════
@@ -214,7 +225,7 @@
             h2.textContent = tt('fo.level.' + p.slug, p.slug);
             var acc = document.createElement('p');
             acc.className = 'fo-band-accroche';
-            acc.textContent = p.accroche;
+            acc.textContent = loc(p, 'accroche');
             gauche.appendChild(code); gauche.appendChild(h2); gauche.appendChild(acc);
 
             var stats = document.createElement('div');
@@ -251,12 +262,12 @@
                 var lien = document.createElement('a');
                 lien.className = 'fo-mod-lien';
                 lien.href = 'module.html?p=' + p.slug + '&m=' + m.numero;
-                lien.textContent = m.titre;
+                lien.textContent = loc(m, 'titre');
                 h3.appendChild(lien);
 
                 var obj = document.createElement('p');
                 obj.className = 'fo-mod-obj';
-                obj.textContent = m.objectif;
+                obj.textContent = loc(m, 'objectif');
 
                 var meta = document.createElement('div');
                 meta.className = 'fo-mod-meta';
@@ -273,7 +284,7 @@
                     var b = document.createElement('b');
                     b.textContent = c.numero;
                     li.appendChild(b);
-                    li.appendChild(document.createTextNode(c.titre));
+                    li.appendChild(document.createTextNode(loc(c, 'titre')));
                     ul.appendChild(li);
                 });
                 if (m.exercice) {
@@ -281,7 +292,7 @@
                     var b = document.createElement('b');
                     b.textContent = 'EX';
                     li.appendChild(b);
-                    li.appendChild(document.createTextNode(m.exercice));
+                    li.appendChild(document.createTextNode(loc(m, 'exercice')));
                     ul.appendChild(li);
                 }
 

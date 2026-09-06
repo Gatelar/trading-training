@@ -2,14 +2,16 @@
 -- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
--- Partie 1 sur 3 : parcours debutant.
+-- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
+-- Partie 1 sur 4 : parcours debutant, langue fr.
 -- A executer dans l'ordre : la partie 1 vide la table.
+-- Requiert la migration 011 : la colonne langue doit exister.
 
 begin;
 delete from public.formation_chapitres;
 
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 1, '1.1', 'Ce que tu achètes réellement', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 1, '1.1', 'Ce que tu achètes réellement', 'HOOK:
 Tu ouvres l''application. EUR/USD affiche 1,0850. Tu cliques sur « Acheter ». Question simple, et presque personne ne sait y répondre le premier jour : tu viens d''acheter quoi, exactement ?
 
 P: Pas des euros. Il n''y a pas de coffre, pas de billets, rien qui t''appartienne. Tu viens de passer un contrat avec ton courtier : si l''euro monte face au dollar, il te doit de l''argent ; s''il baisse, tu lui en dois. C''est tout.
@@ -33,8 +35,8 @@ KEY: À retenir
 - Tu ne détiens rien : tu as un contrat contre ton courtier.
 - Il y a toujours deux prix. Tu achètes au plus haut, tu vends au plus bas.
 - Chaque trade commence en perte. Plus tu en ouvres, plus cette perte s''accumule.', 1);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 1, '1.2', 'Qui est en face de toi', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 1, '1.2', 'Qui est en face de toi', 'HOOK:
 Ton courtier t''offre une plateforme, des graphiques en temps réel, parfois une prime de bienvenue et un accompagnement téléphonique. Personne ne fait ça par philanthropie. Alors : d''où vient l''argent ?
 
 P: De trois endroits. Des commissions prélevées sur chaque transaction. Du spread, cet écart entre les deux prix. Et des frais de report, facturés chaque nuit où tu gardes une position ouverte.
@@ -55,8 +57,8 @@ KEY: À retenir
 - Ton courtier est rémunéré à l''activité, pas à ta performance.
 - Les frais expliquent 14,2 % des pertes. Le reste, ce sont les décisions.
 - Une position gardée longtemps coûte de l''argent chaque nuit, même à l''arrêt.', 2);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 1, '1.3', 'Les chiffres qu''on ne te montre pas', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 1, '1.3', 'Les chiffres qu''on ne te montre pas', 'HOOK:
 Avant d''apprendre quoi que ce soit, tu dois savoir dans quelle statistique tu viens d''entrer. Ce chapitre est le plus désagréable du parcours. C''est aussi le seul que je te demande de ne jamais oublier.
 
 P: En 2014, l''Autorité des marchés financiers a fait ce que personne n''avait fait avant : elle a demandé aux courtiers agréés en France les résultats réels de leurs clients. Pas des courtiers frauduleux — des acteurs légaux, régulés, ceux dont tu vois les publicités.
@@ -78,8 +80,8 @@ KEY: À retenir
 - 89 % des clients français perdent. Le client médian perd 1 843 €.
 - L''expérience seule n''améliore rien : c''est mesuré, pas supposé.
 - Ce parcours ne prétend pas inverser ces chiffres. Il te donne les rares variables sur lesquelles tu peux réellement agir.', 3);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 1, '1.4', 'L''effet de levier', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 1, '1.4', 'L''effet de levier', 'HOOK:
 Un courtier te propose de déposer 1 000 € et de faire bouger 30 000 € sur le marché. Présenté comme ça, ça ressemble à un cadeau. C''est un accélérateur — et un accélérateur fonctionne dans les deux sens.
 
 P: L''**effet de levier** est le rapport entre la taille de ta position et l''argent que tu as réellement déposé. Levier 30 : 1 000 € pilotent 30 000 €. La conséquence est purement arithmétique, il n''y a rien à interpréter : un mouvement de 1 % du marché devient 30 % de ton capital.
@@ -108,8 +110,8 @@ KEY: À retenir
 - Levier ×30 : 1 % de marché devient 30 % de ton capital.
 - Le levier ne modifie pas ta justesse, seulement ta vitesse d''élimination.
 - Tu ne choisis jamais un levier. Tu calcules une taille de position, et le levier en découle.', 4);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 1, '1.5', 'Ce que ce parcours va — et ne va pas — t''apprendre', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 1, '1.5', 'Ce que ce parcours va — et ne va pas — t''apprendre', 'HOOK:
 Tu ne trouveras dans les pages qui suivent ni signal, ni configuration gagnante, ni indicateur réputé secret. Autant te dire tout de suite ce qui va remplacer tout ça.
 
 P: Cinq compétences, et elles sont toutes vérifiables. Calculer ce que tu risques avant de cliquer. Lire un graphique nu. Écrire un scénario qu''un prix précis peut démentir. Refuser un trade et nommer la règle qui l''a refusé. Tenir un journal et en extraire une erreur de processus.
@@ -127,8 +129,8 @@ KEY: À retenir
 - Aucun indicateur dans ce parcours. Le graphique nu d''abord.
 - L''ordre des modules *est* le contenu : risque, puis lecture, puis décision.
 - Tout se passe en simulation. Le seul capital en jeu ici est ton attention.', 5);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 1, 'EX', 'Le coût de départ', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 1, 'EX', 'Le coût de départ', 'EXF: Compétence évaluée
 Objectifs 1 et 2 : expliquer ce qu''est un prix, un spread et un contrat contre le courtier ; calculer l''impact d''un mouvement de 1 % du marché pour trois niveaux de levier.
 
 EXF: Consigne
@@ -151,8 +153,8 @@ EXF: Correction commentée
 - *« Le levier augmente mes chances d''avoir raison. »* — Faux. Il n''agit que sur l''amplitude, jamais sur la probabilité.
 **Partie B.** Levier ×5 : 50 €, soit 5 %. Levier ×30 : 300 €, soit 30 %. Levier ×100 : 1 000 €, soit 100 %.
 La troisième ligne est la seule qui compte vraiment. Beaucoup d''utilisateurs la calculent juste et en tirent la conclusion inverse de la bonne : « il suffit de ne pas se tromper ». Non. Elle signifie qu''une **journée ordinaire** sur EUR/USD — pas un krach, pas une surprise — suffit à effacer le compte. La question n''est pas d''éviter l''erreur. Elle est de survivre à la normale.', 6);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 2, '2.1', 'La seule question qui compte', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 2, '2.1', 'La seule question qui compte', 'HOOK:
 Deux personnes prennent exactement le même trade. Même actif, même seconde, même prix. Six mois plus tard, l''une a doublé son compte et l''autre l''a vidé. Elles avaient la même analyse. Elles n''avaient pas la même taille de position.
 
 P: Le débutant se demande « où ça va ? ». C''est une question sans réponse fiable : personne, nulle part, ne la connaît. Elle occupe pourtant 95 % du contenu que tu trouveras sur le sujet.
@@ -176,8 +178,8 @@ KEY: À retenir
 - La question n''est pas « où ça va », mais « combien je perds si j''ai tort ».
 - Ton risque s''exprime en pourcentage du capital, jamais en taille de position.
 - 1 R = la perte acceptée sur un trade. Compte en R à partir de maintenant.', 7);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 2, '2.2', 'La règle du 1 %', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 2, '2.2', 'La règle du 1 %', 'HOOK:
 Tout le monde répète « ne risque jamais plus de 1 % ». Presque personne n''explique d''où sort ce chiffre. Il sort d''une multiplication que tu peux faire toi-même, et qui prend deux minutes.
 
 P: Point de départ : même une méthode correcte enchaîne des pertes. Ce n''est pas un accident, c''est de l''arithmétique. Avec une chance sur deux de gagner, une série de sept pertes consécutives survient environ une fois tous les 128 trades — soit plusieurs fois par an pour quelqu''un qui trade régulièrement.
@@ -202,8 +204,8 @@ KEY: À retenir
 - Une série de sept pertes est normale. Elle n''indique rien sur ta méthode.
 - À 1 % par trade, dix pertes coûtent 9,6 % du capital. À 10 %, elles en coûtent 65 %.
 - Plus la perte est profonde, plus le gain nécessaire pour l''effacer devient disproportionné.', 8);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 2, '2.3', 'Calculer une taille de position', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 2, '2.3', 'Calculer une taille de position', 'HOOK:
 C''est le seul calcul obligatoire du parcours. Trois nombres entrent, un nombre sort, et ce nombre décide de ta survie plus sûrement que toute l''analyse que tu feras cette année.
 
 P: La formule tient en une ligne :
@@ -228,8 +230,8 @@ KEY: À retenir
 - Taille = (Capital × Risque) ÷ Distance au stop. Aucune exception, aucun actif dispensé.
 - Le stop se choisit avant la taille, jamais l''inverse.
 - Un stop plus large n''augmente pas ton risque : il réduit ta taille.', 9);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 2, '2.4', 'Où placer un stop', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 2, '2.4', 'Où placer un stop', 'HOOK:
 Tu places ton stop à 20 € de perte, parce que 20 €, c''est ce que tu es prêt à perdre aujourd''hui. Le marché ne connaît pas ton budget. Il est juste passé par là, et il t''a sorti au passage.
 
 P: Un **stop-loss** est un ordre automatique qui ferme ta position à un niveau défini à l''avance. Sa fonction n''est pas de limiter une somme : elle est de marquer le point à partir duquel **ton scénario est faux**. Si le prix l''atteint, ta raison d''être dans ce trade a disparu.
@@ -251,8 +253,8 @@ KEY: À retenir
 - Le stop se place là où ton scénario devient faux, pas là où ton budget est atteint.
 - Sous le dernier creux pour un achat, au-dessus du dernier sommet pour une vente.
 - Un stop ne se déplace jamais dans le sens de la perte. Jamais.', 10);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 2, '2.5', 'Le drawdown', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 2, '2.5', 'Le drawdown', 'HOOK:
 Ton compte ne monte pas en ligne droite, et il ne descend pas non plus. Entre les deux, il y a un creux. C''est dans ce creux que la plupart des gens abandonnent, ou font n''importe quoi.
 
 P: Le **drawdown** est l''écart entre le plus haut niveau qu''a atteint ton capital et son niveau actuel, exprimé en pourcentage. C''est une mesure de ce que tu subis, pas de ce que tu produis.
@@ -278,8 +280,8 @@ KEY: À retenir
 - Le drawdown mesure ce que tu subis. Le solde mesure ce que tu montres.
 - −50 % exige +100 % pour revenir. L''asymétrie est le vrai adversaire.
 - Fixe ta limite de drawdown avant d''en avoir besoin, pas pendant.', 11);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 2, 'EX', 'Trois positions, un seul risque', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 2, 'EX', 'Trois positions, un seul risque', 'EXF: Compétence évaluée
 Objectifs 5 et 6 : calculer une taille de position à partir d''un capital, d''un risque de 1 % et d''une distance de stop ; placer un stop à un niveau justifié par la structure du graphique.
 
 EXF: Consigne
@@ -299,8 +301,8 @@ EXF: Correction commentée
 - *Cas 3 — BTC/USD, entrée 62 000, stop 61 000.* 1 000 $. Taille : 0,01 BTC.
 **Partie B.** La bonne réponse est le stop placé **sous le creux**.
 Pourquoi les deux autres sont tentants : le stop serré autorise une position beaucoup plus grosse, ce qui rend le trade plus excitant, et il affiche un chiffre de perte plus petit à l''écran — deux récompenses immédiates pour une décision mauvaise. Le stop très large, lui, donne une sensation de sécurité : on se sent « à l''abri d''être sorti ». En réalité, il fait payer une invalidation déjà consommée. Dans les deux cas, la sensation et le calcul vont dans des directions opposées.', 12);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 3, '3.1', 'Le chandelier japonais', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 3, '3.1', 'Le chandelier japonais', 'HOOK:
 Un chandelier ne dit pas où va le prix. Il dit qui a gagné la dernière bataille, et avec quelle marge. C''est infiniment moins séduisant, et infiniment plus utile.
 
 P: Chaque chandelier résume quatre valeurs et rien d''autre : l''**ouverture**, la **clôture**, le **plus haut** et le **plus bas** atteints pendant la période. Le rectangle central — le corps — représente la distance entre l''ouverture et la clôture. Les traits qui en sortent — les mèches — marquent les extrêmes.
@@ -322,8 +324,8 @@ KEY: À retenir
 - Quatre nombres suffisent : ouverture, plus haut, plus bas, clôture.
 - Une mèche marque un refus. Le prix y est allé et n''y est pas resté.
 - Décris la bougie avant de la nommer. La description est plus riche que l''étiquette.', 13);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 3, '3.2', 'L''unité de temps', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 3, '3.2', 'L''unité de temps', 'HOOK:
 Le même marché, à la même seconde, peut être simultanément en tendance haussière et en tendance baissière. Il suffit de changer d''unité de temps. Ce n''est pas une contradiction du marché, c''est une question d''échelle d''observation.
 
 P: L''**unité de temps** désigne la durée que résume chaque bougie. En H1, une bougie couvre une heure ; en H4, quatre heures. Les données sous-jacentes sont rigoureusement identiques : seul le niveau d''agrégation change.
@@ -344,8 +346,8 @@ KEY: À retenir
 - H4 pose le contexte, H1 situe l''exécution. Deux rôles, jamais deux avis.
 - Une unité plus courte n''ajoute pas d''information : elle ajoute du bruit.
 - Face au doute, monte d''une unité de temps. Jamais l''inverse.', 14);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 3, '3.3', 'Sommets, creux et structure', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 3, '3.3', 'Sommets, creux et structure', 'HOOK:
 Retire tout du graphique. Il te reste des sommets et des creux. C''est suffisant pour répondre à la seule question qui précède toute décision : ce marché va-t-il quelque part, ou tourne-t-il en rond ?
 
 P: Un **sommet** est une bougie dont le plus haut dépasse celui des bougies qui l''entourent. Un **creux** est son symétrique vers le bas. Ce sont des faits observables, sans marge d''interprétation.
@@ -368,8 +370,8 @@ KEY: À retenir
 - Trois états possibles : haussier, baissier, aucun. Le troisième est le plus courant.
 - Une tendance exige les sommets *et* les creux dans le même sens.
 - Si la lecture demande un effort d''interprétation, c''est qu''il n''y a rien à lire.', 15);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 3, '3.4', 'Zones de support et de résistance', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 3, '3.4', 'Zones de support et de résistance', 'HOOK:
 Une ligne tracée sur un graphique n''exerce aucun pouvoir sur le marché. Ce qui en exerce, c''est le fait que des milliers de participants observent la même zone et y ont laissé des ordres.
 
 P: Un **support** est une zone située sous le prix où des acheteurs sont déjà intervenus par le passé. Une **résistance** est son symétrique au-dessus. Le mot important est *zone* : le prix ne réagit pas à un chiffre exact mais à une bande de quelques pips, parce que les participants ne placent pas tous leurs ordres au même endroit.
@@ -392,8 +394,8 @@ KEY: À retenir
 - Une zone, pas une ligne. Quelques pips de large, jamais un chiffre exact.
 - Sa crédibilité tient au nombre et à la netteté des réactions passées.
 - Deux zones au maximum par unité de temps.', 16);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 3, '3.5', 'Pourquoi aucun indicateur', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 3, '3.5', 'Pourquoi aucun indicateur', 'HOOK:
 Tu viens de lire quatre chapitres consacrés à la lecture de graphique sans croiser une seule moyenne mobile. Ce n''est pas un oubli, et ce n''est pas une position idéologique. C''est une question d''ordre.
 
 P: Un **indicateur technique** est une formule appliquée aux quatre nombres que tu sais désormais lire. Une moyenne mobile calcule une moyenne de clôtures ; un oscillateur compare des amplitudes récentes. Aucun n''accède à une donnée que le graphique ne contient pas. Par construction, un indicateur ne peut donc pas ajouter d''information : il en retire, puisque son rôle est de résumer.
@@ -415,8 +417,8 @@ KEY: À retenir
 - Un indicateur ne crée pas d''information : il en résume, donc il en perd.
 - Le graphique nu d''abord. Les outils ensuite, sur une lecture qui tient déjà.
 - Plus d''outils signifie plus de justifications disponibles, pas plus de justesse.', 17);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 3, 'EX', 'Lecture à froid', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 3, 'EX', 'Lecture à froid', 'EXF: Compétence évaluée
 Objectifs 3, 4 et 7 : lire un chandelier, justifier le choix d''une unité de temps, identifier une structure et deux zones sur un graphique nu.
 
 EXF: Consigne
@@ -436,8 +438,8 @@ EXF: Correction commentée
 C''est le point pédagogique central de l''exercice : la majorité des utilisateurs marque les sommets, parce que ce sont eux que l''œil remarque. Or une tendance haussière ne se casse pas par ses sommets, elle se casse par ses creux — et c''est exactement là que se placera le stop calculé au module 2. Marquer les sommets, c''est regarder la partie du graphique qui n''entre dans aucune décision.
 **Question 2.** Une zone au-dessus, une en dessous, avec une tolérance de ±10 pips. Toute tentative d''en tracer une troisième est refusée par l''outil, sans message d''erreur autre que la limite affichée.
 **Question 3.** En H1, la partie droite du graphique paraît neutre, voire baissière. C''est le piège attendu, et la bonne réponse n''est pas « le H1 se trompe ». La bonne réponse est : **le H1 ne répond pas à cette question**. Une correction à l''intérieur d''une tendance haussière ressemble toujours à une tendance baissière quand on la regarde de trop près. Les deux unités ne sont pas en désaccord : elles n''ont pas été interrogées sur le même sujet.', 18);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 4, '4.1', 'Scénario, invalidation, objectif', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 4, '4.1', 'Scénario, invalidation, objectif', 'HOOK:
 « Je pense que ça va monter » n''est pas un scénario. C''est une opinion — et une opinion ne peut pas avoir tort, elle peut seulement être déçue. La différence n''est pas rhétorique : elle décide de ce que tu feras dans deux heures.
 
 P: Un scénario exploitable comporte trois éléments, tous écrits **avant** l''entrée. Ce que tu attends, formulé en termes de prix et non d''intention. Le niveau qui prouvera que tu t''es trompé, appelé **invalidation**. Le niveau où tu prends ton gain, appelé objectif.
@@ -462,8 +464,8 @@ KEY: À retenir
 - Trois lignes écrites avant l''entrée : attente, invalidation, objectif.
 - Un scénario qu''aucun prix ne peut démentir n''est pas un scénario.
 - L''invalidation vient du graphique. L''objectif s''en déduit. Jamais l''inverse.', 19);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 4, '4.2', 'Ratio gain/risque et seuil d''équilibre', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 4, '4.2', 'Ratio gain/risque et seuil d''équilibre', 'HOOK:
 Avoir raison souvent ne suffit pas. On peut gagner sept trades sur dix et terminer l''année en perte. Deux minutes de calcul suffisent à comprendre pourquoi — et à ne plus jamais juger une méthode sur son taux de réussite.
 
 P: Le **ratio gain/risque**, noté R/R, rapporte le gain visé au risque accepté. Un trade qui risque 10 € pour en viser 30 est un trade à 3R. C''est une donnée connue avant l''entrée, contrairement au résultat.
@@ -493,8 +495,8 @@ KEY: À retenir
 - Taux de réussite minimal = 1 ÷ (1 + R/R). Calcule-le avant d''entrer.
 - En dessous de 1,5R, les frais absorbent l''avantage.
 - Un fort taux de réussite avec un R/R faible est une manière lente de perdre.', 20);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 4, '4.3', 'L''espérance', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 4, '4.3', 'L''espérance', 'HOOK:
 Quelqu''un qui a raison 40 % du temps peut gagner de l''argent chaque année. Quelqu''un qui a raison 70 % du temps peut se ruiner. La différence tient dans une multiplication que tu peux poser en trente secondes.
 
 P: L''**espérance** est le gain moyen que produit un trade, tous résultats confondus. Elle réunit les deux variables que les débutants examinent séparément : la fréquence des gains et leur ampleur.
@@ -518,8 +520,8 @@ KEY: À retenir
 - Espérance = (réussite × gain moyen) − (échec × perte moyenne), en R.
 - Une espérance faiblement positive et répétée bat une méthode brillante et rare.
 - Ne juge jamais un système sur son taux de réussite seul.', 21);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 4, '4.4', 'La checklist pré-ordre', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 4, '4.4', 'La checklist pré-ordre', 'HOOK:
 Le moment où tu es le moins capable de juger est précisément celui où ton doigt est sur le bouton. La checklist existe pour que la décision soit déjà prise quand ce moment arrive.
 
 P: Son rôle n''est pas d''améliorer tes trades : c''est d''éliminer ceux que tu prends par réflexe. Elle déplace la décision d''un instant chargé émotionnellement vers un moment froid, où les critères ont été fixés sans enjeu.
@@ -548,8 +550,8 @@ KEY: À retenir
 - Six questions, toutes obligatoires. Une seule manquante annule le trade.
 - Elle se remplit avant le clic, pas pendant.
 - Elle ne se modifie qu''en dehors des heures de marché.', 22);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 4, '4.5', 'Le trade que tu ne prends pas', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 4, '4.5', 'Le trade que tu ne prends pas', 'HOOK:
 L''étude de l''AMF a mesuré une relation d''une simplicité désarmante sur 14 799 clients : plus ils passaient d''ordres, plus ils perdaient. Pas de seuil, pas d''exception, pas de catégorie épargnée. Une droite.
 
 P: Ne pas entrer est une décision, pas une absence de décision. Elle a un coût nul et une valeur mesurable : elle évite l''espérance négative des configurations moyennes, qui constituent l''écrasante majorité de ce que tu verras.
@@ -571,8 +573,8 @@ KEY: À retenir
 - Ne pas entrer est une décision, et elle se consigne comme les autres.
 - Trois à quatre configurations conformes par semaine, pas quatorze.
 - Une séance sans trade n''est pas une séance perdue.', 23);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 4, 'EX', 'Le plan avant le clic', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 4, 'EX', 'Le plan avant le clic', 'EXF: Compétence évaluée
 Objectifs 8, 9 et 10 : calculer un ratio gain/risque, rédiger un plan de trade complet, refuser un trade en nommant la règle qui le refuse.
 
 EXF: Consigne
@@ -593,8 +595,8 @@ Le R/R attendu est d''au moins 1,5 et la taille doit correspondre à un risque d
 La difficulté est ailleurs, et elle est délibérée. Le compteur est à 3, donc la sixième question de la checklist échoue, donc **le trade doit être refusé** — même si les cinq autres réponses sont excellentes, et elles le sont.
 La majorité des utilisateurs valide quand même. Non par distraction, mais parce que le trade est objectivement bon et que la règle paraît accessoire à cet instant précis. C''est exactement la situation que la règle existe pour couvrir : elle n''a aucune utilité face aux mauvais trades, que tu écarterais de toute façon. Elle n''a d''utilité que face aux beaux.
 Un bon plan de trade refusé reste un bon plan de trade. Il se consigne au journal avec la mention « non pris », et il compte dans tes statistiques du module 6.', 24);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 5, '5.1', 'L''effet de disposition', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 5, '5.1', 'L''effet de disposition', 'HOOK:
 Tu clôtures un gain de 12 € avec soulagement. Tu laisses courir une perte de 40 € en te disant que ça va revenir. Ce comportement porte un nom, il a été mesuré sur dix mille comptes, et il te concerne — la question n''est pas de savoir si tu y échapperas, mais quelle règle tu lui opposeras.
 
 P: L''**effet de disposition** désigne la tendance à réaliser ses gains trop tôt et à différer la réalisation de ses pertes. Terrance Odean l''a établi en 1998 sur dix mille comptes de courtage : à situation comparable, les investisseurs vendent leurs positions gagnantes une fois et demie à deux fois plus souvent que leurs positions perdantes.
@@ -617,8 +619,8 @@ KEY: À retenir
 - Tu couperas tes gains et tu laisseras courir tes pertes. C''est documenté, pas hypothétique.
 - L''effet de disposition dégrade le R/R sans jamais toucher à l''analyse.
 - Seule contre-mesure fiable : objectif et stop fixés avant l''entrée, non renégociés après.', 25);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 5, '5.2', 'Surtrading et excès de confiance', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 5, '5.2', 'Surtrading et excès de confiance', 'HOOK:
 Sur 14 799 clients français, ceux qui passaient le plus d''ordres perdaient le plus. Sur 66 465 ménages américains, les plus actifs ont sous-performé le marché de plus de six points par an. Deux échantillons, deux continents, deux décennies d''écart, la même droite.
 
 P: Barber et Odean ont examiné les comptes de 66 465 ménages américains entre 1991 et 1996. Le ménage moyen obtient 16,4 % par an ; le quintile le plus actif, 11,4 % ; le marché, 17,9 %. L''écart ne s''explique pas par de mauvais choix de titres : il s''explique par le **volume d''activité lui-même**.
@@ -640,8 +642,8 @@ KEY: À retenir
 - L''activité elle-même est corrélée à la perte. Le nombre d''ordres est une variable de risque.
 - Une bonne série n''est pas une preuve de compétence : c''est un échantillon court.
 - Fixe ta taille et ton nombre de trades hors séance, quand rien n''est en jeu.', 26);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 5, '5.3', 'La spirale après une perte', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 5, '5.3', 'La spirale après une perte', 'HOOK:
 La perte de 10 € ne t''a rien fait. Ce qui t''a fait quelque chose, c''est de constater que tu t''étais trompé. Les vingt minutes qui suivent sont, statistiquement, les plus coûteuses de ta journée.
 
 P: La séquence est stéréotypée et se déroule en quatre temps. La perte. Le besoin de réparation immédiate. L''entrée hors checklist, sur une configuration qui n''aurait pas passé le filtre une heure plus tôt. Et l''augmentation de taille, destinée à « compenser en un seul trade ».
@@ -664,8 +666,8 @@ KEY: À retenir
 - Après une perte, la contre-mesure est un délai, pas un effort de volonté : aucun ordre pendant trente minutes.
 - Deux pertes dans la séance : la séance est terminée. Sans exception, sans évaluation.
 - Si tu comptes en euros et non en R, tu n''es déjà plus en train de trader.', 27);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 5, '5.4', 'Des règles qui tiennent', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 5, '5.4', 'Des règles qui tiennent', 'HOOK:
 Toutes les règles de ce module partagent une propriété : elles s''écrivent quand le marché est fermé et s''appliquent sans jugement quand il est ouvert. Une règle qui exige une évaluation au moment de s''appliquer n''est pas une règle — c''est une intention.
 
 P: Le principe est simple à formuler et difficile à tenir : externaliser la décision hors de l''état émotionnel qui la fausse. Les règles qui survivent à l''usage partagent trois propriétés — elles sont **numériques**, **vérifiables sans interprétation**, et **posées à l''avance**.
@@ -694,8 +696,8 @@ KEY: À retenir
 - Une règle utile est numérique, vérifiable, et écrite marché fermé.
 - Sept règles suffisent. Au-delà, aucune n''est réellement appliquée.
 - Attache à chaque règle une conséquence écrite, même minime.', 28);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 5, 'EX', 'Quatre situations, une règle', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 5, 'EX', 'Quatre situations, une règle', 'EXF: Compétence évaluée
 Objectifs 10 et 12 : refuser un trade en nommant la règle qui le refuse ; reconnaître un biais documenté dans une situation concrète.
 
 EXF: Consigne
@@ -712,8 +714,8 @@ EXF: Correction commentée
 - **Situation 2** — configuration conforme, deux pertes déjà encaissées dans la séance. Réponse : *je ne prends pas*. Règle : deux pertes, séance terminée. La configuration proposée est objectivement la meilleure des quatre, et c''est entièrement délibéré : une règle qui ne résiste pas à une belle configuration ne sert à rien, puisque c''est le seul moment où elle est mise à l''épreuve.
 - **Situation 3** — configuration moyenne, ratio gain/risque à 1,2, aucun trade pris. Réponse : *je ne prends pas*. Règle : ratio minimum de 1,5. Le piège ici est l''absence de tout autre obstacle : rien dans le bandeau d''état ne s''oppose au trade, et il faut aller chercher le seul chiffre qui le disqualifie.
 - **Situation 4** — configuration conforme, dernier trade perdant il y a huit minutes. Réponse : *je ne prends pas*. Règle : trente minutes d''attente. Rien n''interdit ce trade sur le fond ; seul le délai le bloque. C''est la situation que les utilisateurs valident le plus souvent, et c''est précisément la deuxième marche de la séquence décrite au chapitre 5.3.', 29);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 6, '6.1', 'Le journal de trading', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 6, '6.1', 'Le journal de trading', 'HOOK:
 L''AMF a isolé 1 881 clients actifs quatre années de suite. Leur taux de perte n''a pas baissé : 87,56 %. L''expérience seule n''enseigne rien — c''est mesuré. Ce qui enseigne, c''est la trace écrite qu''on en garde.
 
 P: La mémoire ne suffit pas, et pour une raison précise : elle est reconstruite. Tu te souviens de la conclusion, pas de la décision — et la conclusion contamine rétrospectivement le souvenir de la décision. Un trade gagnant devient une bonne idée ; un trade perdant, une erreur. Dans les deux cas, la reconstruction efface l''information utile.
@@ -743,8 +745,8 @@ KEY: À retenir
 - Sept champs, dont un seul porte sur le processus. C''est celui qui compte.
 - Le scénario s''écrit avant l''entrée, sinon il est réécrit par le résultat.
 - Tout se note en R. Jamais en euros.', 30);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 6, '6.2', 'Décision et résultat', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 6, '6.2', 'Décision et résultat', 'HOOK:
 Quatre trades, quatre issues. Deux méritent une correction, deux n''en méritent aucune — et ce ne sont pas les deux perdants.
 
 P: Croiser la conformité de la décision et la nature du résultat produit quatre cas, dont deux sont contre-intuitifs. C''est cette grille, et non le solde du compte, qui indique sur quoi travailler le mois suivant.
@@ -770,8 +772,8 @@ KEY: À retenir
 - Conforme et perdant : aucune correction. C''est le coût de l''activité.
 - Non conforme et gagnant : à traiter en priorité, malgré le résultat.
 - Ne change jamais de méthode sur la base d''une série courte.', 31);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 6, '6.3', 'Lire ses propres statistiques', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 6, '6.3', 'Lire ses propres statistiques', 'HOOK:
 Après trente trades, ton journal contient plus d''information sur toi que n''importe quelle formation. Encore faut-il savoir quels trois nombres en extraire, et dans quel ordre les lire.
 
 P: Trois nombres, et pas un de plus.
@@ -797,8 +799,8 @@ KEY: À retenir
 - Trois mesures : conformité, R moyen sur les conformes, série de pertes maximale.
 - Rien n''est interprétable sous 30 trades conformes.
 - Corrige la conformité avant de toucher à la méthode.', 32);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 6, '6.4', 'La pratique délibérée', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 6, '6.4', 'La pratique délibérée', 'HOOK:
 Répéter mille trades n''apprend rien : c''est mesuré, sur quatre ans en France et sur trois années de cohortes au Brésil. Ce qui apprend, c''est une répétition avec correction immédiate et objectif étroit. La différence entre les deux tient dans l''organisation, pas dans le talent.
 
 P: La **pratique délibérée** désigne la répétition d''une tâche précise, située à la limite de sa compétence actuelle, assortie d''un retour immédiat portant sur l''exécution et non sur le résultat. C''est le seul régime d''entraînement dont l''efficacité soit établie dans les disciplines complexes.
@@ -827,8 +829,8 @@ KEY: À retenir
 - Une compétence par session, vingt répétitions minimum, correction immédiate.
 - Le simulateur sert à densifier les répétitions, pas à simuler des gains.
 - Temps d''écran et entraînement ne sont pas la même chose.', 33);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 6, '6.5', 'Après ce parcours', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 6, '6.5', 'Après ce parcours', 'HOOK:
 Tu sais maintenant calculer un risque, lire une structure et refuser un trade. Il te manque la seule chose qu''aucun texte ne pourra jamais te donner : un échantillon.
 
 P: **Étape 1 — trente trades conformes en simulation, sans objectif de gain.** Le seul chiffre suivi est le taux de conformité. Le résultat n''a aucune importance à ce stade, et le regarder serait même contre-productif.
@@ -850,8 +852,8 @@ KEY: À retenir
 - Trente trades conformes avant toute conclusion, cent avant toute confiance.
 - Le seul chiffre à suivre au départ est le taux de conformité.
 - Dix semaines au minimum. Le calcul est arithmétique, pas moral.', 34);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('debutant', 6, 'EX', 'Le trade que tu ne corrigeras pas', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('debutant', 'fr', 6, 'EX', 'Le trade que tu ne corrigeras pas', 'EXF: Compétence évaluée
 Objectifs 11 et 12 : consigner un trade et en extraire une erreur de processus, distincte d''un mauvais résultat.
 
 EXF: Consigne

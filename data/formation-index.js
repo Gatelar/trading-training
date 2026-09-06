@@ -20,26 +20,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "1.1",
-            "titre": "Ce que tu achètes réellement"
+            "titre": "Ce que tu achètes réellement",
+            "titre_en": "What you are actually buying"
           },
           {
             "numero": "1.2",
-            "titre": "Qui est en face de toi"
+            "titre": "Qui est en face de toi",
+            "titre_en": "Who is on the other side"
           },
           {
             "numero": "1.3",
-            "titre": "Les chiffres qu'on ne te montre pas"
+            "titre": "Les chiffres qu'on ne te montre pas",
+            "titre_en": "The numbers nobody shows you"
           },
           {
             "numero": "1.4",
-            "titre": "L'effet de levier"
+            "titre": "L'effet de levier",
+            "titre_en": "Leverage"
           },
           {
             "numero": "1.5",
-            "titre": "Ce que ce parcours va — et ne va pas — t'apprendre"
+            "titre": "Ce que ce parcours va — et ne va pas — t'apprendre",
+            "titre_en": "What this track will — and will not — teach you"
           }
         ],
-        "exercice": "Le coût de départ"
+        "exercice": "Le coût de départ",
+        "titre_en": "Before you touch a chart",
+        "objectif_en": "understand what you are playing at, and why the vast majority of people lose at it.",
+        "exercice_en": "The cost of starting"
       },
       {
         "numero": 2,
@@ -50,26 +58,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "2.1",
-            "titre": "La seule question qui compte"
+            "titre": "La seule question qui compte",
+            "titre_en": "The only question that matters"
           },
           {
             "numero": "2.2",
-            "titre": "La règle du 1 %"
+            "titre": "La règle du 1 %",
+            "titre_en": "The 1% rule"
           },
           {
             "numero": "2.3",
-            "titre": "Calculer une taille de position"
+            "titre": "Calculer une taille de position",
+            "titre_en": "Calculating a position size"
           },
           {
             "numero": "2.4",
-            "titre": "Où placer un stop"
+            "titre": "Où placer un stop",
+            "titre_en": "Where to put a stop"
           },
           {
             "numero": "2.5",
-            "titre": "Le drawdown"
+            "titre": "Le drawdown",
+            "titre_en": "Drawdown"
           }
         ],
-        "exercice": "Trois positions, un seul risque"
+        "exercice": "Trois positions, un seul risque",
+        "titre_en": "Risk before method",
+        "objectif_en": "know how much you are risking before you even know what to buy.",
+        "exercice_en": "Three positions, one risk"
       },
       {
         "numero": 3,
@@ -80,26 +96,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "3.1",
-            "titre": "Le chandelier japonais"
+            "titre": "Le chandelier japonais",
+            "titre_en": "The candlestick"
           },
           {
             "numero": "3.2",
-            "titre": "L'unité de temps"
+            "titre": "L'unité de temps",
+            "titre_en": "The timeframe"
           },
           {
             "numero": "3.3",
-            "titre": "Sommets, creux et structure"
+            "titre": "Sommets, creux et structure",
+            "titre_en": "Highs, lows and structure"
           },
           {
             "numero": "3.4",
-            "titre": "Zones de support et de résistance"
+            "titre": "Zones de support et de résistance",
+            "titre_en": "Support and resistance zones"
           },
           {
             "numero": "3.5",
-            "titre": "Pourquoi aucun indicateur"
+            "titre": "Pourquoi aucun indicateur",
+            "titre_en": "Why no indicators"
           }
         ],
-        "exercice": "Lecture à froid"
+        "exercice": "Lecture à froid",
+        "titre_en": "Reading a bare chart",
+        "objectif_en": "pull information out of a chart without the help of a single indicator.",
+        "exercice_en": "Cold reading"
       },
       {
         "numero": 4,
@@ -110,26 +134,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "4.1",
-            "titre": "Scénario, invalidation, objectif"
+            "titre": "Scénario, invalidation, objectif",
+            "titre_en": "Scenario, invalidation, target"
           },
           {
             "numero": "4.2",
-            "titre": "Ratio gain/risque et seuil d'équilibre"
+            "titre": "Ratio gain/risque et seuil d'équilibre",
+            "titre_en": "Reward-to-risk and the break-even hit rate"
           },
           {
             "numero": "4.3",
-            "titre": "L'espérance"
+            "titre": "L'espérance",
+            "titre_en": "Expectancy"
           },
           {
             "numero": "4.4",
-            "titre": "La checklist pré-ordre"
+            "titre": "La checklist pré-ordre",
+            "titre_en": "The pre-order checklist"
           },
           {
             "numero": "4.5",
-            "titre": "Le trade que tu ne prends pas"
+            "titre": "Le trade que tu ne prends pas",
+            "titre_en": "The trade you do not take"
           }
         ],
-        "exercice": "Le plan avant le clic"
+        "exercice": "Le plan avant le clic",
+        "titre_en": "Building a decision",
+        "objectif_en": "turn a chart reading into a scenario with numbers, and that scenario into a decision.",
+        "exercice_en": "The plan before the click"
       },
       {
         "numero": 5,
@@ -140,22 +172,29 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "5.1",
-            "titre": "L'effet de disposition"
+            "titre": "L'effet de disposition",
+            "titre_en": "The disposition effect"
           },
           {
             "numero": "5.2",
-            "titre": "Surtrading et excès de confiance"
+            "titre": "Surtrading et excès de confiance",
+            "titre_en": "Overtrading and overconfidence"
           },
           {
             "numero": "5.3",
-            "titre": "La spirale après une perte"
+            "titre": "La spirale après une perte",
+            "titre_en": "The spiral after a loss"
           },
           {
             "numero": "5.4",
-            "titre": "Des règles qui tiennent"
+            "titre": "Des règles qui tiennent",
+            "titre_en": "Rules that hold"
           }
         ],
-        "exercice": "Quatre situations, une règle"
+        "exercice": "Quatre situations, une règle",
+        "titre_en": "What goes on in your head",
+        "objectif_en": "recognise three documented behaviours in your own statement, and set a rule against each of them.",
+        "exercice_en": "Four situations, one rule"
       },
       {
         "numero": 6,
@@ -166,33 +205,46 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "6.1",
-            "titre": "Le journal de trading"
+            "titre": "Le journal de trading",
+            "titre_en": "The trading journal"
           },
           {
             "numero": "6.2",
-            "titre": "Décision et résultat"
+            "titre": "Décision et résultat",
+            "titre_en": "Decision and outcome"
           },
           {
             "numero": "6.3",
-            "titre": "Lire ses propres statistiques"
+            "titre": "Lire ses propres statistiques",
+            "titre_en": "Reading your own statistics"
           },
           {
             "numero": "6.4",
-            "titre": "La pratique délibérée"
+            "titre": "La pratique délibérée",
+            "titre_en": "Deliberate practice"
           },
           {
             "numero": "6.5",
-            "titre": "Après ce parcours"
+            "titre": "Après ce parcours",
+            "titre_en": "After this track"
           }
         ],
-        "exercice": "Le trade que tu ne corrigeras pas"
+        "exercice": "Le trade que tu ne corrigeras pas",
+        "titre_en": "Working like a professional",
+        "objectif_en": "install the correction loop without which experience teaches nothing.",
+        "exercice_en": "The trade you will not correct"
       }
     ],
     "totalModules": 6,
     "totalChapitres": 29,
     "totalExercices": 6,
     "minutes": 71,
-    "pdf": "formation/TapeSense_Parcours_Debutant.pdf"
+    "pdf": "formation/TapeSense_Parcours_Debutant.pdf",
+    "accroche_en": "Learning to read a market. And not to ruin yourself learning it.",
+    "langues": [
+      "fr",
+      "en"
+    ]
   },
   {
     "slug": "intermediaire",

@@ -2,13 +2,15 @@
 -- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
--- Partie 3 sur 3 : parcours experimente.
+-- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
+-- Partie 3 sur 4 : parcours experimente, langue fr.
 -- A executer dans l'ordre : la partie 1 vide la table.
+-- Requiert la migration 011 : la colonne langue doit exister.
 
 begin;
 
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 1, '1.1', 'Ce que la simulation ne t''a jamais facturé', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 1, '1.1', 'Ce que la simulation ne t''a jamais facturé', 'HOOK:
 Ton relevé affiche 140 trades conformes et un R moyen positif. Il repose sur une hypothèse que tu n''as jamais eu l''occasion de vérifier : que le prix demandé et le prix obtenu sont le même nombre.
 
 P: Le **slippage**, ou **écart d''exécution**, est la différence entre le prix auquel tu demandes une transaction et celui auquel elle est conclue. En simulation il vaut zéro par construction. En réel il vaut ce qu''il vaut, et personne ne peut te dire à l''avance combien.
@@ -32,8 +34,8 @@ KEY: À retenir
 - L''écart d''exécution se compte en fraction de ton stop, jamais en pourcentage du prix.
 - Stop à 20 pips : un pip vaut 0,05 R. Dix pips valent la moitié d''un trade perdant.
 - Un stop est un ordre au marché muni d''un déclencheur, pas une garantie de prix.', 1);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 1, '1.2', 'Le mesurer au lieu de le croire', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 1, '1.2', 'Le mesurer au lieu de le croire', 'HOOK:
 Tu ne trouveras le chiffre ni ici ni ailleurs : les seules mesures publiques viennent d''entreprises qui vendent leur exécution. La tienne s''obtient en vingt-cinq trades, et c''est la seule qui te concerne.
 
 P: Ajoute au journal un **neuvième champ** : l''écart d''exécution en R, signé. Il se calcule à partir de deux prix que ta plateforme connaît déjà — celui que tu as demandé, celui que tu as obtenu — et il se note comme tout le reste, en R.
@@ -56,8 +58,8 @@ KEY: À retenir
 - Neuvième champ du journal : l''écart d''exécution en R, signé, entrée et sortie séparées.
 - La moyenne entre dans l''espérance. La médiane te dit seulement à quoi ressemble un jour ordinaire.
 - Vingt-cinq trades suffisent pour ce chiffre-là. Le chapitre 2.1 explique pourquoi si peu.', 2);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 1, '1.3', 'Les moments où le prix saute', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 1, '1.3', 'Les moments où le prix saute', 'HOOK:
 Un stop te protège d''un mouvement. Il ne te protège pas d''un trou. La différence entre les deux se rencontre une ou deux fois par an, et elle se règle en une seconde.
 
 P: Un **saut de cotation** est un intervalle de prix dans lequel aucune transaction n''a eu lieu : le marché cote 40 000, puis 38 800, et rien entre les deux. Ton stop placé au milieu n''a pas été ignoré. Il a été déclenché, puis exécuté au premier prix disponible.
@@ -80,8 +82,8 @@ KEY: À retenir
 - Un saut de cotation traverse ton stop sans s''y arrêter. Ta perte n''est plus bornée par ton calcul.
 - Trois familles : annonces programmées, ouverture hebdomadaire, heures creuses en crypto.
 - L''exposition cumulée et le saut sont deux risques distincts. Aucune règle ne couvre les deux.', 3);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 1, '1.4', 'Ton espérance, recalculée', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 1, '1.4', 'Ton espérance, recalculée', 'HOOK:
 Tu as un R moyen, un critère d''abandon et 140 trades. Il te manque une soustraction — et elle suffit à faire passer ton système du bon au mauvais côté de ton propre critère.
 
 P: L''**espérance nette** est ton espérance brute diminuée du coût d''exécution moyen que tu as mesuré. C''est elle, et elle seule, qui décrit ce que ton système produirait en réel. La brute décrit ce qu''il a produit dans un environnement qui ne facture rien.
@@ -102,8 +104,8 @@ KEY: À retenir
 - Espérance nette = espérance brute − coût d''exécution mesuré. C''est elle qui se compare au critère.
 - Réécris le critère sur la nette, incrémente la version, remets le compteur à zéro.
 - Un résultat net contenu dans son erreur-type ne conclut rien, dans aucun sens.', 4);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 1, 'EX', 'Le même trade, deux prix', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 1, 'EX', 'Le même trade, deux prix', 'EXF: Compétence évaluée
 Objectifs 25 et 26 : mesurer l''écart entre prix demandé et prix obtenu et l''exprimer en R ; recalculer l''espérance d''un système en y intégrant ce coût, et conclure.
 
 EXF: Consigne
@@ -121,8 +123,8 @@ EXF: Ce que la plateforme doit fournir
 EXF: Correction commentée
 **Étape B.** Le piège est le trade à écart extrême. Beaucoup d''utilisateurs le traitent comme une anomalie et le retirent du calcul — geste naturel, et faux : c''est un coût réellement subi, et l''écarter revient à mesurer son exécution en excluant les moments où elle est mauvaise. Le relevé est construit pour que ce seul trade porte environ la moitié du coût total.
 **Étape C.** La bonne réponse est **« ne conclut rien »**. L''espérance nette calculée est positive, mais inférieure à son erreur-type. « Passe le critère » est tentant parce que le nombre est du bon côté ; « ne passe pas » l''est tout autant chez les lecteurs prudents. Les deux commettent la même faute — conclure sur un chiffre plus petit que son incertitude — et le module 1 de l''Intermédiaire l''interdit depuis 100 trades.', 5);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 2, '2.1', 'La première taille n''est pas la taille du système', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 2, '2.1', 'La première taille n''est pas la taille du système', 'HOOK:
 Ton document de système dit 1 %. Il a été rédigé par quelqu''un qui n''avait jamais payé un écart d''exécution de sa vie. Ce quelqu''un, c''est toi, il y a quelques mois.
 
 P: Un **palier de démarrage** est une période initiale pendant laquelle le risque par trade est volontairement inférieur à celui de ton système écrit, dans le seul but de mesurer ton coût d''exécution. Il a une question, une seule, et il se termine quand elle a sa réponse.
@@ -145,8 +147,8 @@ KEY: À retenir
 - Le palier mesure l''exécution : 25 trades. Il ne mesure pas l''espérance : il en faudrait 1 600.
 - Un palier a une question unique et une fin définie par cette question.
 - Ce qui met fin à un palier est une mesure obtenue, jamais une impression acquise.', 6);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 2, '2.2', 'Le palier de démarrage', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 2, '2.2', 'Le palier de démarrage', 'HOOK:
 Quatre lignes, écrites avant le premier ordre, datées. Écrites après, ce ne sont plus des règles : ce sont des commentaires sur ce qui s''est passé.
 
 P: Quatre éléments, et pas un de plus. **La fraction** du risque de ton système. **Le nombre de trades** minimal. **La grandeur mesurée**, nommée précisément. **Ce qui met fin au palier**, formulé de façon qu''un tiers puisse constater la fin sans t''interroger.
@@ -167,8 +169,8 @@ KEY: À retenir
 - Quatre lignes : fraction, nombre de trades, grandeur mesurée, fin du palier.
 - Le pire cas du palier doit rester sous ton seuil de drawdown. C''est ce qui valide la fraction.
 - La fin du palier n''autorise rien. Elle date un recalcul.', 7);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 2, '2.3', 'Ce que ce palier mesure, et ce qu''il ne mesure pas', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 2, '2.3', 'Ce que ce palier mesure, et ce qu''il ne mesure pas', 'HOOK:
 Vingt-cinq trades te donneront un chiffre solide et une illusion. Le chiffre, c''est ton coût d''exécution. L''illusion, c''est absolument tout le reste.
 
 P: Ce qu''il mesure vraiment : l''écart d''exécution à l''entrée, l''écart au stop, le comportement du spread à l''heure où tu opères, et une chose qu''aucune documentation ne te dira — si ta plateforme fait bien ce que tu crois qu''elle fait quand le prix se déplace vite.
@@ -189,8 +191,8 @@ KEY: À retenir
 - Le palier mesure l''exécution, le spread à ton heure, et le comportement réel de ta plateforme.
 - Il ne mesure ni ton espérance, ni l''usure du système, ni ton comportement sous perte.
 - Un palier calme n''est pas une information. C''est le résultat attendu par construction.', 8);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 2, '2.4', 'Rester en simulation est une réponse', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 2, '2.4', 'Rester en simulation est une réponse', 'HOOK:
 Sur les trois issues possibles d''un palier, deux s''écrivent « pas maintenant ». Ce n''est pas un travers de prudence pédagogique : c''est ce que produit l''arithmétique des deux chapitres précédents.
 
 P: Une décision de ne rien faire est une décision. Elle se date, elle s''écrit, elle nomme la mesure sur laquelle elle s''appuie, et elle dit ce qui devrait changer pour être revue. Sans ces quatre éléments, ce n''est pas une décision : c''est un report, et un report se rediscute chaque semaine.
@@ -209,8 +211,8 @@ KEY: À retenir
 - Deux issues sur trois, à ce stade, s''écrivent « pas maintenant ». C''est la proportion normale.
 - Une mesure favorable lève une objection parmi plusieurs. Elle n''en lève aucune autre.
 - Rester en simulation se décide, se date et s''écrit comme n''importe quelle autre décision.', 9);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 2, 'EX', 'Le palier que tu écris', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 2, 'EX', 'Le palier que tu écris', 'EXF: Compétence évaluée
 Objectif 27 : définir un palier de démarrage en taille réduite et écrire le critère de mesure — non de résultat — qui autorise sa réévaluation.
 
 EXF: Consigne
@@ -227,8 +229,8 @@ EXF: Ce que la plateforme doit fournir
 EXF: Correction commentée
 **Étape B.** La fraction la plus grande échoue, et beaucoup d''utilisateurs la valident quand même parce que le montant en euros reste modeste. C''est le raisonnement inversé du chapitre 2.2 : le test ne porte pas sur ce qui semble supportable, il porte sur un seuil déjà écrit. La seconde partie de la question — le nombre de trades qui rendrait la fraction acceptable — est celle qui distingue une règle comprise d''une règle apprise.
 **Étape C.** Le relevé B est celui qui piège. Son espérance nette est franchement positive et le lecteur veut conclure ; son erreur-type est deux fois plus grande que lui. Répondre « la mesure ne s''y oppose pas » sur le relevé B est l''erreur la plus fréquente de tout ce module, et c''est exactement l''erreur du chapitre 1.1 de l''Intermédiaire, commise un an plus tard sur un enjeu réel.', 10);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 3, '3.1', 'Ce que 1 R devient quand c''est de l''argent', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 3, '3.1', 'Ce que 1 R devient quand c''est de l''argent', 'HOOK:
 Dix euros ne sont rien. Sauf que ce ne sont plus dix euros : c''est la première preuve datée que ta méthode peut te coûter quelque chose, et elle porte ton nom.
 
 P: En simulation, R était une unité de compte. Elle rendait les résultats comparables et les émotions absentes — c''était même son objet, et le Débutant l''a introduite pour ça au chapitre 2.1. En réel, la même unité devient un signal, et un signal se traite, qu''on le veuille ou non.
@@ -249,8 +251,8 @@ KEY: À retenir
 - Cinq pertes consécutives : 5 % de chances à chaque trade, 98 % sur une année complète.
 - La série est prévue par ton système. Ce qui ne l''était pas, c''est son effet sur toi.
 - Une série de cette longueur ne dit rien du système. L''Intermédiaire l''a chiffré au module 1.', 11);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 3, '3.2', 'Les trois biais ne reviennent pas séparément', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 3, '3.2', 'Les trois biais ne reviennent pas séparément', 'HOOK:
 Les trois biais arrivent ensemble, dans la même séance, et dans un ordre qui a sa logique. Tu les avais rencontrés un par un dans ton journal, à froid, plusieurs jours après les faits.
 
 P: La chaîne commence toujours pareil. Une perte conforme, sans faute. Le trade suivant part bien, et tu le refermes tôt pour « sécuriser » — c''est l''effet de disposition, et il paraît raisonnable puisqu''il transforme un gain flottant en gain acquis.
@@ -275,8 +277,8 @@ KEY: À retenir
 - Les trois biais du module 5 du Débutant forment une chaîne, pas une liste.
 - Chaque maillon se présente comme la réparation raisonnable du précédent.
 - La règle qui coupe la chaîne est la plus ancienne : deux pertes, la séance est terminée.', 12);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 3, '3.3', 'Le protocole d''arrêt : seuil, durée, reprise', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 3, '3.3', 'Le protocole d''arrêt : seuil, durée, reprise', 'HOOK:
 Tes huit règles ferment une séance. Aucune ne ferme un compte. Tant que tout se déroulait en simulation, cette différence n''avait aucune conséquence.
 
 P: Un **protocole d''arrêt** est une règle écrite à l''avance qui suspend toute activité réelle au-delà d''un seuil, pour une durée fixée, avec une condition de reprise qu''un tiers pourrait vérifier. Trois éléments, tous chiffrés ou datés, aucun laissé à l''appréciation du moment. C''est la **neuvième règle**, et elle complète la septième sans la remplacer : celle-ci dit quand s''arrêter, la neuvième dit pour combien de temps et à quelle condition on reprend.
@@ -297,8 +299,8 @@ KEY: À retenir
 - Trois éléments : un seuil, une durée, une condition de reprise vérifiable de l''extérieur.
 - Un seuil à moins d''un écart-type de la dispersion se déclenche sur du bruit.
 - La condition de reprise est un acte daté, jamais un état ressenti.', 13);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 3, '3.4', 'Les règles que le réel oblige à réécrire', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 3, '3.4', 'Les règles que le réel oblige à réécrire', 'HOOK:
 Sur les huit règles que tu appliques, six passent en réel sans changer d''une virgule. Les deux autres cessent de protéger sans prévenir — et ce ne sont pas celles auxquelles on pense.
 
 TABLE: 56,44 || Règle | Ce que le réel en fait
@@ -327,8 +329,8 @@ KEY: À retenir
 - Six règles sur huit passent en réel sans modification. N''y touche pas.
 - La règle des trente minutes change de déclencheur : le montant perdu, pas le fait de perdre.
 - La septième règle est complétée par la neuvième : seuil, durée, condition de reprise.', 14);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 3, 'EX', 'Ta séance, dégradée', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 3, 'EX', 'Ta séance, dégradée', 'EXF: Compétence évaluée
 Objectifs 28 et 29 : reconnaître dans son propre journal un comportement du module 5 du Débutant réapparu sous contrainte réelle et nommer la règle qui le couvre ; rédiger un protocole d''arrêt et l''appliquer à une séance dégradée.
 
 EXF: Consigne
@@ -347,8 +349,8 @@ EXF: Correction commentée
 **Étape A.** La séance est construite pour que la sortie anticipée du trade 2 soit **récompensée immédiatement** : le prix revient effectivement contre la position juste après. C''est le piège central, et il est honnête — l''effet de disposition n''est pas une bêtise, c''est un geste qui a raison souvent et qui coûte quand même. Le relevé montre ensuite le prix atteignant l''objectif quarante minutes plus tard.
 **Étape B.** L''erreur fréquente est de nommer la spirale, qui est spectaculaire et arrive en dernier. Le comportement présent **dans les deux journaux** est l''effet de disposition, beaucoup plus discret, et c''est le premier maillon. Un utilisateur qui ne trouve rien dans son journal Débutant a probablement cherché une faute grave là où il fallait chercher un écart de 0,3 R répété quinze fois.
 **Étape C.** Un seuil sous 6 R déclenche l''arrêt dès la séance de l''étape A, ce qui semble être le bon résultat et ne l''est pas : le calculateur montre qu''à 1,2 R d''écart-type, ce seuil se déclencherait aussi sur une série ordinaire. La bonne réponse arrête la séance par la règle des deux pertes, pas par le protocole. Le protocole, lui, ne sert jamais dans une seule séance.', 15);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 4, '4.1', 'Quand trois catégories ne suffisent plus', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 4, '4.1', 'Quand trois catégories ne suffisent plus', 'HOOK:
 Avec trois positions, tu as trois paires à examiner et tu le fais de tête en cinq secondes. Avec sept, tu en as vingt et une — et tu ne le fais plus du tout.
 
 P: Le chapitre 5.2 de l''Intermédiaire t''a donné trois catégories de corrélation et une règle qui s''applique à une paire. Elle était suffisante parce qu''à deux ou trois positions, le nombre de paires reste inférieur au nombre de positions. Cette propriété s''arrête à trois, et elle s''arrête brutalement.
@@ -370,8 +372,8 @@ KEY: À retenir
 - Le nombre de paires croît comme le carré. Sept positions : vingt et une paires.
 - Dans un groupe qui perd ensemble, les risques s''additionnent. Sans exception.
 - Entre groupes seulement, les trois catégories de corrélation s''appliquent.', 16);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 4, '4.2', 'La corrélation bouge quand le marché bouge', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 4, '4.2', 'La corrélation bouge quand le marché bouge', 'HOOK:
 Tu as classé tes deux positions à +0,15 au moment de passer les ordres. Elles ont touché leur stop dans la même heure. Les deux affirmations sont exactes, et c''est ça le problème.
 
 P: Une corrélation se mesure sur une fenêtre. Elle décrit ce qui s''est passé dans cette fenêtre, et elle décrira le régime précédent pendant toute la durée du suivant. Ce n''est pas un défaut de la mesure : c''est ce qu''une moyenne fait.
@@ -391,8 +393,8 @@ KEY: À retenir
 - Une corrélation décrit le passé de la fenêtre sur laquelle elle est calculée.
 - L''illiquidité arrive simultanément sur les paires. La diversification manque quand elle servirait.
 - Groupe par scénario partagé. Un scénario ne se réévalue pas pendant que le marché bouge.', 17);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 4, '4.3', 'Refuser une position : l''ordre de priorité', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 4, '4.3', 'Refuser une position : l''ordre de priorité', 'HOOK:
 Ta limite est atteinte et un très bon trade se présente. La question n''est pas de savoir s''il est bon : il l''est. C''est de savoir lequel des cinq tu refuses — et cette réponse doit exister avant la question.
 
 P: Trois règles de refus sont défendables, et il faut en choisir une seule. **Le dernier arrivé** : le trade qui se présente. **Le moins bon ratio** : celui dont le gain visé rapporté au risque est le plus faible. **Le plus gros groupe** : celui qui viendrait grossir le bloc le plus exposé.
@@ -413,8 +415,8 @@ KEY: À retenir
 - L''ordre de refus s''écrit avant, jamais au moment où un bon trade se présente.
 - Par défaut : le dernier arrivé. C''est le seul refus qui ne rouvre rien.
 - Réduire une position ouverte pour en loger une autre, c''est renégocier. La règle 6 l''interdit.', 18);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 4, '4.4', 'Le plafond que tu ne peux plus vérifier à l''œil', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 4, '4.4', 'Le plafond que tu ne peux plus vérifier à l''œil', 'HOOK:
 « Vérifiable en cinq secondes avant chaque ordre », disait l''Intermédiaire de sa huitième règle. C''était vrai à trois positions. La règle ne dit nulle part ce qu''il faut faire quand ce n''est plus vrai.
 
 P: Un **tableau d''exposition** est une feuille tenue par toi, hors de la plateforme, avec une ligne par position ouverte et quatre colonnes : actif, sens, risque en pourcentage, groupe. Plus une ligne de total. Il se met à jour avant l''ordre, comme la taille de position.
@@ -434,8 +436,8 @@ KEY: À retenir
 - Quatre colonnes : actif, sens, risque, groupe. Et une ligne de total.
 - Vingt secondes avant chaque ordre, quel que soit le nombre de positions ouvertes.
 - Le tableau reste chez toi. Ce que tient la plateforme du courtier ne t''appartient pas.', 19);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 4, 'EX', 'Cinq positions, une limite', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 4, 'EX', 'Cinq positions, une limite', 'EXF: Compétence évaluée
 Objectifs 30 et 31 : calculer l''exposition d''un portefeuille de plus de trois positions en tenant compte du sens et des groupes ; décider quelle position refuser quand la limite est atteinte, en citant la règle qui tranche.
 
 EXF: Consigne
@@ -454,8 +456,8 @@ EXF: Correction commentée
 **Étape A.** Le piège est le short au milieu des longs, comme à l''Intermédiaire — mais il est ici inversé : le short USD/JPY **rejoint** le groupe des paris contre le dollar au lieu de le compenser, parce que c''est le dollar qui est vendu dans les deux cas. Un utilisateur qui applique mécaniquement « sens opposés, on retranche » se trompe de 0,8 point. Le sens se lit sur le scénario, pas sur le libellé de la paire.
 **Étape B.** La réponse attendue est que la décision d''origine **ne change pas**, et c''est contre-intuitif : deux couples ont changé de catégorie, donc quelque chose devrait bouger. Rien ne bouge, parce que les groupes ont été constitués sur des scénarios et que les scénarios n''ont pas changé. C''est tout l''enseignement du chapitre 4.2, et il ne se démontre qu''en le faisant deux fois.
 **Étape C.** « Réduire une position ouverte » est choisi par une large part des utilisateurs, parce que c''est la seule solution qui permette de prendre le bon trade. La règle violée est la sixième du Débutant — objectif et stop non renégociables — et la difficulté de l''exercice est de la nommer alors qu''aucun objectif ni aucun stop n''a été explicitement déplacé.', 20);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 5, '5.1', 'Série défavorable ou dégradation : la question mal posée', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 5, '5.1', 'Série défavorable ou dégradation : la question mal posée', 'HOOK:
 Trente trades sans rien gagner. Tu veux savoir si ton avantage a disparu. Cette question n''a pas de réponse — pas parce qu''elle est difficile, parce qu''elle est posée après.
 
 P: Une **dégradation** est la disparition durable de l''avantage d''un système. Une série défavorable est une suite de résultats négatifs qui relève de la variance. Les deux produisent le même relevé, le même sentiment et la même envie de faire quelque chose.
@@ -476,8 +478,8 @@ KEY: À retenir
 - Série et dégradation expliquent les mêmes données. Rien dans le relevé ne les sépare.
 - Détecter la disparition d''un avantage de 0,15 R demanderait plus de quatre ans.
 - Ce qui tranche n''est pas dans les données. C''est la date à laquelle le seuil a été écrit.', 21);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 5, '5.2', 'Ce que la recherche établit sur la durée de vie d''un avantage', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 5, '5.2', 'Ce que la recherche établit sur la durée de vie d''un avantage', 'HOOK:
 Ton avantage va se réduire. Ce n''est pas un pronostic sur toi : c''est le résultat le mieux documenté du domaine, mesuré sur des centaines de stratégies, et il a un ordre de grandeur.
 
 P: On appelle **décote hors échantillon** la perte de performance constatée quand une règle est appliquée à des données qui n''ont pas servi à la construire. McLean et Pontiff l''ont mesurée en 2016 sur les 97 variables dont la littérature affirmait qu''elles prédisaient les rendements d''actions : **−26 %** hors échantillon, **−58 %** après publication.
@@ -500,8 +502,8 @@ KEY: À retenir
 - McLean et Pontiff, 2016 : −26 % hors échantillon, −58 % après publication, sur 97 variables.
 - Ce n''est pas un coefficient à appliquer à ton système. C''est un ordre de grandeur.
 - Un avantage qui ne survit pas à une décote de 26 % n''a aucune marge.', 22);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 5, '5.3', 'Le test écrit avant l''observation', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 5, '5.3', 'Le test écrit avant l''observation', 'HOOK:
 Un critère d''arrêt sans taux de fausse alarme n''est pas un critère : c''est une phrase. Le calculer prend deux minutes et change presque toujours le seuil qu''on s''apprêtait à écrire.
 
 P: Quatre éléments, comme le critère d''abandon du chapitre 2.5 de l''Intermédiaire, mais sur un autre objet. **La grandeur** mesurée. **Le seuil** chiffré. **La fenêtre** sur laquelle on mesure. **L''action** déclenchée, écrite au présent de l''indicatif.
@@ -522,8 +524,8 @@ KEY: À retenir
 - Quatre éléments : la grandeur, le seuil, la fenêtre, l''action.
 - Tout seuil a un taux de fausse alarme. Calcule-le avant de l''écrire, pas après.
 - Un critère rédigé pendant une série défavorable est calibré pour ne pas se déclencher.', 23);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 5, '5.4', 'Le critère d''arrêt de système', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 5, '5.4', 'Le critère d''arrêt de système', 'HOOK:
 Le critère d''abandon tue une hypothèse en test, et ça ne coûte rien. Le critère d''arrêt ferme un système en production, et ça coûte trente-trois semaines. Confondre les deux revient à payer le second prix pour la première décision.
 
 P: Le **critère d''arrêt de système** porte sur un système qui tourne, avec de l''argent engagé et un journal en cours. Le critère d''abandon portait sur une idée en cours d''évaluation, dont l''échec ne laissait qu''une ligne datée dans le journal des tests.
@@ -545,8 +547,8 @@ KEY: À retenir
 - Critère d''abandon : une hypothèse en test. Critère d''arrêt : un système en production.
 - Évalue sur des fenêtres qui ne se recouvrent pas. Le seuil ne change pas, la fausse alarme si.
 - Le critère écrit ce qu''il advient des positions déjà ouvertes. Sinon elles décident seules.', 24);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 5, '5.5', 'Arrêter n''est pas échouer', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 5, '5.5', 'Arrêter n''est pas échouer', 'HOOK:
 Un système arrêté peut être retesté l''an prochain. Un capital perdu ne revient pas par le même chemin, et l''arithmétique de ce retour figure dans les annexes du Débutant depuis ton premier jour.
 
 P: Les deux erreurs possibles n''ont pas le même prix, et c''est ce déséquilibre qui doit gouverner ton seuil. Arrêter à tort coûte des semaines, un chiffre connu et borné à l''avance. Ne pas arrêter à temps coûte du capital, et cette dépense-là n''a pas de borne écrite.
@@ -565,8 +567,8 @@ KEY: À retenir
 - Les deux erreurs n''ont pas le même prix : l''une coûte des semaines, l''autre du capital.
 - Un arrêt injustifié : 33 semaines, tous les six ans. C''est un prix connu et borné.
 - Revenir en simulation après un arrêt est le déroulement prévu, pas un accident de parcours.', 25);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 5, 'EX', 'Le système que tu arrêtes', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 5, 'EX', 'Le système que tu arrêtes', 'EXF: Compétence évaluée
 Objectifs 32 et 33 : distinguer une série défavorable d''une dégradation au moyen d''un test écrit avant l''observation ; écrire et dater un critère d''arrêt de système, distinct du critère d''abandon.
 
 EXF: Consigne
@@ -584,8 +586,8 @@ EXF: Correction commentée
 **Étape A.** La bonne réponse est **« je ne peux pas savoir »**, et c''est le seul exercice de tout le parcours dont la bonne réponse est un refus de répondre. Les deux séquences sont construites pour être indiscernables sur 60 trades : le chapitre 5.1 a montré qu''il en faudrait environ 640. Un utilisateur qui tranche a nécessairement tranché sur autre chose que les données — le plus souvent sur la forme de la courbe, qui est exactement ce que le module 1 de l''Intermédiaire lui apprenait déjà à ne pas lire.
 **Étape B.** Le seuil spontanément écrit est presque toujours trop haut, et le calculateur affiche alors un taux de fausse alarme supérieur à 25 %. La correction ne dit pas quel seuil écrire : elle demande de le baisser jusqu''à ce que le taux soit acceptable **pour toi**, et de noter la valeur retenue. C''est ta tolérance qui est le paramètre libre, pas la statistique.
 **Étape C.** Les deux fenêtres donnent des réponses différentes sur le même relevé dans une majorité des cas. C''est le résultat attendu et il est déstabilisant : il montre qu''une part de ta décision d''arrêt tient à la fréquence à laquelle tu regardes, et non à ce que fait ton système. Choisir la fenêtre disjointe n''est pas une astuce pour arrêter moins souvent — c''est refuser que la fréquence d''observation entre dans la décision.', 26);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 6, '6.1', 'Le courtier : ce que tu peux vérifier toi-même', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 6, '6.1', 'Le courtier : ce que tu peux vérifier toi-même', 'HOOK:
 Aucun nom ne figure dans ce chapitre, et ce n''est pas une précaution juridique. C''est que le bon critère n''a jamais été l''identité du prestataire : c''est ce que tu peux vérifier de lui sans le croire sur parole.
 
 P: Sept vérifications, toutes réalisables avant d''ouvrir quoi que ce soit, toutes documentaires. Aucune ne demande d''avis, aucune ne demande de comparateur, et chacune se conclut par oui ou par non.
@@ -608,8 +610,8 @@ KEY: À retenir
 - Sept vérifications documentaires, toutes réalisables avant d''ouvrir, toutes en oui ou non.
 - L''agrément se vérifie chez le régulateur, jamais sur le site du prestataire.
 - La qualité d''exécution ne se vérifie pas à l''avance. Elle se mesure, et ça prend 25 trades.', 27);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 6, '6.2', 'Les protections réglementaires, et ce qu''elles ne couvrent pas', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 6, '6.2', 'Les protections réglementaires, et ce qu''elles ne couvrent pas', 'HOOK:
 Il existe une règle européenne qui ferme automatiquement tes positions pour te protéger. Sur un capital de 1 000 €, elle se déclenche quand tu as perdu 91,7 % de ce capital.
 
 P: L''ESMA a arrêté en 2018 quatre mesures applicables aux contrats à effet de levier proposés aux particuliers, reprises ensuite dans les droits nationaux. Elles ne se ressemblent pas et ne protègent pas de la même chose.
@@ -636,8 +638,8 @@ KEY: À retenir
 - Quatre mesures : levier plafonné, clôture à 50 % de la marge, solde négatif, avertissement publié.
 - Elles bornent ce que tu peux devoir. Elles ne bornent pas ce que tu peux perdre.
 - Sur 1 000 €, la clôture automatique intervient à −91,7 %. Tes règles agissent à −10 %.', 28);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 6, '6.3', 'Tenue de registre : ce que ton journal ne suffit pas à produire', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 6, '6.3', 'Tenue de registre : ce que ton journal ne suffit pas à produire', 'HOOK:
 Ton journal sert à apprendre. Il ne sert pas à répondre à quelqu''un qui te demandera, dans trois ans, ce que tu as fait au mois de mars.
 
 P: Un **registre** est le relevé exhaustif et daté de toutes tes opérations, tenu pour un tiers : une administration, un professionnel du chiffre, ou toi-même dans trois ans. Il ne remplace pas le journal, et le journal ne le remplace pas.
@@ -667,8 +669,8 @@ KEY: À retenir
 - Le registre est exhaustif, factuel et exportable. Le journal est filtré, interprété et privé.
 - Sept champs, exportés une fois par mois. Deux minutes.
 - La durée de conservation de l''historique se vérifie avant d''ouvrir, pas après.', 29);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 6, '6.4', 'La fiscalité : les questions, jamais les réponses', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 6, '6.4', 'La fiscalité : les questions, jamais les réponses', 'HOOK:
 Ce chapitre ne contient aucun taux, aucun seuil et aucun régime : une règle fiscale citée dans un document et lue deux ans plus tard est une information fausse. Ce qu''il contient, ce sont les sept questions qui rendent une consultation utile, et le document à emporter avec elles.
 
 P: Trois raisons rendent toute réponse impossible ici. Les règles changent, parfois d''une année sur l''autre. Elles dépendent de ton pays de résidence fiscale. Et elles dépendent d''éléments personnels — statut, autres revenus, caractère occasionnel ou habituel de l''activité — qu''aucun cours ne connaît.
@@ -694,8 +696,8 @@ KEY: À retenir
 - Aucun taux, aucun seuil : ils changent et dépendent de ton pays. Cette page est datée.
 - Sept questions, une consultation, ton registre sous le bras.
 - Une consultation préparée coûte moins cher qu''une consultation improvisée.', 30);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 6, '6.5', 'Ce que tu décides maintenant', 'HOOK:
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 6, '6.5', 'Ce que tu décides maintenant', 'HOOK:
 Ce document ne t''a jamais dit d''engager de l''argent, et il ne le fera pas dans les lignes qui restent. Tu arrives pourtant au bout de trois parcours et d''environ un an de pratique.
 
 P: Le seul livrable de ce parcours est une décision datée. Elle tient en cinq lignes, elle se verse au document de système comme n''importe quelle autre décision, et elle nomme ce qui devrait changer pour être revue.
@@ -719,8 +721,8 @@ KEY: À retenir
 - Le livrable de ce parcours est une décision datée, pas un compte ouvert.
 - Cinq lignes : brute, coût, nette et son incertitude, ce que dit le critère, la décision.
 - « Je reste en simulation » est une réponse complète. C''est la plus fréquente, et elle est juste.', 31);
-insert into public.formation_chapitres (parcours, module, numero, titre, corps, ordre) values
-  ('experimente', 6, 'EX', 'Ta décision, datée', 'EXF: Compétence évaluée
+insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
+  ('experimente', 'fr', 6, 'EX', 'Ta décision, datée', 'EXF: Compétence évaluée
 Objectifs 34, 35 et 36 : énumérer les critères de choix vérifiables d''un prestataire ; constituer une tenue de registre et les questions à poser à un professionnel ; formuler une décision datée et argumentée sur des mesures.
 
 EXF: Consigne

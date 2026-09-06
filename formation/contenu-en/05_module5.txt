@@ -1,0 +1,131 @@
+MOD: 5 | What goes on in your head | 11-minute read · 4 chapters · 1 exercise | 11 min
+Goal: recognise three documented behaviours in your own statement, and set a rule against each of them.
+
+H2: 5.1 The disposition effect
+
+HOOK:
+You close a €12 gain with relief. You let a €40 loss run, telling yourself it will come back. That behaviour has a name, it has been measured across ten thousand accounts, and it applies to you — the question is not whether you will escape it, but which rule you will set against it.
+
+P: The **disposition effect** is the tendency to realise your gains too early and to put off realising your losses. Terrance Odean established it in 1998 across ten thousand brokerage accounts: in comparable situations, investors sell their winning positions one and a half to two times more often than their losing ones.
+
+P: The mechanism is asymmetrical and perfectly understandable. An open winning position is a permanent source of worry; closing it converts an unpleasant uncertainty into a pleasant certainty. An open losing position, on the other hand, is a loss "on paper" — closing it makes it final, and above all, makes it true.
+
+P: The effect produced is mechanical: average gains systematically smaller than average losses. In other words a structural deterioration of the reward-to-risk ratio, independent of the quality of the analysis. Module 4 showed that a degraded R/R is enough to make a sound method lose. That is exactly what happens here.
+
+CASE: A profitable method, made losing by its execution
+Twenty trades, sound method, stop at 1R and target at 3R, 40% hit rate.
+**Compliant execution**: 8 gains at 3R, 12 losses at 1R, that is 24 − 12 = **+12 R**.
+**Execution with the disposition effect**: gains are cut at an average of 1.2R, and two losses are allowed to run to 2.5R.
+8 × 1.2 = 9.6 R. Losses: 10 × 1 + 2 × 2.5 = 15 R. Result: **−5.4 R**.
+The method has not changed one iota. The analysis was identical. Only the execution moved, and it turned +12 R into −5.4 R.
+
+ERR: The classic mistake
+Calling it prudence. "I'm locking in my gains" is the presentable name for a behaviour that, once measured, destroys expectancy. Prudence has every place in trading — it is exercised in the position size, decided before entry. Not in an early exit, decided under pressure.
+
+KEY: Key points
+- You will cut your gains and let your losses run. That is documented, not hypothetical.
+- The disposition effect degrades the R/R without ever touching the analysis.
+- The only reliable countermeasure: target and stop fixed before entry, not renegotiated afterwards.
+
+H2: 5.2 Overtrading and overconfidence
+
+HOOK:
+Across 14,799 French clients, those who placed the most orders lost the most. Across 66,465 American households, the most active underperformed the market by more than six points a year. Two samples, two continents, two decades apart, the same straight line.
+
+P: Barber and Odean examined the accounts of 66,465 American households between 1991 and 1996. The average household returns 16.4% a year; the most active quintile, 11.4%; the market, 17.9%. The gap is not explained by poor stock picking: it is explained by the **volume of activity itself**.
+
+P: The explanation the authors settle on is overconfidence. Everyone overestimates the quality of their information and underestimates the part luck played in their successes — which leads to acting more often than the information actually held would justify.
+
+P: On top of that comes a self-reinforcing mechanism that is particularly hard to defuse. A gain is credited to skill; a loss, to circumstances. The sample of memories is therefore biased in one direction only, and confidence keeps rising even as the account statement falls. The two curves cross without ever meeting.
+
+CASE: The AMF's three measures all point the same way
+Across the 14,799 clients tracked for four years:
+Those who placed **at least 250 orders** make up 52% of the population studied and lose an average of **€18,741**.
+Those whose **average order size exceeds €10,000** make up 62% of the population and lose an average of **€14,876**.
+Number of orders, average size, cumulative volume: all three measures give the same result, and no sub-population escapes it.
+
+ERR: The classic mistake
+Reading a good run as a step up in level. That is the precise moment position sizes increase, "since it's working". Statistically, that increase comes in just before the return to the mean — that is, at the worst possible moment, and for a reason that seems excellent.
+
+KEY: Key points
+- Activity itself is correlated with loss. The number of orders is a risk variable.
+- A good run is not proof of skill: it is a short sample.
+- Set your size and your number of trades outside the session, when nothing is at stake.
+
+H2: 5.3 The spiral after a loss
+
+HOOK:
+The €10 loss did nothing to you. What did something to you was realising you had been wrong. The twenty minutes that follow are, statistically, the most expensive of your day.
+
+P: The sequence is stereotyped and unfolds in four beats. The loss. The need for immediate repair. The entry outside the checklist, on a setup that would not have passed the filter an hour earlier. And the increase in size, meant to "make it back in a single trade".
+
+P: Each step is individually defensible. It is the chain that empties an account, and it is all the harder to break because every link looks reasonable taken on its own.
+
+P: The tipping point is identifiable and it is **linguistic**. As long as you think "−1 R", you are inside the system: the loss has a unit, a place in a series, a statistical meaning. The moment you think "−€10, I need €10", you have left the system and you are chasing a sum. The change of unit always comes before the change of behaviour.
+
+CASE: Forty minutes
+**Trade 1**, compliant, planned: **−1 R**.
+**Trade 2**, six minutes later, outside the checklist, size doubled to catch up: **−2 R**.
+**Trade 3**, fifteen minutes after that, size quadrupled: **−4 R**.
+Total: **−7 R**, that is seven normal working sessions wiped out in forty minutes.
+The only one of the three that was part of the plan is the one that cost the least.
+
+ERR: The classic mistake
+Believing you will recognise that state at the moment it happens. You do not recognise it — that is the very definition of the state. So the countermeasure cannot take the form of a decision made during. It has to be a mechanical rule, set beforehand, that applies without your having to judge whether it is appropriate at the time.
+
+KEY: Key points
+- After a loss the countermeasure is a delay, not an act of will: no orders for thirty minutes.
+- Two losses in the session: the session is over. No exceptions, no assessment.
+- If you are counting in euros rather than in R, you have already stopped trading.
+
+H2: 5.4 Rules that hold
+
+HOOK:
+Every rule in this module shares one property: it is written when the market is closed and applied without judgement when it is open. A rule that requires an assessment at the moment it applies is not a rule — it is an intention.
+
+P: The principle is easy to state and hard to hold to: move the decision outside the emotional state that distorts it. The rules that survive contact with use share three properties — they are **numerical**, **checkable without interpretation**, and **set in advance**.
+
+UL:
+- Fixed risk of 1% per trade, never adjusted mid-session.
+- Three trades maximum per session.
+- Two losses: the session is over.
+- Thirty minutes' wait after any loss.
+- No order without all six answers on the checklist.
+- Target and stop not renegotiable once the position is open.
+- Drawdown of 10% on the month: full stop and review of the journal.
+
+P: These seven rules are not a method. They make no claim to generate a profit. Their function is more modest and more decisive: to let a method, whatever it is, be tested on a large enough sample before the account disappears.
+
+CASE: What the absence of the seventh rule costs
+Capital €1,000, risk 1%, three trades per session, stop at two losses. The maximum loss in a session is therefore 2%.
+**Without a monthly rule**: twenty consecutive losing sessions bring capital down to €667, a drawdown of **−33%**.
+**With the 10% rule**: the stop triggers on the sixth losing session, drawdown contained at around **−11%**.
+Same method, same run of bad luck, same risk per trade. The only difference is one line written on a Sunday evening.
+
+ERR: The classic mistake
+Writing the rules without writing what happens when you break them. A rule with no consequence attached is a wish. The consequence does not have to be punitive — recording the breach in the journal is quite enough, provided it is systematic and the count is read back at the end of the month.
+
+KEY: Key points
+- A useful rule is numerical, checkable, and written with the market closed.
+- Seven rules are enough. Beyond that, none of them is genuinely applied.
+- Attach a written consequence to every rule, however small.
+
+EX: Four situations, one rule
+
+EXF: Skill assessed
+Goals 10 and 12: turn down a trade by naming the rule that turns it down; recognise a documented bias in a concrete situation.
+
+EXF: Instructions
+Four situations are shown to you one after the other. For each: **I take it** or **I don't take it**, then select from the list the rule that justifies your decision.
+
+EXF: What the platform must provide
+- Four sequential cards, with no going back. Not being able to go back is part of the exercise: it reproduces the real condition.
+- Each card carries a small static H1 chart and a status bar permanently showing: capital, number of trades taken today, result of the current session, minutes elapsed since the last trade.
+- Two decision buttons, then a drop-down list containing the module's seven rules. The rule must be chosen **after** the decision, never before.
+- No indication of what the market did next. This exercise assesses a decision, not an outcome.
+
+EXF: Worked correction
+- **Situation 1** — compliant setup, no trades taken, session flat. Answer: *I take it*. Rule cited: complete checklist. It is the only one of the four where entering is correct.
+- **Situation 2** — compliant setup, two losses already taken in the session. Answer: *I don't take it*. Rule: two losses, session over. The setup offered is objectively the best of the four, and that is entirely deliberate: a rule that does not hold up against a beautiful setup is useless, since that is the only moment it is ever tested.
+- **Situation 3** — average setup, reward-to-risk at 1.2, no trades taken. Answer: *I don't take it*. Rule: minimum ratio of 1.5. The trap here is the absence of any other obstacle: nothing in the status bar stands in the way of the trade, and you have to go looking for the single figure that disqualifies it.
+- **Situation 4** — compliant setup, last trade lost eight minutes ago. Answer: *I don't take it*. Rule: thirty minutes' wait. Nothing rules this trade out on its merits; only the delay blocks it. It is the situation users validate most often, and it is precisely the second step in the sequence described in chapter 5.3.

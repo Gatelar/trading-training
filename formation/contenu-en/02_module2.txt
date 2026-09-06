@@ -1,0 +1,172 @@
+MOD: 2 | Risk before method | 12-minute read · 5 chapters · 1 exercise | 12 min
+Goal: know how much you are risking before you even know what to buy.
+
+CARD: Seven words borrowed from later modules
+This module is about risk, and risk is calculated on a chart. Here is the bare minimum to follow it without getting stuck. Each of these words is developed later, in its proper place.
+- **Candle** (or candlestick): the piece of chart that sums up one period. Module 3.
+- **High** and **low**: a peak or a trough visible on the chart, surrounded by candles that are less high or less low. Module 3.
+- **Structure**: the sequence of those highs and lows, which tells you whether the market is rising, falling, or going round in circles. Module 3.
+- **H1** and **H4**: the timeframe of the chart. Each candle sums up one hour, or four hours. Module 3.
+- **Stop**: the automatic order that closes your position at a price fixed in advance. Chapter 2.4.
+- **Scenario**: what you expect from the market, written down before you enter. Module 4.
+- **Invalidation**: the price whose being reached proves that scenario was wrong. Module 4.
+
+H2: 2.1 The only question that matters
+
+HOOK:
+Two people take exactly the same trade. Same asset, same second, same price. Six months later one has doubled the account and the other has emptied it. They had the same analysis. They did not have the same position size.
+
+P: The beginner asks "where is it going?". That question has no reliable answer: nobody, anywhere, knows. And yet it takes up 95% of the content you will find on the subject.
+
+P: The professional question is a different one: **"how much do I lose if I am wrong?"**. It has an exact answer, known before you click, independent of anything the market does. It is the only thing you genuinely control.
+
+P: You control exactly three variables: the amount you risk, the level at which you give up, and whether you enter or stay out. You control nothing else. Least of all the price: that one does not belong to you.
+
+P: We call **R** the sum you lose if your scenario is wrong. It is your unit of account for the rest of this track.
+
+CASE: Your unit of measurement
+Capital: €1,000. Chosen risk: 1% per trade.
+1 R = **€10**.
+Whether you trade EUR/USD or BTC/USD, whether the leverage is 5 or 30, whether it is your first trade or your hundredth: a trade puts €10 at stake. Not 9, not 40.
+It is the one constant in this track. Everything else adjusts around it.
+
+ERR: The classic mistake
+Thinking in position size — "I'll put in €500" — instead of thinking in risk — "I'm risking €10". Those two sentences have nothing to do with each other. A €500 position with a stop 2% away risks only €10. The same position with no stop risks €500. Size tells you nothing about risk.
+
+KEY: Key points
+- The question is not "where is it going", but "how much do I lose if I am wrong".
+- Your risk is expressed as a percentage of capital, never as a position size.
+- 1 R = the loss accepted on one trade. Count in R from now on.
+
+H2: 2.2 The 1% rule
+
+HOOK:
+Everyone repeats "never risk more than 1%". Almost nobody explains where that figure comes from. It comes out of a multiplication you can do yourself, and it takes two minutes.
+
+P: Starting point: even a sound method strings losses together. That is not an accident, it is arithmetic. With a one-in-two chance of winning, a run of seven consecutive losses comes up roughly once every 128 trades — several times a year for someone who trades regularly.
+
+P: So the question is not "how do I avoid losing runs" — you cannot. It is: **"what size of risk makes a losing run survivable?"**
+
+TABLE: 30,35,35 || Risk per trade | Capital after 10 losses | Cumulative loss
+1% | €904 | −9.6%
+2% | €817 | −18.3%
+5% | €599 | −40.1%
+10% | €349 | −65.1%
+
+CASE: The trap in the last row
+The 10% row does not merely require you to win back the €651 you lost.
+To get back to €1,000 starting from €349, you have to make **+186%**.
+The 1% row needs +10.6% to break even. The difference at the start was nine points of risk. The difference at the finish is 176 points of performance to produce.
+
+ERR: The classic mistake
+Increasing the risk after a losing run, to "win it back". The arithmetic runs exactly the other way: it is precisely when capital is low that every euro risked weighs most heavily as a percentage. Doubling up after four losses is accelerating just as the road narrows.
+
+KEY: Key points
+- A run of seven losses is normal. It tells you nothing about your method.
+- At 1% per trade, ten losses cost 9.6% of capital. At 10%, they cost 65%.
+- The deeper the loss, the more disproportionate the gain needed to erase it.
+
+H2: 2.3 Calculating a position size
+
+HOOK:
+This is the one compulsory calculation in the track. Three numbers go in, one number comes out, and that number decides your survival more surely than all the analysis you will do this year.
+
+P: The formula fits on one line:
+
+CARD: The formula
+**Position size = (Capital × Risk in %) ÷ Distance to the stop**
+The result is a quantity — a number of currency units, a fraction of a bitcoin. Not an amount in euros.
+
+P: You first have to translate the distance to the stop into money. On EUR/USD the unit is the **pip**: the fourth decimal, that is 0.0001. For a position of 10,000 units, 1 pip is worth about $1. On BTC/USD there is no pip: you work directly in dollars per unit of bitcoin.
+
+CASE: Two markets, one calculation
+**EUR/USD.** Capital €1,000, risk 1% = €10. Entry at 1.0850, stop at 1.0820: the distance is **30 pips**.
+€10 ÷ 30 pips = €0.33 per pip, that is a position of about **3,300 units**.
+**BTC/USD.** Capital €1,000, risk 1% = €10. Entry at 62,000, stop at 61,000: the distance is **$1,000**.
+€10 ÷ $1,000 = **0.01 BTC**, that is a position of about $620.
+Two markets with nothing in common. Same risk: €10.
+
+ERR: The classic mistake
+Choosing the size first and the stop afterwards. That is the right order reversed. The beginner decides "I'll put in €200", places his stop wherever looks reasonable, and discovers his risk after the fact — often after the loss. Size is a **result**, not a decision.
+
+KEY: Key points
+- Size = (Capital × Risk) ÷ Distance to the stop. No exceptions, no asset exempt.
+- The stop is chosen before the size, never the other way round.
+- A wider stop does not increase your risk: it reduces your size.
+
+H2: 2.4 Where to put a stop
+
+HOOK:
+You put your stop €20 away, because €20 is what you are willing to lose today. The market does not know your budget. It just passed through, and took you out on the way.
+
+P: A **stop-loss** is an automatic order that closes your position at a level set in advance. Its function is not to cap an amount: it is to mark the point beyond which **your scenario is wrong**. If price reaches it, your reason for being in the trade has gone.
+
+P: Two symmetrical errors. The stop that is too tight: you are taken out by the market's normal breathing, when your idea was good. The stop that is too wide: your scenario died long ago and you are still paying.
+
+P: A useful order of magnitude: on EUR/USD in H1, an ordinary candle covers 15 to 25 pips. A stop placed 5 pips away will be hit by **noise** — movement with no meaning — not by an invalidation.
+
+CASE: Two stops for the same idea
+You buy at 1.0850. The last low visible on the chart is at 1.0822.
+**Stop at 1.0845 (5 pips).** Hit within the hour by an unremarkable swing. You were right about the direction and you were taken out anyway. Loss: €10.
+**Stop at 1.0818 (32 pips, below the low).** Hit only if the market's structure genuinely breaks. Matching size: €10 ÷ 32 = €0.31 per pip, that is 3,100 units. Loss if hit: €10.
+The second stop is six times wider and **no riskier**. Size absorbed the difference.
+
+ERR: The classic mistake
+Moving the stop when price approaches it. That single gesture is what turns a €10 loss into a €200 loss. It always justifies itself beautifully in the moment — "the level was badly placed", "it'll bounce right after". A stop that has been moved is no longer a stop. It is hope with an order's name.
+
+KEY: Key points
+- The stop goes where your scenario becomes wrong, not where your budget runs out.
+- Below the last low for a buy, above the last high for a sell.
+- A stop is never moved in the direction of the loss. Never.
+
+H2: 2.5 Drawdown
+
+HOOK:
+Your account does not rise in a straight line, and it does not fall in one either. In between there is a trough. It is in that trough that most people give up, or do something stupid.
+
+P: **Drawdown** is the gap between the highest level your capital has reached and where it stands now, as a percentage. It measures what you endure, not what you produce.
+
+P: Its unpleasant property is asymmetry. Losing 50% does not require making 50% to get back: it requires making 100. Loss and recovery are not symmetrical, and the gap between them widens fast.
+
+TABLE: 50,50 || Drawdown endured | Gain needed to break even
+−10% | +11%
+−20% | +25%
+−33% | +50%
+−50% | +100%
+−65% | +186%
+
+CASE: What the 1% really buys you
+At 1% risk per trade, it takes about **69 consecutive net losses** to reach a −50% drawdown.
+At 10% risk per trade, it takes **7**.
+Seven. That is the number of losses in a row a sound method produces regularly, as we saw in chapter 2.2. At 10% risk, the normal run becomes a terminal event.
+
+ERR: The classic mistake
+Measuring your progress solely by the account balance. Two accounts both showing €1,100 are in no way comparable if the first never went below €980 and the second passed through €400. The second got lucky, and worse: it does not know it. It will credit that result to its method.
+
+KEY: Key points
+- Drawdown measures what you endure. The balance measures what you show.
+- −50% demands +100% to get back. The asymmetry is the real opponent.
+- Set your drawdown limit before you need it, not during.
+
+EX: Three positions, one risk
+
+EXF: Skill assessed
+Goals 5 and 6: calculate a position size from a capital, a 1% risk and a stop distance; place a stop at a level justified by the structure of the chart.
+
+EXF: Instructions
+**Part A.** You are given three situations. For each one, calculate the position size that corresponds to 1% risk on capital of €1,000.
+**Part B.** You are shown a EUR/USD H1 chart with three proposed stop levels. Choose one, then select the reason for your choice.
+
+EXF: What the platform must provide
+- Part A: a calculator with four fields — capital (pre-filled at €1,000, locked), risk in % (pre-filled at 1, locked), entry price, stop price — and a free input field for the size. Validation with a tolerance of ±5%.
+- The intermediate calculation (distance in pips or dollars) is displayed automatically as soon as entry and stop are entered. The user must see the distance, not guess it.
+- Part B: a bare EUR/USD H1 chart, no indicators, showing about thirty candles with one clearly identifiable low. Three stop levels A, B and C drawn as dotted lines. Single selection, then a three-option multiple choice for the justification.
+- No display of the market's future outcome until the answer has been submitted.
+
+EXF: Worked correction
+**Part A.**
+- *Case 1 — EUR/USD, entry 1.0850, stop 1.0820.* 30 pips. Size: 3,300 units.
+- *Case 2 — EUR/USD, entry 1.0850, stop 1.0790.* 60 pips. Size: 1,650 units. This is the case that counts: the stop doubled, the size was halved, and the risk did not move by a cent. Most users expect the risk to double.
+- *Case 3 — BTC/USD, entry 62,000, stop 61,000.* $1,000. Size: 0.01 BTC.
+**Part B.** The right answer is the stop placed **below the low**.
+Why the other two are tempting: the tight stop allows a much bigger position, which makes the trade more exciting, and it shows a smaller loss figure on screen — two immediate rewards for a bad decision. The very wide stop, for its part, feels safe: you feel "protected from being taken out". In reality it pays for an invalidation that has already happened. In both cases the feeling and the arithmetic point in opposite directions.

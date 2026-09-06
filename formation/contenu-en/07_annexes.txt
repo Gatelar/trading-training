@@ -1,0 +1,105 @@
+SEC: Session card
+
+NOTE: One page, to print and keep beside the screen. It contains nothing new: only what has to be available without thinking.
+
+CARD: The seven rules
+- Fixed risk of 1% per trade, never adjusted mid-session.
+- Three trades maximum per session.
+- Two losses: the session is over.
+- Thirty minutes' wait after any loss.
+- No order without all six answers on the checklist.
+- Target and stop not renegotiable once the position is open.
+- Drawdown of 10% on the month: full stop and review of the journal.
+
+CARD: The three formulas
+**Position size** = (Capital × Risk in %) ÷ Distance to the stop
+**Minimum hit rate** = 1 ÷ (1 + Reward-to-risk ratio)
+**Expectancy** = (hit rate × average gain) − (miss rate × average loss)
+
+CARD: The checklist, before every order
+- Is the structure readable in H4? If not, I do not enter.
+- Where is my invalidation, in price?
+- What size does that stop impose for 1%?
+- What is the reward-to-risk ratio? Below 1.5, I do not enter.
+- Does this trade look like my previous trades?
+- How many trades have I already taken today?
+A single missing answer cancels the trade.
+
+CARD: The journal, after every order
+Date and time · Asset and timeframe · Scenario written before entry · Invalidation and target · Size and risk in R · Result in R · **Compliant: yes / no**
+The last field is the only one that produces learning.
+
+TABLE: 25,25,25,25 || Ratio | Min. hit rate | Drawdown | Gain to recover
+1R | 50% | −10% | +11%
+1.5R | 40% | −20% | +25%
+2R | 33% | −33% | +50%
+3R | 25% | −50% | +100%
+
+SEC: Glossary
+
+GLOSS:
+Body :: Rectangular part of a candlestick, between the open and the close. Measures the conviction behind the move.
+Broker :: The intermediary with whom the position is opened. Paid for activity — commissions, spread, overnight charges — not for the client's performance.
+Candle :: See *candlestick*.
+Candlestick :: Graphical representation of one period, summing up four values: open, high, low, close.
+CFD :: *Contract for difference*. A contract by which broker and client exchange the difference in an asset's price between opening and closing, without the asset being held. The product covered by the AMF and ESMA studies cited in this track.
+Checklist :: List of questions with compulsory answers, filled in before any order. A missing answer cancels the trade.
+Close :: Last price traded during the period a candle covers.
+Compliance :: The fact that a trade respected the whole checklist. Recorded yes or no, independently of the result.
+Deliberate practice :: Repetition of a specific task, at the edge of one's competence, with immediate correction bearing on the execution.
+Disposition effect :: Documented tendency to realise gains too early and to defer losses. Measured by Odean in 1998.
+Drawdown :: Gap between the highest level capital has reached and its current level, as a percentage. Measures what you endure.
+Expectancy :: Average result of a trade, winners and losers taken together, expressed in R. The only measure that describes a whole system.
+High :: A candle whose top is above that of the neighbouring candles. Reference point for placing the stop on a sell.
+Invalidation :: The price whose being reached proves the scenario was wrong. Determines where the stop goes.
+Leverage :: Ratio between the size of a position and the capital actually deposited. Multiplies the size of the swings, never the probability of being right.
+Low :: A candle whose bottom is below that of the neighbouring candles. Reference point for placing the stop on a buy.
+Noise :: Price movement with no consequence, produced by the market's normal activity. A stop that is too tight is hit by noise, not by an invalidation.
+Open :: First price traded during the period a candle covers.
+Overnight financing :: Cost billed each night for holding a leveraged position. Also called financing or *swap*.
+Overtrading :: Placing more orders than the information held would justify. Correlated with losses in every study cited.
+Pip :: Smallest usual variation of a currency pair, that is 0.0001 on EUR/USD. Worth about $1 per 10,000 units.
+Position :: Contract open with the broker, for as long as it is not closed. Its *size* is the quantity committed, and it is calculated; it is not chosen.
+R :: Unit of risk. 1 R is the loss accepted on one trade. All results are recorded in R, never in euros.
+Resistance :: Zone above price where sellers have already stepped in.
+Reward-to-risk ratio :: Gain sought divided by risk accepted. Determines the minimum hit rate required.
+Scenario :: An expectation stated in prices, together with an invalidation and a target. What distinguishes it from an opinion is that a price can contradict it.
+Spread :: Gap between the buy price and the sell price shown at the same moment. A cost taken the instant the position opens.
+Stop-loss :: Automatic order closing the position at a level set in advance. Placed at the invalidation, never at the budget.
+Structure :: The sequence of highs and lows. Determines one of three states: up, down, or none.
+Support :: Zone below price where buyers have already stepped in.
+Technical indicator :: Formula applied to prices to produce a graphical summary of them. Adds no information: it removes some.
+Timeframe :: Length of time each candle sums up. H1 for one hour, H4 for four hours.
+Trade :: The complete operation, from opening the position to closing it. Judged once closed, never while running.
+Trade plan :: The set written before entry: scenario, entry, invalidation, target, size.
+Variance :: Normal dispersion of results around their mean. A run of losses is variance for as long as it stays within what the method usually produces.
+Wick :: Thin line sticking out of a candlestick's body. Marks a level reached and then abandoned — a refusal.
+
+SEC: Disclosures and sources
+
+H3: The nature of this document
+
+P: This document is educational content intended for learning. It is not investment advice, not a personal recommendation, not financial analysis in the regulatory sense, and not an inducement to open an account with any provider.
+
+P: The worked examples it contains are teaching cases built to explain a point. They do not reproduce real market records and must not be used as such.
+
+P: No chapter in this track promises, suggests or holds out the hope of a profit. Leveraged trading is a high-risk activity: most retail traders lose money at it, and past performance is no guide to future performance.
+
+P: Every exercise takes place in the TapeSense simulator, on replayed historical data. No real money is committed at any stage of the track.
+
+H3: Sources cited
+
+UL:
+- **Autorité des marchés financiers**, *Étude des résultats des investisseurs particuliers sur le trading de CFD et de Forex en France*, 13 October 2014. Sample of 14,799 active clients of licensed providers, period 2009–2012. Share of losing clients above 89%, average result −€10,887, median result −€1,843, total result −€161,115,493. Fees taken by intermediaries: 14.2% of losses.
+- **ESMA**, product intervention decision, press release of 27 March 2018. "74-89% of retail accounts typically lose money on their investments, with average losses per client ranging from €1,600 to €29,000."
+- **F. Chague, R. De-Losso, B. Giovannetti**, *Day Trading for a Living?*, Universidade de São Paulo and FGV EESP, 2019–2020. 2013–2015 cohorts on the Brazilian futures market: among those who persisted for more than 300 days, 97% lose money and 0.4% earn more than a bank teller. "We find no evidence of learning by day trading."
+- **B. Barber, T. Odean**, *Trading Is Hazardous to Your Wealth: The Common Stock Investment Performance of Individual Investors*, The Journal of Finance, April 2000. 66,465 households, 1991–1996: annual return of 16.4% for the average household, 11.4% for the most active quintile, 17.9% for the market.
+- **T. Odean**, *Are Investors Reluctant to Realize Their Losses?*, The Journal of Finance, October 1998. Ten thousand brokerage accounts: winning positions are sold 1.5 to 2 times more often than losing ones.
+
+H3: Links
+
+UL:
+- amf-france.org — 2014 study on CFD and forex trading in France
+- esma.europa.eu — press release of 27 March 2018 on CFDs and binary options
+- ideas.repec.org/p/spa/wpaper/2019wpecon47.html — Chague, De-Losso, Giovannetti
+- faculty.haas.berkeley.edu/odean — work of Brad Barber and Terrance Odean

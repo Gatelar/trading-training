@@ -1,0 +1,57 @@
+COUV:
+Learning to read a market.
+And not to ruin yourself learning it.
+
+SEC: Risk warning
+
+WARN: Read this before anything else
+Leveraged trading is a high-risk activity. Most retail traders who take it up lose money.
+- Across 14,799 French retail clients tracked for four years by the AMF, France's financial markets regulator, **89% lose money**. The average loss is €10,887; the median loss is €1,843.
+- This document is **educational content**. It is not investment advice, not a personal recommendation, and not an inducement to open an account anywhere.
+- No chapter in this track promises, suggests or holds out the hope of a profit. Past performance is no guide to future performance.
+- Every exercise takes place in the **TapeSense simulator**, on replayed historical market data. No real money is committed at any point.
+
+P: This track rests on public, checkable sources: the work of the AMF and ESMA, and academic research on what retail investors actually earn. Full references are listed at the end of the document, with their links.
+
+P: You will find no winning method here, no signals, no secret setup. You will find the part of the job almost nobody teaches first, because it is not spectacular: how much to risk, where to stop, and how to tell whether you are getting better.
+
+P: If you ever intend to commit real money, do it knowing the numbers on the page you have just read. Not ignoring them.
+
+SECX: Contents
+
+NOTE: Six modules, roughly 70 minutes of reading in total, six exercises in the simulator. The track is meant to be followed in order: each module builds on the one before.
+
+TOC:
+
+SEC: How to follow this track
+
+P: This track is not an encyclopaedia of trading. It is a progression, and it is built to be followed in a particular order.
+
+H3: The order is not negotiable
+
+P: Module 2 deals with risk before module 3 touches a chart. That is not an editorial preference. The data in module 1 shows that what separates an account that survives from an account that disappears is almost never the quality of the analysis: it is position size. Starting with charts is like learning to drive by working on the paintwork first.
+
+H3: Read it in several sittings
+
+P: Each module takes ten to thirteen minutes. Six modules back to back in one evening is an evening wasted: you will remember the first and the last. One module per session, with its exercise, is the right pace. The full track takes one to two weeks.
+
+H3: The exercise is not a bonus
+
+P: Each module ends with an exercise in the simulator. That is where the learning happens — the text only prepares the ground. A study cited in module 1 followed traders for four years and measured no spontaneous improvement at all. The difference between repeating and learning lies in immediate correction. That is what the exercises are for.
+
+H3: Four conventions used throughout
+
+UL:
+- **The reference capital is €1,000.** Every worked example starts from that amount, so you can compare them with each other. Scale the proportions to your own case.
+- **The illustration markets are EUR/USD and BTC/USD**, on the H1 and H4 timeframes — each candle on the chart sums up one hour, or four hours. The examples are coherent teaching cases, built to explain a point, not records of real market sessions.
+- **No technical word is used before it has been defined.** Every term gets a one-line definition the first time it appears in the modules, and the glossary at the end of the document lists them all alphabetically.
+- **Everything happens in simulation.** The simulator replays historical data. The only capital committed in this track is your attention.
+
+H3: What you will be able to do at the end
+
+UL:
+- Work out what you are risking, in euros, before you send an order.
+- Read price **structure** — the sequence of highs and lows — on a chart with no indicator whatsoever.
+- Write a **scenario**: what you expect from the market, and the price that would prove you wrong.
+- Turn down a trade and name the rule that turned it down.
+- Keep a journal and pull one process error out of it.

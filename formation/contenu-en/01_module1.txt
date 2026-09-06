@@ -1,0 +1,157 @@
+MOD: 1 | Before you touch a chart | 11-minute read · 5 chapters · 1 exercise | 11 min
+Goal: understand what you are playing at, and why the vast majority of people lose at it.
+
+H2: 1.1 What you are actually buying
+
+HOOK:
+You open the app. EUR/USD shows 1.0850. You click "Buy". Simple question, and almost nobody can answer it on day one: what exactly did you just buy?
+
+P: Not euros. There is no vault, no banknotes, nothing that belongs to you. You have just entered into a contract with your broker: if the euro rises against the dollar, he owes you money; if it falls, you owe him. That is all.
+
+P: Two words you will read hundreds of times. A **position** is that contract for as long as it is open. A **trade** is the whole operation: the entry, the wait, the exit. A trade is judged once it is closed, never while it is running.
+
+P: The price on the screen is not a value either. It is the last agreement struck between a buyer and a seller, a fraction of a second ago. You are not "taking a view on the euro": you are betting that another human being, later, will accept a different price.
+
+P: And there is not one price, there are two. A price at which you can buy, another at which you can sell, always a little lower. The gap between them is called the **spread**. You always enter on the wrong side of it.
+
+CASE: What the first second costs
+EUR/USD shows 1.08495 to sell and 1.08505 to buy. You buy, so at 1.08505.
+You change your mind within the second and sell back: at 1.08495. The market has not moved a hair, and you have lost **1 pip** — the pip is the fourth decimal of a currency pair, that is 0.0001 on EUR/USD. It is the unit distances are counted in on this market.
+On a position of 10,000 units, 1 pip is worth about $1. Twenty round trips in a day: $20. Twenty trading days: **$400**.
+On capital of $1,000, you have to make 40% in the year just to cover your costs.
+
+ERR: The classic mistake
+The beginner watches *the* price, not *the two* prices. He believes he is level as soon as his order is filled. In reality every trade starts at a loss equal to the spread — and he never adds up what that comes to over a month.
+
+KEY: Key points
+- You hold nothing: you have a contract against your broker.
+- There are always two prices. You buy at the higher one, you sell at the lower one.
+- Every trade starts at a loss. The more you open, the more that loss piles up.
+
+H2: 1.2 Who is on the other side
+
+HOOK:
+Your broker gives you a platform, real-time charts, sometimes a welcome bonus and someone at the end of a phone. Nobody does that out of philanthropy. So: where does the money come from?
+
+P: From three places. Commissions taken on every transaction. The spread, that gap between the two prices. And overnight financing charges, billed for every night you keep a position open.
+
+P: None of that is illegitimate: it is a service, and it is paid for. What matters is the shape of the cost. It is **certain and regular**, while your gain is uncertain and irregular. The broker earns when you trade. Not when you win.
+
+P: Now, a distinction you will hear nowhere else, and one that takes away your favourite excuse before you have even invented it. The AMF measured the share of fees in client losses: **14.2%**. The rest — the other 85.8% — comes from the client's own decisions. Your broker is not your main problem. You are.
+
+CASE: What waiting costs
+You keep a $10,000 position open for 30 nights. The overnight charge is 0.02% a night, that is $2.
+30 nights × $2 = **$60**.
+On capital of $1,000, that is 6% of the account. The market has not moved. You have done nothing wrong. You have just waited.
+
+ERR: The classic mistake
+Holding a losing position "until it comes back". Every night adds a cost, and the position whose recovery you are hoping for is the one you pay for longest. In leveraged trading, time is not neutral: it is billed.
+
+KEY: Key points
+- Your broker is paid for activity, not for your performance.
+- Fees explain 14.2% of losses. The rest is decisions.
+- A position held for a long time costs money every night, even standing still.
+
+H2: 1.3 The numbers nobody shows you
+
+HOOK:
+Before you learn anything at all, you need to know which statistic you have just joined. This chapter is the most unpleasant in the track. It is also the only one I ask you never to forget.
+
+P: In 2014 the AMF did what nobody had done before: it asked brokers licensed in France for their clients' actual results. Not fraudulent brokers — legal, regulated firms, the ones whose adverts you see.
+
+P: 14,799 active clients. Four years. The result: **89% lose money**. Average loss per client: €10,887. Total loss across the sample: €161 million.
+
+P: The average lies a little, and in a direction that concerns you. It is dragged down by a few disasters. The figure to remember is the **median: €1,843**. That is the fate of the ordinary client — the one who did nothing crazy, who simply played for a few months and stopped. You are far more likely to be that one.
+
+CASE: The shape of the distribution
+Out of the 14,799 clients in the study:
+722 clients (4.9%) lost **more than €50,000** each, for a total of €102 million.
+121 clients (0.8%) made **more than €24,000** each, for a total of about €10 million.
+The tail of losses weighs **ten times** the tail of gains. This is not an even game whose side you pick at random: the rare big winners do not come close to offsetting the rare big losers.
+
+ERR: The classic mistake
+"Those people didn't know what they were doing. I'm going to learn properly." The study isolated the 1,881 clients who were active *every year* for four years — the most experienced in the sample. Result: 87.56% losing, with an average loss of €26,745. The longer they lasted, the more they lost. The AMF concludes that there is no learning effect.
+
+KEY: Key points
+- 89% of French clients lose. The median client loses €1,843.
+- Experience on its own improves nothing: that is measured, not assumed.
+- This track does not claim to reverse those numbers. It gives you the few variables you can actually act on.
+
+H2: 1.4 Leverage
+
+HOOK:
+A broker offers to let you deposit €1,000 and move €30,000 on the market. Put like that, it sounds like a gift. It is an accelerator — and an accelerator works in both directions.
+
+P: **Leverage** is the ratio between the size of your position and the money you have actually deposited. Leverage 30: €1,000 drives €30,000. The consequence is pure arithmetic, there is nothing to interpret: a 1% move in the market becomes 30% of your capital.
+
+P: Here is the point almost everyone misses. Leverage does not change the probability that you are right. It makes your analysis neither better nor worse. It changes one thing only: **how fast you are wiped out when you are wrong**.
+
+P: In Europe, your broker closes your positions automatically when your account falls below a regulatory threshold. That mechanism does not protect you from loss. It protects you from debt. An important distinction.
+
+P: Look at what exactly the same market move — a 1% fall — produces at different levels of leverage, on capital of €1,000.
+
+TABLE: Leverage | Position for €1,000 | Loss if the market falls 1%
+×1 | €1,000 | €10, or 1% of capital
+×5 | €5,000 | €50, or 5%
+×30 | €30,000 | €300, or 30%
+×100 | €100,000 | €1,000, or all of it
+
+CASE: The order of magnitude that matters
+EUR/USD covers on average **0.5% to 0.7% in an ordinary day**. Not a crash, not a surprise announcement: a dull session.
+At ×100 leverage, that dull session is 50% to 70% of your capital.
+So you need neither an analytical error nor an exceptional event to disappear. A Tuesday is enough.
+
+ERR: The classic mistake
+Picking maximum leverage because it is available. Leverage is not a performance setting you push to the top like the volume on a speaker. It is the **result** of a calculation you will learn in the next module — never a default, never a preference.
+
+KEY: Key points
+- Leverage ×30: 1% of market becomes 30% of your capital.
+- Leverage does not change how right you are, only how fast you are wiped out.
+- You never choose a leverage. You calculate a position size, and the leverage follows from it.
+
+H2: 1.5 What this track will — and will not — teach you
+
+HOOK:
+In the pages that follow you will find no signals, no winning setup, no indicator said to be secret. So let me tell you straight away what is going to replace all that.
+
+P: Five skills, and every one of them is checkable. Work out what you are risking before you click. Read a bare chart. Write a scenario that a specific price can disprove. Turn down a trade and name the rule that turned it down. Keep a journal and pull a process error out of it.
+
+P: What you will not find: a method that wins, technical indicators, exotic chart patterns, or the slightest opinion on what you should buy. Indicators arrive in the Intermediate track, together with the only thing that makes them useful — a way to test them.
+
+CASE: Look at how the time is split
+Of the 70 minutes in this track: **13 minutes** go to reading a chart, and **35 minutes** to risk, decision and behaviour.
+That is the exact opposite of the average course, which spends most of its volume on entering a position — that is, on the one moment in the process that has never separated a surviving account from a dead one.
+
+ERR: The classic mistake
+Jumping straight to module 3 because "charts are the real trading". The data in chapter 1.3 says otherwise, and it says so across 14,799 people: what separates the survivors from the rest is not the sharpness of their analysis, it is the size of their positions.
+
+KEY: Key points
+- No indicators in this track. The bare chart first.
+- The order of the modules *is* the content: risk, then reading, then decision.
+- Everything happens in simulation. The only capital at stake here is your attention.
+
+EX: The cost of starting
+
+EXF: Skill assessed
+Goals 1 and 2: explain what a price, a spread and a contract against the broker are; calculate the impact of a 1% market move at three levels of leverage.
+
+EXF: Instructions
+**Part A.** Six statements are shown to you one at a time. For each: true or false.
+**Part B.** Your capital is €1,000. For three levels of leverage, calculate the loss in euros and as a percentage of capital if the market falls 1%.
+
+EXF: What the platform must provide
+- A screen with no chart. This exercise must contain no market data at all: it is about mechanisms, not about reading.
+- Part A: six true/false cards shown in sequence, no going back, with the correction displayed after each answer.
+- Part B: a three-row table (leverage ×5, ×30, ×100) and two numeric input columns — loss in €, loss in %. Validation with a tolerance of ±€1 and ±0.5 points.
+- The €1,000 capital is shown at all times in a top bar, and cannot be edited.
+
+EXF: Worked correction
+**Part A.** The six statements and their answers:
+- *"By buying EUR/USD, I own euros."* — False. You hold a contract against your broker. Tempting because the platform's vocabulary says "buy".
+- *"If the market does not move, I lose nothing."* — False. The spread is taken at entry, the financing charge every night.
+- *"The broker wins when I lose."* — False in the general case, and this is the one most often got wrong. The broker is paid for activity: commissions, spread, overnight charges. Your result concerns him only indirectly.
+- *"Fees explain most of clients' losses."* — False: 14.2% according to the AMF. Tempting because it is the most comfortable explanation.
+- *"The most experienced clients lose markedly less."* — False. 87.56% losing among clients active four years running.
+- *"Leverage improves my chances of being right."* — False. It acts on size alone, never on probability.
+**Part B.** Leverage ×5: €50, or 5%. Leverage ×30: €300, or 30%. Leverage ×100: €1,000, or 100%.
+The third row is the only one that really counts. Plenty of users compute it correctly and draw exactly the wrong conclusion: "so I just need to not be wrong". No. It means that an **ordinary day** on EUR/USD — no crash, no surprise — is enough to wipe out the account. The question is not how to avoid being wrong. It is how to survive the normal.

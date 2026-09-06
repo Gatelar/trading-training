@@ -1,0 +1,171 @@
+MOD: 4 | Building a decision | 12-minute read · 5 chapters · 1 exercise | 12 min
+Goal: turn a chart reading into a scenario with numbers, and that scenario into a decision.
+
+H2: 4.1 Scenario, invalidation, target
+
+HOOK:
+"I think it's going up" is not a scenario. It is an opinion — and an opinion cannot be wrong, it can only be disappointed. The difference is not rhetorical: it decides what you will do two hours from now.
+
+P: A usable scenario has three elements, all of them written down **before** you enter. What you expect, stated in terms of price and not of intention. The level that will prove you were wrong, called the **invalidation**. The level where you take your profit, called the target.
+
+P: What separates a scenario from an opinion is falsifiability: there must be a specific price whose being reached means "I was wrong". Without that price you have written nothing usable, and you will discover your position is losing without ever being able to say when it stopped being valid.
+
+P: The practical consequence is a chain, and the order of its links is not negotiable. The invalidation determines the stop. The stop determines the size — that is the formula from module 2. The target determines the ratio in the next chapter. Everything follows from three lines written in cold blood.
+
+CASE: A complete scenario, from the first number to the last
+EUR/USD in H4, uptrend structure, last low at 1.0844. Current price: 1.0868.
+**Scenario**: price comes back into the 1.0844–1.0850 zone and sets off again towards the last high, 1.0898.
+**Invalidation**: an H4 close below 1.0838, that is, below the low holding the structure up.
+**Entry**: 1.0852. **Target**: 1.0895.
+Risk: 14 pips. Gain sought: 43 pips.
+Size for 1% on €1,000: €10 ÷ 14 = €0.71 per pip, that is about **7,100 units**.
+Not one of these numbers was chosen for comfort. Each follows from the one before.
+
+ERR: The classic mistake
+Writing the target first. The beginner decides how much he wants to make, then looks for the entry that would make that gain possible. The correct order starts from the invalidation, the only element the market supplies — the other two come from you, and one of them comes mostly from what you want.
+
+KEY: Key points
+- Three lines written before entry: expectation, invalidation, target.
+- A scenario no price can contradict is not a scenario.
+- The invalidation comes from the chart. The target is deduced from it. Never the reverse.
+
+H2: 4.2 Reward-to-risk and the break-even hit rate
+
+HOOK:
+Being right often is not enough. You can win seven trades out of ten and end the year down. Two minutes of arithmetic are enough to see why — and to stop ever judging a method by its hit rate.
+
+P: The **reward-to-risk ratio**, written R/R, compares the gain sought to the risk accepted. A trade risking €10 to aim for €30 is a 3R trade. It is a figure known before entry, unlike the outcome.
+
+P: From that ratio comes a far more interesting value: the minimum hit rate below which you lose money. The formula is short.
+
+CARD: The break-even hit rate
+**Minimum hit rate = 1 ÷ (1 + R/R)**
+Below that rate a method loses. Above it, it wins. The calculation is done before entering, not after a hundred trades.
+
+TABLE: 40,60 || Reward-to-risk ratio | Hit rate needed to break even
+1R | 50%
+1.5R | 40%
+2R | 33%
+3R | 25%
+5R | 17%
+
+CASE: What the table really means
+At **3R** you can be wrong three times out of four and still break even. That is a considerable margin for error, and it is handed to you by the structure of the trade, not by your insight.
+At **0.5R** you need a 67% hit rate — a level almost nobody sustains over time.
+And these thresholds are **gross**: they ignore the spread and the overnight charges from module 1. Once those costs are folded in, a trade that breaks even in theory is a losing trade in fact.
+
+ERR: The classic mistake
+Aiming small to "lock it in". Systematically taking 5 pips of profit while risking 20 produces a long run of winning trades and an account that goes down. The feeling is excellent — you are right almost every time — and the statement is bad. It is the most comfortable trap in the business, because nothing in the lived experience flags the error.
+
+KEY: Key points
+- Minimum hit rate = 1 ÷ (1 + R/R). Work it out before you enter.
+- Below 1.5R, costs eat the edge.
+- A high hit rate with a low R/R is a slow way to lose.
+
+H2: 4.3 Expectancy
+
+HOOK:
+Someone who is right 40% of the time can make money every year. Someone who is right 70% of the time can go broke. The difference lies in a multiplication you can do in thirty seconds.
+
+P: **Expectancy** is the average result a trade produces, winners and losers taken together. It brings together the two variables beginners look at separately: how often the gains come and how big they are.
+
+CARD: The formula
+**Expectancy = (hit rate × average gain) − (miss rate × average loss)**
+Expressed in R, it gives you directly what a trade returns on average. It is the only figure that describes a whole system.
+
+CASE: Two profiles, two opposite conclusions
+**Profile A** — 40% hit rate, average gain 3R, average loss 1R.
+(0.40 × 3) − (0.60 × 1) = 1.20 − 0.60 = **+0.60 R per trade**.
+**Profile B** — 70% hit rate, average gain 0.4R, average loss 1R.
+(0.70 × 0.4) − (0.30 × 1) = 0.28 − 0.30 = **−0.02 R per trade**.
+Over 200 trades: A is wrong 120 times and makes about 120 R. B is right 140 times and loses, before the spread is even counted.
+The profile that feels better day to day is the one that empties the account.
+
+ERR: The classic mistake
+Judging a method by its hit rate. It is the most visible figure, the easiest to tell a story about, and the least informative of them all. On its own it says strictly nothing: it only means something alongside the average R.
+
+KEY: Key points
+- Expectancy = (hit rate × average gain) − (miss rate × average loss), in R.
+- A small positive expectancy repeated beats a brilliant, rare method.
+- Never judge a system on its hit rate alone.
+
+H2: 4.4 The pre-order checklist
+
+HOOK:
+The moment you are least able to judge is exactly the moment your finger is on the button. The checklist exists so that the decision is already made when that moment arrives.
+
+P: Its job is not to improve your trades: it is to remove the ones you take on reflex. It moves the decision out of an emotionally loaded instant and into a cold one, where the criteria were set with nothing at stake.
+
+UL:
+- Is the structure readable in H4? If the answer is "no trend", I do not enter.
+- Where is my invalidation, in price?
+- What size does that stop impose for a 1% risk?
+- What is the reward-to-risk ratio? Below 1.5, I do not enter.
+- Does this trade look like my previous trades, or is it an exception?
+- How many trades have I already taken today?
+
+P: The rule of use is brutal, and that is what makes it work: **a single missing answer cancels the trade**. No weighting, no trading one criterion off against another, no "almost".
+
+CASE: A good trade turned down
+Assessment of a real setup, question by question.
+H4 structure readable: **yes**, up. Invalidation: **yes**, 1.0838. Size for 1%: **yes**, 7,100 units. Reward-to-risk: **yes**, 43 ÷ 14 = 3.1. Consistent with previous trades: **yes**.
+Trades already taken today: **4**, against a limit set at 3. **No.**
+Result: **trade refused**.
+That trade might well have won. The rule does not exist to optimise this one: it exists to remove the thirty trades of the same kind that will follow, most of which will be worth nothing.
+
+ERR: The classic mistake
+Adapting the checklist to the trade. As soon as an answer is missing, the temptation is to reword the question rather than give up. A checklist modified during a session no longer filters anything: it merely records what you had decided to do.
+
+KEY: Key points
+- Six questions, all compulsory. One missing answer cancels the trade.
+- It is filled in before the click, not during.
+- It is only ever modified outside market hours.
+
+H2: 4.5 The trade you do not take
+
+HOOK:
+The AMF study measured a disarmingly simple relationship across 14,799 clients: the more orders they placed, the more they lost. No threshold, no exception, no category spared. A straight line.
+
+P: Not entering is a decision, not the absence of one. It costs nothing and has a measurable value: it avoids the negative expectancy of average setups, which make up the overwhelming majority of what you will see.
+
+P: Selectivity is therefore a performance variable in exactly the same way as R/R. Out of twenty or so setups spotted in a week, three or four genuinely pass the checklist. The other sixteen are not missed opportunities: they are low-expectancy trades you were lucky enough not to take.
+
+P: What remains is the real obstacle, and it is not technical. A session with no trade feels like a session where you did nothing. That is a complete illusion: selectivity *is* the work, and it is in fact the hardest part to hold to.
+
+CASE: Two weeks, same method, same person
+**Week 1** — 4 trades, all compliant: +2R, −1R, +3R, −1R. Result: **+3R**.
+**Week 2** — 14 trades, 10 of them taken out of boredom. The 4 compliant ones produce the same +3R. The other 10 return an average of −0.2R each, that is −2R, plus the spread on ten round trips.
+Result: **+1R at best**.
+The ten extra trades cost two thirds of the week's performance. They also took up most of the time spent in front of the screen.
+
+ERR: The classic mistake
+Measuring your day by the number of trades taken. Nobody feels productive after four hours of watching without a single order. And yet that is very often the most profitable session of the week — and the only one that leaves no trace in the statement.
+
+KEY: Key points
+- Not entering is a decision, and it is recorded like any other.
+- Three to four compliant setups a week, not fourteen.
+- A session with no trade is not a wasted session.
+
+EX: The plan before the click
+
+EXF: Skill assessed
+Goals 8, 9 and 10: calculate a reward-to-risk ratio, write a complete trade plan, turn down a trade by naming the rule that turns it down.
+
+EXF: Instructions
+You are shown a EUR/USD chart in H4 and in H1.
+**1.** Fill in the trade plan: scenario, entry, invalidation, target.
+**2.** Check the reward-to-risk ratio calculated automatically.
+**3.** Go through the six-point checklist, then make your final decision.
+
+EXF: What the platform must provide
+- A split screen, H4 on top and H1 below, on the same asset over the same period.
+- A four-field form: scenario as free text (200 characters), then entry, invalidation and target — those last three typed in or set by clicking directly on the chart.
+- A live display of position size and R/R as soon as the three prices are filled in. The user must see the R/R change while he moves his target: that is the best way to make chapter 4.2 stick.
+- The six checklist items as tick boxes, with a "trades taken today" counter **preset to 3** and not editable.
+- A final decision button with two outcomes: "I take it" / "I don't take it".
+
+EXF: Worked correction
+The expected R/R is at least 1.5 and the size must correspond to 1% risk on €1,000. Both are checked automatically and are not where the difficulty lies.
+The difficulty is elsewhere, and it is deliberate. The counter stands at 3, so the sixth checklist question fails, so **the trade must be refused** — even though the other five answers are excellent, and they are.
+Most users validate it anyway. Not out of carelessness, but because the trade is objectively good and the rule feels incidental at that particular moment. That is exactly the situation the rule exists to cover: it is of no use at all against bad trades, which you would discard anyway. It is only of use against the beautiful ones.
+A good trade plan that is turned down is still a good trade plan. It goes into the journal marked "not taken", and it counts in your statistics in module 6.

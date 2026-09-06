@@ -1,0 +1,175 @@
+MOD: 6 | Working like a professional | 12-minute read · 5 chapters · 1 exercise | 12 min
+Goal: install the correction loop without which experience teaches nothing.
+
+H2: 6.1 The trading journal
+
+HOOK:
+The AMF isolated 1,881 clients active four years running. Their loss rate did not fall: 87.56%. Experience on its own teaches nothing — that is measured. What teaches is the written record you keep of it.
+
+P: Memory is not enough, and for a precise reason: it is reconstructed. You remember the conclusion, not the decision — and the conclusion retrospectively contaminates the memory of the decision. A winning trade becomes a good idea; a losing trade, a mistake. In both cases the reconstruction erases the useful information.
+
+P: The account statement is no better: it gives the results, never the reasons. Seven fields, on the other hand, are enough — provided you fill them in at the right moment.
+
+UL:
+- Date and time of entry.
+- Asset and timeframe.
+- Scenario in one sentence, **written before entry**.
+- Invalidation and target, in price.
+- Position size and risk in R.
+- Result in R, never in euros.
+- Compliance: did the trade respect the six checklist questions? Yes or no.
+
+P: The seventh field is the only one that produces learning. The first six describe; that one judges the process, independently of what the market did. It is also the easiest to skip, precisely because it is the only one that can tell you that you were wrong when you won.
+
+CASE: A complete entry
+*12/03, 2:20 p.m. · EUR/USD H1 · Pullback into the 1.0850–1.0844 zone in an H4 uptrend, resumption expected towards 1.0898 · Invalidation 1.0838, target 1.0895 · 7,100 units, 1 R = €10 · Result: −1 R · Compliant: yes.*
+This trade is **losing and compliant**. It calls for no correction, no soul-searching, no adjustment of method.
+That is the distinction the next chapter develops, and it is the hardest to accept in the whole track.
+
+ERR: The classic mistake
+Recording results in euros. "−€40" compares to nothing: not to your other trades, whose risk varied, nor to your capital six months ago, which was not the same. "−1 R" compares to everything. A journal in euros produces emotion; a journal in R produces statistics.
+
+KEY: Key points
+- Seven fields, only one of which is about the process. That is the one that counts.
+- The scenario is written before entry, otherwise it is rewritten by the result.
+- Everything is recorded in R. Never in euros.
+
+H2: 6.2 Decision and outcome
+
+HOOK:
+Four trades, four outcomes. Two deserve a correction, two deserve none — and they are not the two losers.
+
+P: Crossing the compliance of the decision with the nature of the outcome produces four cases, two of which are counter-intuitive. It is this grid, and not the account balance, that tells you what to work on next month.
+
+TABLE: 34,33,33 || | Winning outcome | Losing outcome
+**Compliant decision** | Nothing to do. Repeat. | Nothing to correct. It is the normal cost of the activity.
+**Non-compliant decision** | The dangerous case: the outcome rewards the breach. | The easy case: the pain and the error coincide.
+
+P: The worst-handled cell is "compliant and losing". It represents the majority of your trades — a system with a 40% hit rate produces six out of ten — and it is the one everybody sets about correcting, because it hurts.
+
+P: The most expensive cell is "non-compliant and winning". Nothing flags the error: the account rises, the feeling is good, and the behaviour settles into habit. Judging a decision by its outcome is called *resulting*. On a short sample, the outcome is mostly noise.
+
+CASE: A month of forty trades
+**Thirty compliant trades**: 12 winners at +3R, 18 losers at −1R, that is 36 − 18 = **+18 R**.
+**Ten non-compliant trades**: 4 winners at +1.5R, 6 losers at −2.2R — the stops having been moved. That is 6 − 13.2 = **−7.2 R**.
+Month's total: **+10.8 R**.
+The ten out-of-framework trades removed 40% of the performance. And the four winners among them are exactly why they will be repeated next month.
+
+ERR: The classic mistake
+Revising your method after a run of compliant losses. It is the most frequent and most destructive reaction there is: it replaces a system with positive expectancy by an untested one, at the precise moment the first was passing through its normal variance. Two months later the same thing starts again with the new one.
+
+KEY: Key points
+- Compliant and losing: no correction. It is the cost of the activity.
+- Non-compliant and winning: deal with it first, despite the outcome.
+- Never change method on the basis of a short run.
+
+H2: 6.3 Reading your own statistics
+
+HOOK:
+After thirty trades, your journal holds more information about you than any course. You just have to know which three numbers to pull out of it, and in what order to read them.
+
+P: Three numbers, and not one more.
+
+UL:
+- **The compliance rate** — compliant trades divided by total trades. The only measure you control entirely, and therefore the first to fix. Aim for above 90%.
+- **The average R per trade** — the expectancy from module 4, calculated exclusively on compliant trades. It measures your method, provided it is computed on trades that actually applied it.
+- **The longest losing run** — to be compared with your drawdown limit. If it comes close, the method is not what is at fault: your risk per trade is too high for it.
+
+P: The order of reading is not negotiable, and it follows from the first point: as long as compliance is low, the average R does not measure your method, it measures your indiscipline. Below **30 compliant trades**, none of the three values can be interpreted — it is the limit beginners ignore most systematically.
+
+CASE: A statement of forty-five trades
+Compliance: 31 / 45 = **69%**.
+Average R across all 45 trades: **+0.05 R** — that is, near enough nothing.
+Average R across the 31 compliant trades: **+0.52 R**.
+Longest losing run: 6.
+Reading: the method has a clearly positive expectancy, and fourteen out-of-framework trades brought it back to zero. So next month's work is not about the method — it works. It is entirely about the fourteen.
+
+ERR: The classic mistake
+Calculating your statistics across all trades. Mixing compliant and non-compliant produces an average that describes no existing system: neither the one you designed, nor the one you applied. You then conclude that "the method doesn't work", when it has never actually been tested.
+
+KEY: Key points
+- Three measures: compliance, average R on compliant trades, longest losing run.
+- Nothing can be interpreted below 30 compliant trades.
+- Fix compliance before touching the method.
+
+H2: 6.4 Deliberate practice
+
+HOOK:
+Repeating a thousand trades teaches nothing: that is measured, over four years in France and over three years of cohorts in Brazil. What teaches is repetition with immediate correction and a narrow objective. The difference between the two lies in the organisation, not in talent.
+
+P: **Deliberate practice** means repeating a specific task, sitting at the edge of your current competence, with immediate feedback on the execution rather than the outcome. It is the only training regime whose effectiveness is established in complex disciplines.
+
+P: Applied to trading, that definition rules out two extremely widespread practices: trading "to see", and working on several skills at once. In both cases the feedback becomes unusable, since you no longer know what it is assessing.
+
+UL:
+- One skill per session — spotting lows, *or* calculating a size, never both.
+- Twenty repetitions minimum on replayed historical data.
+- Correction after each repetition, never at the end of the session.
+- No scorekeeping in euros during training.
+- One written note at the end of the session: what was difficult, in a sentence.
+
+P: The simulator is what makes that structure possible. It compresses into an hour a sample of situations that would take months to occur in real time — and it allows error, which no real account does.
+
+CASE: Two ways to spend ten hours
+**Option A** — ten hours of simulated trading, all skills mixed together. About **25 decisions**, each judged on its outcome, none isolated.
+**Option B** — ten one-hour sessions, one skill per session. About **200 repetitions**, each corrected immediately.
+The same time invested. Eight times as many repetitions, and feedback that bears on the execution rather than on luck.
+That is the difference between playing and training.
+
+ERR: The classic mistake
+Confusing screen time with training. Watching a market for four hours with no defined task produces no measurable learning, however serious the observer. Duration is not the variable that counts: the density of corrections is.
+
+KEY: Key points
+- One skill per session, twenty repetitions minimum, immediate correction.
+- The simulator is there to concentrate repetitions, not to simulate profits.
+- Screen time and training are not the same thing.
+
+H2: 6.5 After this track
+
+HOOK:
+You now know how to calculate a risk, read a structure and turn down a trade. You are missing the one thing no text can ever give you: a sample.
+
+P: **Step 1 — thirty compliant trades in simulation, with no profit objective.** The only figure tracked is the compliance rate. The result does not matter at this stage, and looking at it would be actively counterproductive.
+
+P: **Step 2 — measure the average R across those thirty compliant trades.** If it is negative, the method gets revised. If it is positive, the sample extends to a hundred trades before any conclusion, because thirty is not enough to tell a method from a lucky run.
+
+P: **Step 3 — the Intermediate track**, which introduces technical indicators together with the only thing that makes them usable: a way to test them. The question left open in chapter 3.5 finds its answer there.
+
+P: And what this track has deliberately not covered, so that you know what is left to look for elsewhere: choosing a broker, taxation, the conditions for any move to real money, and every product other than currency pairs and spot cryptocurrencies.
+
+CASE: The calendar, with no favourable rounding
+At three compliant trades a week — the pace the selectivity of module 4 imposes — thirty trades take about **ten weeks**. A hundred trades take **thirty-three**.
+Any promise of competence in thirty days is in direct contradiction with that division. This is not a moral position on how serious courses are: it is the result of 30 ÷ 3.
+
+ERR: The classic mistake
+Going live as soon as the simulation becomes profitable. Profitability observed over thirty trades is mostly noise. And execution with real money brings the whole of module 5 back at a stroke — disposition effect, overtrading, the spiral after a loss — which has strictly nothing to do with the quality of your analysis.
+
+KEY: Key points
+- Thirty compliant trades before any conclusion, a hundred before any confidence.
+- The only figure to track at the start is the compliance rate.
+- Ten weeks minimum. The calculation is arithmetic, not moral.
+
+EX: The trade you will not correct
+
+EXF: Skill assessed
+Goals 11 and 12: record a trade and pull a process error out of it, distinct from a bad outcome.
+
+EXF: Instructions
+You are shown four trades that have already been executed, with their chart and their result.
+**1.** Complete the missing journal fields for each one.
+**2.** Place each trade in the compliance / outcome grid.
+**3.** Name the one trade that requires a correction, and write that correction in a single sentence.
+
+EXF: What the platform must provide
+- Four short replays of 30 H1 candles, with the entry, stop, target and actual exit drawn on the chart.
+- A seven-field journal form, five of them pre-filled and read-only. Two fields remain to be entered: compliance (yes / no) and the result in R.
+- A 2 × 2 drag-and-drop grid for the classification.
+- A 150-character text field for the correction, and only one — part of the exercise is naming only one.
+
+EXF: Worked correction
+- **Trade A** — compliant, losing, −1 R. No correction. This is the trade the vast majority of users want to correct, and it is the heart of the exercise: nothing failed. The stop worked exactly as intended, the scenario was contradicted by the market, the process was intact.
+- **Trade B** — compliant, winning, +3 R. No correction. Easy.
+- **Trade C** — non-compliant, stop moved after entry, losing, −2.4 R. Everyone finds this one: the fault and the pain coincide.
+- **Trade D** — non-compliant, fourth trade of the day when the limit is three, **winning, +2 R**. This is the only right answer to the third question.
+The result is positive, so nothing flags the error: not the balance, not the feeling, not the chart. That is exactly why it will be repeated — and why it will eventually land on an unfavourable run. The expected correction is about the rule that was broken, never about the result obtained.
+If you named trade C, you found a real error, but an already obvious one. If you named trade D, you have just used the journal for what it is for.

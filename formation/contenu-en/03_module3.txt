@@ -1,0 +1,151 @@
+MOD: 3 | Reading a bare chart | 13-minute read · 5 chapters · 1 exercise | 13 min
+Goal: pull information out of a chart without the help of a single indicator.
+
+H2: 3.1 The candlestick
+
+HOOK:
+A candlestick does not tell you where price is going. It tells you who won the last battle, and by how much. That is infinitely less seductive, and infinitely more useful.
+
+P: Each candlestick sums up four values and nothing else: the **open**, the **close**, the **high** and the **low** reached during the period. The central rectangle — the body — represents the distance between the open and the close. The lines sticking out of it — the wicks — mark the extremes.
+
+P: The useful reading is in what the wicks say. A wick marks a place price went to and **was pushed back from**. It is a refusal, not a passage. The market tested a level there and failed to settle on it.
+
+P: The body, for its part, measures conviction. A full body means one side held from the beginning of the period to the end. A tiny body framed by two long wicks means the opposite: plenty of movement, no decision.
+
+CASE: One hour of market, read properly
+H1 candle on EUR/USD. Open 1.0840 · high 1.0872 · low 1.0836 · close 1.0842.
+Price rose **32 pips**, then gave the whole move back to close 2 pips above its open.
+Range covered: 36 pips. Net progress: 2 pips.
+Reading: the buyers spent a full hour for almost nothing, and they left behind a 30-pip upper wick. That level, 1.0872, has just been refused. It will serve as a marker.
+
+ERR: The classic mistake
+Naming the patterns before reading the numbers. The beginner learns "hammer", "doji", "engulfing", then hunts for those shapes on the chart — and finds them, inevitably, because they are everywhere. A single candle predicts nothing: it describes. The productive question is not "which pattern is this?" but "where was price refused?".
+
+KEY: Key points
+- Four numbers are enough: open, high, low, close.
+- A wick marks a refusal. Price went there and did not stay.
+- Describe the candle before you name it. The description is richer than the label.
+
+H2: 3.2 The timeframe
+
+HOOK:
+The same market, at the same second, can be in an uptrend and a downtrend at once. All it takes is a change of timeframe. That is not the market contradicting itself, it is a question of the scale you observe it at.
+
+P: The **timeframe** is the length of time each candle sums up. In H1 a candle covers one hour; in H4, four hours. The underlying data is rigorously identical: only the level of aggregation changes.
+
+P: What does change is the ratio between signal and noise. The shorter the timeframe, the more movements you watch that will have no consequence at all. You are not seeing more things: you are seeing the same things sliced more finely, and therefore more apparent occasions to act.
+
+P: The working convention adopted in this track gives each timeframe a distinct role. **H4 sets the context** — where the major zones are, what the dominant direction is. **H1 places the execution** — where to enter, where to put the stop. The two do not vote: they answer two different questions.
+
+CASE: The same day, two slicings
+**In H1**: 24 candles, average range around 18 pips, roughly ten alternations between up candles and down candles.
+**In H4**: 6 candles, average range around 45 pips, most often a single readable direction.
+The data is the same to the decimal. The number of moments at which you might feel obliged to act has been divided by four.
+
+ERR: The classic mistake
+Dropping to a lower timeframe when you are undecided. The reflex looks reasonable — look closer to see better. The result is mechanical: more candles, more movement, more available justifications for entering. And the AMF study is unambiguous on this point: the more orders a client places, the more he loses.
+
+KEY: Key points
+- H4 sets the context, H1 places the execution. Two roles, never two opinions.
+- A shorter timeframe adds no information: it adds noise.
+- When in doubt, go up a timeframe. Never the other way.
+
+H2: 3.3 Highs, lows and structure
+
+HOOK:
+Strip everything off the chart. You are left with highs and lows. That is enough to answer the one question that comes before any decision: is this market going somewhere, or round in circles?
+
+P: A **high** is a candle whose top exceeds that of the candles around it. A **low** is its mirror image downwards. These are observable facts, with no room for interpretation.
+
+P: From the way they follow one another come three states, and only three. The **uptrend**: higher highs *and* higher lows. The **downtrend**: lower highs *and* lower lows. And **no trend**, the moment that double condition is not met.
+
+P: That third state deserves particular attention, because it is the most frequent and the most badly handled. No trend is not an in-between phase to be read subtly while waiting for the direction to firm up: it is a state in its own right, and it is where the beginner loses most, precisely because he goes looking for a direction that does not exist yet.
+
+CASE: A structure read with nothing but numbers
+Sequence recorded on EUR/USD in H4:
+low 1.0790 · high 1.0865 · low 1.0812 · high 1.0898 · low 1.0844.
+The lows are rising: 1.0790 < 1.0812 < 1.0844. The highs are rising: 1.0865 < 1.0898.
+The double condition is met: **uptrend structure**, unambiguously and without a single tool.
+What follows can be read in advance: a next low above 1.0844 confirms the structure; a low below it opens the door to doubt.
+
+ERR: The classic mistake
+Forcing the reading. On a chart with no structure you can always find two points that rise — provided you choose which ones carefully. The test is binary and not negotiable: if you have to hesitate over which points to keep, the answer is "no trend". The hesitation is the information.
+
+KEY: Key points
+- Three possible states: up, down, none. The third is the most common.
+- A trend requires the highs *and* the lows to point the same way.
+- If the reading takes an effort of interpretation, there is nothing there to read.
+
+H2: 3.4 Support and resistance zones
+
+HOOK:
+A line drawn on a chart exerts no power over the market. What does exert power is the fact that thousands of participants are watching the same zone and have left orders in it.
+
+P: A **support** is a zone below price where buyers have already stepped in in the past. A **resistance** is its mirror image above. The important word is *zone*: price does not react to an exact number but to a band a few pips wide, because participants do not all place their orders in the same spot.
+
+P: Three criteria decide a zone's credibility: how many times price reacted there, how clean the rejection was — that is, how long the wicks left behind are — and how fresh it is. A zone that has not been visited for six months describes a market that no longer exists.
+
+P: One clarification that saves a lot of disappointment: a zone does not stop price. It marks a place where something *may* happen, which has nothing to do with a place where something *will* happen. The difference between those two phrasings is exactly the difference between a marker and a prediction.
+
+CASE: A zone wearing out
+EUR/USD in H4, zone between 1.0800 and 1.0812. Price has come down into it three times.
+**First visit**: 18-pip lower wick — clean rejection.
+**Second visit**: 12-pip wick.
+**Third visit**: 4-pip wick.
+The zone is still holding, but the reaction weakens with every visit: sellers are meeting less and less opposition there. A zone tested too often eventually gives way, and the shrinking wicks are the leading signal of that wear.
+
+ERR: The classic mistake
+Drawing ten zones. A chart covered in lines guarantees there will always be one near price, and therefore always a justification available at the moment the urge to enter turns up. Two zones per timeframe are enough: the nearest above, the nearest below. Past that, you are no longer building a reading, you are manufacturing permissions.
+
+KEY: Key points
+- A zone, not a line. A few pips wide, never an exact number.
+- Its credibility rests on how many past reactions there were and how clean they were.
+- Two zones per timeframe, maximum.
+
+H2: 3.5 Why no indicators
+
+HOOK:
+You have just read four chapters on reading charts without meeting a single moving average. That is not an oversight, and it is not an ideological stance. It is a question of order.
+
+P: A **technical indicator** is a formula applied to the four numbers you now know how to read. A moving average computes an average of closes; an oscillator compares recent ranges. Neither reaches any data the chart does not already contain. By construction an indicator therefore cannot add information: it removes some, since its job is to summarise.
+
+P: The problem is not the tool, which has its place. The problem is the order in which it arrives. Laid on top of a solid reading, an indicator filters: it removes setups you would have taken wrongly. Laid on top of nothing, it **replaces** the reading with a colour, and turns a hard question into a reassuring binary answer.
+
+P: On top of that comes a documented and systematic effect: piling on tools does not produce better decisions, it produces better justifications. With enough indicators on screen, there is always one that approves of what you already wanted to do.
+
+CASE: The arithmetic of justification
+Take three indicators, each in one of two possible states — in favour of buying or of selling. That produces **eight combinations**.
+Exactly one is full agreement to buy. Exactly one is full agreement to sell. The **other six** are disagreements.
+In other words, in 75% of cases the tooling does not settle anything. In practice, the trader who wants to buy keeps the two indicators that agree with him and describes the third as "lagging".
+The three tools settled nothing. They supplied the raw material for the justification.
+
+ERR: The classic mistake
+Hunting for the combination of indicators and settings that would have read the last six months correctly. That combination always exists — on any given history you are bound to find one in the end — and it almost never survives the following month. The Intermediate track comes back to this question with the only thing that makes it serious: a way to test instead of hope.
+
+KEY: Key points
+- An indicator creates no information: it summarises, so it loses some.
+- The bare chart first. Tools afterwards, on a reading that already stands up.
+- More tools means more available justifications, not more accuracy.
+
+EX: Cold reading
+
+EXF: Skill assessed
+Goals 3, 4 and 7: read a candlestick, justify the choice of a timeframe, identify a structure and two zones on a bare chart.
+
+EXF: Instructions
+You are shown a EUR/USD chart in H4, with no tools at all.
+**1.** Name the structure — up, down, or none — and place the two points that justify your answer.
+**2.** Draw the nearest zone above price, and the nearest one below.
+**3.** Answer this: in H1, would you see the same thing?
+
+EXF: What the platform must provide
+- A bare 60-candle H4 chart on EUR/USD, showing a readable uptrend structure with a pullback on the right-hand side. No indicators, no pre-existing annotations.
+- A "mark a point" tool limited to two uses, and a "draw a zone" tool limited to two uses, with adjustable width. Those limits are deliberate and are part of the teaching: the tool must refuse the third zone.
+- An H1 / H4 toggle **locked** until questions 1 and 2 have been submitted. The user must not be able to go looking in H1 for confirmation of what he could not read in H4.
+- A three-option multiple choice for question 3.
+
+EXF: Worked correction
+**Question 1.** Uptrend structure. The two expected points are the **last two lows**, not the highs.
+This is the central teaching point of the exercise: most users mark the highs, because the highs are what the eye notices. But an uptrend does not break at its highs, it breaks at its lows — and that is exactly where the stop calculated in module 2 will go. Marking the highs means looking at the part of the chart that enters into no decision at all.
+**Question 2.** One zone above, one below, with a tolerance of ±10 pips. Any attempt to draw a third is refused by the tool, with no error message beyond the limit already shown.
+**Question 3.** In H1 the right-hand part of the chart looks neutral, even bearish. That is the intended trap, and the right answer is not "H1 is wrong". The right answer is: **H1 does not answer that question**. A pullback inside an uptrend always looks like a downtrend when you look at it too closely. The two timeframes are not in disagreement: they were not asked about the same thing.

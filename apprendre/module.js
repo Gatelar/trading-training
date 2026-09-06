@@ -110,7 +110,10 @@
     }
 
     function rendre(corps, dans) {
-        corps.split(/\n\s*\n/).forEach(function (bloc) {
+        // Le contenu poussé depuis Windows arrive avec des CRLF, et un retour
+        // chariot en fin de ligne empêche le $ de l'expression ci-dessous de
+        // coller : le balisage s'afficherait tel quel (« P: … »). On normalise.
+        corps.replace(/\r\n?/g, '\n').split(/\n\s*\n/).forEach(function (bloc) {
             var lignes = bloc.split('\n').filter(function (l) { return l.trim(); });
             if (!lignes.length) return;
             var m = lignes[0].match(/^([A-Z0-9_]+):\s?(.*)$/);

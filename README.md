@@ -1,6 +1,8 @@
 # Trading Training
 
-**Trading Training** est un site permettant de s'entraîner à l'analyse de graphiques financiers (chandeliers japonais) sur des scénarios de marché, avec un niveau de difficulté progressif et un vrai système de comptes.
+**Trading Training** est un site permettant de s'entraîner à l'analyse de graphiques financiers (chandeliers japonais) sur des scénarios de marché, avec un niveau de difficulté progressif, une formation écrite réservée aux abonnés et un vrai système de comptes.
+
+Site statique en vanilla (HTML/CSS/JS), sans build step ni dépendance npm, hébergé sur GitHub Pages. Toute la partie serveur (comptes, abonnements, contenu payant, administration) vit dans Supabase.
 
 ## Concept
 
@@ -51,48 +53,134 @@ Symétriquement à l'accompagnement en amont, la profondeur du debrief **après*
 
 Les questions/biais par niveau sont dans `DEBRIEF_QUESTIONS` et `BIAS_ITEMS` (`trading-trainer-prototype.jsx`). Les réponses ne sont pas encore sauvegardées entre les sessions (juste en mémoire le temps de l'exercice) — une vraie sauvegarde (table Supabase) serait l'étape suivante si on veut un historique de progression.
 
-## Comptes utilisateurs et quotas
+## Comptes, quotas et abonnement
 
-- Authentification réelle via **Supabase Auth** (inscription/connexion par email + mot de passe)
-- Visiteurs non connectés : **1 exercice/jour**
-- Inscrits gratuits : **3 exercices/jour** (suivi dans la table Supabase `exercise_logs`)
-- Page **Abonnement** avec prix encore en `???` (pas de paiement réel branché)
-- Page **Mon compte** : infos utilisateur + quota du jour restant
+Authentification réelle via **Supabase Auth**, avec quatre chemins d'entrée : email + mot de passe, **Google** (OAuth), **téléphone** (code SMS à usage unique), et réinitialisation de mot de passe par email (`authentification/reset-password.js`).
+
+| Profil | Accès aux exercices |
+|---|---|
+| Visiteur non connecté | **1 exercice/jour** (marqueur `localStorage`, remis à zéro chaque jour) |
+| Inscrit gratuit | **3 exercices/jour** (comptés dans la table Supabase `exercise_logs`) |
+| Abonné actif, en essai, ou en délai de grâce | **Illimité** |
+
+Le contrôle est fait dans l'en-tête de `trading-trainer.html`, avant l'affichage du simulateur. Une liste d'e-mails admin y est codée en dur pour contourner le quota en développement.
+
+L'abonnement passe par **Stripe, en mode test** : 9,99 €/mois ou 99 €/an (−17 %). Aucune carte réelle n'est débitée et le prix définitif n'est pas fixé. Trois fonctions edge Supabase portent la partie serveur :
+
+| Fonction | Rôle |
+|---|---|
+| `create-checkout-session` | Ouvre la session de paiement Stripe depuis la page Abonnement |
+| `stripe-webhook` | Reçoit les événements Stripe et met à jour la table `subscriptions` |
+| `admin-subscription-override` | Pause / reprise / annulation / octroi de jours gratuits, déclenché depuis le panel admin |
+
+La page **Mon compte** affiche les infos utilisateur et le quota du jour restant.
+
+## Formation (réservée aux abonnés)
+
+Trois parcours écrits — Débutant, Intermédiaire, Expérimenté — de 6 modules chacun, soit 18 modules et 83 chapitres (29 / 28 / 26), entièrement bilingues FR/EN.
+
+Le **sommaire** (titres, durées, nombre de chapitres) est public : il est servi en statique depuis `data/formation-index.js` et sert d'argument commercial. Le **corps des chapitres** vient exclusivement de la table Supabase `formation_chapitres`, sous RLS (migration `008_formation_rls.sql`) : un non-abonné ne reçoit aucune ligne, quoi qu'il fasse dans son navigateur.
+
+- `apprendre/apprendre.html` — le sommaire des trois parcours
+- `apprendre/module.html?p=<parcours>&m=<numéro>` — la lecture d'un module
+- `lib/formation-gate.js` — pilote **l'affichage** (mur d'abonnement ou contenu). Il ne protège rien à lui seul : la barrière réelle est la RLS. Il reprend à la virgule près la règle d'abonnement de `compte/compte.js`, et ouvre aussi l'accès aux comptes MANAGER et SUPER_ADMIN, comme la migration 008 le prévoit côté base.
+
+La chaîne de production du contenu part des fichiers texte balisés de `formation/contenu*/` et alimente trois sorties, qui ne peuvent donc pas diverger :
+
+```bash
+python formation/build_index.py
+```
+
+```bash
+python formation/push_chapitres.py
+```
+
+```bash
+python formation/build_pdf.py
+```
+
+Respectivement : `data/formation-index.js` (le sommaire public), `supabase/sql/009_formation_contenu.sql` (à jouer dans Supabase) et les six PDF (3 parcours × 2 langues, non versionnés).
+
+`_config.yml` exclut `formation/` et `supabase/` de la publication GitHub Pages : sans lui, les sources `.txt`, les PDF et les migrations 009 rendraient tout le contenu payant téléchargeable en clair. **Ne pas ajouter de `.nojekyll` à la racine** — il désactiverait Jekyll, donc ces exclusions.
+
+## Panel d'administration
+
+`admin/admin.html`, avec un contrôle d'accès par rôle (`USER` / `MANAGER` / `SUPER_ADMIN`, migration `001_rbac_profiles.sql`) :
+
+| Onglet | Contenu | Ouvert à |
+|---|---|---|
+| **Clients** | Annuaire (email, inscription, rôle, statut, activité), recherche et filtres | MANAGER, SUPER_ADMIN |
+| **Abonnements** | Overrides support : pause, reprise, annulation, octroi de jours gratuits | MANAGER, SUPER_ADMIN |
+| **Codes promo** | Création et activation/désactivation de codes | MANAGER, SUPER_ADMIN |
+| **Réglages** | Statistiques (clients, abonnés, essais, MRR), gestion des rôles, journal d'activité | SUPER_ADMIN seulement |
+
+Deux points structurants :
+
+- **La redirection côté client n'est pas la sécurité.** `admin/admin-init.js` renvoie un non-admin vers l'accueil, mais c'est du confort d'UX. La vraie barrière est la RLS Postgres sur chaque table : même en contournant la redirection, toutes les requêtes du panel restent vides ou refusées.
+- **Le journal d'activité est alimenté par des triggers**, pas par le JS (`005_activity_log_triggers.sql`). Un trigger se déclenche dès que la mutation a lieu, quelle que soit la façon dont elle a été invoquée — compter sur le code client laisserait des trous dans l'audit.
+
+Les codes promo sont créés et activables dans le panel, mais **pas encore appliqués au paiement** : `create-checkout-session` ne les lit pas.
+
+## Conventions de code
+
+- **Vanilla, aucun build step, aucune dépendance npm.** Les pages chargent leurs scripts directement. Les bibliothèques tierces viennent d'un CDN.
+- **Cache-busting par `?v=N`** sur les scripts et feuilles de style. À incrémenter quand on modifie un fichier déjà en ligne, sinon les visiteurs récurrents gardent l'ancienne version.
+- **Données utilisateur en `textContent`, jamais en `innerHTML`.** Les e-mails, les codes promo et tout ce qui vient de la base sont posés sur des nœuds construits par `document.createElement`. Les gabarits `innerHTML` sont réservés au balisage dont on écrit soi-même le contenu (libellés du dictionnaire i18n, nombres calculés). Là où du texte balisé doit devenir du HTML — le rendu des chapitres dans `apprendre/module.js` — il est échappé d'abord, et seules nos propres balises sont réinjectées ensuite.
+- **Une règle, un endroit.** Le test d'abonnement est écrit dans `compte/compte.js` et repris à l'identique par `lib/formation-gate.js` ; les titres et durées de la formation viennent tous de `data/formation-index.js`, généré.
 
 ## Structure du projet
 
 ```
 trading-training/
 ├── index.html                      # Page d'accueil (hero, ticker live, niveaux, CTA)
-├── style.css / app.js               # Styles et animations de la page d'accueil
-├── auth-state.js                    # Affiche l'état de connexion dans la top-bar (partout)
-├── supabase-client.js               # Config Supabase partagée (URL + clé publique)
-├── trading-trainer.html             # Prototype jouable (bundle React compilé)
-├── trading-trainer-prototype.jsx    # Code source React du simulateur (à recompiler avec esbuild)
-├── data/
-│   └── macro-events-eurusd.js       # Vraies dates de décisions BCE pour le contexte EUR/USD
-├── authentification/                # Connexion / inscription (panneau coulissant, Supabase Auth)
-├── abonnement/                      # Page abonnement (prix en attente)
-├── compte/                          # Page "Mon compte"
-└── images/                          # Visuels des cartes de niveaux
+├── style.css / app.js              # Styles et animations de la page d'accueil
+├── i18n.js / lang-toggle.js        # Dictionnaire bilingue + sélecteur FR/EN
+├── auth-state.js                   # Affiche l'état de connexion dans la top-bar (partout)
+├── supabase-client.js              # Config Supabase partagée (URL + clé publique)
+├── _config.yml                     # Exclusions GitHub Pages (protège le contenu payant)
+├── trading-trainer.html            # Simulateur : gate de quota + chargement du .jsx
+├── trading-trainer-prototype.jsx   # Le simulateur lui-même (malgré son nom, pas un prototype)
+├── niveaux/                        # Pages des 3 niveaux + quiz de vocabulaire
+├── exercices/                      # Exercice bonus "Gestion de trade en cours de route"
+├── apprendre/                      # Formation : sommaire et lecture des modules
+├── formation/                      # Sources .txt des parcours + scripts Python de génération
+├── admin/                          # Panel d'administration (RBAC)
+├── abonnement/                     # Page abonnement (Stripe mode test)
+├── authentification/               # Connexion / inscription (email, Google, téléphone)
+├── compte/                         # Page "Mon compte"
+├── legal/                          # Mentions légales, CGU, confidentialité
+├── lib/formation-gate.js           # Contrôle d'accès (affichage) à la formation
+├── supabase/
+│   ├── sql/                        # Migrations, à jouer dans l'ordre
+│   └── functions/                  # Fonctions edge (Stripe, overrides admin)
+├── data/                           # Événements BCE, glossaire, index de la formation
+├── tools/                          # Génération d'images et prompts (développement)
+└── images/                         # Visuels des cartes de niveaux
 ```
+
+`components/` et `lib/utils.ts` sont des composants React/TS qu'aucune page ne charge — ils sont exclus de la publication.
 
 ## Où en est le projet
 
 - [x] Page d'accueil avec ticker BTC/USD + EUR/USD en direct
-- [x] Authentification réelle (Supabase Auth), page Mon compte, menu déroulant
-- [x] Quotas d'exercices (1/jour visiteurs, 3/jour inscrits) avec page Abonnement
+- [x] Authentification réelle (Supabase Auth) : email, Google, téléphone, réinitialisation de mot de passe
+- [x] Quotas d'exercices (1/jour visiteurs, 3/jour inscrits, illimité pour les abonnés)
+- [x] Abonnement Stripe en mode test (mensuel/annuel) avec webhook et fonctions edge
 - [x] Simulateur avec outils de tracé (ligne de tendance, Fibonacci)
 - [x] EUR/USD sur données réelles (prix + contexte BCE daté)
 - [x] Quiz de définitions par niveau (correction par mots-clés, débloque l'accès aux exercices)
 - [x] Gestion du risque (stop-loss/take-profit, score en multiples de R) sur les niveaux intermédiaire et expérimenté
-- [x] Mode séance : 5 exercices enchaînés dans le même niveau/marché, résumé avec P&L cumulé à la fin
-- [x] Exercice bonus "Gestion de trade en cours de route" (niveau Expérimenté) : 4 scénarios de décision en cours de trade, notation optimal/défendable/risqué
-- [x] Identification de structure (support/résistance) sur intermédiaire et expérimenté, avant le choix achat/vente, avec score de précision contre les vrais points pivots
+- [x] Mode séance : 20 exercices enchaînés dans le même niveau/marché, résumé avec P&L cumulé à la fin
+- [x] Exercice bonus "Gestion de trade en cours de route" (niveau Expérimenté)
+- [x] Identification de structure (support/résistance) sur intermédiaire et expérimenté
 - [x] Quiz "quel événement explique ce mouvement" (EUR/USD, tous niveaux) intégré au debrief post-reveal
-- [x] Progression entre niveaux : intermédiaire/expérimenté verrouillés (y compris leur quiz de vocabulaire) tant qu'un seuil de performance n'est pas atteint sur le niveau précédent
+- [x] Progression entre niveaux : intermédiaire/expérimenté verrouillés tant qu'un seuil de performance n'est pas atteint
+- [x] Panel d'administration avec RBAC, overrides d'abonnement et journal d'activité
+- [x] Formation : 3 parcours bilingues (18 modules, 83 chapitres) servis sous RLS aux abonnés
+- [ ] Appliquer les codes promo au paiement (créés dans le panel, ignorés au checkout)
+- [ ] Passer Stripe en mode production et fixer le prix définitif
 - [ ] Étendre les données réelles aux autres marchés (or, actions, crypto)
-- [ ] Vrai système de paiement pour l'abonnement
+- [ ] Sauvegarder les réponses de debrief pour un historique de progression
 - [ ] Revue de sécurité complète du site
 
 ## Progression entre niveaux
@@ -122,9 +210,9 @@ Page autonome `exercices/gestion-trade-en-cours.html`, accessible depuis la page
 
 ## Mode séance
 
-Chaque changement de marché démarre une nouvelle séance de **5 exercices** (`SESSION_LENGTH` dans `trading-trainer-prototype.jsx`). Le badge "SESSION" affiche la progression (ex: "Exercice 3/5"). Le résultat de chaque exercice révélé est enregistré automatiquement (`useEffect` sur `revealed`) : gagné/perdu pour le débutant, multiple de R pour intermédiaire/expérimenté.
+Chaque changement de marché démarre une nouvelle séance de **20 exercices** (`SESSION_LENGTH` dans `trading-trainer-prototype.jsx`). Le badge "SESSION" affiche la progression (ex: "Exercice 3/20"). Le résultat de chaque exercice révélé est enregistré automatiquement (`useEffect` sur `revealed`) : gagné/perdu pour le débutant, multiple de R pour intermédiaire/expérimenté.
 
-Une fois les 5 exercices complétés, le bouton devient "Voir le résumé de séance" et affiche : nombre d'exercices, taux de réussite, R cumulé, R moyen par trade, meilleur/pire trade, et le détail exercice par exercice. Boutons "Nouvelle séance" (relance sur le même niveau/marché) ou "Changer de marché".
+Une fois la séance complétée, le bouton devient "Voir le résumé de séance" et affiche : nombre d'exercices, taux de réussite, R cumulé, R moyen par trade, meilleur/pire trade, et le détail exercice par exercice. Boutons "Nouvelle séance" (relance sur le même niveau/marché) ou "Changer de marché".
 
 ## Gestion du risque (stop-loss / take-profit)
 
@@ -146,25 +234,25 @@ Chaque page `niveaux/<niveau>.html` affiche un quiz de vocabulaire avant de déb
 
 ## Site bilingue (FR/EN)
 
-Le site entier (pages statiques + simulateur d'exercice) est traduit en français et anglais, avec un sélecteur en pastille glissante dans la top-bar.
+Le site entier (pages statiques, simulateur d'exercice et formation) est traduit en français et anglais, avec un sélecteur en pastille glissante dans la top-bar.
 
 - `i18n.js` — dictionnaire central + fonctions utilitaires, chargé sur toutes les pages statiques. Chaque élément traduisible porte un attribut `data-i18n="clé"` (utiliser `data-i18n-html` pour du HTML, `data-i18n-placeholder` pour un placeholder de champ).
-- `lang-toggle.js` — composant du sélecteur FR/EN, attend un élément `#langToggle` dans la page.
+- `lang-toggle.js` — composant du sélecteur FR/EN, attend un élément `#langToggle` dans la page. Il diffuse `tt:langchange`, que les pages qui se rendent dynamiquement (formation, exercice bonus) écoutent pour se re-rendre sans requête.
 - Les longues pages légales utilisent un système de blocs (`class="lang-fr"` / `class="lang-en"`, basculés via `html[lang]` en CSS) plutôt que des clés unitaires.
 - Le simulateur d'exercice (React) a son propre dictionnaire `T` embarqué dans `trading-trainer-prototype.jsx`, avec un état `lang` propagé à tous les composants. Il partage la même clé `localStorage` (`tt_lang`) que le reste du site pour rester synchronisé.
+- Le contenu de la formation est traduit à la source (`formation/contenu*-en/`) et stocké par langue dans la base (migration `011_formation_langues.sql`). Un parcours non traduit retombe sur le français, jamais sur du vide.
 - La base d'événements BCE (`data/macro-events-eurusd.js`) a des champs `title_en`/`detail_en` en plus des champs français.
 
-## Recompiler trading-trainer.html après une modification du .jsx
+## Modifier le simulateur
 
-Le fichier jouable est un bundle React autonome. Pour le régénérer après avoir modifié `trading-trainer-prototype.jsx` :
+Il n'y a **rien à recompiler**. `trading-trainer.html` charge `trading-trainer-prototype.jsx` directement dans le navigateur : Babel Standalone transpile le JSX à la volée, et React, `lucide-react` et `lightweight-charts` arrivent d'esm.sh via un `importmap`.
 
-```
-npm install esbuild react react-dom lucide-react
-npx esbuild entry.jsx --bundle --minify --outfile=bundle.js --loader:.jsx=jsx
-```
+Après une modification du `.jsx`, il suffit d'incrémenter le cache-buster de la balise `<script type="text/babel">` en bas de `trading-trainer.html`.
 
-(`entry.jsx` importe `trading-trainer-prototype.jsx` et fait le `createRoot(...).render(...)`). Le HTML final = en-tête avec le gate d'accès + `bundle.js` + fermeture des balises.
+Malgré son nom, ce fichier n'est pas un prototype mort : c'est le simulateur en production. Il ne doit pas être ajouté aux exclusions de `_config.yml`, sous peine de casser « Commencer l'entraînement » sur la page d'accueil.
 
 ## Notes
 
 Ce README est mis à jour au fur et à mesure de l'avancement du projet.
+
+Les pages de la formation s'affichent sous le nom **TapeSense**, tandis que le reste du site (accueil, pied de page, dictionnaire i18n) porte **Trading Training**. Les deux noms coexistent dans le dépôt ; l'unification reste à trancher.

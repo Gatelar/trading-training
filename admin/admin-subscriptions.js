@@ -22,7 +22,14 @@
         // le <select> retomberait sur le premier compte de la liste et l'admin
         // lirait le statut de quelqu'un d'autre.
         const selectionne = userSelect.value;
-        userSelect.innerHTML = directory.map((row) => `<option value="${row.id}">${row.email}</option>`).join('');
+        // Convention du projet : l'e-mail, saisi à l'inscription, est posé en
+        // textContent, jamais interpolé dans du HTML.
+        userSelect.replaceChildren(...directory.map((row) => {
+            const option = document.createElement('option');
+            option.value = row.id;
+            option.textContent = row.email;
+            return option;
+        }));
         if (selectionne && directory.some((row) => row.id === selectionne)) {
             userSelect.value = selectionne;
         }

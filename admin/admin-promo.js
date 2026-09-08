@@ -12,6 +12,23 @@
         return row.discount_type === 'percent' ? `${row.discount_value}%` : `${row.discount_value} €`;
     }
 
+    // Convention du projet : les données venant de la base (ici le code promo,
+    // texte libre) sont posées en textContent, jamais interpolées dans du HTML.
+    function td(text, className) {
+        const cell = document.createElement('td');
+        cell.textContent = text;
+        if (className) cell.className = className;
+        return cell;
+    }
+
+    function emptyRow(colspan) {
+        const tr = document.createElement('tr');
+        const cell = td('—', 'admin-table-empty');
+        cell.colSpan = colspan;
+        tr.appendChild(cell);
+        return tr;
+    }
+
     async function loadPromoCodes() {
         const { data, error } = await supabaseClient
             .from('promo_codes')
@@ -19,27 +36,40 @@
             .order('created_at', { ascending: false });
 
         if (error || !data || data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="admin-table-empty">—</td></tr>`;
+            tbody.replaceChildren(emptyRow(6));
             return;
         }
 
-        tbody.innerHTML = data.map((row) => {
+        tbody.replaceChildren(...data.map((row) => {
             const usage = `${row.redemption_count} / ${row.max_redemptions ?? tt('admin.promo.unlimited')}`;
             const expires = row.expires_at ? new Date(row.expires_at).toLocaleDateString() : tt('admin.promo.noExpiry');
             const statusCls = row.is_active ? 'admin-tag-accent' : 'admin-tag-muted';
             const statusLabel = row.is_active ? tt('admin.promo.active') : tt('admin.promo.disabled');
             const toggleLabel = row.is_active ? tt('admin.promo.disable') : tt('admin.promo.enable');
-            return `
-                <tr>
-                    <td>${row.code}</td>
-                    <td>${discountLabel(row)}</td>
-                    <td>${usage}</td>
-                    <td>${expires}</td>
-                    <td><span class="admin-tag ${statusCls}">${statusLabel}</span></td>
-                    <td><button class="admin-btn-link" data-toggle-id="${row.id}" data-toggle-active="${row.is_active}">${toggleLabel}</button></td>
-                </tr>
-            `;
-        }).join('');
+
+            const statusCell = document.createElement('td');
+            const statusTag = document.createElement('span');
+            statusTag.className = `admin-tag ${statusCls}`;
+            statusTag.textContent = statusLabel;
+            statusCell.appendChild(statusTag);
+
+            const toggleCell = document.createElement('td');
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'admin-btn-link';
+            toggleBtn.setAttribute('data-toggle-id', row.id);
+            toggleBtn.setAttribute('data-toggle-active', String(row.is_active));
+            toggleBtn.textContent = toggleLabel;
+            toggleCell.appendChild(toggleBtn);
+
+            const tr = document.createElement('tr');
+            tr.appendChild(td(row.code));
+            tr.appendChild(td(discountLabel(row)));
+            tr.appendChild(td(usage));
+            tr.appendChild(td(expires));
+            tr.appendChild(statusCell);
+            tr.appendChild(toggleCell);
+            return tr;
+        }));
 
         tbody.querySelectorAll('[data-toggle-id]').forEach((btn) => {
             btn.addEventListener('click', async () => {

@@ -14,10 +14,36 @@
     let activityByUser = {};
     let searchTimer = null;
 
-    function roleBadge(role) {
+    // Convention du projet : les données venant de la base (e-mails saisis à
+    // l'inscription) sont posées en textContent, jamais interpolées dans du HTML.
+    function td(text, className) {
+        const cell = document.createElement('td');
+        cell.textContent = text;
+        if (className) cell.className = className;
+        return cell;
+    }
+
+    function tagCell(cls, text) {
+        const cell = document.createElement('td');
+        const tag = document.createElement('span');
+        tag.className = `admin-tag ${cls}`;
+        tag.textContent = text;
+        cell.appendChild(tag);
+        return cell;
+    }
+
+    function emptyRow(colspan) {
+        const tr = document.createElement('tr');
+        const cell = td('—', 'admin-table-empty');
+        cell.colSpan = colspan;
+        tr.appendChild(cell);
+        return tr;
+    }
+
+    function roleBadgeCell(role) {
         const cls = role === 'SUPER_ADMIN' ? 'admin-tag-solid' : role === 'MANAGER' ? 'admin-tag-accent' : 'admin-tag-muted';
         const key = role === 'SUPER_ADMIN' ? 'admin.role.super' : role === 'MANAGER' ? 'admin.role.manager' : 'admin.role.user';
-        return `<span class="admin-tag ${cls}">${tt(key)}</span>`;
+        return tagCell(cls, tt(key));
     }
 
     // Dérive un statut d'affichage à partir des colonnes brutes, en tenant
@@ -56,27 +82,26 @@
         });
 
         if (rows.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="admin-table-empty">—</td></tr>`;
+            tbody.replaceChildren(emptyRow(5));
             return;
         }
 
-        tbody.innerHTML = rows.map((row) => {
+        tbody.replaceChildren(...rows.map((row) => {
             const info = statusInfo(row);
             const activity = activityByUser[row.id];
             const activityLabel = activity
                 ? `${activity.exercise_count} ${tt('admin.users.exercisesCount')}`
                 : tt('admin.users.noActivity');
             const registered = new Date(row.registered_at).toLocaleDateString(ttGetLang() === 'en' ? 'en-US' : 'fr-FR');
-            return `
-                <tr>
-                    <td>${row.email}</td>
-                    <td>${registered}</td>
-                    <td>${roleBadge(row.role)}</td>
-                    <td><span class="admin-tag ${info.cls}">${tt(info.key)}</span></td>
-                    <td>${activityLabel}</td>
-                </tr>
-            `;
-        }).join('');
+
+            const tr = document.createElement('tr');
+            tr.appendChild(td(row.email));
+            tr.appendChild(td(registered));
+            tr.appendChild(roleBadgeCell(row.role));
+            tr.appendChild(tagCell(info.cls, tt(info.key)));
+            tr.appendChild(td(activityLabel));
+            return tr;
+        }));
     }
 
     async function load() {

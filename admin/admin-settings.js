@@ -13,6 +13,24 @@
     const rolesBody = document.getElementById('rolesTableBody');
     const activityBody = document.getElementById('activityTableBody');
 
+    // Convention du projet : les données venant de la base (e-mails saisis à
+    // l'inscription, libellés d'action) sont posées en textContent, jamais
+    // interpolées dans du HTML.
+    function td(text, className) {
+        const cell = document.createElement('td');
+        cell.textContent = text;
+        if (className) cell.className = className;
+        return cell;
+    }
+
+    function emptyRow(colspan) {
+        const tr = document.createElement('tr');
+        const cell = td('—', 'admin-table-empty');
+        cell.colSpan = colspan;
+        tr.appendChild(cell);
+        return tr;
+    }
+
     function statCard(labelKey, value) {
         return `
             <div class="admin-stat-card">
@@ -46,8 +64,27 @@
         ].join('');
     }
 
-    function roleOptions(current) {
-        return ['USER', 'MANAGER', 'SUPER_ADMIN'].map((r) => `<option value="${r}" ${r === current ? 'selected' : ''}>${r}</option>`).join('');
+    function roleSelect(row) {
+        const select = document.createElement('select');
+        select.className = 'admin-select';
+        select.setAttribute('data-role-id', row.id);
+        ['USER', 'MANAGER', 'SUPER_ADMIN'].forEach((r) => {
+            const option = document.createElement('option');
+            option.value = r;
+            option.textContent = r;
+            option.selected = r === row.role;
+            select.appendChild(option);
+        });
+        return select;
+    }
+
+    function roleRow(row) {
+        const tr = document.createElement('tr');
+        tr.appendChild(td(row.email));
+        const roleCell = document.createElement('td');
+        roleCell.appendChild(roleSelect(row));
+        tr.appendChild(roleCell);
+        return tr;
     }
 
     async function loadRoles() {
@@ -55,16 +92,11 @@
         const rows = data || [];
 
         if (rows.length === 0) {
-            rolesBody.innerHTML = `<tr><td colspan="2" class="admin-table-empty">—</td></tr>`;
+            rolesBody.replaceChildren(emptyRow(2));
             return;
         }
 
-        rolesBody.innerHTML = rows.map((row) => `
-            <tr>
-                <td>${row.email}</td>
-                <td><select class="admin-select" data-role-id="${row.id}">${roleOptions(row.role)}</select></td>
-            </tr>
-        `).join('');
+        rolesBody.replaceChildren(...rows.map(roleRow));
 
         rolesBody.querySelectorAll('[data-role-id]').forEach((select) => {
             select.addEventListener('change', async () => {
@@ -90,18 +122,18 @@
 
         const rows = data || [];
         if (rows.length === 0) {
-            activityBody.innerHTML = `<tr><td colspan="4" class="admin-table-empty">—</td></tr>`;
+            activityBody.replaceChildren(emptyRow(4));
             return;
         }
 
-        activityBody.innerHTML = rows.map((row) => `
-            <tr>
-                <td>${row.actor ? row.actor.email : '—'}</td>
-                <td>${row.action}</td>
-                <td>${row.target ? row.target.email : '—'}</td>
-                <td>${new Date(row.created_at).toLocaleString()}</td>
-            </tr>
-        `).join('');
+        activityBody.replaceChildren(...rows.map((row) => {
+            const tr = document.createElement('tr');
+            tr.appendChild(td(row.actor ? row.actor.email : '—'));
+            tr.appendChild(td(row.action));
+            tr.appendChild(td(row.target ? row.target.email : '—'));
+            tr.appendChild(td(new Date(row.created_at).toLocaleString()));
+            return tr;
+        }));
     }
 
     window.addEventListener('admin:ready', (e) => {

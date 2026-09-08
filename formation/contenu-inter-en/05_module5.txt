@@ -1,0 +1,129 @@
+MOD: 5 | Your real exposure | 12-minute read · 4 chapters · 1 exercise | 12 min
+Goal: know what you are actually risking when several positions are open at once.
+
+H2: 5.1 Three positions at 1%, a 3% risk
+
+HOOK:
+You have three positions open, each sized at 1% using the formula from chapter 2.3 of the Beginner track. You believe you are risking 1%. Depending on what you have opened, you are risking between 1% and 3%.
+
+P: The Beginner track's size calculation is correct. It covers one trade in isolation, and it becomes insufficient the second a second position opens. That is not a flaw in the previous track: a beginner holds one position at a time, and talking portfolios to them would have been premature.
+
+P: **Cumulative exposure** is the loss you would take if all your open positions hit their stops in the same market move. It is a different quantity from the sum of the displayed risks, and often a very different one.
+
+P: The question that settles it fits on one line: **can your positions lose together?** If the answer is yes, they are only one position, however your platform counts them.
+
+CASE: Three portfolios, one display
+**A** — long EUR/USD 1%, long GBP/USD 1%, long AUD/USD 1%. Three bets against the dollar. A rising dollar hits all three. Real exposure: close to **3%**.
+**B** — long EUR/USD 1%, long BTC/USD 1%, short USD/JPY 1%. Three apparently different markets — and three positions that lose if the dollar rises. Real exposure: still high.
+**C** — long EUR/USD 1%, short GBP/USD 1%. The two bets largely oppose each other. Real exposure: well below 2%, and so is the potential gain.
+In all three cases your platform displays "risk: 1% per position". It is right position by position, and it does not answer the question being asked.
+
+ERR: The classic mistake
+Adding positions in the belief that you are diversifying. Opening three major pairs against the dollar is not diversification: it is tripling the stake on a single idea. The Beginner track established that the number of orders correlates with loss; this chapter supplies one precise mechanism for it.
+
+KEY: Key points
+- The Beginner track's size formula is right for one isolated trade, insufficient as soon as there are two.
+- Cumulative exposure is what you lose if all your positions hit their stops together.
+- Three positions that lose in the same scenario count as one.
+
+H2: 5.2 Correlation
+
+HOOK:
+EUR/USD and GBP/USD move together with a coefficient commonly measured between +0.81 and +0.95. That figure alone turns two trades into one — and two 1% risks into a risk of almost 2%.
+
+P: **Correlation** is a measure between −1 and +1 of how far two assets move together. At +1 they move identically. At 0 they are independent. At −1 they move in opposite directions.
+
+P: The major pairs are correlated by construction, not by accident: EUR/USD and GBP/USD share the dollar as counterpart, so any move in the dollar shows up mechanically in both. On the crypto side, most pairs run between +0.6 and +0.9 with bitcoin — a portfolio of ten cryptocurrencies is a portfolio of one.
+
+P: You do not need a coefficient to three decimals. Three categories are enough, and they save you from the order-of-magnitude error, which is the only one that costs real money.
+
+CASE: The rule in three lines
+**Above +0.7** — a single group. Two 1% trades on EUR/USD and GBP/USD lose together, so their risks **add up**: they count as **2%**, that is your whole limit. To open both and keep some room, cut each to 0.5%.
+**Between +0.3 and +0.7** — the second counts half. Two 1% trades count as **1.5%**.
+**Below +0.3** — add them normally. Two 1% trades count as **2%**.
+And one correction that overrides everything: if the positions are in **opposite directions**, a high correlation **reduces** exposure instead of raising it.
+This is not exact in the mathematical sense. It is enough never to be wrong by a factor of three.
+
+ERR: The classic mistake
+Chasing precision. Computing a coefficient over a rolling window gives a flattering impression of mastery — and that coefficient changes with the period chosen anyway, sometimes by a factor of two. Three categories applied systematically are worth more than an exact number applied one time in three.
+
+KEY: Key points
+- Above +0.7: one group, risks add up. Between +0.3 and +0.7: the second counts half. Below: add them.
+- The major pairs share the dollar. They are correlated by construction.
+- Opposite directions with a high correlation: exposure falls. Always look at the direction before the coefficient.
+
+H2: 5.3 Session risk, portfolio risk
+
+HOOK:
+The Beginner track's seven rules cap what you lose during a session. None of them caps what you lose while you sleep with four positions open.
+
+P: Two limits, two distinct objects. **Session risk** — two losses and the session is over — caps **sequential** losses, the ones that follow one another in time because you keep trading.
+
+P: **Portfolio risk** caps **simultaneous** losses, the ones that arrive together without your having decided anything further. The Beginner track did not cover it because it was addressing someone who opened one position at a time.
+
+P: Both are necessary and neither replaces the other. A perfectly respected session rule protects you not at all if your four positions hit their stops at three in the morning.
+
+CASE: The hole in the seven rules
+A perfectly compliant session: you open three positions at 1%, none hits its stop, you close your session. Zero loss, zero rule broken, nothing to reproach yourself with.
+Overnight, an announcement pushes the dollar up. Your three positions — all long on pairs against the dollar — hit their stops.
+Loss: **3%**. Not one of the seven rules was violated, because not one of the seven was built for this case.
+So you need an eighth rule, and it covers what is **open simultaneously**, not what was decided in succession.
+
+ERR: The classic mistake
+Believing the seven rules cover everything. They covered the practice of a beginner with one position. Your practice has changed — that is what this level is — and a rule that does not evolve with the practice it governs stops protecting without warning.
+
+KEY: Key points
+- Session risk: losses that follow one another. Portfolio risk: those that arrive together.
+- The Beginner track's seven rules cover only the first.
+- Your practice has changed. Your rules have to change with it.
+
+H2: 5.4 The cumulative exposure rule
+
+HOOK:
+One rule, one number, checkable in five seconds before every order. It is the eighth, and it completes the seven from chapter 5.4 of the Beginner track without modifying any of them.
+
+CARD: The eighth rule
+**Maximum cumulative exposure: 2%.**
+It is worked out by applying the three correlation categories to every open position, plus the one you are considering, and taking the direction of each into account.
+
+P: The choice of 2% is not arbitrary. It allows two independent positions at 1%, or four correlated positions at 0.5%, and it caps the simultaneous loss at twice the loss of a single trade — an order of magnitude the drawdown of chapter 2.5 of the Beginner track makes bearable.
+
+P: The calculation is done **before** the order, like the position size. It becomes the seventh question on your checklist, and it obeys the same rule as the other six: no answer, no trade.
+
+CASE: Four positions, a five-second calculation
+Open: long EUR/USD 0.5% · long GBP/USD 0.5% · long BTC/USD 0.5%.
+EUR/USD and GBP/USD, correlation above +0.7, same direction: one group, whose risks add up — **1%** for the two of them.
+BTC/USD, weakly correlated with both: adds **0.5%**.
+Current exposure: **1.5%**.
+You are considering a long AUD/USD at 1%. Correlated above +0.7 with the first two and in the same direction, it joins their group: that group would go to 2%, and total exposure to **2.5%**.
+Decision: either you take it at **0.5%** — the group goes to 1.5%, exposure to exactly 2% — or you do not take it. There is no third option.
+
+ERR: The classic mistake
+Working out the exposure after opening. As with position size in chapter 2.3 of the Beginner track, the order of operations is half the rule: an exposure checked after the order protects nothing, it observes.
+
+KEY: Key points
+- Maximum cumulative exposure: 2%. That is the eighth rule.
+- Apply the three correlation categories to everything open, plus what you are considering.
+- The calculation is done before the order. It becomes the seventh question on your checklist.
+
+EX: What you are actually risking
+
+EXF: Skill assessed
+Goal 23: calculate the cumulative exposure of a set of open positions, taking their correlation and their direction into account.
+
+EXF: Instructions
+**Step A.** You are shown a portfolio of four open positions. Calculate its cumulative exposure.
+**Step B.** A fifth trade is offered. Say whether it passes the 2% rule and, if not, at what size it would.
+**Step C.** You are given three portfolios all displaying "1% per position". Rank them from most to least exposed.
+
+EXF: What the platform must provide
+- A portfolio screen listing four positions with asset, **direction**, and risk as a percentage. The direction must be as visible as the amount: that is where the exercise's trap lies.
+- A correlation matrix displayed **in three colours** — above +0.7, between +0.3 and +0.7, below — and not as numerical coefficients. The exercise assesses applying the rule, not reading a table of numbers.
+- An input field for the calculated exposure, with a tolerance of ±0.25 points.
+- Step B: two fields — "passes / does not pass" and "maximum acceptable size".
+- Step C: three portfolios to rank by drag and drop, all displaying the same risk per position.
+
+EXF: Worked correction
+**Step A.** The trap is the short position. A short GBP/USD in among long EUR/USD **reduces** exposure, even though the matrix shows a high correlation between the two pairs. Strong correlation plus opposite directions equals reduced exposure. It is the most frequent error in the exercise, and it comes from applying the colour rule without looking at the "direction" column.
+**Step B.** The fifth trade does not pass at 1% and does pass at 0.5%. Answering "does not pass" without giving the size is incomplete: the skill assessed is precisely knowing what size it would pass at, because that is the answer that lets you take the trade instead of giving it up.
+**Step C.** The three portfolios display the same risk per position and have real exposures of **1%, 2% and 3.5%**. The ranking is the only result that matters here, and its lesson fits in one sentence: your platform's display does not answer the question you have to ask.

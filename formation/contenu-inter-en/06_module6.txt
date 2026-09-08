@@ -1,0 +1,157 @@
+MOD: 6 | Your system, written down | 13-minute read · 5 chapters · 1 exercise | 13 min
+Goal: turn a set of rules into a system that can be measured and revised.
+
+H2: 6.1 What a system is
+
+HOOK:
+A system fits on one page. If yours takes five, it is not a system: it is a collection of exceptions, and you will never be able to test it.
+
+P: A **system** is a set of rules small enough to be applied identically across a whole sample, and precise enough that two people reading it take the same decision in front of the same chart.
+
+P: The quality test is empirical and final: give your system to somebody else. If they cannot take the same decisions as you, your system is not written down — it is in your head, and what is in your head cannot be measured.
+
+P: Six elements make it up: scope, entry condition, invalidation, management, exposure, abandonment criterion. What it does not contain matters just as much: no exceptions, no "unless", no appeal to judgement.
+
+CASE: The transmissibility test
+**Version A** — *"I buy when the H4 structure is bullish and price comes back to a zone."*
+Two readers, two outcomes. Which zone? How close? With what confirmation? Each will fill the gaps their own way, and you first of all, differently depending on the day.
+**Version B** — *"EUR/USD and BTC/USD, structure in H4, entry in H1. I buy if the last two H4 lows are rising and price comes back within 10 pips of a zone that has produced at least two reactions. Invalidation below the low. Stop between 1 and 3 ATR. Management: no intervention. Maximum cumulative exposure 2%."*
+Two readers, the same decisions in the great majority of cases. Version B is no longer. It is more precise.
+
+ERR: The classic mistake
+Confusing precision with complexity. Adding rules does not make a system more precise: most often it multiplies the situations where two of them contradict each other, and your mood at the time settles it — which is exactly what the system existed to prevent.
+
+KEY: Key points
+- A system is transmissible: another reader takes the same decisions as you.
+- Six elements: scope, entry, invalidation, management, exposure, abandonment criterion.
+- Precision and complexity are not the same thing. Aim for the first.
+
+H2: 6.2 The system document
+
+HOOK:
+One page, six sections, a date. This document is the only deliverable of the Intermediate track, and it is worth more than everything you have read so far.
+
+UL:
+- **Scope** — assets, timeframes, times of day when you operate.
+- **Entry** — the condition, worded so that a third party can check it.
+- **Invalidation and stop** — where, and within what ATR range.
+- **Management** — one only, applied to every trade.
+- **Exposure** — the cumulative limit and the correlation categories.
+- **Abandonment criterion** — the average R below which the system is reviewed, and over what sample.
+
+P: To those six sections are added two pieces of header information that turn a descriptive document into a measuring instrument: the **date last modified** and the **number of trades since**.
+
+P: Without them you do not know how many trades your current version has been applied over — and module 2 established that with no known sample, no figure is interpretable.
+
+CASE: The header that changes everything
+*Version 4 · Modified 12/03 · 47 trades since the last modification · Abandonment criterion: average R below +0.10 R at 100 trades.*
+That single line answers three questions immediately: what am I measuring on, since when, and from what point do I start worrying.
+Without it, a system modified three times in two months produces a journal of 120 trades that measures **none** of the three versions. The figure exists, it describes nothing.
+
+ERR: The classic mistake
+Modifying the document without incrementing the version or resetting the counter. It is the system-level equivalent of the unrecorded trade: the change did happen, it is untraceable, and you will never be able to say what it produced.
+
+KEY: Key points
+- Six sections, one page, plus a modification date and a trade counter.
+- Every modification increments the version and resets the counter to zero.
+- With no counter, your journal measures no particular version.
+
+H2: 6.3 The monthly review
+
+HOOK:
+Once a month, market closed, three questions and one decision. It is short because that is the only way it gets done every month.
+
+P: **First question: what is my compliance rate?** Below 90%, the review stops here and the decision is about discipline. The average R is not even examined — chapter 6.3 of the Beginner track established that it measures nothing while compliance is low.
+
+P: **Second question: how many trades since the last modification?** Below 100, no modification of the system is allowed, whatever figure is showing. That rule is the hardest to hold to and the most profitable.
+
+P: **Third question: is the average R below my abandonment criterion?** If yes, the system is reviewed. If no, nothing changes. And in every case, re-read the log of abandoned ideas from chapter 3.4 to check that none of them is quietly climbing back in through the window.
+
+CASE: Three months, one revision
+**Month 1** — compliance 78%, 40 trades, average R +0.31 R. → *Fix the discipline.* The average R is not discussed; it measures nothing at that level of compliance.
+**Month 2** — compliance 94%, 71 trades, average R +0.08 R. → *Change nothing.* The figure is poor and the sample is insufficient. This is by far the hardest of the three decisions.
+**Month 3** — compliance 96%, 112 trades, average R +0.04 R, criterion set at +0.10 R. → *Review the system.* Then, and only then, for the first time.
+Three months of work, one revision, arriving after 112 trades. That is the normal pace.
+
+ERR: The classic mistake
+Revising in month 2. The figure is discouraging, the sample insufficient, and the temptation at its peak precisely because the two combine. Revising at that moment destroys the 71 trades accumulated and starts again from zero — for a system you will now never know worked or not.
+
+KEY: Key points
+- Three questions in order: compliance, sample, result. No step is skipped.
+- Below 100 trades since the last modification, no modification. No exceptions.
+- A review produces one written decision, never two.
+
+H2: 6.4 When to modify, when to do nothing
+
+HOOK:
+The question is not whether your system should evolve — it should. The question is which event authorises a modification, and there are only three.
+
+P: **First trigger**: the abandonment criterion is met on a sufficient sample. That is the anticipated case, the one the criterion was written for.
+
+P: **Second trigger**: a hypothesis has passed the module 2 protocol, control included. That is the rare case — most hypotheses die before it.
+
+P: **Third trigger**: your practice has changed to the point that the rules no longer cover it. The cumulative exposure of module 5 is the exact example: it did not exist while you had only one position open.
+
+P: Everything else — a run of losses, an article you read, an idea you heard, a disappointing month — authorises nothing at all. And every modification resets the counter to zero: that is the price, and it must be paid knowingly.
+
+CASE: What a modification costs, in weeks
+At three compliant trades a week, a hundred trades take **33 weeks**.
+A system modified **every two months** never reaches its measuring sample. After a year: six versions, zero measurements, and the sincere conviction of having worked hard.
+A system modified **once a year** produces about 78 trades per version. Still insufficient, but the order of magnitude is finally right.
+Conclusion: the highest modification frequency compatible with measurement is on the order of **once a year**. That figure surprises everyone, and it comes out of a simple division.
+
+ERR: The classic mistake
+Modifying "just one small parameter". A small change resets the counter exactly like a large one: the system applied afterwards is no longer the one from before, and the trades from the two periods do not add up. There is no such thing as a modification that preserves the sample.
+
+KEY: Key points
+- Three legitimate triggers: criterion met, hypothesis validated, practice changed.
+- Every modification resets the counter and costs 33 weeks.
+- One modification a year is the maximum frequency compatible with measurement.
+
+H2: 6.5 What awaits you in the Experienced track
+
+HOOK:
+You have a written system, a method for testing it and a rule for revising it. What is missing now is no longer knowledge: it is contact with an environment that does not forgive approximations.
+
+P: The Experienced track deals first with **going live with real money**: slippage, execution quality, the gap between the price asked and the price obtained, and the protocol for reducing size at the start. These are problems simulation cannot set you.
+
+P: It then deals with what real money brings back all at once: the whole of module 5 of the Beginner track — disposition effect, overtrading, the spiral after a loss — this time under conditions where the error costs immediately.
+
+P: What the Intermediate track has not covered, so that you know where to look: choosing a broker, taxation, products other than currency pairs and spot cryptocurrencies, and managing a portfolio beyond three positions.
+
+P: The entry condition for the Experienced track is not a formality: a written system, **100 compliant trades on the current version**, and an average R above your abandonment criterion. Without those three, the Experienced track would be dealing with problems you do not have yet.
+
+CASE: The honest calendar, extended
+The Beginner track put **10 weeks** on reaching 30 compliant trades.
+The Intermediate track asks for 100 trades on a stable version, so **33 further weeks** at least — and that calculation assumes no revision happens in between, which is optimistic.
+From the first chapter of the Beginner track to the end of a properly practised Intermediate: **about a year**.
+That duration is not a teaching pose meant to make you wait. It is the result of dividing chapter 2.2 by your rate of trades.
+
+ERR: The classic mistake
+Moving to the next level by reading rather than by practice. You can read the Experienced track tomorrow morning, nothing stops you. It will be of no use to you until you have the 100 trades on a stable version — for exactly the same reason the module 2 protocol is of no use without a sample.
+
+KEY: Key points
+- Entry condition for the Experienced level: written system, 100 compliant trades, average R above the criterion.
+- Going live brings all the behaviour back, under harsher conditions.
+- Beginner and Intermediate properly practised: about a year.
+
+EX: Write your system
+
+EXF: Skill assessed
+Goal 24: write a one-page system document and run a monthly review ending in a written decision.
+
+EXF: Instructions
+**Step A.** Write your system document: six sections, one page.
+**Step B.** You are shown three situations. For each, re-read your own document and say what decision it imposes on you.
+**Step C.** You are given a month of journal. Run the review: three questions, one decision.
+
+EXF: What the platform must provide
+- Step A: a six-section form, **250 characters maximum per section**. That limit is pedagogical, not technical: it makes the system-with-exceptions materially impossible. An automatic header generates version, date and trade counter.
+- Step B: three chart situations, with the user's document **shown permanently alongside**. For each, two buttons — "I take it", "I don't take it" — and a third, essential one: "**my document does not settle this**".
+- Step C: a supplied month of journal showing compliance, number of trades since modification and average R, then three possible decisions of which only one is selectable.
+- If the user's Beginner journal is available, step A pre-fills scope and management from their real trades. **Fallback**: empty sections and an example document available at all times.
+
+EXF: Worked correction
+**Step B.** The three situations are chosen so that at least one is not settled by a typical document. So the expected outcome is not a right answer: it is the third button. The correction then asks the user to complete the document on that precise point — and that is the real deliverable of the exercise. A user who never presses "my document does not settle this" has probably answered from intuition rather than from their text.
+**Step C.** The supplied month shows compliance 94%, 71 trades since modification, average R +0.08 R, criterion at +0.10 R. The right decision is **change nothing**, because the sample is below 100.
+It is an exact reproduction of "month 2" from chapter 6.3, and it is the decision most users refuse to take: the figure is below the criterion, and everything pushes towards acting. The sample rule exists to cover this case and no other — it is never needed when the figures are good.

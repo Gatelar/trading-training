@@ -261,22 +261,29 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "1.1",
-            "titre": "Trente trades, et ce qu'ils ne disent pas"
+            "titre": "Trente trades, et ce qu'ils ne disent pas",
+            "titre_en": "Thirty trades, and what they do not say"
           },
           {
             "numero": "1.2",
-            "titre": "Série ou signal"
+            "titre": "Série ou signal",
+            "titre_en": "Run or signal"
           },
           {
             "numero": "1.3",
-            "titre": "Segmenter son journal"
+            "titre": "Segmenter son journal",
+            "titre_en": "Segmenting your journal"
           },
           {
             "numero": "1.4",
-            "titre": "Ce que tu ne peux pas conclure"
+            "titre": "Ce que tu ne peux pas conclure",
+            "titre_en": "What you cannot conclude"
           }
         ],
-        "exercice": "Ce que dit vraiment ton relevé"
+        "exercice": "Ce que dit vraiment ton relevé",
+        "titre_en": "What your journal already knows",
+        "objectif_en": "make the thirty trades you already have talk, before adding anything at all.",
+        "exercice_en": "What your statement really says"
       },
       {
         "numero": 2,
@@ -287,26 +294,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "2.1",
-            "titre": "Une hypothèse, pas une intuition"
+            "titre": "Une hypothèse, pas une intuition",
+            "titre_en": "A hypothesis, not a hunch"
           },
           {
             "numero": "2.2",
-            "titre": "L'échantillon"
+            "titre": "L'échantillon",
+            "titre_en": "The sample"
           },
           {
             "numero": "2.3",
-            "titre": "Couper ses données en deux"
+            "titre": "Couper ses données en deux",
+            "titre_en": "Cutting your data in two"
           },
           {
             "numero": "2.4",
-            "titre": "Le surapprentissage"
+            "titre": "Le surapprentissage",
+            "titre_en": "Overfitting"
           },
           {
             "numero": "2.5",
-            "titre": "Le critère d'abandon"
+            "titre": "Le critère d'abandon",
+            "titre_en": "The abandonment criterion"
           }
         ],
-        "exercice": "Le test que tu ne truques pas"
+        "exercice": "Le test que tu ne truques pas",
+        "titre_en": "Test instead of hope",
+        "objectif_en": "have a protocol that settles the difference between an idea that works and an idea you like.",
+        "exercice_en": "The test you do not rig"
       },
       {
         "numero": 3,
@@ -317,26 +332,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "3.1",
-            "titre": "Ce qu'un indicateur calcule"
+            "titre": "Ce qu'un indicateur calcule",
+            "titre_en": "What an indicator calculates"
           },
           {
             "numero": "3.2",
-            "titre": "Mesurer n'est pas prédire"
+            "titre": "Mesurer n'est pas prédire",
+            "titre_en": "Measuring is not predicting"
           },
           {
             "numero": "3.3",
-            "titre": "Le filtre"
+            "titre": "Le filtre",
+            "titre_en": "The filter"
           },
           {
             "numero": "3.4",
-            "titre": "Passer un outil au protocole"
+            "titre": "Passer un outil au protocole",
+            "titre_en": "Putting a tool through the protocol"
           },
           {
             "numero": "3.5",
-            "titre": "Le coût de chaque outil"
+            "titre": "Le coût de chaque outil",
+            "titre_en": "What each tool costs"
           }
         ],
-        "exercice": "L'outil que tu jettes"
+        "exercice": "L'outil que tu jettes",
+        "titre_en": "Indicators, at last",
+        "objectif_en": "put a tool on top of a reading that already stands up, and know which one to throw away.",
+        "exercice_en": "The tool you throw away"
       },
       {
         "numero": 4,
@@ -347,26 +370,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "4.1",
-            "titre": "Le trade ne s'arrête pas à l'entrée"
+            "titre": "Le trade ne s'arrête pas à l'entrée",
+            "titre_en": "The trade does not stop at the entry"
           },
           {
             "numero": "4.2",
-            "titre": "La sortie partielle"
+            "titre": "La sortie partielle",
+            "titre_en": "The partial exit"
           },
           {
             "numero": "4.3",
-            "titre": "Le stop suiveur"
+            "titre": "Le stop suiveur",
+            "titre_en": "The trailing stop"
           },
           {
             "numero": "4.4",
-            "titre": "La mise à l'équilibre"
+            "titre": "La mise à l'équilibre",
+            "titre_en": "Moving the stop to break-even"
           },
           {
             "numero": "4.5",
-            "titre": "Choisir et tenir"
+            "titre": "Choisir et tenir",
+            "titre_en": "Choose one and hold to it"
           }
         ],
-        "exercice": "Trois gestions, une seule série"
+        "exercice": "Trois gestions, une seule série",
+        "titre_en": "Managing the position",
+        "objectif_en": "decide what happens between the entry and the exit, and measure it instead of feeling it.",
+        "exercice_en": "Three management styles, one series"
       },
       {
         "numero": 5,
@@ -377,22 +408,29 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "5.1",
-            "titre": "Trois positions à 1 %, un risque à 3 %"
+            "titre": "Trois positions à 1 %, un risque à 3 %",
+            "titre_en": "Three positions at 1%, a 3% risk"
           },
           {
             "numero": "5.2",
-            "titre": "La corrélation"
+            "titre": "La corrélation",
+            "titre_en": "Correlation"
           },
           {
             "numero": "5.3",
-            "titre": "Risque de séance, risque de portefeuille"
+            "titre": "Risque de séance, risque de portefeuille",
+            "titre_en": "Session risk, portfolio risk"
           },
           {
             "numero": "5.4",
-            "titre": "La règle d'exposition cumulée"
+            "titre": "La règle d'exposition cumulée",
+            "titre_en": "The cumulative exposure rule"
           }
         ],
-        "exercice": "Ce que tu risques vraiment"
+        "exercice": "Ce que tu risques vraiment",
+        "titre_en": "Your real exposure",
+        "objectif_en": "know what you are actually risking when several positions are open at once.",
+        "exercice_en": "What you are actually risking"
       },
       {
         "numero": 6,
@@ -403,33 +441,46 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "6.1",
-            "titre": "Ce qu'est un système"
+            "titre": "Ce qu'est un système",
+            "titre_en": "What a system is"
           },
           {
             "numero": "6.2",
-            "titre": "Le document de système"
+            "titre": "Le document de système",
+            "titre_en": "The system document"
           },
           {
             "numero": "6.3",
-            "titre": "La revue mensuelle"
+            "titre": "La revue mensuelle",
+            "titre_en": "The monthly review"
           },
           {
             "numero": "6.4",
-            "titre": "Quand modifier, quand ne rien faire"
+            "titre": "Quand modifier, quand ne rien faire",
+            "titre_en": "When to modify, when to do nothing"
           },
           {
             "numero": "6.5",
-            "titre": "Ce qui t'attend au parcours Expérimenté"
+            "titre": "Ce qui t'attend au parcours Expérimenté",
+            "titre_en": "What awaits you in the Experienced track"
           }
         ],
-        "exercice": "Écris ton système"
+        "exercice": "Écris ton système",
+        "titre_en": "Your system, written down",
+        "objectif_en": "turn a set of rules into a system that can be measured and revised.",
+        "exercice_en": "Write your system"
       }
     ],
     "totalModules": 6,
     "totalChapitres": 28,
     "totalExercices": 6,
     "minutes": 82,
-    "pdf": "formation/TapeSense_Parcours_Intermediaire.pdf"
+    "pdf": "formation/TapeSense_Parcours_Intermediaire.pdf",
+    "accroche_en": "You have rules. What you are missing is the method that tells you whether they work.",
+    "langues": [
+      "fr",
+      "en"
+    ]
   },
   {
     "slug": "experimente",

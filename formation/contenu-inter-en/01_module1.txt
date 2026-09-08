@@ -1,0 +1,138 @@
+MOD: 1 | What your journal already knows | 13-minute read · 4 chapters · 1 exercise | 13 min
+Goal: make the thirty trades you already have talk, before adding anything at all.
+
+CARD: Six words used before their chapter
+This track starts with your data, then the method, and only then the tools. So a few words turn up before the chapter that develops them. Here is the minimum needed never to get stuck.
+- **System**: the whole of your rules taken together. Defined precisely in chapter 6.1.
+- **Overfitting**: tuning a rule to the accidents of a sample rather than to its structure. Chapter 2.4.
+- **Market regime**: the market's dominant state over a period — trending, or not trending. Chapter 4.3.
+- **Filter**: a condition that removes trades from a set your reading has already produced. Chapter 3.3.
+- **Moving average**: the average of the last n closes. Chapter 3.1.
+- **RSI**: an indicator that maps the recent balance of rises and falls onto a 0 to 100 scale. Chapter 3.1.
+
+H2: 1.1 Thirty trades, and what they do not say
+
+HOOK:
+You have thirty compliant trades and a positive average R. The Beginner track asked you to wait for this moment before concluding anything. It lied to you by omission: thirty trades conclude nothing. They only entitle you to start looking.
+
+P: The reason lies in an asymmetry between the two figures you track. The **compliance rate** depends on you alone: thirty observations are more than enough to know whether you apply your rules. The **average R** depends on the market, and the market is noisy. Over thirty trades it produces a number, not a measurement.
+
+P: That is exactly why chapter 6.3 of the Beginner track made you fix compliance first. It was not a matter of moral discipline: it was the only one of the two quantities a small sample lets you measure.
+
+P: The tool that separates them is called the **standard error**: the uncertainty left on an average, given the number of observations. It equals the standard deviation of the results divided by the square root of the number of trades.
+
+CASE: Your average R, with its margin
+On a series with 1R losses and 3R gains, the standard deviation of results is about **1.9 R**. That is the figure to remember; it is used throughout this track.
+**Over 30 trades**: standard error = 1.9 ÷ √30 = **0.35 R**. For a displayed average R of +0.52 R, the interval at two standard errors runs from **−0.18 to +1.22 R**. It contains zero. Your system could be losing.
+**Over 100 trades**: standard error = 1.9 ÷ √100 = **0.19 R**. The same +0.52 R gives an interval of **+0.14 to +0.90 R**. The sign is finally established.
+The displayed figure has not moved. What has changed is what you are entitled to say about it.
+
+ERR: The classic mistake
+Announcing your average R as a fact. Thirty trades give an exact number — that is indeed what happened — and a false measurement — that is not what will happen. Both statements are true at once, and mistaking the first for the second is the founding error of this level.
+
+KEY: Key points
+- Thirty trades measure your compliance, not your expectancy.
+- Standard error = standard deviation ÷ square root of n. Quadrupling the sample halves the uncertainty.
+- As long as your interval contains zero, you have demonstrated nothing.
+
+H2: 1.2 Run or signal
+
+HOOK:
+Six losses in a row. You change something. That is where most people destroy a system that was working — and the arithmetic says they were wrong to move.
+
+P: Chapter 6.2 of the Beginner track asked you not to change method on a short run. It asked in the name of common sense. You can now check it instead of believing it.
+
+P: The principle: before you attach meaning to a pattern, ask how many chances that pattern had to occur. A run of six losses is spectacular when it happens to you. It is unremarkable once you count the number of places it could have started.
+
+P: The exact calculation is tedious; an approximation is quite enough for what we do with it here, and it gives the right order of magnitude.
+
+CASE: What variance produces on its own
+A system with a 40% hit rate, so 60% losses. Over a sequence of 100 trades:
+Probability that a run of **at least 6 consecutive losses** appears somewhere: about **84%**.
+Probability for a run of **at least 8**: about **47%**.
+In other words: a run of six is near enough guaranteed over a hundred trades, and a run of eight is a coin flip. These are not accidents. They are the patterns a perfectly healthy system produces.
+*(Poisson approximation on the expected number of runs. The order of magnitude is reliable, the decimal is not.)*
+
+ERR: The classic mistake
+Looking for an explanation for a run. The brain is excellent at finding causes, and it will find them: a change in volatility, some news, a lapse in attention. Those explanations are plausible, free, and usually wrong. The only valid test is the number of chances.
+
+KEY: Key points
+- A run of six losses over a hundred trades is expected in more than eight cases out of ten.
+- Before interpreting a pattern, count how many chances it had to occur.
+- The warning sign is never a run: it is a gap that persists across a whole subsample.
+
+H2: 1.3 Segmenting your journal
+
+HOOK:
+Your overall average R is a blend. It adds your buys to your sells, your two assets, your mornings and your evenings. Separating that blend once teaches you more than three months of extra trades.
+
+P: **Segmentation** means cutting your sample by a single criterion and comparing the subsamples you get. The useful criteria at this level are few: the direction of the position, the asset, the time of day, the market regime, compliance.
+
+P: One constraint governs the whole exercise: **one criterion at a time**. Two crossed criteria over sixty trades produce cells of fifteen, where chapter 1.1 showed you the uncertainty far exceeds the effect you are looking for.
+
+P: And a gap between two subsamples is not compared to zero. It is compared to the standard error of the difference, which is the standard deviation multiplied by the square root of the sum of the reciprocals of the two counts.
+
+CASE: A gap that may not be one
+Journal of 60 compliant trades, overall average R **+0.45 R**.
+Segmented by direction: **buys** (34 trades) **+0.78 R** · **sells** (26 trades) **+0.02 R**.
+Apparent gap: **0.76 R**. Impressive.
+Standard error of the difference: 1.9 × √(1/34 + 1/26) = 1.9 × 0.26 = **0.49 R**.
+So the gap is worth **1.5 standard errors**. That is suggestive. It is not established — that would take two standard errors, meaning a gap of 0.98 R.
+Conclusion: write the hypothesis down, change nothing, and test it in the next module.
+
+ERR: The classic mistake
+Segmenting until you find something. Cut for long enough and a brilliant subsample always turns up in the end. It is the overfitting of module 2 applied to your own journal — and it is its most seductive form, because this is your data and you trust it.
+
+KEY: Key points
+- One segmentation criterion at a time. Never two crossed.
+- A gap is compared to its standard error, never to zero.
+- A segmentation produces a hypothesis. It does not produce a decision.
+
+H2: 1.4 What you cannot conclude
+
+HOOK:
+The most frequent result of a good journal analysis is "I don't know yet". That is not a failure of the analysis. It is what it is supposed to produce most of the time.
+
+P: Three conclusions are possible at the end of an analysis. An **established effect** — rare. A **hypothesis to test** — frequent. And **nothing** — the most common case of all. Being able to name the third is the skill of this module.
+
+P: The difficulty is not technical, it is psychological. You have just spent time on this analysis, and the temptation is to produce a conclusion in proportion to the effort. An hour of work seems to deserve better than "nothing".
+
+P: What that restraint buys you is considerable, though: it leaves your system intact long enough for it to become measurable. It is the Beginner track's compliance, transposed to the scale of a month.
+
+CASE: A whole module, zero decisions
+Take the three analyses run here.
+**The average R over 30 trades**: interval containing zero. No decision.
+**The run of six losses**: expected in 84% of cases. No decision.
+**The segmentation by direction**: gap at 1.5 standard errors. A hypothesis, not a decision.
+Three analyses, a module's worth of work, **zero changes**. One line to write: *"hypothesis: sells underperform buys, to be tested"*.
+That is the normal yield of this work. It looks meagre. It is far better than the yield of an unjustified change.
+
+ERR: The classic mistake
+Turning a hypothesis into a rule. Between "sells seem to work less well" and "I no longer sell" lies exactly the protocol of the next module. Skipping that step means adding an untested rule to a system that had seven tested ones.
+
+KEY: Key points
+- Three possible conclusions: established effect, hypothesis to test, nothing. The third dominates.
+- An analysis that concludes nothing has done its job.
+- Write the hypothesis. Do not change the rule.
+
+EX: What your statement really says
+
+EXF: Skill assessed
+Goals 13 and 14: determine whether a gap is variance or a real effect; segment a journal by a single criterion and compare the subsamples.
+
+EXF: Instructions
+**Step A.** You are given a journal of 60 trades. Calculate the average R and its standard error, then say whether the sign of the result is established.
+**Step B.** Segment that journal by one criterion of your choice out of three. Compare the two subsamples and express the gap in standard errors.
+**Step C.** Apply the same approach to your own journal from the Beginner track, then choose your conclusion from three set wordings.
+
+EXF: What the platform must provide
+- A supplied journal of 60 trades in a sortable table, carrying the seven fields from the Beginner track plus two columns: direction of the position and session.
+- A built-in calculator showing average R, standard deviation and standard error as soon as the selection changes. The user chooses the selection, the machine does the sums: the skill assessed is interpretation, not arithmetic.
+- Only one segmentation criterion active at a time. The interface **refuses** the second and says why.
+- Step C: import of the user's Beginner journal. **Fallback required** if that journal is unavailable or holds fewer than 30 compliant trades — a second supplied journal, presented as another user's, with the same mechanics. The exercise must stay complete in both cases.
+- Three selectable conclusion wordings — "established effect", "hypothesis to test", "nothing conclusive" — plus a 120-character free field.
+
+EXF: Worked correction
+**Step A.** Average R +0.45 R, standard error 0.25 R, interval from −0.04 to +0.94 R. The sign is **not** established. Most users answer that it is, because the number is positive and sixty trades feel like a lot. Sixty trades are not a lot.
+**Step B.** By direction, the gap is worth 1.5 standard errors: a hypothesis. By asset, the gap is small: nothing. By session, the trap is elsewhere — the "evening" subsample holds only 9 trades, and its standard error exceeds 0.6 R. Choosing that criterion and drawing a conclusion from it is the expected error, and the interface must display the count large enough that the user cannot claim not to have seen it.
+**Step C.** For almost every user, the only correct answers are "hypothesis to test" or "nothing conclusive". Ticking "established effect" on thirty to sixty trades is wrong whatever figure came out — and that holds even if the figure is excellent. Especially if it is excellent.

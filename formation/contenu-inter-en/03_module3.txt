@@ -1,0 +1,155 @@
+MOD: 3 | Indicators, at last | 15-minute read · 5 chapters · 1 exercise | 15 min
+Goal: put a tool on top of a reading that already stands up, and know which one to throw away.
+
+H2: 3.1 What an indicator calculates
+
+HOOK:
+Three indicators, three formulas, three lines. You are about to see that none of them contains information you have not had in front of you since module 3 of the Beginner track.
+
+P: A **moving average** of period n is the average of the last n closes. An **RSI** of period n compares the average of the rises to the average of the falls over those n periods and maps the ratio onto a 0 to 100 scale. An **ATR** — *average true range* — is the average true range of the last n candles.
+
+P: What they have in common is obvious the moment you write them down: each is a function of the four numbers from chapter 3.1 of the Beginner track. None reaches any extra data, and each loses some — that is the definition of a summary.
+
+P: What separates them matters more. The moving average and the RSI claim to say something about the direction to come. The ATR claims nothing: it measures a past distance. That is what makes it the only one of the three usable without a protocol.
+
+CASE: A moving average's lag, in hours
+A 50-period moving average on H4 candles sums up 50 × 4 = **200 hours**, about eight trading days.
+Price moves; the average follows it with a structural lag of roughly half its period, that is **about four days**.
+Direct consequence: a moving average **cannot** signal a reversal. It can only confirm that a move has been going on for a while.
+This is not a setting problem a better parameter would fix. It is the definition of an average.
+
+ERR: The classic mistake
+Hunting for the right setting. The question "50-period or 200-period?" assumes there is an answer that holds over time. What it mostly does is generate attempts — and chapter 2.4 has just told you what each attempt costs against the credit of your final result.
+
+KEY: Key points
+- Moving average, RSI and ATR are functions of the same four numbers. None adds information.
+- A moving average lags by about half its period. That is structural, not adjustable.
+- A tool that measures and a tool that claims to predict are not used the same way.
+
+H2: 3.2 Measuring is not predicting
+
+HOOK:
+The ATR will never tell you where price is going. It tells you how much it usually moves — and that piece of information you can use today, with no test first.
+
+P: Chapter 2.4 of the Beginner track put the stop below the last low. That placement is still correct and is not revised. It simply ignores one variable: the same distance in pips does not carry the same risk of being hit depending on how volatile things are at the time.
+
+P: The ATR supplies that variable. The rule of use fits in one comparison: a stop less than **1 ATR** away will be hit by ordinary noise; a stop beyond **3 ATR** pays for an invalidation that is too far off. Between the two, the distance is consistent with what the market is currently doing.
+
+P: A word about **volume**, since you will see it everywhere else. On BTC/USD, traded volume is real data, measured by the exchanges. On spot EUR/USD there is no centralised volume at all: what your chart shows is **tick volume**, that is, the number of price changes recorded by your broker alone. It is a measure of activity at one intermediary, not a market volume. This track builds nothing on it, and you now know why.
+
+CASE: The same stop, two different markets
+EUR/USD in H1, **ATR 14 = 22 pips**.
+Stop 12 pips away = **0.55 ATR** — it will be hit by an ordinary candle, without any invalidation having occurred.
+Stop 32 pips away = **1.45 ATR**, placed below the last low. Consistent with both criteria.
+Stop 80 pips away = **3.6 ATR** — the structure does not justify it; you are paying for somebody else's uncertainty.
+Three weeks later the ATR falls to 11 pips. That same 32-pip stop is now worth **2.9 ATR**: too wide for the context. Your distance has not moved, the market has.
+
+ERR: The classic mistake
+Fixing a stop distance once and for all. "I always use 30 pips" ignores that 30 pips is 1.4 ATR one day and 3 ATR another. The Beginner track taught you not to set your stop by your budget; this level adds one prohibition: do not set it by habit either.
+
+KEY: Key points
+- The ATR measures a usual distance. It predicts nothing, and that is exactly its virtue.
+- Always compare your stop to the current ATR: between 1 and 3, or justify it.
+- The volume shown in forex is not a market volume. Build no rule on it.
+
+H2: 3.3 The filter
+
+HOOK:
+An indicator does not tell you what to take. At best it tells you what not to take — which is already considerable, since chapter 4.5 of the Beginner track showed that selectivity is a performance variable in its own right.
+
+P: A **filter** is a condition that removes trades from a set your reading has already produced. It never creates a trade, and that constraint is not decorative: it is what stops the tool turning back into a signal.
+
+P: The correct sequence is fixed, and the filter comes last in it. Reading the structure (Beginner 3.3), then scenario and invalidation (4.1), then checklist (4.4), then filter. Nothing moves up that order.
+
+P: That position has a methodological consequence people forget every time. A filter cannot be judged on the winning trades it brings in — it brings in none. It is judged on what it **removes**: were the deleted trades worse than average?
+
+CASE: What a filter removes, and what it costs
+Sample of 100 trades, average R **+0.40 R**.
+The filter removes **30** of them.
+The 30 removed trades had an average R of **−0.10 R**. The 70 remaining: **+0.61 R**.
+So the filter worked on this sample. Whether that result survives chapter 2.3 remains to be seen, and it is not a given.
+Note the price too: 30% of the opportunities gone. At three compliant trades a week you drop to 2.1 — and the time needed to measure anything at all rises by a third.
+
+ERR: The classic mistake
+Using a filter to enter. The moment you catch yourself thinking "the RSI has just crossed back above 50, I'm buying", you have reversed the sequence. The filter has become a trigger, and you have just contradicted everything module 3 of the Beginner track established. The reversal is easy to spot: it happens when the tool gives you an idea instead of taking one away.
+
+KEY: Key points
+- A filter subtracts. It never adds a trade.
+- It is judged on the quality of what it removes, not on what it lets through.
+- It costs opportunities, therefore measuring time. Count that cost before adopting it.
+
+H2: 3.4 Putting a tool through the protocol
+
+HOOK:
+Here is the complete test, from first step to last, on a real case. It takes an hour. It is the only hour in this track that will tell you whether a tool deserves to stay on your screen.
+
+P: The protocol takes module 2 whole, in order: hypothesis, sample and cut, attempts allowed, abandonment criterion, build, control looked at once, written decision. Seven steps, none optional.
+
+P: What follows is a real test in its full unfolding, including its conclusion — which is the most frequent conclusion of all tests of this kind.
+
+CASE: A test, end to end
+**Hypothesis** — on EUR/USD H4, taking buys only when price is above its 50-period moving average raises the average R by at least 0.3 R.
+**Sample** — 200 situations, 140 for building, 60 for control, cut by time.
+**Attempts allowed** — 3 periods: 20, 50, 100.
+**Abandonment criterion** — less than +0.15 R on the control and the idea is thrown away, not retried for six months.
+**Build** — 20-period: +0.18 R · 50-period: **+0.44 R** · 100-period: +0.31 R. Three attempts spent, the 50 is kept.
+**Control**, looked at once: **+0.09 R**.
+**Decision** — below the criterion. **Thrown away**, with the date, in the test log.
+
+ERR: The classic mistake
+Keeping it anyway, "because 0.09 is still positive". Over 60 control trades the standard error is about 0.25 R: a result of +0.09 R is rigorously indistinguishable from zero. The criterion was set at 0.15 R precisely so that this argument would not happen now, just after you have spent an hour on the test.
+
+KEY: Key points
+- Seven steps, in order, before a tool stays on your screen.
+- Most ideas die at the control. That is normal operation, not failure.
+- Note the date of abandonment. That is what stops you retesting the same thing on a loop.
+
+H2: 3.5 What each tool costs
+
+HOOK:
+Every tool you add has a price, and it is not paid in euros. It is paid in opportunities, attempts and attention — three currencies you hold in very limited quantity.
+
+P: **Cost in opportunities.** A filter that removes 30% of trades lengthens the time needed to reach a given sample by about 43%. Chapter 2.2 showed you what that time amounts to.
+
+P: **Cost in attempts.** Every tool multiplies the number of configurations to explore. Two tools with four settings each do not make eight combinations, they make sixteen — and the counter from chapter 2.4 rises accordingly.
+
+P: **Cost in attention.** A crowded screen lengthens the decision and weakens the checklist, which chapter 4.4 of the Beginner track established is only worth anything if it applies mechanically. One more tool is one more question to answer under pressure.
+
+CASE: The second filter you will not add
+You have one filter in place. You are considering a second.
+**Opportunities** — the first removes 30%, the second removes 25% of what is left. You are down to 52.5% of the trades: at three a week, that is **1.6**.
+**Attempts** — 4 settings × 4 settings = **16 configurations**, against 4 before.
+**Sample needed** to measure the second one's effect: 160 trades for an effect of 0.3 R. At 1.6 trades a week, that is **two years**.
+The second filter is not a bad idea. It is simply unverifiable at your scale — which, per chapter 2.2, comes to the same thing.
+
+ERR: The classic mistake
+Piling up because each addition looks reasonable on its own. No tool taken separately seems expensive. It is the product of the three costs that is, and that product stays invisible as long as you decide one addition at a time.
+
+KEY: Key points
+- Three costs: opportunities, attempts, attention. All three can be quantified.
+- One tool at a time. Tested, then kept or thrown away, before considering another.
+- If measuring an addition's effect would take two years, you do not add it.
+
+EX: The tool you throw away
+
+EXF: Skill assessed
+Goals 19 and 20: describe what an indicator calculates and what it cannot do; put a filter through the full protocol and conclude.
+
+EXF: Instructions
+**Step A.** Choose one filter out of three and set its parameter.
+**Step B.** Fill in the test sheet — hypothesis, sample, attempts allowed, abandonment criterion — before any access to the data.
+**Step C.** Apply the filter to the build sample.
+**Step D.** Look at the control. Once.
+**Step E.** Decide, holding your result against the criterion you wrote at step B.
+
+EXF: What the platform must provide
+- Three filters on offer — moving average, RSI, position of price within the ATR — each with one parameter adjustable within a closed range.
+- A four-field test sheet. The "run" button stays **disabled as long as the abandonment criterion is empty**.
+- A visible attempt counter, incremented on every parameter change, not resettable.
+- A sample of 200 pre-computed situations on EUR/USD H4, cut 140 / 60 in chronological order. The control locks after one viewing.
+- A final screen showing, side by side: build average R, control average R, **standard error of the control**, and the criterion the user wrote at step B, copied out unchanged.
+
+EXF: Worked correction
+All three filters are calibrated to produce a control between +0.05 and +0.15 R — so at or below any reasonable criterion, and in every case indistinguishable from zero with a standard error of 0.25 R over sixty trades.
+The right answer is **I abandon it**, for all three. This is not a trick: it is the real survival rate of ideas of this kind, and chapter 3.4 said so explicitly.
+Two errors are expected. The first: keeping the filter that returned exactly +0.15 R, by rounding the criterion mentally in the convenient direction. The second, more serious: **running again with another parameter after a bad control**. The platform deliberately allows it, increments the counter, and points it out on the final screen — by that stage the control has been viewed, it no longer exists, and the second test is worth precisely nothing. It is the most effective demonstration of chapter 2.3, because the user has just produced it themselves.

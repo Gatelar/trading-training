@@ -1,0 +1,104 @@
+SEC: Session card
+
+NOTE: It replaces the one from the Beginner track: the seven rules are unchanged, an eighth is added, and three new blocks appear. To print and keep beside the screen.
+
+CARD: The Beginner track's seven rules — unchanged
+- Fixed risk of 1% per trade, never adjusted mid-session.
+- Three trades maximum per session.
+- Two losses: the session is over.
+- Thirty minutes' wait after any loss.
+- No order without the checklist answers.
+- Target and stop not renegotiable once the position is open.
+- Drawdown of 10% on the month: full stop and review of the journal.
+
+CARD: The eighth rule — added by this track
+**Maximum cumulative exposure: 2%.**
+It caps simultaneous losses, where the previous seven capped only successive ones. It is checked before every order, never after.
+
+CARD: The checklist, now seven questions
+- Is the structure readable in H4? If not, I do not enter.
+- Where is my invalidation, in price?
+- What size does that stop impose for 1%?
+- Is the stop between 1 and 3 ATR? If not, I justify it.
+- What is the reward-to-risk ratio? Below 1.5, I do not enter.
+- How many trades have I already taken today?
+- **What is my cumulative exposure, this trade included? Above 2%, I cut the size or I pass.**
+
+CARD: The test protocol, in seven steps
+Hypothesis — scope, quantity, threshold · Sample and chronological cut · Attempts allowed · Abandonment criterion · Build · **Control, looked at once** · Written and dated decision.
+A skipped step voids the test. The number of attempts is noted before, not after.
+
+CARD: The three correlation categories
+Above **+0.7**: one group, risks add up · Between **+0.3 and +0.7**: the second counts half · Below **+0.3**: add them.
+Opposite directions with a high correlation: exposure **falls**. Always look at the direction before the coefficient.
+
+CARD: The system document
+Scope · Entry · Invalidation and stop · Management · Exposure · Abandonment criterion.
+Header: **version, modification date, trades since**.
+Every modification increments the version and resets the counter to zero.
+
+TABLE: 25,25,25,25 || Effect sought | Trades required | R/R ratio | Min. hit rate
+0.5 R | 58 | 1R | 50%
+0.3 R | 160 | 1.5R | 40%
+0.2 R | 361 | 2R | 33%
+0.1 R | 1,444 | 3R | 25%
+
+SEC: Glossary
+
+NOTE: Only terms introduced by this track appear below. For the Beginner-level notions — R, spread, drawdown, structure, expectancy, compliance, checklist, journal — see that document's glossary.
+
+GLOSS:
+Abandonment criterion :: Value set in advance below which a tested idea is thrown away. Makes the test symmetrical; without it, only favourable results conclude anything.
+ATR :: *Average true range*. Average true range of the last n candles. Measures a usual distance; predicts nothing. Used to check that a stop sits between 1 and 3 ATR.
+Break-even stop :: Moving the stop to the entry price once a profit threshold is reached. Puts the stop in the noise; costs about 25% of the expectancy in a standard case.
+Build sample :: The part of the data on which you search and tune. You may be wrong there as many times as necessary.
+Control sample :: The part of the data reserved for checking, looked at once. Going back to it after a further adjustment destroys it.
+Correlation :: Measure between −1 and +1 of how far two assets move together. Above +0.7, two positions in the same direction count as one.
+Cumulative exposure :: Loss taken if all open positions hit their stops in the same move. Different from the sum of the displayed risks.
+Filter :: Condition that removes trades from a set the reading has already produced. Never creates a trade. Judged on the quality of what it removes.
+Market regime :: The market's dominant state over the period observed — trending or not trending. Determines whether a trailing stop adds or removes expectancy.
+Moving average :: Average of the last n closes. Lags by about half its period. Cannot signal a reversal, only confirm that a move has lasted.
+Overfitting :: Tuning a rule to the noise of a sample rather than to its structure. Grows with the number of configurations tried.
+Partial exit :: Closing a fraction of the position before the target. Reduces variance and expectancy. Costs about 18% of the average R in a standard case.
+Position management :: The set of decisions taken between entry and exit. Every intervention changes the expectancy; none is neutral.
+RSI :: Indicator comparing the average of rises to the average of falls over n periods, mapped onto a 0 to 100 scale. Measures a recent balance, not a value.
+Segmentation :: Cutting a journal by a single criterion, to compare the subsamples. One criterion at a time. Produces a hypothesis, never a decision.
+Standard error :: Uncertainty left on an average, given the number of observations. Equals the standard deviation divided by the square root of the count.
+System :: Set of rules small enough to be applied identically across a sample, and precise enough that a third party takes the same decisions.
+Testable hypothesis :: Statement carrying a scope, a measured quantity and a numerical threshold. Without a threshold, every result confirms.
+Tick volume :: Number of price changes recorded by one broker. Displayed as "volume" on spot forex, where no centralised volume exists. It is not a market volume.
+Trailing stop :: Stop that moves in the direction of the trade, never the other way. Adds in a trend, removes without one.
+Transmissibility :: The property of a system that another reader can apply without asking you a question. The main quality test of a system document.
+
+SEC: Disclosures and sources
+
+H3: The nature of this document
+
+P: Educational content intended for learning. It is not investment advice, not a personal recommendation, not financial analysis in the regulatory sense, and not an inducement to open an account with any provider.
+
+P: The worked examples are teaching cases built to explain a point. They do not reproduce real market records and must not be used as such. The test results presented in chapters 2.3, 3.4 and 4.3 are teaching illustrations, not measurements made on market data.
+
+P: Leveraged trading is a high-risk activity: most retail traders lose money at it, and past performance is no guide to future performance. No chapter promises, suggests or holds out the hope of a profit.
+
+P: The whole track takes place in the TapeSense simulator, on replayed historical data. No real money is committed.
+
+H3: Sources cited
+
+UL:
+- **C.-H. Park & S. H. Irwin**, *What Do We Know About the Profitability of Technical Analysis?*, Journal of Economic Surveys, 2007. Review of 95 modern studies: 56 positive, 20 negative, 19 mixed; the authors note systematic problems of *data snooping*, ex post rule selection and cost estimation.
+- **R. Sullivan, A. Timmermann & H. White**, *Data-Snooping, Technical Trading Rule Performance, and the Bootstrap*, The Journal of Finance, October 1999. A broadened universe of technical rules applied to a century of Dow Jones data; weak profitability over the out-of-sample period.
+- **P. Bajgrowicz & O. Scaillet**, *Technical Trading Revisited: False Discoveries, Persistence Tests, and Transaction Costs*, Journal of Financial Economics, 2012. 7,846 rules on the Dow Jones from 1897 to 2011: ex ante selection impossible, performance wiped out by modest transaction costs.
+- **D. H. Bailey, J. M. Borwein, M. López de Prado & Q. J. Zhu**, *Pseudo-Mathematics and Financial Charlatanism: The Effects of Backtest Overfitting on Out-of-Sample Performance*, Notices of the American Mathematical Society, 2014. "If only five years of data are available, no more than forty-five independent model configurations should be tried…"
+- **C. R. Harvey, Y. Liu & H. Zhu**, *… and the Cross-Section of Expected Returns*, The Review of Financial Studies, January 2016. 316 factors catalogued; the customary statistical threshold judged inadequate in the presence of multiple testing.
+- **K. M. Kaminski & A. W. Lo**, *When Do Stop-Loss Rules Stop Losses?*, Journal of Financial Markets, March 2014. Under a random walk, a simple stop rule reduces expectancy; in the presence of momentum, it adds to it.
+- **Autorité des marchés financiers**, *Étude des résultats des investisseurs particuliers sur le trading de CFD et de Forex en France*, 13 October 2014. Carried over from the Beginner track.
+
+H3: Links
+
+UL:
+- onlinelibrary.wiley.com — Park & Irwin (2007) and Sullivan, Timmermann & White (1999)
+- sciencedirect.com — Bajgrowicz & Scaillet (2012)
+- papers.ssrn.com/sol3/papers.cfm?abstract_id=2308659 — Bailey, Borwein, López de Prado & Zhu (2014)
+- academic.oup.com/rfs/article/29/1/5/1843824 — Harvey, Liu & Zhu (2016)
+- dspace.mit.edu — Kaminski & Lo (2014)
+- amf-france.org — 2014 study on CFD and forex trading in France

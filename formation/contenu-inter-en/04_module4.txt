@@ -1,0 +1,161 @@
+MOD: 4 | Managing the position | 14-minute read · 5 chapters · 1 exercise | 14 min
+Goal: decide what happens between the entry and the exit, and measure it instead of feeling it.
+
+H2: 4.1 The trade does not stop at the entry
+
+HOOK:
+The Beginner track taught you to enter and to place a stop. It deliberately left aside everything that happens between the two. And yet a considerable share of your average R lives there.
+
+P: With a position open, three interventions are possible: do nothing, reduce the position, move the stop. Each changes the expectancy, and none is neutral — including the first, which is a choice exactly like the others.
+
+P: The principle governing this module fits in one sentence: **every intervention during a trade is paid for**. The question is never whether it costs, but whether what it earns exceeds what it costs. That question has a quantifiable answer, and the next four chapters quantify it.
+
+P: One difficulty is peculiar to the subject: the intervention is decided with a position open, under pressure. Module 5 of the Beginner track documented what your judgement is worth at that moment. The conclusion follows on its own — the management rule is written **before** entry, along with the stop and the target.
+
+CASE: The same trade, three managements
+EUR/USD, entry 1.0852, stop 1.0838 — that is 14 pips, so 1 R — target 1.0895, that is 43 pips, so 3.1 R.
+What happens: price rises to 1.0880, falls back to 1.0845, then reaches 1.0895.
+**Management A, do nothing**: the initial stop is never hit, the target is reached. **+3.1 R**.
+**Management B, exit half at +1.5 R**: (0.5 × 1.5) + (0.5 × 3.1) = **+2.3 R**.
+**Management C, stop moved to entry as soon as +2 R is reached**: the return to 1.0845 passes below 1.0852. Hit. **0 R**.
+Same trade, same reading, same market. From +3.1 R to zero.
+
+ERR: The classic mistake
+Judging a management style on this trade. Here, doing nothing wins. On the next trade — where price falls back to the initial stop without ever reaching the target — management C would have saved 1 R. A management style is judged over a series, never on one case, and that is precisely what the following chapters measure.
+
+KEY: Key points
+- Three possible interventions: nothing, reduce, move. None is neutral.
+- The management rule is written before entry, exactly like the stop and the target.
+- A management style is judged over a series. One trade proves nothing, however spectacular.
+
+H2: 4.2 The partial exit
+
+HOOK:
+Taking half off halfway. The gesture looks prudent, it justifies itself effortlessly, and its effect on your average R can be calculated exactly.
+
+P: A **partial exit** means closing a fraction of the position before the target. It reduces variance and reduces expectancy: it is a trade-off, not an improvement.
+
+P: What it buys: comfort, and a markedly higher share of trades finishing positive. What it sells: the right-hand side of your distribution, that is, the trades that were going a long way and that pay for everything else.
+
+P: You recognise the mechanism. It is the disposition effect from chapter 5.1 of the Beginner track, in institutionalised form. The difference lies in one decisive detail: here the decision is taken in cold blood and applied uniformly, which makes it measurable.
+
+CASE: What comfort costs, exactly
+100 trades, stop at 1 R, target at 3 R, 40% hit rate.
+**Without a partial exit**: (0.40 × 3) − (0.60 × 1) = **+0.60 R** per trade.
+**With half taken off at +1.5 R**, given that a winner necessarily passes through 1.5 R before reaching 3 R, and assuming a quarter of the losers touch 1.5 R before returning to the stop:
+winners: 0.40 × [(0.5 × 1.5) + (0.5 × 3)] = **+0.90**
+losers that touched 1.5 R: 0.60 × 0.25 × [(0.5 × 1.5) + (0.5 × −1)] = **+0.04**
+losers that touched nothing: 0.60 × 0.75 × (−1) = **−0.45**
+Total: **+0.49 R** per trade.
+The price of comfort: **18% of the expectancy**. What it buys: the share of trades finishing positive goes from 40% to 55%.
+
+ERR: The classic mistake
+Adopting the partial exit to "lock things in", without having done this calculation. The choice is perfectly defensible — if you know it costs you 18% of your expectancy and you judge the drop in variance more valuable. What is not defensible is adopting it in the belief that it improves the result.
+
+KEY: Key points
+- The partial exit swaps expectancy for comfort. It is a trade-off, not a gain.
+- In a standard case it costs 18% of the average R and takes the share of positive trades from 40% to 55%.
+- If you adopt it, apply it to every trade. Otherwise you are no longer measuring anything at all.
+
+H2: 4.3 The trailing stop
+
+HOOK:
+Kaminski and Lo established a counter-intuitive result: under a random walk, a stop rule always reduces expectancy; in the presence of momentum, it adds to it. So the trailing stop is neither good nor bad. It is conditional.
+
+P: A **trailing stop** is a stop that moves in the direction of the trade, never the other way. Not to be confused with moving a stop in the direction of the loss, which chapter 2.4 of the Beginner track forbids and which stays forbidden without exception.
+
+P: Kaminski and Lo's result, transposed to your scale: if price behaves like a random walk, cutting a position part-way through removes expectancy, mechanically. If the market is in a persistent trend, the trailing stop captures that persistence and adds to it.
+
+P: The operational consequence is clear. The trailing stop is applied according to the **regime**, not the mood. In a trend readable in the sense of chapter 3.3 of the Beginner track, it has a chance of adding. With no trend, it removes — and there is no setting that corrects that.
+
+CASE: The value is in the condition, not in the tool
+100 trades, two regimes.
+**60 trades with no trend**: the trailing stop cuts at an average of +0.4 R trades that would have finished at +0.6 R. Cost: −0.2 R × 60 = **−12 R**.
+**40 trades in a trend**: it lets them run and captures +2.8 R on average, against +2.2 R at the fixed target. Gain: +0.6 R × 40 = **+24 R**.
+**Applied everywhere**: −12 + 24 = **+12 R** over 100 trades.
+**Applied only in a trend**: **+24 R**, twice as much, for the same tool and the same setting.
+The value does not lie in the trailing stop. It lies in the condition under which it is applied.
+
+ERR: The classic mistake
+Applying it in all circumstances because it "protects gains". On the 60 no-trend trades in the example it protected nothing: it converted average gains into small gains, which is the exact definition of the disposition effect — automated this time, and therefore applied without even the remorse that usually goes with it.
+
+KEY: Key points
+- The trailing stop adds in a trend and removes without one. That is not a preference, it is a result.
+- It never moves in the direction of the loss. The Beginner track's rule is unchanged.
+- Its value rests on the condition under which it is applied, not on its setting.
+
+H2: 4.4 Moving the stop to break-even
+
+HOOK:
+Moving the stop up to your entry price as soon as the trade is in profit. It is called "getting safe", it seems to cost nothing, and it is the most expensive gesture in this module.
+
+P: **Moving to break-even** puts a stop exactly where the market's noise will come looking for it. The reason is structural: your entry price is a level the market has just passed through. It has no meaning for anyone but you, and price comes back to it very often before setting off again.
+
+P: Chapter 2.4 of the Beginner track put the stop at the invalidation, that is, at a level justified by the structure. Moving to break-even replaces it with an arbitrary level — and it does so at the precise moment the trade starts working.
+
+P: What it buys is real: the disappearance of loss risk on this trade. What it sells is just as real: a share of the trades that were going to the target.
+
+CASE: Twenty-one losses avoided, twelve targets lost
+100 trades, starting expectancy +0.60 R. Break-even triggered at +1 R.
+Of the 40 winners, **30% come back through the entry price** before reaching the target: 12 trades go from +3 R to **0 R**.
+Of the 60 losers, **35% reach +1 R** before falling back: 21 trades go from −1 R to **0 R**.
+New count: 28 winners × 3 = +84 · 12 winners cut = 0 · 21 losers saved = 0 · 39 losers × (−1) = −39.
+Total: **+45 R** over 100 trades, that is +0.45 R per trade, against +0.60 R doing nothing.
+The feeling is excellent: 21 losses avoided and a third of trades finishing at zero. The count is **25% lower**.
+
+ERR: The classic mistake
+Validating this gesture on the memory of the losses avoided. You will remember the 21 times the break-even stop saved you — they produced clean, dated relief. You will not remember the 12 times it cost you 3 R, because those trades closed at zero and left no emotional trace. The journal, though, counted them.
+
+KEY: Key points
+- Your entry price has no structural meaning. Putting a stop there is putting it in the noise.
+- In a standard case, moving to break-even costs about 25% of the expectancy.
+- It leaves a favourable memory and an unfavourable statement. The statement is right.
+
+H2: 4.5 Choose one and hold to it
+
+HOOK:
+Three management styles, three figures. None is the right answer. The one certain mistake is changing between them every fortnight.
+
+P: Alternating management styles makes the sample uninterpretable. Three styles applied over sixty trades produce three samples of twenty, and chapter 2.2 showed you that at that size nothing is measurable — neither separately nor together.
+
+P: So the rule is: one management style, written down, applied to **every** trade, over a sufficient sample, then measured. To compare two styles you do not alternate them: you apply the first over a hundred trades, you measure it, then the second.
+
+P: There is a shortcut, though, and it is an excellent one. Add an eighth field to the Beginner track's journal: the **highest point the trade reached before it closed**, expressed in R. With that one number you can recompute after the fact what any management style would have produced, without having had to live through it.
+
+CASE: The field worth three hundred trades
+Beginner track journal: seven fields, one of them the result in R.
+Add the eighth: **highest point reached, in R**, noted at closing. Three seconds per trade.
+Over a hundred trades already taken, that field lets you recompute the expectancy that would have come from a partial exit at 1.5 R, a break-even stop at 1 R, and a trailing stop 1 R away.
+Three management styles compared on a sample you already own, instead of three hundred extra trades and a two-year wait. It is the best effort-to-information ratio in the whole track.
+
+ERR: The classic mistake
+Changing management style after an unfavourable run. This is chapter 6.2 of the Beginner track applied to management: a short run says nothing, and the change resets your sample counter to zero. A year later you will have tried four styles and will know which one worked for none of the four.
+
+KEY: Key points
+- One management style, applied to every trade, measured over a sufficient sample.
+- Add the highest point reached in R to the journal: it makes every management style testable after the fact.
+- Alternating styles does not produce a comparison. It produces noise in three pieces.
+
+EX: Three management styles, one series
+
+EXF: Skill assessed
+Goals 21 and 22: calculate the effect of a partial exit on the average R; decide whether to apply a trailing stop according to the observed regime.
+
+EXF: Instructions
+**Step A.** On one replayed trade, watch the three management styles applied in parallel and note the R each one obtains.
+**Step B.** Choose **one** style, then apply it to the 40 trades of a replayed series. The choice is locked for the whole series.
+**Step C.** The platform recomputes what the other two would have produced on exactly the same series.
+**Step D.** Name the regime of the series, and say whether the ranking obtained was predictable.
+
+EXF: What the platform must provide
+- Step A: a single replay with the three management styles computed in parallel and displayed side by side, R by R.
+- Step B: 40 short replays at speed. The style is chosen before the first trade and **locked** until the last. This is the central teaching constraint of the exercise: without it the user alternates and the exercise teaches nothing.
+- Automatic recording, for every trade, of the **highest point reached in R** — the eighth field from chapter 4.5.
+- Step C: automatic recomputation of the two styles not chosen from the recorded highs, displaying the three expectancies **and the standard error over 40 trades**.
+- Step D: a multiple choice for naming the regime — trend, no trend, mixed — then a question on whether that regime is consistent with the ranking obtained.
+
+EXF: Worked correction
+The series of 40 is built in a **mixed** regime: 24 trades with no trend, 16 in a trend.
+Expected results: do nothing ≈ +0.58 R · trailing stop ≈ +0.61 R · break-even ≈ +0.44 R.
+The ranking is not the point of the exercise. The point is the gap between the first two — 0.03 R — set against the standard error over 40 trades, which is about **0.30 R**. None of the three styles is distinguishable from the other two on this sample. Break-even trails, but even that gap stays inside the noise.
+So the right answer at step D is: the regime was mixed, and 40 trades are not enough to settle it. Most users conclude that the style that came top is the best — reproducing, on management, the exact error module 1 diagnosed on the average R. That is deliberate: the same mistake, made twice three modules apart, is what makes it memorable.

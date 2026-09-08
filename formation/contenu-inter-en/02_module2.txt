@@ -1,0 +1,163 @@
+MOD: 2 | Test instead of hope | 15-minute read · 5 chapters · 1 exercise | 15 min
+Goal: have a protocol that settles the difference between an idea that works and an idea you like.
+
+H2: 2.1 A hypothesis, not a hunch
+
+HOOK:
+"Sells work less well" is not testable. "On EUR/USD in H1, my sells have an average R at least 0.3 R below my buys" is. Three specifics separate the two sentences.
+
+P: A usable hypothesis has a **scope** — which asset, which timeframe, under what conditions — a **measured quantity** — average R, hit rate, compliance rate — and a **numerical threshold**.
+
+P: The threshold is the one people forget, and it is the only one that makes the test real. Without it, any result confirms: an improvement of 0.01 R will be enough for you to say it works.
+
+P: You recognise the property. Chapter 4.1 of the Beginner track demanded that a scenario be contradictable by a specific price. It is the same demand, applied to a rule rather than a trade: a hypothesis no result can refute is not a hypothesis.
+
+CASE: The same idea, three times
+**"The RSI helps."** No scope, no quantity, no threshold. Nothing to test.
+**"The RSI improves my results."** A vague quantity, no threshold. Any positive result will confirm it, including +0.01 R.
+**"On EUR/USD in H4, filtering my buys by an RSI above 50 raises my average R by at least 0.25 R over 100 trades."** Scope, quantity, threshold, sample. Refutable, therefore testable.
+The third wording takes twenty seconds longer to write. It is the only one that will produce information.
+
+ERR: The classic mistake
+Framing the hypothesis after looking at the data. It is the most discreet error at this level: you look at your journal, you notice something, you frame it, then you "test" it — on the very data that suggested the idea. The test can only confirm. It measures nothing except your ability to spot a pattern you have just spotted.
+
+KEY: Key points
+- A testable hypothesis = scope + measured quantity + numerical threshold.
+- Without a threshold, every result confirms.
+- The hypothesis is written before you look at the data that will test it.
+
+H2: 2.2 The sample
+
+HOOK:
+Thirty trades, a hundred trades, five hundred. These numbers circulate without justification. Here is where they come from — and above all why the one you need depends entirely on the size of the effect you are looking for.
+
+P: The logic is that of chapter 1.1, turned around. You know the uncertainty on an average is two standard errors. For an effect to be detectable, that effect must therefore exceed two standard errors.
+
+P: That gives a simple condition: **n greater than (2 × standard deviation ÷ effect)²**. With the standard deviation of 1.9 R established in module 1, you can work it out in your head.
+
+TABLE: 40,30,30 || Effect you are looking for | Trades needed | Time at 3 trades/week
+0.5 R | 58 | 5 months
+0.3 R | 160 | 1 year
+0.2 R | 361 | 2 and a half years
+0.1 R | 1,444 | 9 years
+
+CASE: The row that should make you give up
+An effect of **0.1 R** needs about **1,444 trades**. At three compliant trades a week, that is **nine years**.
+That effect may well exist. It may even be real and stable. You will never verify it: the time it would take you to establish it exceeds the lifespan of most methods, and of most retail traders.
+The conclusion is not discouraging, it is liberating: you can stop hunting for refinements. Only coarse effects are within your reach.
+
+ERR: The classic mistake
+Hunting for small edges. The intermediate level is drawn to fine-tuning — a filter that adds 0.1 R, an extra condition that improves things "a bit". Even if perfectly real, those effects are unverifiable at your scale. An edge you cannot measure is not an edge, it is a belief.
+
+KEY: Key points
+- n > (2 × standard deviation ÷ effect)². Remember the shape, not the formula.
+- An effect of 0.3 R needs about 160 trades, that is a year at your pace.
+- Below 0.2 R, nothing is measurable at your scale. Do not go looking.
+
+H2: 2.3 Cutting your data in two
+
+HOOK:
+You build your rule on some data. You test it on the same data. It works. Of course it works: you made it to.
+
+P: The defence takes two words. The **build sample** is where you search, where you tune, where you are allowed to be wrong as many times as you like. The **control sample** is where you check — and you look at it once.
+
+P: That once is the whole rule. If you go back and tune your rule after seeing the control, it stops being a control: it joins the build sample, and you have nothing left to check anything with.
+
+P: The cut is made **by time**, never at random. Markets behave differently in different periods; a random split mixes the periods and systematically flatters the result, because every piece contains a bit of everything.
+
+CASE: The gap that measures your tuning
+200 replayed situations on EUR/USD, cut chronologically: the first 140 for building, the last 60 for control.
+Rule tuned on the build sample: **+0.61 R**.
+The same rule applied to the control: **+0.12 R**.
+The gap between them is not an accident: it is the measure of what your tuning manufactured. Of the 0.61 R obtained, about 0.49 R was noise cut to fit.
+That leaves 0.12 R. Over 60 trades, the standard error is 0.25 R. That residue is indistinguishable from zero.
+
+ERR: The classic mistake
+Starting again after a bad control. "I'll adjust it slightly and retest." At that precise second your control is dead and you have no way left to check the new version. What you need then is new data, not new settings — and you have no data in reserve.
+
+KEY: Key points
+- Build and control. The cut is made by time, never at random.
+- The control is looked at once. After that, it no longer exists.
+- The gap between the two measures exactly what your tuning manufactured.
+
+H2: 2.4 Overfitting
+
+HOOK:
+Bailey and his co-authors established a figure that ought to appear on the splash screen of every backtesting program: with five years of data, forty-five attempts are enough to produce a brilliant and perfectly empty strategy.
+
+P: **Overfitting** means tuning a rule to the noise of a sample rather than to its structure. The mechanism is mechanical: every configuration tried raises the probability that at least one of them looks excellent by pure chance.
+
+P: The exact statement, from their work: *"If only five years of data are available, no more than forty-five independent model configurations should be tried or we are almost guaranteed to produce strategies with an annualized Sharpe ratio in-sample of 1 but an expected Sharpe ratio out-of-sample of zero."*
+
+P: The practical consequence is brutal. **The number of attempts is part of the test's data**, exactly like the result. A test where the number of configurations tried is unknown is not interpretable — not "less reliable": not interpretable at all.
+
+P: Two other pieces of work confirm the order of magnitude. Bajgrowicz and Scaillet tested **7,846 rules** over 114 years of the Dow Jones: no investor could have picked the future best ones in advance, and the measured performance is entirely wiped out by even modest transaction costs. Harvey, Liu and Zhu, across 316 factors, show that a customary statistical threshold becomes inadequate as soon as the tests multiply.
+
+CASE: Count your attempts, you will be surprised
+You decide to test "a moving average". A single idea, apparently.
+Periods tried: 20, 50, 100, 200. → **4**
+Timeframes: H1 and H4. → × 2 = **8**
+Filter above or below the average. → × 2 = **16**
+Two assets: EUR/USD and BTC/USD. → × 2 = **32**
+You have tested "only a moving average", and you have just made **32 attempts**. Bailey's limit for five years of data is 45. You are nearly there, and you have not yet added a single other tool.
+
+ERR: The classic mistake
+Not counting the attempts you abandoned. Every configuration you tried and then set aside counts, without exception. It is precisely because they were set aside that the one left standing looks good — it is the winner of a competition whose entrants you forgot to count.
+
+KEY: Key points
+- The number of configurations tried is part of the test's data. Write it down before you start.
+- Five years of data, forty-five attempts: past that, the result is dressed-up noise.
+- An abandoned configuration counts as much as a retained one.
+
+H2: 2.5 The abandonment criterion
+
+HOOK:
+Write down what would make you give up, before you start. Without that line you are testing nothing: you are looking for a reason to carry on, and you will end up finding one.
+
+P: The **abandonment criterion** is the value, set in advance, below which the idea is thrown away. Its function is to make the test symmetrical: without it, only favourable results trigger a conclusion, and the others trigger another round of tuning.
+
+P: It covers three things at once, and all three are decided beforehand: the **result threshold**, the **sample size**, and the **number of attempts allowed**. Exceeding any one of the three voids the test.
+
+P: It is the invalidation from chapter 4.1 of the Beginner track, moved up a level. There, you wrote the price that would prove you wrong on a trade. Here, you write the figure that will prove you wrong on an idea.
+
+CASE: Four lines worth more than the test
+**Hypothesis** — on EUR/USD H4, filtering buys by a 50-period moving average raises the average R by at least 0.3 R.
+**Sample** — 200 situations, cut 140 / 60 in chronological order.
+**Attempts allowed** — 4 periods maximum. Past that, the test is void and not restarted.
+**Abandonment criterion** — if the control gives less than +0.15 R of improvement, the idea is thrown away and not retried for six months.
+Those four lines take three minutes. They are worth more than the two hours of testing that follow, because they alone stop the test turning into a hunt for confirmation.
+
+ERR: The classic mistake
+Loosening the criterion when the result comes close to it. "0.14 R is nearly 0.15 R." A criterion loosened once will never constrain anything again, and you have just spent 200 irreplaceable situations for nothing. The threshold was set in cold blood precisely so that this argument would not happen in the heat of the moment.
+
+KEY: Key points
+- Write the threshold, the sample and the number of attempts allowed before you start.
+- A test with no abandonment criterion is not a test.
+- Note the date you abandoned an idea. That is what stops you retrying it in three weeks.
+
+EX: The test you do not rig
+
+EXF: Skill assessed
+Goals 15, 16, 17 and 18: frame a testable hypothesis, separate build from control, count your attempts, write and respect an abandonment criterion.
+
+EXF: Instructions
+**Step A.** Frame your hypothesis: scope, measured quantity, threshold.
+**Step B.** Set the sample, the number of attempts allowed and the abandonment criterion.
+**Step C.** The simulator replays 140 situations. You apply your rule to each one.
+**Step D.** The simulator replays the 60 control situations. Once only.
+**Step E.** Conclude: I keep it, or I abandon it — with the figure.
+Then the platform compares your result to what chance would have produced on the same sample.
+
+EXF: What the platform must provide
+- A hypothesis form with three constrained fields. The submit button stays **disabled as long as the numerical threshold is empty**.
+- An attempt counter shown at all times, incremented automatically on every parameter change and **never resettable**.
+- The replay of 140 build situations: for each, the user decides "I take it / I don't take it", and the result in R appears after the answer.
+- The replay of the 60 control situations, available **once only**, permanently locked after being viewed.
+- **The comparison to chance**, which is the heart of the exercise: the platform replays the same control sample with a random decision, 200 times, and displays the distribution of average R obtained. The user's result is placed within that distribution.
+- **Fallback** if the interactive replay of 200 situations is too heavy: a set of 200 pre-computed results, the user deciding on static situations presented in series. The comparison to chance must be kept in every case — without it the exercise loses all of its teaching.
+
+EXF: Worked correction
+The control gives a result clearly below the build sample. It is built that way, and it is representative.
+The turning point is the comparison to chance. Across the 200 random draws, the distribution of average R typically spreads from −0.4 to +0.4 R. The user's result almost always falls inside it — meaning it is indistinguishable from a decision taken at random on the same situations.
+The expected conclusion is **I abandon it**. Most users nevertheless write "I keep it", for two reasons that add up: the figure is positive, and the exercise cost them time. That is exactly the bias the abandonment criterion exists to neutralise — and that criterion had been written at step B, by the user, twenty minutes earlier.
+The second lesson is in the counter. Most users reach step D with more than twenty attempts on it, without having noticed. The platform reminds them on the final screen, alongside the limit of 45 from chapter 2.4.

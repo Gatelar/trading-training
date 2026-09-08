@@ -1,0 +1,51 @@
+COUV: Track|Intermediate
+You have rules. What you are missing
+is the method that tells you whether they work.
+
+SEC: Risk warning
+
+WARN: Read this before anything else
+Leveraged trading is a high-risk activity. Most retail traders who take it up lose money.
+- Across 14,799 French retail clients tracked for four years by the AMF, France's financial markets regulator, **89% lose money**, with a median loss of €1,843. That finding from the Beginner track is not revised by this document: it remains its frame.
+- This document is **educational content**. It is not investment advice, not a personal recommendation, and not an inducement to open an account.
+- No chapter promises, suggests or holds out the hope of a profit. The tests presented here exist to **rule ideas out**, not to validate them.
+- The whole track takes place in **simulation**, on replayed historical data. Moving to real money belongs to the Experienced track and is not covered here.
+
+P: This level adds tools. That is exactly what makes it dangerous: a badly tested tool gives you more confidence than no tool at all, for identical accuracy. The Beginner track showed that piling on indicators produces justifications, not precision. Nothing here walks that position back.
+
+P: So what you are about to learn is not how to use indicators. It is how to decide which ones deserve to stay on your screen — and the answer, most of the time, will be none.
+
+SEC: What this track assumes you already have
+
+P: This document re-explains nothing. It continues the Beginner track, whose vocabulary, conventions and rules it carries over. If any of the points below means nothing to you, go back to the chapter named before you go any further.
+
+TABLE: 34,66 || Assumed | Chapter of the Beginner track
+Price, spread, costs, leverage | 1.1 to 1.4
+Counting in R and the 1% rule | 2.1 and 2.2
+Position size, stop at the invalidation, drawdown | 2.3 to 2.5
+Candlestick, timeframes, structure, zones | 3.1 to 3.4
+Why no indicators at beginner level | 3.5
+Scenario, reward-to-risk, expectancy, checklist | 4.1 to 4.4
+Disposition effect, overtrading, the seven rules | 5.1 to 5.4
+Journal, compliance × outcome grid, the three measures | 6.1 to 6.3
+
+H3: Where you are supposed to be
+
+P: You have finished the Beginner track and accumulated **at least thirty compliant trades** in simulation. You know your compliance rate and your average R. You have never committed real money.
+
+P: You are also starting to think it works. Module 5 of the Beginner track explained why that is the most dangerous moment of the whole thing: a good run is not proof of skill, it is a short sample. This entire level exists to give you the means to tell the difference.
+
+H3: Conventions unchanged
+
+UL:
+- **Reference capital: €1,000.** One R is worth €10, as in the Beginner track, so that the examples in both documents stay comparable.
+- **Markets: EUR/USD and BTC/USD.** Three timeframes from now on — D1 for context, H4 for structure, H1 for execution.
+- **Everything happens in simulation.** The only capital committed is still your attention.
+- **The worked examples are teaching cases** built to explain a point, never records of real market sessions.
+- **Terms from the Beginner track are used without reminders.** Only new terms are defined on first appearance, and the closing glossary contains only those.
+
+SECX: Contents
+
+NOTE: Six modules, roughly 80 minutes of reading, six exercises in the simulator. As in the Beginner track, the order is not negotiable: the method for checking arrives before the tools it is used to check.
+
+TOC:

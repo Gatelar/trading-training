@@ -3,7 +3,7 @@
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
 -- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
--- Partie 3 sur 4 : parcours experimente, langue fr.
+-- Partie 3 sur 5 : parcours experimente, langue fr.
 -- A executer dans l'ordre : la partie 1 vide la table.
 -- Requiert la migration 011 : la colonne langue doit exister.
 

@@ -1449,7 +1449,7 @@ Additionner des positions en croyant diversifier. Ouvrir trois paires majeures c
 KEY: À retenir
 - La formule de taille du Débutant est exacte pour un trade isolé, insuffisante dès qu''il y en a deux.
 - L''exposition cumulée est ce que tu perds si toutes tes positions touchent leur stop ensemble.
-- Trois positions qui perdent dans le même scénario ne comptent que pour une.', 24);
+- Trois positions qui perdent dans le même scénario sont un seul pari, et leurs risques s''additionnent.', 24);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'fr', 5, '5.2', 'La corrélation', 'HOOK:
 EUR/USD et GBP/USD évoluent ensemble avec un coefficient couramment mesuré entre +0,81 et +0,95. Ce chiffre suffit à transformer deux trades en un seul — et deux risques de 1 % en un risque de presque 2 %.
@@ -3863,7 +3863,7 @@ Adding positions in the belief that you are diversifying. Opening three major pa
 KEY: Key points
 - The Beginner track''s size formula is right for one isolated trade, insufficient as soon as there are two.
 - Cumulative exposure is what you lose if all your positions hit their stops together.
-- Three positions that lose in the same scenario count as one.', 24);
+- Three positions that lose in the same scenario are one bet, and their risks add up.', 24);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'en', 5, '5.2', 'Correlation', 'HOOK:
 EUR/USD and GBP/USD move together with a coefficient commonly measured between +0.81 and +0.95. That figure alone turns two trades into one — and two 1% risks into a risk of almost 2%.

@@ -4,10 +4,11 @@
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
 -- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
 -- Partie 6 sur 6 : parcours experimente, langue en.
--- A executer dans l'ordre : la partie 1 vide la table.
+-- Se rejoue seule : elle ne touche qu'a son propre lot.
 -- Requiert la migration 011 : la colonne langue doit exister.
 
 begin;
+delete from public.formation_chapitres where parcours = 'experimente' and langue = 'en';
 
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('experimente', 'en', 1, '1.1', 'What simulation never charged you for', 'HOOK:

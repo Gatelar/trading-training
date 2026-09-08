@@ -4,10 +4,11 @@
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
 -- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
 -- Partie 5 sur 6 : parcours intermediaire, langue en.
--- A executer dans l'ordre : la partie 1 vide la table.
+-- Se rejoue seule : elle ne touche qu'a son propre lot.
 -- Requiert la migration 011 : la colonne langue doit exister.
 
 begin;
+delete from public.formation_chapitres where parcours = 'intermediaire' and langue = 'en';
 
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'en', 1, '1.1', 'Thirty trades, and what they do not say', 'HOOK:
@@ -585,7 +586,7 @@ Adding positions in the belief that you are diversifying. Opening three major pa
 KEY: Key points
 - The Beginner track''s size formula is right for one isolated trade, insufficient as soon as there are two.
 - Cumulative exposure is what you lose if all your positions hit their stops together.
-- Three positions that lose in the same scenario count as one.', 24);
+- Three positions that lose in the same scenario are one bet, and their risks add up.', 24);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'en', 5, '5.2', 'Correlation', 'HOOK:
 EUR/USD and GBP/USD move together with a coefficient commonly measured between +0.81 and +0.95. That figure alone turns two trades into one — and two 1% risks into a risk of almost 2%.

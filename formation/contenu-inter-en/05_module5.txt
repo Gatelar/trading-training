@@ -24,7 +24,7 @@ Adding positions in the belief that you are diversifying. Opening three major pa
 KEY: Key points
 - The Beginner track's size formula is right for one isolated trade, insufficient as soon as there are two.
 - Cumulative exposure is what you lose if all your positions hit their stops together.
-- Three positions that lose in the same scenario count as one.
+- Three positions that lose in the same scenario are one bet, and their risks add up.
 
 H2: 5.2 Correlation
 

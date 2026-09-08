@@ -4,10 +4,11 @@
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
 -- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
 -- Partie 4 sur 6 : parcours debutant, langue en.
--- A executer dans l'ordre : la partie 1 vide la table.
+-- Se rejoue seule : elle ne touche qu'a son propre lot.
 -- Requiert la migration 011 : la colonne langue doit exister.
 
 begin;
+delete from public.formation_chapitres where parcours = 'debutant' and langue = 'en';
 
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('debutant', 'en', 1, '1.1', 'What you are actually buying', 'HOOK:

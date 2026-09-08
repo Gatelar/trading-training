@@ -115,16 +115,17 @@ def main():
         complet += lot + [""]
 
         # Un fichier par parcours et par langue : l'editeur SQL du tableau de
-        # bord Supabase digere mal un collage de 250 Ko. Le premier vide la
-        # table, les suivants completent — donc a executer dans l'ordre.
+        # bord Supabase digere mal un collage de 250 Ko. Chaque partie remplace
+        # son propre lot et rien d'autre : elle se rejoue seule, sans ordre
+        # impose, et une partie oubliee ne laisse pas les autres en vrac.
         nom = slug if langue == "fr" else "%s_%s" % (slug, langue)
         part = list(ENTETE) + [
             "-- Partie %d sur %d : parcours %s, langue %s." % (i, len(tout), slug, langue),
-            "-- A executer dans l'ordre : la partie 1 vide la table.",
+            "-- Se rejoue seule : elle ne touche qu'a son propre lot.",
             "-- Requiert la migration 011 : la colonne langue doit exister.",
-            "", "begin;"]
-        if i == 1:
-            part.append("delete from public.formation_chapitres;")
+            "", "begin;",
+            "delete from public.formation_chapitres "
+            "where parcours = '%s' and langue = '%s';" % (slug, langue)]
         part += [""] + lot + ["", "commit;", ""]
         ko = ecrire(os.path.join(dossier_sql, "009_%d_contenu_%s.sql" % (i, nom)), part)
         print("  009_%d_contenu_%-17s %3d chapitres  %5.0f Ko" % (i, nom + ".sql", len(lot), ko))

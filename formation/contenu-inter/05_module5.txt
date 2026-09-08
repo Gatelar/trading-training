@@ -24,7 +24,7 @@ Additionner des positions en croyant diversifier. Ouvrir trois paires majeures c
 KEY: À retenir
 - La formule de taille du Débutant est exacte pour un trade isolé, insuffisante dès qu'il y en a deux.
 - L'exposition cumulée est ce que tu perds si toutes tes positions touchent leur stop ensemble.
-- Trois positions qui perdent dans le même scénario ne comptent que pour une.
+- Trois positions qui perdent dans le même scénario sont un seul pari, et leurs risques s'additionnent.
 
 H2: 5.2 La corrélation
 

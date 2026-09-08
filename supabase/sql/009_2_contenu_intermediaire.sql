@@ -4,10 +4,11 @@
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
 -- Les dossiers suffixes '-en' fournissent la version anglaise du parcours.
 -- Partie 2 sur 6 : parcours intermediaire, langue fr.
--- A executer dans l'ordre : la partie 1 vide la table.
+-- Se rejoue seule : elle ne touche qu'a son propre lot.
 -- Requiert la migration 011 : la colonne langue doit exister.
 
 begin;
+delete from public.formation_chapitres where parcours = 'intermediaire' and langue = 'fr';
 
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'fr', 1, '1.1', 'Trente trades, et ce qu''ils ne disent pas', 'HOOK:
@@ -585,7 +586,7 @@ Additionner des positions en croyant diversifier. Ouvrir trois paires majeures c
 KEY: À retenir
 - La formule de taille du Débutant est exacte pour un trade isolé, insuffisante dès qu''il y en a deux.
 - L''exposition cumulée est ce que tu perds si toutes tes positions touchent leur stop ensemble.
-- Trois positions qui perdent dans le même scénario ne comptent que pour une.', 24);
+- Trois positions qui perdent dans le même scénario sont un seul pari, et leurs risques s''additionnent.', 24);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'fr', 5, '5.2', 'La corrélation', 'HOOK:
 EUR/USD et GBP/USD évoluent ensemble avec un coefficient couramment mesuré entre +0,81 et +0,95. Ce chiffre suffit à transformer deux trades en un seul — et deux risques de 1 % en un risque de presque 2 %.

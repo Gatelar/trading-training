@@ -25,7 +25,8 @@ GENERIQUE_EN = ("Educational content · No investment advice<br/>"
 # Le parcours Experimente traite de l'argent reel : le colophon generique le
 # contredirait des la couverture.
 EXPERIMENTE_FR = ("Contenu pédagogique · Aucun conseil en investissement<br/>"
-                  "Exercices en simulation · Aucun prestataire nommé, aucun capital recommandé")
+                  "Exercices en simulation · Aucun prestataire nommé<br/>"
+                  "N'encourage pas le passage en argent réel · Capital à risque")
 EXPERIMENTE_EN = ("Educational content · No investment advice<br/>"
                   "Exercises in simulation · No provider named, no capital recommended")
 

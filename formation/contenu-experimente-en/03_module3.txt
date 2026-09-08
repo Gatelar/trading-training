@@ -1,0 +1,132 @@
+MOD: 3 | Behaviour, under real constraint | 15-minute read · 4 chapters · 1 exercise | 15 min
+Goal: recognise the three Beginner-track biases coming back at once, and set a stopping protocol against them.
+
+H2: 3.1 What 1 R becomes when it is money
+
+HOOK:
+Ten euros is nothing. Except that it is no longer ten euros: it is the first dated proof that your method can cost you something, and it has your name on it.
+
+P: In simulation, R was a unit of account. It made results comparable and emotions absent — that was its very purpose, and the Beginner track introduced it for that in chapter 2.1. With real money the same unit becomes a signal, and a signal gets processed whether you like it or not.
+
+P: Module 5 of the Beginner track described three documented behaviours to you, which you then spotted in your journal, one at a time, in cold blood, several days later. That was the only way simulation could have you meet them. It is not the way they present themselves.
+
+CASE: The run that is waiting for you
+System with 45% winning trades. Probability that five consecutive trades all lose: 0.55⁵ = **5.0%**.
+Over the 25 trades of a stage: a **43%** chance of meeting one.
+Over 156 trades — a year at three a week: **98%**.
+Five consecutive losses at 1% cost **5 R**, that is €50 on capital of €1,000. The amount is small and the event is ordinary.
+The amount is not the problem. The problem is that it arrives accompanied by the conviction that something has just broken — and that conviction was not in your simulation.
+
+ERR: The classic mistake
+Treating the first real run as information about the system. It is not: module 1 of the Intermediate track established that a run of that length is variance and is distinguishable from nothing at all. What it teaches you is elsewhere — about you — and it appears in no statement.
+
+KEY: Key points
+- Five consecutive losses: a 5% chance at every trade, 98% over a full year.
+- The run is anticipated by your system. What was not anticipated is its effect on you.
+- A run of that length says nothing about the system. The Intermediate track put numbers on that in module 1.
+
+H2: 3.2 The three biases do not come back separately
+
+HOOK:
+The three biases arrive together, in the same session, and in an order that has its own logic. You had met them one at a time in your journal, in cold blood, several days after the fact.
+
+P: The chain always starts the same way. A compliant loss, no fault. The next trade starts well, and you close it early to "lock it in" — that is the disposition effect, and it looks reasonable since it turns a floating gain into a realised one.
+
+P: Except that a gain of 0.4 R does not offset a loss of 1.0 R. The remaining gap calls for a third trade, which was not in the session's plan: that is overtrading. And when that one fails in turn, the size of the fourth becomes the only variable that can still close the gap before the close.
+
+P: Every link presents itself as the reasonable repair of the one before. That is what makes them hard to see from the inside: at the moment you commit them, you are not giving in, you are correcting.
+
+CASE: One session, four trades
+**Trade 1** — compliant, no fault. Result: **−1.0 R**.
+**Trade 2** — compliant entry, target written at +2.0 R, closed at **+0.4 R** to lock it in. Disposition effect.
+**Trade 3** — outside the checklist, taken to get back to even. **−1.0 R**. Overtrading.
+**Trade 4** — size doubled. **−2.0 R**. The spiral.
+Session: −1.0 + 0.4 − 1.0 − 2.0 = **−3.6 R**, that is 3.6% of capital.
+What your rules anticipated: "two losses, the session is over" closed the day after trade 3, at **−1.6 R**.
+Gap between the session lived and the session planned: **2.0 R**, which is what a system at +0.18 R produces on average over eleven trades.
+
+ERR: The classic mistake
+Asking which of the three errors cost the most. The question is badly put: they do not add up, they chain together. Trade 4 exists only because trade 3 failed, and trade 3 exists only because trade 2 returned 0.4 R instead of 2.0 R. Fixing the last link only moves the breaking point back one notch.
+
+KEY: Key points
+- The three biases from module 5 of the Beginner track form a chain, not a list.
+- Every link presents itself as the reasonable repair of the one before.
+- The rule that cuts the chain is the oldest one: two losses, the session is over.
+
+H2: 3.3 The stopping protocol: threshold, duration, resumption
+
+HOOK:
+Your eight rules close a session. None of them closes an account. As long as everything happened in simulation, that difference had no consequence.
+
+P: A **stopping protocol** is a rule written in advance that suspends all real activity beyond a threshold, for a fixed duration, with a resumption condition a third party could check. Three elements, all of them numerical or dated, none left to judgement in the moment. It is the **ninth rule**, and it completes the seventh without replacing it: the seventh says when to stop, the ninth says for how long and on what condition you resume.
+
+P: The threshold is the hard part, and the error there is systematically in the same direction: too tight. A threshold set inside your system's ordinary dispersion will fire on a perfectly healthy system, regularly, and you will end up going round it — and then deleting it.
+
+CASE: Two thresholds, only one that holds
+System whose results have a standard deviation of 1.2 R per trade. Over a window of 20 trades, the standard deviation of the **sum** is 1.2 × √20 = **5.4 R**.
+**Threshold A — stop at −5 R.** It sits inside one standard deviation of ordinary dispersion. It will fire on noise, often, and signal nothing.
+**Threshold B — stop at −10 R**, that is 10% of capital: the threshold the Beginner track's seventh rule already imposes on you. At close to two standard deviations, it no longer responds to noise.
+And the cost of stopping: the fixed duration, plus the resumption condition. Twenty compliant trades in simulation, at three a week, is **nearly seven weeks**.
+A threshold that is too tight leaves you permanently stopped. It is the stop-in-the-noise of chapter 2.4 of the Beginner track, transposed to the scale of the account.
+
+ERR: The classic mistake
+Writing the resumption condition in terms of an inner state. "I resume when I feel clear-headed again" is not checkable, and will be checked favourably the very next morning. A resumption condition is an act observable from outside: a number of compliant trades in simulation, a written review, a date. Exactly the transmissibility criterion of chapter 6.1 of the Intermediate track.
+
+KEY: Key points
+- Three elements: a threshold, a duration, a resumption condition checkable from outside.
+- A threshold less than one standard deviation from the dispersion fires on noise.
+- The resumption condition is a dated act, never a felt state.
+
+H2: 3.4 The rules real money forces you to rewrite
+
+HOOK:
+Of the eight rules you apply, six pass into real trading without a comma changing. The other two stop protecting without warning — and they are not the ones you would think.
+
+TABLE: 56,44 || Rule | What real money does to it
+Fixed risk of 1% per trade | Unchanged
+Three trades maximum per session | Unchanged
+Two losses: the session is over | Unchanged, and becomes the most useful of the eight
+Thirty minutes' wait after any loss | **To be re-quantified**: the trigger changes
+No order without the checklist answers | Unchanged — the checklist itself goes to eight questions
+Target and stop not renegotiable | Unchanged
+Drawdown of 10% on the month: full stop | **Completed** by the ninth rule, chapter 3.3
+Maximum cumulative exposure of 2% | Unchanged, and still blind to price gaps
+
+P: The thirty-minute rule was written for a loss that cost nothing. Its trigger is the fact of losing. With real money, what determines the time you need is not the fact of losing: it is the amount lost, and that varies by a factor of three within a single day.
+
+CASE: The thirty-minute rule, measured
+Take from your journal the delay between closing a losing trade and the next order.
+**In simulation**: median delay of 34 minutes. The rule is respected effortlessly, because nothing pushes you to get round it.
+**In real trading, on two-loss days**: median delay of 9 minutes. The rule was not abandoned — it was got round once, and then every time.
+The fix is not to lengthen the duration, which would be got round just the same. It is to change the trigger: **thirty minutes after a loss of 1 R, the whole session after 2 R lost in the day.**
+You only get that figure by recording the delay. It is a tenth journal field — and that one is optional, unlike the ninth.
+
+ERR: The classic mistake
+Rewriting all eight rules at once when you make the move. A rule rewritten before it has been found wanting is a rule written on a supposition. Six of the eight hold as they are; changing them all together amounts to altering the system on eight points with no sample, which chapter 6.4 of the Intermediate track already forbids for a single one.
+
+KEY: Key points
+- Six rules out of eight pass into real trading unmodified. Leave them alone.
+- The thirty-minute rule changes trigger: the amount lost, not the fact of losing.
+- The seventh rule is completed by the ninth: threshold, duration, resumption condition.
+
+EX: Your session, degraded
+
+EXF: Skill assessed
+Goals 28 and 29: recognise in your own journal a behaviour from module 5 of the Beginner track reappearing under real constraint and name the rule that covers it; write a stopping protocol and apply it to a degraded session.
+
+EXF: Instructions
+**Step A.** A four-trade session runs under time pressure, with degraded execution and a running result displayed in euros, not in R. At each decision, you choose. The session does not pause.
+**Step B.** Once the session is over, your own Beginner-track journal opens beside the session record. Identify the same behaviour in both, and name the rule that covers it.
+**Step C.** Write your stopping protocol — threshold, duration, resumption condition — then replay the step A session with that protocol active.
+
+EXF: What the platform must provide
+- Step A: a **non-interruptible** session, timed, with the running result displayed **in euros**. It is the only screen in the whole track where R disappears, and that is deliberate: module 3 is about what that conversion does.
+- Degraded execution active, with one of the four trades taking a marked gap on the stop exit.
+- Step B: import of the user's Beginner journal, highlighting trades whose result departs from the written target. **Fallback** if the journal is missing or holds fewer than 30 compliant trades: a supplied journal, presented as another user's, with the same mechanics — the exact fallback from exercise 1 of the Intermediate track.
+- Step C: a three-field form, the "resumption" field refusing state-based wordings, and a calculator for the standard deviation of the sum over 20 trades, displayed but not pre-filled.
+- **Fallback** if degraded execution is unavailable: the session runs with perfect execution, timer and euro display kept. The essentials of module 3 survive; the execution gap on trade 4 does not.
+
+EXF: Worked correction
+**Step A.** The session is built so that closing trade 2 early is **rewarded immediately**: price does indeed come back against the position right afterwards. That is the central trap, and it is an honest one — the disposition effect is not stupidity, it is a gesture that is right often and costs anyway. The record then shows price reaching the target forty minutes later.
+**Step B.** The frequent error is to name the spiral, which is spectacular and comes last. The behaviour present **in both journals** is the disposition effect, far more discreet, and it is the first link. A user who finds nothing in their Beginner journal has probably looked for a serious fault where they should have looked for a 0.3 R gap repeated fifteen times.
+**Step C.** A threshold below 6 R fires the stop during the step A session, which looks like the right result and is not: the calculator shows that at 1.2 R of standard deviation, that threshold would also fire on an ordinary run. The right answer stops the session by the two-loss rule, not by the protocol. The protocol is never what serves within a single session.

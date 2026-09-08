@@ -1,0 +1,176 @@
+SEC: What this track changes
+
+NOTE: This section exists because the Intermediate track made parts of the Beginner cards obsolete without saying so. Everything the present document adds, changes or corrects is listed below, and nowhere else.
+
+H3: The rules: from eight to nine
+
+TABLE: 44,20,36 || Rule | Status | Where
+Fixed risk of 1% per trade | Unchanged | Beginner 2.2
+Three trades maximum per session | Unchanged | Beginner 5.4
+Two losses: the session is over | Unchanged | Beginner 5.4
+Waiting after a loss | **Modified** | Experienced 3.4
+No order without the checklist answers | Unchanged | Beginner 4.4
+Target and stop not renegotiable | Unchanged | Beginner 5.4
+Drawdown of 10% on the month: full stop | Unchanged | Beginner 2.5
+Maximum cumulative exposure of 2% | Unchanged | Intermediate 5.4
+Stopping protocol: duration and resumption | **Added** | Experienced 3.3
+
+P: The fourth rule changes trigger, not nature: thirty minutes after a loss of 1 R, the whole session beyond 2 R lost in the day. The ninth completes the seventh — the seventh says when to stop, the ninth for how long and on what condition you resume.
+
+H3: The checklist: from seven to eight questions
+
+P: The Intermediate track's seven questions are kept word for word. An eighth is added in last position: **does a scheduled announcement or a weekly open fall within this trade's expected duration?** It follows from chapter 1.3 and is answered by consulting a calendar, not a chart.
+
+P: The seventh question — cumulative exposure — does not change wording, but changes source. Its answer now comes from the exposure table of chapter 4.4, no longer from memory. At three positions memory was enough; at five it systematically produces the lowest figure.
+
+H3: The journal: from eight to nine fields
+
+P: The ninth field is the **execution gap in R**, signed, recorded separately on entry and on exit. It is compulsory from the first real trade: without it the net expectancy of chapter 1.4 cannot be calculated, and the abandonment criterion goes on applying to a quantity that exists only in simulation.
+
+P: A tenth field is offered and stays **optional**: the delay between closing a losing trade and the next order. It serves one purpose, quantifying how far the fourth rule is being got round, and it serves only those who get round it.
+
+H3: The system document: two criteria instead of one
+
+UL:
+- The **abandonment criterion** is rewritten on **net** expectancy. That rewriting increments the version and resets the trade counter to zero, like any modification.
+- A **system stopping criterion** is added: quantity, threshold, window, action, plus what becomes of open positions.
+- The stopping criterion's window is **disjoint** — one evaluation per batch of 100 new trades, never rolling.
+- The **starting stage** goes in if there is one: fraction, number of trades, quantity measured, end of the stage.
+- The **dated decision** of chapter 6.5 goes in too, and is re-read at every monthly review.
+
+H3: Exposure, now stated identically in both documents
+
+P: Chapter 5.2 of the Intermediate track said that two strongly correlated 1% positions "count as 1%", which its own chapter 5.1 contradicted — three positions that lose together expose about 3%. The wording of 5.1 has been adopted, and the Intermediate track corrected accordingly.
+
+P: So the rule is single across all three tracks: **within a group that loses together, risks add up**, and the 2% limit applies to that sum. If you hold a version of the Intermediate track from before this correction, its chapter 5.2, its chapter 5.4 and its session card are what you need to re-read.
+
+SEC: Consolidated session card
+
+NOTE: It replaces the Beginner card and the Intermediate one, and is authoritative for all three levels. One page, to print, to keep beside the screen. Nothing new appears on it: only what has to be available without thinking.
+
+CARD: The nine rules
+- Fixed risk of 1% per trade, never adjusted mid-session.
+- Three trades maximum per session.
+- Two losses: the session is over.
+- Thirty minutes after a loss of 1 R; the whole session beyond 2 R lost.
+- No order without the checklist answers.
+- Target and stop not renegotiable once the position is open.
+- Drawdown of 10% on the month: full stop and review of the journal.
+- Maximum cumulative exposure: 2%, checked before the order.
+- **Stopping protocol: threshold, duration, resumption condition, written beforehand.**
+
+CARD: The checklist, at eight questions
+- Is the structure readable in H4? If not, I do not enter.
+- Where is my invalidation, in price?
+- What size does that stop impose for 1%?
+- Is the stop between 1 and 3 ATR? If not, I justify it.
+- What is the reward-to-risk ratio? Below 1.5, I do not enter.
+- How many trades have I already taken today?
+- What is my cumulative exposure, this trade included? Answer read off the table.
+- **Does an announcement or a weekly open fall during this trade?**
+
+CARD: The journal, at nine fields
+Date and time · Asset and timeframe · Scenario written before entry · Invalidation and target · Size and risk in R · Highest point reached in R · Result in R · **Compliant: yes / no** · **Execution gap in R, entry and exit**
+Optional field: delay between a loss and the next order.
+
+CARD: The formulas
+**Position size** = (Capital × Risk in %) ÷ Distance to the stop
+**Minimum hit rate** = 1 ÷ (1 + Reward-to-risk ratio)
+**Expectancy** = (hit rate × average gain) − (miss rate × average loss)
+**Net expectancy** = Gross expectancy − Measured execution cost
+**Standard error** = standard deviation ÷ square root of the number of trades
+**Trades for a wanted precision** = (standard deviation ÷ precision)²
+
+CARD: Exposure, beyond three positions
+**1.** Group the positions by shared losing scenario.
+**2.** Within a group, risks **add up**.
+**3.** Between groups: above +0.3 the smaller counts half, below that they add up, opposite directions subtract.
+**4.** Keep the table — asset, direction, risk, group, total — outside the platform, updated before the order.
+Default refusal when the limit is reached: **the last to arrive**. Never by cutting an open position.
+
+CARD: The starting stage
+Fraction of the risk · Number of trades · Quantity measured · What ends the stage.
+The stage's worst case must stay **below** your drawdown threshold. Twenty-five trades are enough to measure execution; one thousand six hundred would be needed for expectancy.
+The end of the stage authorises nothing: it dates a recalculation.
+
+CARD: The test protocol, in seven steps
+Hypothesis — scope, quantity, threshold · Sample and chronological cut · Attempts allowed · Abandonment criterion · Build · **Control, looked at once** · Written and dated decision.
+A skipped step voids the test. The number of attempts is noted before, not after.
+
+CARD: The system document, and its two criteria
+Scope · Entry · Invalidation and stop · Management · Exposure · Abandonment criterion, on **net** expectancy · **Stopping criterion: quantity, threshold, disjoint window, action, fate of open positions.**
+Header: version, modification date, trades since. Every modification resets the counter to zero.
+
+TABLE: 25,25,25,25 || Ratio | Min. hit rate | Drawdown | Gain to recover
+1R | 50% | −10% | +11%
+1.5R | 40% | −20% | +25%
+2R | 33% | −33% | +50%
+3R | 25% | −50% | +100%
+
+TABLE: 25,25,25,25 || Effect sought | Trades required | Quantity | Trades required
+0.5 R | 58 | Execution cost to 0.03 R | 25
+0.3 R | 160 | Expectancy to 0.03 R | 1,600
+0.2 R | 361 | A 0.15 R fall detected | 640
+0.1 R | 1,444 | One year of practice | 156
+
+SEC: Glossary
+
+NOTE: Only terms introduced by this track appear below. For the Beginner notions — R, spread, drawdown, structure, expectancy, compliance, checklist, journal — and the Intermediate ones — ATR, correlation, standard error, cumulative exposure, filter, overfitting, system — see the glossaries of those two documents.
+
+GLOSS:
+Automatic close-out :: Compulsory closing of positions when funds fall to 50% of the minimum required margin. On €1,000 at maximum leverage, it comes after a loss of 91.7%.
+Decay :: Lasting disappearance of a system's edge. Indistinguishable from a bad run on any sample you will ever produce.
+Disjoint window :: Evaluation window sharing no trade with the previous one. Reduces the false-alarm rate without touching the threshold.
+Execution gap :: Difference between the price asked and the price obtained. Zero in simulation by construction. Counted as a fraction of the stop, never as a percentage of the price.
+Exposure group :: Set of positions that lose in the same scenario. Within a group, risks add up.
+Exposure table :: Sheet kept outside the platform — asset, direction, risk, group, total — updated before every order in about twenty seconds.
+False-alarm rate :: Probability that a criterion fires while the system is healthy. Depends on the threshold, and more still on the window.
+Market order :: Order executed at the best price available the instant it arrives. A stop-loss is a market order with a trigger.
+Negative balance protection :: Guarantee, account by account, that the loss cannot exceed the funds deposited. Introduced after the debit balances of January 2015.
+Net expectancy :: Gross expectancy less the measured execution cost. The only quantity to compare with the criterion once money is committed.
+Out-of-sample decline :: Loss of performance observed when a rule is applied to data that did not serve to build it. Documented order of magnitude: −26%.
+Price gap :: Range of prices in which no transaction took place. The stop is triggered there and then executed further away: the loss stops being bounded by your calculation.
+Record :: Exhaustive, factual and exportable statement of all operations, kept for a third party. Does not replace the journal and does not follow from it.
+Slippage :: See *execution gap*.
+Standardised warning :: Statement by which a provider publishes the percentage of its retail client accounts that lose money. Produced by the provider itself, and checkable before opening anything.
+Starting stage :: Initial reduced-risk period whose sole object is to measure the execution cost. Its end dates a recalculation and authorises nothing.
+Stopping protocol :: Ninth rule: threshold, duration, resumption condition checkable from outside. A threshold less than one standard deviation from the dispersion fires on noise.
+System stopping criterion :: Threshold written in advance beyond which a system in production is stopped. Distinct from the abandonment criterion, which applies to a hypothesis under test and costs only an idea.
+
+SEC: Disclosures and sources
+
+H3: The nature of this document
+
+P: Educational content intended for learning. It is not investment advice, not a personal recommendation, not financial analysis in the regulatory sense, and not an inducement to open an account with any provider.
+
+P: Leveraged trading is a high-risk activity. Most retail traders who take it up lose money: 89% of the 14,799 French clients tracked by the AMF over four years. Past performance is no guide to future performance, and the capital committed can be lost in full.
+
+P: This track at no point recommends committing real money, presents that move neither as a culmination nor as an expected step, and recommends no amount of capital. No provider is named. No tax figure appears: chapter 6.4 is dated September 2026 and refers you explicitly to a professional.
+
+P: The worked examples are teaching cases built to explain a point. The execution gaps in chapters 1.2 and 1.4, the records in chapter 2.4 and the sessions in module 3 are teaching illustrations, not measurements taken at a provider. The exercises take place in the TapeSense simulator.
+
+H3: On the absence of a slippage figure
+
+P: This document cites no measured execution gap value, because no published, checkable, independent measurement could be identified for a retail trader on this type of product. The values in circulation come from firms selling their own execution. So the track teaches the measurement, not the figure.
+
+H3: Sources cited
+
+UL:
+- **Autorité des marchés financiers**, *Étude des résultats des investisseurs particuliers sur le trading de CFD et de Forex en France*, 13 October 2014. 14,799 clients, 2009–2012: more than 89% losing, median result −€1,843.
+- **ESMA**, product intervention measures, 2018: leverage capped from 30:1 to 2:1 depending on the underlying, automatic close-out at 50% of margin, negative balance protection per account, standardised warning. Measures subsequently taken up by national authorities.
+- **T. G. Andersen, T. Bollerslev, F. X. Diebold & C. Vega**, *Micro Effects of Macro Announcements: Real-Time Price Discovery in Foreign Exchange*, American Economic Review, 93(1), 2003. Announcement surprises produce conditional mean jumps, with asymmetry against bad news.
+- **L. Mancini, A. Ranaldo & J. Wrampelmeyer**, *Liquidity in the Foreign Exchange Market: Measurement, Commonality, and Risk Premiums*, The Journal of Finance, 68(5), 2013. Illiquidity costs measured and strong commonality across pairs.
+- **R. D. McLean & J. Pontiff**, *Does Academic Research Destroy Stock Return Predictability?*, The Journal of Finance, 2016. 97 variables: −26% out of sample, −58% after publication.
+- **A. Falck, A. Rej & D. Thesmar**, *Why and how systematic strategies decay*, 2021. The year of publication explains 30% of the variance in the Sharpe decline, about five points a year.
+- **January 2015, abandonment of the EUR/CHF floor**: client debit balances announced by FXCM at $225m, Alpari UK placed in administration on 19 January 2015. Analysis of the episode: Bank of England, Staff Working Paper 711, Breedon, Chen, Ranaldo & Vause.
+
+H3: Links
+
+UL:
+- amf-france.org — 2014 study on CFD and forex trading in France
+- esma.europa.eu — product intervention measures on CFDs, 2018
+- aeaweb.org/articles?id=10.1257/000282803321455151 — Andersen, Bollerslev, Diebold & Vega (2003)
+- onlinelibrary.wiley.com/doi/abs/10.1111/jofi.12053 — Mancini, Ranaldo & Wrampelmeyer (2013)
+- onlinelibrary.wiley.com/doi/abs/10.1111/jofi.12365 — McLean & Pontiff (2016)
+- arxiv.org/abs/2105.01380 — Falck, Rej & Thesmar (2021)
+- bankofengland.co.uk — Staff Working Paper 711, the Swiss franc episode

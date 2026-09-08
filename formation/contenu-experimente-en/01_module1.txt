@@ -1,0 +1,126 @@
+MOD: 1 | The price you actually get | 14-minute read · 4 chapters · 1 exercise | 14 min
+Goal: measure what simulation never charged you for, and redo your expectancy with it.
+
+H2: 1.1 What simulation never charged you for
+
+HOOK:
+Your statement shows 140 compliant trades and a positive average R. It rests on an assumption you have never had the chance to check: that the price asked and the price obtained are the same number.
+
+P: **Slippage**, or **execution gap**, is the difference between the price at which you request a transaction and the price at which it is concluded. In simulation it is zero by construction. In real trading it is whatever it is, and nobody can tell you in advance how much.
+
+P: The Beginner track made you pay two costs: the spread in chapter 1.2, the overnight charges in chapter 1.4. A third was missing, invisible for as long as a simulation engine hands you the displayed price. That one cannot be deduced from any fee schedule: it has to be measured.
+
+P: A **market order** executes at the best price available the instant it arrives, whatever that price is. Your stop-loss is a market order with a trigger attached. The price you write on it is where it wakes up, not where it serves you.
+
+CASE: What one pip is worth on your trade
+Capital €1,000, risk 1%: **1 R = €10**. EUR/USD, stop 20 pips from the entry.
+Size = €10 ÷ 0.0020 = **5,000 units**.
+One pip on 5,000 units is worth 5,000 × 0.0001 = **€0.50**, that is **0.05 R**.
+One pip lost on entry and one pip lost on exit therefore cost **0.10 R per round trip**. Over 100 trades: **10 R**, that is €100.
+If your simulated average R is +0.15 R, your 100 trades were worth +15 R. That leaves **+5 R**.
+This calculation does not estimate your slippage: it measures your **sensitivity** to it. Replace "one pip" with whatever you measure in chapter 1.2.
+
+ERR: The classic mistake
+Thinking in percentage of price. One pip on EUR/USD is about 0.009% of the rate — a reassuring figure, and unrelated to the question being asked. What matters is the gap relative to your stop, not to the price: with a 20-pip stop, one pip is **5% of your risk**. The same gap, on a 100-pip stop, would be 1%.
+
+KEY: Key points
+- The execution gap is counted as a fraction of your stop, never as a percentage of the price.
+- Stop at 20 pips: one pip is 0.05 R. Ten pips are half a losing trade.
+- A stop is a market order with a trigger, not a guarantee of price.
+
+H2: 1.2 Measure it instead of believing it
+
+HOOK:
+You will find the figure neither here nor anywhere else: the only public measurements come from firms that sell their execution. Yours takes twenty-five trades to obtain, and it is the only one that concerns you.
+
+P: Add a **ninth field** to the journal: the execution gap in R, signed. It is worked out from two prices your platform already knows — the one you asked for, the one you got — and it is recorded like everything else, in R.
+
+P: Measure entry and exit **separately**. They are not the same events: on entry you choose your moment and nothing is waiting for you. At the stop, you are executed at the precise second price moves against you, in a queue that leans entirely one way.
+
+P: That asymmetry is a consequence of the mechanics, not the result of a study. Do not take it on trust: your two columns will tell you within twenty-five trades whether it shows up for you, at your hours, at your size.
+
+CASE: Six executions, one figure
+Same system, 20-pip stop, so 1 pip = 0.05 R.
+**On entry** — gaps recorded: 0, −1, +1, 0, −1, +1 pip. Sum: **0 pips**.
+**On the stop exit** — gaps recorded: −1, −4, 0, −2, −1, −9 pips. Sum: **−17 pips**, that is −0.85 R over six trades, so **−0.14 R per trade**.
+Your simulated average R of +0.20 R becomes **+0.06 R** (0.20 − 0.14).
+Now take out the −9: the other five exits cost −8 pips, that is −0.08 R per trade. **One trade in six carries half the total cost.**
+
+ERR: The classic mistake
+Taking the median. It is −1.5 pips in this record and gives a comfortable, false picture. Expectancy is a mean: it is the mean that goes into its calculation. The median serves another purpose, and a useful one — it tells you your usual cost is not your average cost, and therefore that a month without a bad fill proves nothing at all.
+
+KEY: Key points
+- Ninth journal field: the execution gap in R, signed, entry and exit separately.
+- The mean goes into the expectancy. The median only tells you what an ordinary day looks like.
+- Twenty-five trades are enough for that figure. Chapter 2.1 explains why so few.
+
+H2: 1.3 The moments when price jumps
+
+HOOK:
+A stop protects you from a movement. It does not protect you from a hole. The difference between the two turns up once or twice a year, and it is settled in one second.
+
+P: A **price gap** is a range of prices in which no transaction took place: the market quotes 40,000, then 38,800, and nothing in between. Your stop sitting in the middle was not ignored. It was triggered, then executed at the first available price.
+
+P: This is no exotic market accident. Andersen, Bollerslev, Diebold and Vega established in 2003 that macroeconomic announcement surprises produce conditional mean jumps in spot exchange rates, within minutes, with a more pronounced effect for bad news.
+
+P: Three families cover almost every case: scheduled announcements, whose timing you know in advance; the weekly foreign-exchange open, which digests a weekend of news; the quiet hours in crypto, where the market stays open without staying liquid.
+
+CASE: The stop that did not serve
+BTC/USD at 40,000. Capital €1,000, risk 1%: 1 R = €10. Stop 400 below the entry.
+Size = 10 ÷ 400 = **0.025 BTC**. At that size, 400 of movement is indeed worth 1 R.
+In a quiet hour, price goes from 40,000 to 38,800 with no transaction in between. Your stop at 39,600 is triggered, then executed at 38,800.
+Loss = 0.025 × 1,200 = **€30**, that is **3 R**.
+Three times the calculated risk, on a perfectly compliant trade. The Intermediate track's eighth rule caps cumulative exposure at 2%: this one trade has just cost 3%.
+
+ERR: The classic mistake
+Believing the stop bounds the loss. It bounds it when price passes through every level, which is the case the overwhelming majority of the time — and that is exactly why the belief survives so well. The days when it bounds nothing are, by construction, the days when the move is large. The protection disappears at the precise moment it would be useful.
+
+KEY: Key points
+- A price gap goes straight through your stop without stopping. Your loss is no longer bounded by your calculation.
+- Three families: scheduled announcements, the weekly open, quiet hours in crypto.
+- Cumulative exposure and price gaps are two distinct risks. No rule covers both.
+
+H2: 1.4 Your expectancy, recalculated
+
+HOOK:
+You have an average R, an abandonment criterion and 140 trades. What you are missing is one subtraction — and it is enough to move your system from the good to the bad side of your own criterion.
+
+P: **Net expectancy** is your gross expectancy less the average execution cost you have measured. It, and it alone, describes what your system would produce with real money. The gross figure describes what it produced in an environment that charges nothing.
+
+P: The abandonment criterion in chapter 2.5 of the Intermediate track was written on the gross quantity, for want of anything else. It has to be rewritten on the net one, and that rewriting is a modification of the system document: it increments the version and resets the trade counter to zero.
+
+CASE: The same system, twice
+**Gross expectancy**: +0.18 R over 140 compliant trades. Abandonment criterion: +0.10 R. The system passes.
+**Measured execution cost**: 0.14 R per trade, entry and exit together.
+**Net expectancy**: 0.18 − 0.14 = **+0.04 R**. The system no longer passes.
+**And the uncertainty**: with a standard deviation of 1.2 R over 140 trades, the standard error is 1.2 ÷ √140 = **0.10 R**.
++0.04 R give or take 0.10 R is not distinguishable from zero. So the conclusion is not "my system is bad". It is **"I don't know"**, which chapter 1.4 of the Intermediate track describes as the most frequent result of an honest analysis.
+
+ERR: The classic mistake
+Subtracting the cost and keeping the criterion. That criterion was written for a gross quantity; applying it unchanged to a net one tightens it at a stroke, without your having decided or dated the change. It is a system modification disguised as a calculation — the most discreet form of the untracked modification from chapter 6.2 of the Intermediate track.
+
+KEY: Key points
+- Net expectancy = gross expectancy − measured execution cost. That is what is compared to the criterion.
+- Rewrite the criterion on the net figure, increment the version, reset the counter.
+- A net result contained within its standard error concludes nothing, in either direction.
+
+EX: The same trade, two prices
+
+EXF: Skill assessed
+Goals 25 and 26: measure the gap between price asked and price obtained and express it in R; recalculate a system's expectancy with that cost included, and conclude.
+
+EXF: Instructions
+**Step A.** Twelve decisions are shown to you and executed in perfect simulation. Note the average R of the record.
+**Step B.** The same twelve decisions are replayed, identically, with degraded execution. For each, note the gap between price asked and price obtained, on entry then on exit, and convert it into R.
+**Step C.** Calculate the net expectancy, compare it to the supplied abandonment criterion, and choose your conclusion from three set wordings.
+
+EXF: What the platform must provide
+- A configurable degraded-execution engine, **asymmetric** between entry and stop exit, drawing gaps from a fat-tailed distribution: at least one of the twelve trades must carry a gap far larger than the other eleven.
+- Two columns shown at all times, **price asked** and **price obtained**, and a third computed automatically in R.
+- An input field for the average gap in R, tolerance ±0.02 R, and a second one for the net expectancy.
+- Step C: three selectable conclusions — "passes the criterion", "does not pass the criterion", "concludes nothing" — with the standard error displayed alongside.
+- **Fallback** if degraded execution is not available: two pre-computed records shown side by side, the subtraction left to the user. The instructions must then say explicitly that the gap is read rather than lived, and that this is a teaching loss.
+
+EXF: Worked correction
+**Step B.** The trap is the trade with the extreme gap. Many users treat it as an anomaly and remove it from the calculation — a natural gesture, and a wrong one: it is a cost genuinely incurred, and setting it aside amounts to measuring your execution while excluding the moments when it is bad. The record is built so that this single trade carries about half the total cost.
+**Step C.** The right answer is **"concludes nothing"**. The net expectancy computed is positive, but smaller than its standard error. "Passes the criterion" is tempting because the number is on the right side; "does not pass" is just as tempting for cautious readers. Both commit the same error — concluding on a figure smaller than its uncertainty — and module 1 of the Intermediate track has forbidden it for the last 100 trades.

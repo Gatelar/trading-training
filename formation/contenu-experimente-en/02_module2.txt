@@ -1,0 +1,118 @@
+MOD: 2 | Start small, and write it down | 14-minute read · 4 chapters · 1 exercise | 14 min
+Goal: build a starting stage whose function is to measure, and nothing else.
+
+H2: 2.1 The first size is not the system's size
+
+HOOK:
+Your system document says 1%. It was written by someone who had never paid an execution gap in their life. That someone is you, a few months ago.
+
+P: A **starting stage** is an initial period during which the risk per trade is deliberately below that of your written system, for the sole purpose of measuring your execution cost. It has one question, only one, and it ends when that question has its answer.
+
+P: It is not a trial period, not a warm-up, not a way of easing in. What those three phrasings have in common is that they suggest the stage is preparing something. It prepares nothing: it measures a quantity, and that quantity may perfectly well conclude that there is no next step.
+
+P: The choice of question is not free. It follows from an unpleasant arithmetical fact, which module 2 of the Intermediate track already established in another form: some quantities can be measured in a few weeks, others will never be measured at all.
+
+CASE: Twenty-five trades, or one thousand six hundred
+The standard error is the dispersion divided by the square root of the number of observations. To bring it down to a wanted value you therefore need **the square** of the ratio between the two.
+**Measuring your execution cost** — dispersion of the gaps: 0.15 R. Precision wanted: 0.03 R. n = (0.15 ÷ 0.03)² = **25 trades**.
+**Measuring your expectancy** — dispersion of results: 1.2 R. Same precision wanted: 0.03 R. n = (1.2 ÷ 0.03)² = **1,600 trades**.
+Sixty-four times more, for the same precision. At three compliant trades a week: **eight weeks** in the first case, **more than ten years** in the second.
+The stage measures the first quantity. It will never measure the second.
+
+ERR: The classic mistake
+Expecting the stage to tell you whether the system works with real money. That is the question everyone asks and the one twenty-five trades will not answer — nor two hundred, nor five hundred. A stage that claims to answer it is no longer a measurement: it is an observation period with no criterion, and module 2 of the Intermediate track has a name for that.
+
+KEY: Key points
+- The stage measures execution: 25 trades. It does not measure expectancy: that would take 1,600.
+- A stage has a single question and an end defined by that question.
+- What ends a stage is a measurement obtained, never an impression acquired.
+
+H2: 2.2 The starting stage
+
+HOOK:
+Four lines, written before the first order, dated. Written afterwards they are no longer rules: they are commentary on what happened.
+
+P: Four elements, not one more. **The fraction** of your system's risk. **The minimum number of trades**. **The quantity measured**, named precisely. **What ends the stage**, worded so that a third party can see the end without asking you.
+
+P: The fraction is your choice, but it is not free for all that: it has to pass a test. The stage's worst case — every trade a loser — must stay below the stop threshold the Beginner track's seventh rule already imposes on you. A fraction that fails that test would turn the measurement into an incident.
+
+CASE: The stage written down, and its worst case
+System: 1% risk per trade, so 1 R = €10. **Stage at a quarter**: €2.50 per trade.
+Length: **25 compliant trades minimum**, that is about eight weeks.
+Quantity measured: execution gap on entry and at the stop, in R, recorded separately.
+Worst case bounded: 25 trades all losing would cost 25 × €2.50 = **€62.50**, that is **6.25% of capital**.
+The Beginner track's seventh rule stops everything at 10% monthly drawdown. The stage's worst case therefore falls **below** your own stop threshold. That is the criterion that validates a fraction, and it is the only one.
+
+ERR: The classic mistake
+Choosing the fraction from the amount you feel ready to lose. The reasoning looks prudent, and it is back to front. The fraction is deduced from a threshold you have already written and dated; the amount that feels bearable, on the other hand, changes with the week, with tiredness, with the last result. You spent a year giving yourself rules precisely so as to stop deciding that way.
+
+KEY: Key points
+- Four lines: fraction, number of trades, quantity measured, end of the stage.
+- The stage's worst case must stay below your drawdown threshold. That is what validates the fraction.
+- The end of the stage authorises nothing. It dates a recalculation.
+
+H2: 2.3 What this stage measures, and what it does not
+
+HOOK:
+Twenty-five trades will give you one solid figure and one illusion. The figure is your execution cost. The illusion is absolutely everything else.
+
+P: What it really measures: the execution gap on entry, the gap at the stop, how the spread behaves at the hours you operate, and one thing no documentation will tell you — whether your platform does what you think it does when price moves fast.
+
+P: What it does not measure: your expectancy, which the previous chapter put at 1,600 trades. Nor your system's decay, which is the subject of module 5. Nor your behaviour under real loss, and that is the most serious of the three gaps, because it is the one you will believe you have filled.
+
+CASE: What twenty-five trades do not contain
+System with 45% winning trades. Probability that five consecutive trades all lose: 0.55⁵ = **5.0%**.
+Over a sequence of 25 trades, the probability of at least one such run appearing is **43%**.
+In other words: **more than one stage in two runs its course without your meeting your ordinary worst run.**
+And if it does appear, it costs 5 × €2.50 = €12.50, that is 1.25% of capital. You will not really have felt it either.
+Over a full year at three trades a week — 156 trades — that same run has a **98%** chance of occurring. It is waiting for you. It simply was not in the sample.
+
+ERR: The classic mistake
+Concluding from a calm stage that the move went well. Twenty-five trades at a quarter size produce an emotional experience close to zero, and that is intended: the stage is designed to be bearable. Taking it as proof that real money suits you is like judging a vaccine on the absence of illness during the week of the booster.
+
+KEY: Key points
+- The stage measures execution, the spread at your hours, and how your platform actually behaves.
+- It measures neither your expectancy, nor the system's decay, nor your behaviour under loss.
+- A calm stage is not information. It is the outcome expected by construction.
+
+H2: 2.4 Staying in simulation is an answer
+
+HOOK:
+Of the three possible outcomes of a stage, two are written "not now". That is not a quirk of teacherly caution: it is what the arithmetic of the two previous chapters produces.
+
+P: A decision to do nothing is a decision. It is dated, it is written down, it names the measurement it rests on, and it says what would have to change for it to be reviewed. Without those four elements it is not a decision: it is a postponement, and a postponement gets reopened every week.
+
+P: Across 14,799 French clients tracked for four years by the AMF, **89% lose money**. Nothing you have just measured takes you out of that proportion. You measured your execution — a technical parameter, over twenty-five trades. You measured nothing else.
+
+CASE: Three records, three decisions
+**Record A** — gross +0.12 R, measured execution cost 0.16 R, net **−0.04 R**. The system loses once executed. Decision: **back to simulation**. The stage did exactly its job, for €62.50 at worst.
+**Record B** — gross +0.22 R, cost 0.09 R, net **+0.13 R** over 25 trades. Standard error: 1.2 ÷ √25 = **0.24 R**. The figure is half the size of its uncertainty. Decision: **nothing is concluded**.
+**Record C** — same net result, but over 140 trades. Standard error: 1.2 ÷ √140 = **0.10 R**. The sign is established. Decision: the measurement **does not stand in the way** of your committing money. It does not advise it, and it says nothing about what you can afford to lose — that question does not belong to this document.
+
+ERR: The classic mistake
+Reading the end of the stage as a green light. A stage issues no authorisation; it removes one objection out of the five or six you ought to have. The others — your savings, your outgoings, your horizon, what losing the whole sum would change in your life — are neither technical nor measurable here, and no course has the material to judge them for you.
+
+KEY: Key points
+- Two outcomes out of three, at this stage, are written "not now". That is the normal proportion.
+- A favourable measurement lifts one objection among several. It lifts no others.
+- Staying in simulation is decided, dated and written down like any other decision.
+
+EX: The stage you write
+
+EXF: Skill assessed
+Goal 27: define a reduced-size starting stage and write the measurement criterion — not a result criterion — that authorises its reassessment.
+
+EXF: Instructions
+**Step A.** From your system document, write your stage: fraction, number of trades, quantity measured, end of the stage.
+**Step B.** Three fractions are offered along with your drawdown threshold. Say which ones pass the worst-case test, and for those that fail, give the maximum number of trades that would make them acceptable.
+**Step C.** Three end-of-stage records are shown to you. Choose one of the three decisions for each, and justify it by naming the quantity that settles it.
+
+EXF: What the platform must provide
+- Step A: a four-field form, **120 characters maximum** each, with the user's system document shown permanently alongside. The "end of the stage" field refuses any entry containing a result word — "if it works", "if I'm comfortable", "if I'm winning" — and says why.
+- Step B: three fractions, the drawdown threshold taken from the profile, and a worst-case calculator that is visible but **not pre-filled**.
+- Step C: three records showing gross expectancy, execution cost, number of trades and computed standard error, with three selectable decisions — "back to simulation", "nothing is concluded", "the measurement does not stand in the way".
+- If the user's system document exists, step A pre-fills the reference risk. **Fallback**: empty fields and an example stage available at all times, with a complete fictional system document.
+
+EXF: Worked correction
+**Step B.** The largest fraction fails, and many users validate it anyway because the amount in euros stays modest. That is the back-to-front reasoning of chapter 2.2: the test is not about what feels bearable, it is about a threshold already written down. The second part of the question — the number of trades that would make the fraction acceptable — is what separates a rule understood from a rule learned.
+**Step C.** Record B is the one that traps people. Its net expectancy is clearly positive and the reader wants to conclude; its standard error is twice as large. Answering "the measurement does not stand in the way" on record B is the most frequent error in this whole module, and it is exactly the error of chapter 1.1 of the Intermediate track, committed a year later with something real at stake.

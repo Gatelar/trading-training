@@ -1,0 +1,169 @@
+MOD: 6 | The infrastructure | 14-minute read · 5 chapters · 1 exercise | 14 min
+Goal: deal with what surrounds the trade — provider, protections, records, tax — then decide.
+
+H2: 6.1 The broker: what you can check yourself
+
+HOOK:
+No name appears in this chapter, and that is not a legal precaution. It is that the right criterion was never the provider's identity: it is what you can verify about them without taking their word for it.
+
+P: Seven checks, all of them doable before you open anything, all of them documentary. None calls for an opinion, none calls for a comparison site, and each ends in a yes or a no.
+
+UL:
+- **Licence**: the regulator and the number, checked in the public register kept by that regulator — not on the provider's own site.
+- **Segregation of client funds**: which contractual document states it, and in exactly what wording.
+- **Negative balance protection**: contractual or merely regulatory, and for which client status.
+- **Standardised warning**: the percentage of losing accounts the provider publishes itself.
+- **Execution policy**: is it published, and what does it say about stop orders in the event of a price gap.
+- **Overnight charges**: where are they published, in what form, and with what notice of change.
+- **History**: how long the statement stays viewable and exportable after a position is closed.
+
+P: What you cannot check before opening is execution quality. It appears in no document, and the figures published on the subject come from firms that sell that execution. That is the other function of the module 2 stage: its twenty-five trades also measure your provider.
+
+ERR: The classic mistake
+Choosing on the displayed spread. It is the one figure pushed everywhere, and chapter 1.1 showed it is only part of the cost. A tight advertised spread with a wide execution gap costs more than an average spread well executed — and that comparison you can only make after opening the account, never before.
+
+KEY: Key points
+- Seven documentary checks, all doable before opening, all answered yes or no.
+- The licence is checked with the regulator, never on the provider's site.
+- Execution quality cannot be checked in advance. It is measured, and that takes 25 trades.
+
+H2: 6.2 The regulatory protections, and what they do not cover
+
+HOOK:
+There is a European rule that automatically closes your positions to protect you. On capital of €1,000, it fires once you have lost 91.7% of that capital.
+
+P: In 2018 ESMA adopted four measures applying to leveraged contracts offered to retail clients, subsequently carried into national law. They are not alike and they do not protect against the same thing.
+
+UL:
+- **Capped leverage**: 30:1 on major currency pairs, 20:1 on non-majors, 5:1 on shares, **2:1 on cryptocurrencies**.
+- **Automatic close-out** of positions when account funds fall to 50% of the minimum required margin.
+- **Negative balance protection**, account by account: you cannot owe more than you deposited.
+- **Standardised warning**: every provider publishes the percentage of its retail client accounts that lose money.
+
+P: The third is no abstract precaution. On 15 January 2015, the abandonment of the floor between the euro and the Swiss franc left client accounts in debit: FXCM announced $225 million of negative balances, and Alpari UK was placed in administration four days later.
+
+CASE: The protection that arrives afterwards
+Capital €1,000. EUR/USD, a position of 5,000 units — the one from chapter 1.1.
+Margin required at the maximum 30:1 leverage: 5,000 ÷ 30 = **€166.67**.
+Automatic close-out at 50% of that margin: **€83.33**.
+So your account is closed for you when €83.33 is left, that is after losing **€916.67** — that is **91.7% of the capital**.
+In R: **91.7 R**. Your 1% rule will have fired ninety-one times before the regulatory protection shows up once.
+
+ERR: The classic mistake
+Reading these measures as risk management. They bound what you can **owe**, not what you can **lose**, and they were calibrated to avoid a market-wide catastrophe, not to preserve your capital. The only rules that protect your capital are the nine you apply yourself, and every one of them fires far earlier.
+
+KEY: Key points
+- Four measures: capped leverage, close-out at 50% of margin, negative balance, published warning.
+- They bound what you can owe. They do not bound what you can lose.
+- On €1,000, automatic close-out comes at −91.7%. Your rules act at −10%.
+
+H2: 6.3 Record keeping: what your journal is not enough to produce
+
+HOOK:
+Your journal is there for learning. It is not there to answer somebody who asks you, three years from now, what you did in March.
+
+P: A **record** is the exhaustive, dated statement of all your operations, kept for a third party: a tax authority, an accountant, or yourself in three years. It does not replace the journal, and the journal does not replace it.
+
+P: Three differences separate them. The record is **exhaustive** — it also contains the non-compliant trades your journal filters out. It is **factual** — no scenario, no compliance, no commentary. And it is **exportable**, which is its whole reason for being.
+
+UL:
+- Date and time opened, date and time closed.
+- Asset and direction.
+- Position size.
+- Opening price obtained.
+- Closing price obtained.
+- Costs: spread, commissions, overnight charges.
+- Result, in the account currency.
+
+CASE: What three years amounts to
+Three trades a week for three years: **468 trades**.
+Seven fields per trade: **3,276 values**, not counting account movements.
+Reconstructing that after the fact, with no export, is not difficult — it is impossible.
+And your provider is under no obligation to keep a viewable history indefinitely. That duration is among the seven checks of chapter 6.1: verify it beforehand, not on the day you need it.
+A monthly export costs two minutes. Over thirty-six months, one hour twelve. It is the best ratio in the whole track.
+
+ERR: The classic mistake
+Keeping only one of them, thinking the other follows from it. A journal filtered on compliant trades is unusable as a record: it leaves out exactly the operations that are most painful to reconstruct. The record is unusable as a journal: it contains neither scenario nor compliance, that is, neither of the two fields that have produced learning since chapter 6.1 of the Beginner track.
+
+KEY: Key points
+- The record is exhaustive, factual and exportable. The journal is filtered, interpreted and private.
+- Seven fields, exported once a month. Two minutes.
+- How long the history is kept is checked before opening, not after.
+
+H2: 6.4 Tax: the questions, never the answers
+
+HOOK:
+This chapter contains no rate, no threshold and no regime: a tax rule quoted in a document and read two years later is false information. What it does contain are the seven questions that make a consultation useful, and the document to take with them.
+
+P: Three reasons make any answer impossible here. The rules change, sometimes from one year to the next. They depend on your country of tax residence. And they depend on personal circumstances — status, other income, whether the activity is occasional or habitual — that no course can know.
+
+WARN: What follows is dated
+This page is current as of September 2026, and its only stable assertion is this: **the applicable tax rules change and depend on your country.** Any list of rates or thresholds, here or anywhere else, must be treated as out of date until checked with a professional or the relevant authority.
+
+P: What this chapter can give you, on the other hand, are the questions. They are asked once, of a professional, with your chapter 6.3 record under your arm — and a prepared consultation costs less than an improvised one.
+
+UL:
+- Which regime applies to these instruments, in my country of tax residence, this year?
+- Does tax fall due when each position closes or at the end of the tax year?
+- Are losses offsettable? Against what, and for how many years?
+- What reporting obligations, on which forms, by what deadlines?
+- Does an account opened outside my country of residence create an additional obligation?
+- What supporting documents must I keep, and for how long?
+- At what point does my activity stop being treated as occasional?
+
+ERR: The classic mistake
+Looking for the answer on a forum. The answers there are sincere, often accurate for whoever wrote them, and worthless to you: they depend on a country, a year and a personal situation that are not yours. The cost of a consultation is known in advance; the cost of an inaccurate return is not.
+
+KEY: Key points
+- No rate, no threshold: they change and depend on your country. This page is dated.
+- Seven questions, one consultation, your record under your arm.
+- A prepared consultation costs less than an improvised one.
+
+H2: 6.5 What you decide now
+
+HOOK:
+This document has never told you to commit money, and it will not in the lines that remain. And yet you are reaching the end of three tracks and about a year of practice.
+
+P: The only deliverable of this track is a dated decision. It fits in five lines, it goes into the system document like any other decision, and it names what would have to change for it to be reviewed.
+
+CASE: The decision, written down
+**1.** Gross expectancy measured, and over how many compliant trades.
+**2.** Execution cost measured, and over how many trades.
+**3.** Net expectancy, and its standard error.
+**4.** What my criterion says: above, below, or inside the uncertainty.
+**5.** My decision, and what would have to change for me to review it.
+Filled in: gross +0.18 R over 140 trades · cost 0.14 R over 25 trades · net **+0.04 R**, standard error 0.10 R · **inside the uncertainty** · *I am staying in simulation, I will review this decision at 300 compliant trades.*
+
+P: Across 14,799 French clients tracked for four years by the AMF, **89% lose money**. That figure opened the Beginner track, it closes this one, and nothing in the three documents has taken you out of it: they taught you to measure, not to win.
+
+P: Staying in simulation is not this track's consolation prize. For most readers who get here it is its correct conclusion — and it needs no justification beyond line 3 of the sheet above.
+
+ERR: The classic mistake
+Treating reading this document as a step completed. Nothing has been completed: you have read six modules, and you hold at best six more measurements than before. Nowhere in these three tracks does anyone tell you that you are ready, and the absence of that moment is the most deliberate thing in the whole work.
+
+KEY: Key points
+- The deliverable of this track is a dated decision, not an account opened.
+- Five lines: gross, cost, net and its uncertainty, what the criterion says, the decision.
+- "I am staying in simulation" is a complete answer. It is the most frequent one, and it is right.
+
+EX: Your decision, dated
+
+EXF: Skill assessed
+Goals 34, 35 and 36: list the checkable criteria for choosing a provider; build a record and the questions to put to a professional; state a dated decision argued from measurements.
+
+EXF: Instructions
+**Step A.** Three anonymised provider sheets are shown to you. For each, say which of the seven checks from chapter 6.1 are possible with the material supplied, and which are not.
+**Step B.** You are given a raw statement export. Build the seven-field record, then draw up the list of questions that record lets you put to a professional.
+**Step C.** Write your decision in five lines, from your own measurements, and date it.
+
+EXF: What the platform must provide
+- Three **entirely fictional** sheets, with no name, no logo, no link: only the documentary items listed in chapter 6.1, some of them deliberately missing. No sheet must be "the right one".
+- Step B: a realistic raw export — rows out of order, surplus columns, costs in a separate column — and a seven-field grid to fill by dragging the columns.
+- Step C: a five-line form, pre-filled with the user's real measurements from exercises 1, 2 and 5, and a dated export button to their system document.
+- **Fallback** if the user's measurements are unavailable: the three sets of measurements from records A, B and C of chapter 2.4, the user choosing which one to work on. The decision produced is then marked "exercise" and is not added to the system document.
+- No screen in this track may offer a link, a button or a suggestion leading to opening a real account. That prohibition is a design element, not a preference.
+
+EXF: Worked correction
+**Step A.** None of the three sheets allows all seven checks, and that is the expected result. The most attractive sheet — tightest spread, smartest presentation — is also the one where the execution policy is missing. Users who rank it first have reproduced, on an exercise screen, exactly the error of chapter 6.1.
+**Step B.** The trap is the costs column, separated from the result in the raw export. A record that leaves it out looks complete and is not: it is the one column that will be missing the moment somebody asks for a net figure. The questions for the professional are not marked — their existence is enough.
+**Step C.** There is no right decision, and the correction does not judge the one taken. It checks one thing only: that line 5 names a measurable fact that would make you review it. "I'll review when I feel more comfortable" is refused, for the exact reason of chapter 3.3 — a condition nobody can observe from outside will be observed favourably as soon as you want it to be.

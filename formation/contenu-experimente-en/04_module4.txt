@@ -1,0 +1,119 @@
+MOD: 4 | The portfolio | 14-minute read · 4 chapters · 1 exercise | 14 min
+Goal: hold an exposure limit once it stops being checkable in your head.
+
+H2: 4.1 When three categories are no longer enough
+
+HOOK:
+With three positions you have three pairs to examine and you do it in your head in five seconds. With seven you have twenty-one — and you no longer do it at all.
+
+P: Chapter 5.2 of the Intermediate track gave you three correlation categories and a rule that applies to a pair. It was sufficient because at two or three positions the number of pairs stays below the number of positions. That property stops at three, and it stops abruptly.
+
+P: What replaces examining pairs is not a finer calculation. An **exposure group** brings together the positions that lose in the same scenario — it is the question asked in chapter 5.1 of the Intermediate track, turned into a sorting tool. A scenario, unlike a coefficient, does not change value while you are looking at it.
+
+CASE: Three pairs, or twenty-one
+Number of pairs to examine = n(n − 1) ÷ 2. **3 positions**: 3 pairs. **5 positions**: 10. **7 positions**: **21**.
+At twenty seconds a pair, seven positions demand **seven minutes of checking before every order**. You will not do them, and you will be right not to.
+The method that replaces it fits in three lines:
+**1.** Group your positions by shared losing scenario.
+**2.** Within a group, **risks add up** — three positions at 1% that lose together expose 3%, as chapter 5.1 of the Intermediate track already said.
+**3.** Between groups, apply the categories: above +0.3 the smaller counts half, below that they add up, and opposite directions subtract.
+
+ERR: The classic mistake
+Extending the pairs rule to five positions by applying it pair after pair. You then get as many results as there are possible orders of examination, and the most flattering one ends up winning — not through bad faith, simply because it comes last and you stop when the figure passes. Grouping, by contrast, does not depend on the order you look in.
+
+KEY: Key points
+- The number of pairs grows as the square. Seven positions: twenty-one pairs.
+- Within a group that loses together, risks add up. No exceptions.
+- Between groups only, the three correlation categories apply.
+
+H2: 4.2 Correlation moves when the market moves
+
+HOOK:
+You classed your two positions at +0.15 when you placed the orders. They hit their stops within the same hour. Both statements are accurate, and that is the problem.
+
+P: A correlation is measured over a window. It describes what happened in that window, and it will describe the previous regime for the whole duration of the next one. That is not a defect in the measurement: it is what an average does.
+
+P: Mancini, Ranaldo and Wrampelmeyer established in 2013 that illiquidity episodes occur **simultaneously** across currency pairs, with strong commonality. In other words, the moment your diversification ought to serve is precisely the moment it is least present.
+
+CASE: The classification that switches sides
+**When the orders are placed** — long EUR/USD 1%, long BTC/USD 1%. Correlation measured over 90 days: **+0.15**. Two distinct groups, so add: exposure announced at **2%**.
+**Three weeks later** — an episode of stress lifts the dollar and empties the books. Both positions hit their stops within the same hour. They were not two groups: they were two bets against the dollar.
+Realised loss: **2%**. So the addition had given the right figure.
+What would have been wrong is replacing it with a half-sum on the strength of that +0.15. The coefficient was not mistaken — the window it was computed over simply did not contain the episode.
+
+ERR: The classic mistake
+Lengthening the calculation window to get a "more stable" coefficient. A long window does not stabilise the correlation: it slows its estimate down, and will describe the previous regime to you throughout the next one. Chapter 5.2 of the Intermediate track already settled the question of precision; this chapter adds that slowness is paid for at the worst moment.
+
+KEY: Key points
+- A correlation describes the past of the window it is computed over.
+- Illiquidity arrives simultaneously across pairs. Diversification is missing when it would serve.
+- Group by shared scenario. A scenario is not re-estimated while the market moves.
+
+H2: 4.3 Refusing a position: the order of priority
+
+HOOK:
+Your limit is reached and a very good trade turns up. The question is not whether it is good: it is. It is which of the five you refuse — and that answer has to exist before the question.
+
+P: Three refusal rules are defensible, and you have to choose exactly one. **The last to arrive**: the trade in front of you. **The worst ratio**: the one whose gain sought relative to risk is lowest. **The biggest group**: the one that would swell the most exposed block.
+
+P: The first has an advantage the other two do not: it reopens no existing position. The other two force you to reassess trades that are already open, with their target and their stop, at the moment another trade appeals to you. That is where the Beginner track's sixth rule dies, not anywhere else.
+
+CASE: Five positions, one limit
+Open: long EUR/USD 0.6% · long GBP/USD 0.6% · long BTC/USD 0.5% · short USD/JPY 0.4%.
+Group "the dollar falls": EUR/USD, GBP/USD and the short USD/JPY are three identical bets. Sum: 0.6 + 0.6 + 0.4 = **1.6%**.
+Group "crypto", weakly correlated with the first: **0.5%**.
+Total exposure: **2.1%**. The 2% limit is exceeded **before** the fifth trade even turns up.
+So the fifth is not up for discussion. What is up for discussion is what you do about the 0.1% too many — and if your answer is "I'll cut an open position", read the previous line again.
+
+ERR: The classic mistake
+Making room by cutting an open position. The arithmetic looks neutral: same total exposure, one more trade. It is not. You have just renegotiated an open position in favour of a position that does not exist yet, and you did it with a calculation rather than an emotion — which makes it far harder to spot in your journal.
+
+KEY: Key points
+- The order of refusal is written beforehand, never at the moment a good trade turns up.
+- By default: the last to arrive. It is the only refusal that reopens nothing.
+- Cutting an open position to make room for another is renegotiating. Rule 6 forbids it.
+
+H2: 4.4 The ceiling you can no longer check by eye
+
+HOOK:
+"Checkable in five seconds before every order," said the Intermediate track of its eighth rule. That was true at three positions. The rule says nothing anywhere about what to do when it stops being true.
+
+P: An **exposure table** is a sheet you keep yourself, outside the platform, with one row per open position and four columns: asset, direction, risk as a percentage, group. Plus a total row. It is updated before the order, like the position size.
+
+P: The eighth rule does not change and neither does the eighth checklist question. What changes is where the answer comes from: a table you keep, no longer a memory. At three positions memory was enough; at five it systematically produces the lowest figure.
+
+CASE: The table, and what it costs
+Four columns, one row per position, one total row.
+Update before every order: **one row to write and one sum to redo**, about twenty seconds, whatever the number of positions.
+Seven minutes for the pair-by-pair examination of chapter 4.1, twenty seconds for the table: a ratio of **1 to 21**.
+And above all, a cost that does not grow. That is the only property that matters here: a check whose cost rises with the number of positions will be abandoned at exactly the moment it becomes necessary.
+
+ERR: The classic mistake
+Keeping the table inside the broker's interface. It displays risk position by position and knows nothing of your groups — chapter 5.1 of the Intermediate track already established that. It has a second flaw, particular to real trading: it does not belong to you. The day you change provider, your table disappears, and with it the history that would tell you how long your limit has been exceeded.
+
+KEY: Key points
+- Four columns: asset, direction, risk, group. Plus a total row.
+- Twenty seconds before every order, whatever the number of open positions.
+- The table stays with you. What the broker's platform holds does not belong to you.
+
+EX: Five positions, one limit
+
+EXF: Skill assessed
+Goals 30 and 31: calculate the exposure of a portfolio of more than three positions taking direction and groups into account; decide which position to refuse when the limit is reached, naming the rule that settles it.
+
+EXF: Instructions
+**Step A.** You are shown a portfolio of six positions. Form the groups, then calculate the total exposure.
+**Step B.** The same portfolio is shown to you three weeks later, with a correlation matrix that has changed category on two pairings. Recalculate, and say whether your original decision would have been different.
+**Step C.** A seventh trade turns up with the limit already reached. Apply your refusal rule, written at the previous step, and name the Beginner or Intermediate rule that forbids the other two solutions.
+
+EXF: What the platform must provide
+- A six-position portfolio screen with asset, **direction**, risk as a percentage, and a drag-and-drop grouping area — the user forms the groups themselves, the platform never proposes them.
+- A correlation matrix in three colours, as in exercise 5 of the Intermediate track, and a "three weeks later" button that changes it without changing the positions.
+- A field for total exposure, tolerance ±0.1 points, and a timer for step A, displayed only at the end.
+- Step C: three solutions offered — refuse the last to arrive, cut an open position, refuse the worst ratio — and a field for naming the rule broken by the middle solution.
+- **Fallback** if drag and drop is unavailable: groups formed by tick boxes, mechanics and correction identical.
+
+EXF: Worked correction
+**Step A.** The trap is the short among the longs, as in the Intermediate track — but here it is inverted: the short USD/JPY **joins** the group of bets against the dollar instead of offsetting it, because the dollar is what is being sold in both cases. A user who mechanically applies "opposite directions, subtract" is out by 0.8 points. Direction is read off the scenario, not off the name of the pair.
+**Step B.** The expected answer is that the original decision **does not change**, and that is counter-intuitive: two pairings changed category, so something ought to move. Nothing moves, because the groups were formed on scenarios and the scenarios have not changed. That is the whole teaching of chapter 4.2, and it can only be demonstrated by doing it twice.
+**Step C.** "Cut an open position" is chosen by a large share of users, because it is the only solution that lets you take the good trade. The rule broken is the Beginner track's sixth — target and stop not renegotiable — and the difficulty of the exercise is naming it when no target and no stop has been explicitly moved.

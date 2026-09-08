@@ -1,0 +1,62 @@
+COUV: Track|Experienced
+This level does not teach you to go live
+with real money. It teaches you what that changes.
+
+SEC: Risk warning
+
+WARN: Read this before anything else, and twice rather than once
+This is the only one of the three tracks that deals with real money. It does not encourage you towards it and does not constitute permission.
+- Across 14,799 French retail clients tracked for four years by the AMF, France's financial markets regulator, **89% lose money**, with a median loss of €1,843. That figure from the Beginner track is revised by no page of this document.
+- This document is **educational content**. It is not investment advice, not a personal recommendation, and not an inducement to open an account with any provider.
+- **Going live with real money is not the next step in the track.** It is not a culmination, not a promotion, not the reward for two levels completed. It is a personal financial decision that does not belong to a course.
+- **For most readers, the correct conclusion of this document will be to stay in simulation longer.** That outcome is treated here as a result, not as a failure.
+- No amount of capital is recommended, no broker is named, no tax figure is given. Those three silences are deliberate.
+
+P: The first two tracks took place entirely in simulation, and their worst consequence was an hour wasted. This one describes decisions whose outcome is counted in euros. The tone does not change; the consequences do.
+
+P: You will find no slippage figure here presented as a norm, for a simple reason: no published, checkable measurement of it exists for a retail trader. Everything this document teaches you on that subject is how to measure your own.
+
+SEC: What this track assumes you already have
+
+P: This document re-explains nothing and revisits nothing. It continues two tracks whose vocabulary, conventions, rules and figures it carries over. If any line below means nothing to you, go back to the chapter named before going any further.
+
+TABLE: 46,27,27 || Assumed | Beginner | Intermediate
+Price, spread, costs, leverage | 1.1 to 1.4 | —
+Counting in R, the 1% rule, size, stop, drawdown | 2.1 to 2.5 | —
+Candlestick, timeframes, structure, zones | 3.1 to 3.4 | —
+Scenario, ratio, expectancy, checklist, selectivity | 4.1 to 4.5 | —
+Disposition, overtrading, the spiral, the seven rules | 5.1 to 5.4 | —
+Journal, compliance × outcome grid, statistics | 6.1 to 6.3 | —
+Standard error, sample size, segmentation | — | 1.1 to 1.4
+Testable hypothesis, control, overfitting, abandonment | — | 2.1 to 2.5
+Indicators as tested filters, never as signals | — | 3.1 to 3.5
+Partial exit, trailing stop, break-even stop | — | 4.1 to 4.5
+Correlation, cumulative exposure, the eighth rule | — | 5.1 to 5.4
+System document, monthly review, frequency | — | 6.1 to 6.5
+
+H3: Where you are supposed to be
+
+P: You meet the condition set by chapter 6.5 of the Intermediate track: a written system, **100 compliant trades on the current version**, an average R above your abandonment criterion. About a year of practice. You have never committed a euro.
+
+P: Nothing stops you reading these pages without the 100 trades, and nobody will stop you. They will then deal with problems you do not have yet, with the useless precision of a manual for a machine you do not own.
+
+P: Your current competence is exactly what makes you vulnerable here. You now have enough method to believe you are ready, and no experience of what real money adds. The two combine badly.
+
+H3: Conventions unchanged
+
+UL:
+- **Reference capital: €1,000.** One R is worth €10, as in the two previous tracks, so that all the examples stay comparable.
+- **Markets: EUR/USD and BTC/USD.** Three timeframes — D1 for context, H4 for structure, H1 for execution.
+- **The worked examples are teaching cases** built to explain a point. None is a real market record, none is an execution measurement taken at a broker.
+- **Terms from the two previous glossaries are used without reminders.** Only new terms are defined on first appearance.
+- **The exercises stay in the simulator.** This document never asks you to open an account in order to follow it.
+
+H3: What this track is not
+
+P: It is not a guide to going live, and it contains no checklist of steps for getting there. Each of its six modules is written so that you can come out of it with the answer "not yet", and two of them are written so that this is the most likely answer.
+
+SECX: Contents
+
+NOTE: Six modules, roughly 87 minutes of reading, six exercises. The order matters: execution costs are measured before we talk about bearing them, and a system is stopped before we talk about building infrastructure around it.
+
+TOC:

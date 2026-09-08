@@ -497,22 +497,29 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "1.1",
-            "titre": "Ce que la simulation ne t'a jamais facturé"
+            "titre": "Ce que la simulation ne t'a jamais facturé",
+            "titre_en": "What simulation never charged you for"
           },
           {
             "numero": "1.2",
-            "titre": "Le mesurer au lieu de le croire"
+            "titre": "Le mesurer au lieu de le croire",
+            "titre_en": "Measure it instead of believing it"
           },
           {
             "numero": "1.3",
-            "titre": "Les moments où le prix saute"
+            "titre": "Les moments où le prix saute",
+            "titre_en": "The moments when price jumps"
           },
           {
             "numero": "1.4",
-            "titre": "Ton espérance, recalculée"
+            "titre": "Ton espérance, recalculée",
+            "titre_en": "Your expectancy, recalculated"
           }
         ],
-        "exercice": "Le même trade, deux prix"
+        "exercice": "Le même trade, deux prix",
+        "titre_en": "The price you actually get",
+        "objectif_en": "measure what simulation never charged you for, and redo your expectancy with it.",
+        "exercice_en": "The same trade, two prices"
       },
       {
         "numero": 2,
@@ -523,22 +530,29 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "2.1",
-            "titre": "La première taille n'est pas la taille du système"
+            "titre": "La première taille n'est pas la taille du système",
+            "titre_en": "The first size is not the system's size"
           },
           {
             "numero": "2.2",
-            "titre": "Le palier de démarrage"
+            "titre": "Le palier de démarrage",
+            "titre_en": "The starting stage"
           },
           {
             "numero": "2.3",
-            "titre": "Ce que ce palier mesure, et ce qu'il ne mesure pas"
+            "titre": "Ce que ce palier mesure, et ce qu'il ne mesure pas",
+            "titre_en": "What this stage measures, and what it does not"
           },
           {
             "numero": "2.4",
-            "titre": "Rester en simulation est une réponse"
+            "titre": "Rester en simulation est une réponse",
+            "titre_en": "Staying in simulation is an answer"
           }
         ],
-        "exercice": "Le palier que tu écris"
+        "exercice": "Le palier que tu écris",
+        "titre_en": "Start small, and write it down",
+        "objectif_en": "build a starting stage whose function is to measure, and nothing else.",
+        "exercice_en": "The stage you write"
       },
       {
         "numero": 3,
@@ -549,22 +563,29 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "3.1",
-            "titre": "Ce que 1 R devient quand c'est de l'argent"
+            "titre": "Ce que 1 R devient quand c'est de l'argent",
+            "titre_en": "What 1 R becomes when it is money"
           },
           {
             "numero": "3.2",
-            "titre": "Les trois biais ne reviennent pas séparément"
+            "titre": "Les trois biais ne reviennent pas séparément",
+            "titre_en": "The three biases do not come back separately"
           },
           {
             "numero": "3.3",
-            "titre": "Le protocole d'arrêt : seuil, durée, reprise"
+            "titre": "Le protocole d'arrêt : seuil, durée, reprise",
+            "titre_en": "The stopping protocol: threshold, duration, resumption"
           },
           {
             "numero": "3.4",
-            "titre": "Les règles que le réel oblige à réécrire"
+            "titre": "Les règles que le réel oblige à réécrire",
+            "titre_en": "The rules real money forces you to rewrite"
           }
         ],
-        "exercice": "Ta séance, dégradée"
+        "exercice": "Ta séance, dégradée",
+        "titre_en": "Behaviour, under real constraint",
+        "objectif_en": "recognise the three Beginner-track biases coming back at once, and set a stopping protocol against them.",
+        "exercice_en": "Your session, degraded"
       },
       {
         "numero": 4,
@@ -575,22 +596,29 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "4.1",
-            "titre": "Quand trois catégories ne suffisent plus"
+            "titre": "Quand trois catégories ne suffisent plus",
+            "titre_en": "When three categories are no longer enough"
           },
           {
             "numero": "4.2",
-            "titre": "La corrélation bouge quand le marché bouge"
+            "titre": "La corrélation bouge quand le marché bouge",
+            "titre_en": "Correlation moves when the market moves"
           },
           {
             "numero": "4.3",
-            "titre": "Refuser une position : l'ordre de priorité"
+            "titre": "Refuser une position : l'ordre de priorité",
+            "titre_en": "Refusing a position: the order of priority"
           },
           {
             "numero": "4.4",
-            "titre": "Le plafond que tu ne peux plus vérifier à l'œil"
+            "titre": "Le plafond que tu ne peux plus vérifier à l'œil",
+            "titre_en": "The ceiling you can no longer check by eye"
           }
         ],
-        "exercice": "Cinq positions, une limite"
+        "exercice": "Cinq positions, une limite",
+        "titre_en": "The portfolio",
+        "objectif_en": "hold an exposure limit once it stops being checkable in your head.",
+        "exercice_en": "Five positions, one limit"
       },
       {
         "numero": 5,
@@ -601,26 +629,34 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "5.1",
-            "titre": "Série défavorable ou dégradation : la question mal posée"
+            "titre": "Série défavorable ou dégradation : la question mal posée",
+            "titre_en": "Bad run or decay: the badly put question"
           },
           {
             "numero": "5.2",
-            "titre": "Ce que la recherche établit sur la durée de vie d'un avantage"
+            "titre": "Ce que la recherche établit sur la durée de vie d'un avantage",
+            "titre_en": "What the research establishes about the lifespan of an edge"
           },
           {
             "numero": "5.3",
-            "titre": "Le test écrit avant l'observation"
+            "titre": "Le test écrit avant l'observation",
+            "titre_en": "The test written before the observation"
           },
           {
             "numero": "5.4",
-            "titre": "Le critère d'arrêt de système"
+            "titre": "Le critère d'arrêt de système",
+            "titre_en": "The system stopping criterion"
           },
           {
             "numero": "5.5",
-            "titre": "Arrêter n'est pas échouer"
+            "titre": "Arrêter n'est pas échouer",
+            "titre_en": "Stopping is not failing"
           }
         ],
-        "exercice": "Le système que tu arrêtes"
+        "exercice": "Le système que tu arrêtes",
+        "titre_en": "An edge that disappears",
+        "objectif_en": "settle between variance and decay by means of a test written before the observation.",
+        "exercice_en": "The system you stop"
       },
       {
         "numero": 6,
@@ -631,32 +667,45 @@ const FORMATION_INDEX = [
         "chapitres": [
           {
             "numero": "6.1",
-            "titre": "Le courtier : ce que tu peux vérifier toi-même"
+            "titre": "Le courtier : ce que tu peux vérifier toi-même",
+            "titre_en": "The broker: what you can check yourself"
           },
           {
             "numero": "6.2",
-            "titre": "Les protections réglementaires, et ce qu'elles ne couvrent pas"
+            "titre": "Les protections réglementaires, et ce qu'elles ne couvrent pas",
+            "titre_en": "The regulatory protections, and what they do not cover"
           },
           {
             "numero": "6.3",
-            "titre": "Tenue de registre : ce que ton journal ne suffit pas à produire"
+            "titre": "Tenue de registre : ce que ton journal ne suffit pas à produire",
+            "titre_en": "Record keeping: what your journal is not enough to produce"
           },
           {
             "numero": "6.4",
-            "titre": "La fiscalité : les questions, jamais les réponses"
+            "titre": "La fiscalité : les questions, jamais les réponses",
+            "titre_en": "Tax: the questions, never the answers"
           },
           {
             "numero": "6.5",
-            "titre": "Ce que tu décides maintenant"
+            "titre": "Ce que tu décides maintenant",
+            "titre_en": "What you decide now"
           }
         ],
-        "exercice": "Ta décision, datée"
+        "exercice": "Ta décision, datée",
+        "titre_en": "The infrastructure",
+        "objectif_en": "deal with what surrounds the trade — provider, protections, records, tax — then decide.",
+        "exercice_en": "Your decision, dated"
       }
     ],
     "totalModules": 6,
     "totalChapitres": 26,
     "totalExercices": 6,
     "minutes": 87,
-    "pdf": "formation/TapeSense_Parcours_Experimente.pdf"
+    "pdf": "formation/TapeSense_Parcours_Experimente.pdf",
+    "accroche_en": "This level does not teach you to go live with real money. It teaches you what that changes.",
+    "langues": [
+      "fr",
+      "en"
+    ]
   }
 ];

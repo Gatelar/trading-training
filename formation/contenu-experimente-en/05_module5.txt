@@ -1,0 +1,144 @@
+MOD: 5 | An edge that disappears | 16-minute read · 5 chapters · 1 exercise | 16 min
+Goal: settle between variance and decay by means of a test written before the observation.
+
+H2: 5.1 Bad run or decay: the badly put question
+
+HOOK:
+Thirty trades without gaining anything. You want to know whether your edge has gone. That question has no answer — not because it is hard, but because it is asked afterwards.
+
+P: **Decay** is the lasting disappearance of a system's edge. A bad run is a sequence of negative results that comes down to variance. Both produce the same statement, the same feeling and the same urge to do something.
+
+P: Nothing in your data separates them. That is an arithmetical fact, not a shortage of method, and it is not fixed by looking harder. What separates them is elsewhere: in whether a threshold was written beforehand, or was not.
+
+CASE: Fifty trades that prove nothing
+System at **+0.15 R** of net expectancy, standard deviation **1.2 R** per trade.
+Over 50 trades, the expected sum is 50 × 0.15 = **+7.5 R**, and the standard deviation of that sum is 1.2 × √50 = **8.5 R**.
+A sequence of 50 trades finishing at **0 R** therefore sits 0.9 standard deviations below expectation. Perfectly ordinary.
+How many trades to detect a fall from +0.15 R to zero? Using the table from chapter 2.2 of the Intermediate track: about **640 trades**, that is more than **four years** at three trades a week.
+The conclusion has to be accepted once and for all: **you will never statistically detect the disappearance of your own edge.** This module is about what you do knowing that.
+
+ERR: The classic mistake
+Looking for the answer in a slicing of the journal. Segmenting until you find the month it went wrong will always produce a date, since one necessarily exists. Chapter 1.3 of the Intermediate track named that gesture; here it is worse, because the date found then serves to justify a stop or a postponement, and both are paid for in cash.
+
+KEY: Key points
+- A run and decay explain the same data. Nothing in the statement separates them.
+- Detecting the loss of a 0.15 R edge would take more than four years.
+- What settles it is not in the data. It is the date the threshold was written.
+
+H2: 5.2 What the research establishes about the lifespan of an edge
+
+HOOK:
+Your edge is going to shrink. That is not a prediction about you: it is the best-documented result in the field, measured across hundreds of strategies, and it has an order of magnitude.
+
+P: The loss of performance observed when a rule is applied to data that did not serve to build it is called the **out-of-sample decline**. McLean and Pontiff measured it in 2016 across the 97 variables the literature claimed predicted stock returns: **−26%** out of sample, **−58%** after publication.
+
+P: Falck, Rej and Thesmar extended the work in 2021. The year of publication alone explains **30%** of the variance in that decline, with each year adding about five points. In other words, decay is neither rare nor accidental: it is the rule, and it is accelerating.
+
+P: This work concerns published equity anomalies, not your system, and nothing licenses carrying their coefficient across as it stands. They give an order of magnitude — this is what an ordinary decline looks like when you move from yesterday's data to tomorrow's — not a value.
+
+CASE: A decline applied, and what it is worth
+Your system: measured gross expectancy **+0.18 R**, measured execution cost **0.14 R**.
+Apply the out-of-sample decline of 26%: 0.18 × 0.74 = **+0.133 R**.
+Subtract the execution cost: 0.133 − 0.14 = **−0.007 R**.
+Three figures, two operations, and the result changes sign.
+**This calculation is not a prediction.** It is a sensitivity test: it says that a decline of the order observed everywhere else would be enough to wipe out your edge. It does not say it will happen.
+
+ERR: The classic mistake
+Turning the sensitivity test into a forecast — or, just as often, dismissing the decline because "it isn't about my market". Both gestures have the same cause: wanting a figure where there is only an order of magnitude. The first makes you stop a system that is fine, the second makes you keep one that is not.
+
+KEY: Key points
+- McLean and Pontiff, 2016: −26% out of sample, −58% after publication, across 97 variables.
+- It is not a coefficient to apply to your system. It is an order of magnitude.
+- An edge that does not survive a 26% decline has no margin at all.
+
+H2: 5.3 The test written before the observation
+
+HOOK:
+A stopping criterion with no false-alarm rate is not a criterion: it is a sentence. Working it out takes two minutes and almost always changes the threshold you were about to write.
+
+P: Four elements, like the abandonment criterion of chapter 2.5 of the Intermediate track, but on a different object. **The quantity** measured. **The threshold**, numerical. **The window** it is measured over. **The action** triggered, written in the present indicative.
+
+P: A criterion's **false-alarm rate** is the probability that it fires while the system is healthy. It depends on the threshold, but also on the window — the one nobody ever thinks to write down — and the next chapter shows the second weighs more than the first.
+
+CASE: The false-alarm rate of a threshold
+Criterion under consideration: "if the net average R of the **last 100 compliant trades** falls below **0 R**, I stop."
+Healthy system at +0.15 R net expectancy, standard deviation 1.2 R. Over 100 trades, the standard error of the mean is 1.2 ÷ √100 = **0.12 R**.
+The threshold therefore sits (0.15 − 0) ÷ 0.12 = **1.25 standard errors** below the expectancy. The probability of crossing it by pure chance is about **10.6%**.
+One chance in nine, **every time you look**. Looking every month on a rolling window, you will stop a perfectly healthy system roughly once a year.
+The fix is not about the threshold. It is about the window.
+
+ERR: The classic mistake
+Writing the criterion at the moment you need it. A criterion drafted during a bad run is always calibrated not to fire straight away: that is what you are after at that moment, and that is what you get. The Intermediate track's abandonment criterion is written before the test for exactly the same reason, and module 2 already refused to enable the button without it.
+
+KEY: Key points
+- Four elements: the quantity, the threshold, the window, the action.
+- Every threshold has a false-alarm rate. Work it out before writing it, not after.
+- A criterion drafted during a bad run is calibrated not to fire.
+
+H2: 5.4 The system stopping criterion
+
+HOOK:
+The abandonment criterion kills a hypothesis under test, and that costs nothing. The stopping criterion closes a system in production, and that costs thirty-three weeks. Confusing the two means paying the second price for the first decision.
+
+P: The **system stopping criterion** applies to a system that is running, with money committed and a journal in progress. The abandonment criterion applied to an idea under evaluation, whose failure left only a dated line in the test log.
+
+P: The difference in cost imposes a difference in calibration. An abandonment criterion can afford to be severe: throwing away a good idea costs one idea. A severe stopping criterion throws away a system and eight months of simulation before any resumption.
+
+CASE: Windows that do not overlap
+A **disjoint window** is an evaluation window that shares no trade with the previous one.
+Same criterion, same threshold. One single change: it is evaluated **only once per batch of 100 new trades**, never on a rolling window.
+At 156 trades a year, that makes **1.56 evaluations a year**.
+Expected false alarms: 1.56 × 10.6% = **0.17 a year**, that is one unjustified stop roughly every **six years** — against one a year with the rolling window.
+The threshold has not moved by a hundredth. The false-alarm rate has been divided by more than seven, purely because you stopped looking all the time.
+And the price of a stop does not move either: 100 compliant trades in simulation before any resumption, that is the **33 weeks** of chapter 6.4 of the Intermediate track.
+
+ERR: The classic mistake
+Stopping the system and letting the open positions run. The stop applies to the decision to open, not to what is already committed — that is true, and it is insufficient. Three positions running under a stopped system produce exactly the situation of module 3: management decisions taken with no rule active, on trades you would no longer open today. The criterion has to say what becomes of them.
+
+KEY: Key points
+- Abandonment criterion: a hypothesis under test. Stopping criterion: a system in production.
+- Evaluate on windows that do not overlap. The threshold does not change, the false alarm does.
+- The criterion states what becomes of positions already open. Otherwise they decide alone.
+
+H2: 5.5 Stopping is not failing
+
+HOOK:
+A stopped system can be retested next year. Lost capital does not come back by the same road, and the arithmetic of that return has been in the Beginner track's appendices since your first day.
+
+P: The two possible errors do not carry the same price, and it is that imbalance that must govern your threshold. Stopping wrongly costs weeks, a figure known and bounded in advance. Not stopping in time costs capital, and that expense has no written bound.
+
+CASE: The price of hesitation
+The table in the Beginner track's appendices gives the gain needed to return to the starting point.
+Stopping at **−10%**: you then need **+11%**. The return is almost symmetrical.
+Waiting for **−33%**: you need **+50%**. Waiting for **−50%**: you need **+100%**.
+Between the first two rows, the difference is not 23 points of loss. It is the shift from an almost symmetrical return to one that demands half the capital again.
+An unjustified stop costs 33 weeks of simulation, roughly every six years. A stop that comes too late costs capital that no rule restores.
+
+ERR: The classic mistake
+Treating a stop as a repudiation of the year gone by. The stopped system left you a dated document, a complete journal and an execution measurement that are yours to keep — chapter 6.4 of the Intermediate track calls that precisely a legitimate trigger. What would be lost is not stopping, and no longer being able to say, a year from now, what worked.
+
+KEY: Key points
+- The two errors do not carry the same price: one costs weeks, the other costs capital.
+- An unjustified stop: 33 weeks, every six years or so. That is a known, bounded price.
+- Going back to simulation after a stop is the anticipated course, not a mishap.
+
+EX: The system you stop
+
+EXF: Skill assessed
+Goals 32 and 33: distinguish a bad run from decay by means of a test written before the observation; write and date a system stopping criterion, distinct from the abandonment criterion.
+
+EXF: Instructions
+**Step A.** Two sequences of 60 trades are shown to you, unlabelled. One comes from a healthy system going through a bad run, the other from a system whose expectancy has genuinely fallen. Say which is which.
+**Step B.** Write your stopping criterion: quantity, threshold, window, action. The calculator displays the false-alarm rate of what you write, live.
+**Step C.** Your own record — or the fallback one supplied — is run through the criterion you have just written, first on a rolling window then on disjoint windows. Compare the two answers.
+
+EXF: What the platform must provide
+- Two sequences of 60 trades generated with genuinely different expectancies, displayed as an equity curve and as a record. No labels, no clues, and an "I cannot know" button.
+- Step B: four fields, plus a false-alarm-rate calculator that takes the standard deviation of the user's system and updates on every keystroke. The "window" field offers rolling or disjoint, with no default value.
+- Step C: the user's real statistics — net average R, standard deviation, number of trades on the current version. **Fallback** if they are missing or cover fewer than 100 trades: a supplied record of 240 trades, presented as another user's, with the exercise running identically.
+- An export of the drafted criterion, dated, ready to add straight to the Intermediate track's system document.
+
+EXF: Worked correction
+**Step A.** The right answer is **"I cannot know"**, and it is the only exercise in the whole track whose right answer is a refusal to answer. The two sequences are built to be indistinguishable over 60 trades: chapter 5.1 showed it would take about 640. A user who picks one has necessarily picked on something other than the data — most often on the shape of the curve, which is exactly what module 1 of the Intermediate track was already teaching them not to read.
+**Step B.** The threshold written spontaneously is almost always too high, and the calculator then shows a false-alarm rate above 25%. The correction does not say which threshold to write: it asks you to lower it until the rate is acceptable **to you**, and to note the value chosen. Your tolerance is the free parameter, not the statistic.
+**Step C.** The two windows give different answers on the same record in a majority of cases. That is the expected result and it is unsettling: it shows that part of your stopping decision comes down to how often you look, and not to what your system is doing. Choosing the disjoint window is not a trick for stopping less often — it is refusing to let the frequency of observation enter the decision.

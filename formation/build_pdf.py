@@ -28,7 +28,8 @@ EXPERIMENTE_FR = ("Contenu pédagogique · Aucun conseil en investissement<br/>"
                   "Exercices en simulation · Aucun prestataire nommé<br/>"
                   "N'encourage pas le passage en argent réel · Capital à risque")
 EXPERIMENTE_EN = ("Educational content · No investment advice<br/>"
-                  "Exercises in simulation · No provider named, no capital recommended")
+                  "Exercises in simulation · No provider named<br/>"
+                  "Does not encourage going live · Capital at risk")
 
 PARCOURS = [
     ("debutant", "fr", "contenu", "TapeSense_Parcours_Debutant.pdf",

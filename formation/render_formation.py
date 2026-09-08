@@ -41,6 +41,19 @@ PIED = "TapeSense — Parcours Débutant"
 COLOPHON = ("Contenu pédagogique · Aucun conseil en investissement<br/>"
             "Intégralité du parcours en simulation, sans capital réel")
 
+# Les rares libelles que la mise en page fournit elle-meme, quand la source
+# ne les porte pas. Tout le reste vient des fichiers .txt : c'est pourquoi
+# cette table est si courte. Choix par --langue.
+LIBELLES = {
+    "fr": {"exercice": "EXERCICE", "couv": "Parcours|Débutant",
+           "case": "Cas chiffré", "err": "L'erreur classique",
+           "key": "À retenir", "warn": "Avertissement"},
+    "en": {"exercice": "EXERCISE", "couv": "Track|Beginner",
+           "case": "Worked example", "err": "The classic mistake",
+           "key": "Key points", "warn": "Warning"},
+}
+L = LIBELLES["fr"]
+
 # --------------------------------------------------------------------------
 # Polices
 # --------------------------------------------------------------------------
@@ -315,7 +328,7 @@ def construire(blocs, story):
             story.append(PageBreak())
 
         elif tag == "COUV":
-            titre = (tete or "Parcours|Débutant").replace("|", "<br/>")
+            titre = (tete or L["couv"]).replace("|", "<br/>")
             story.append(Spacer(1, 4.6 * cm))
             story.append(Paragraph("TAPESENSE", S["module_kicker"]))
             story.append(Paragraph(titre, S["titre_doc"]))
@@ -392,24 +405,24 @@ def construire(blocs, story):
 
         elif tag == "CASE":
             story.append(Spacer(1, 4))
-            story.append(boite(tete or "Cas chiffré", corps, BLEU, BLEU_FOND, BLEU))
+            story.append(boite(tete or L["case"], corps, BLEU, BLEU_FOND, BLEU))
             story.append(Spacer(1, 10))
 
         elif tag == "ERR":
             story.append(Spacer(1, 2))
-            story.append(boite(tete or "L'erreur classique", corps, ROUGE,
+            story.append(boite(tete or L["err"], corps, ROUGE,
                                ROUGE_FOND, ROUGE))
             story.append(Spacer(1, 10))
 
         elif tag == "KEY":
             story.append(Spacer(1, 2))
             story.append(KeepTogether(
-                boite(tete or "À retenir", corps, VERT, VERT_FOND, VERT)))
+                boite(tete or L["key"], corps, VERT, VERT_FOND, VERT)))
             story.append(Spacer(1, 12))
 
         elif tag == "WARN":
             story.append(Spacer(1, 2))
-            story.append(boite(tete or "Avertissement", corps, ROUGE, ROUGE_FOND,
+            story.append(boite(tete or L["warn"], corps, ROUGE, ROUGE_FOND,
                                ROUGE))
             story.append(Spacer(1, 12))
 
@@ -422,7 +435,7 @@ def construire(blocs, story):
         elif tag == "EX":
             story.append(Spacer(1, 8))
             story.append(filet(ENCRE, 1.6, 6, 10))
-            story.append(Paragraph("EXERCICE", S["module_kicker"]))
+            story.append(Paragraph(L["exercice"], S["module_kicker"]))
             story.append(Paragraph(inline(tete), ParagraphStyle(
                 "extitre", parent=S["chapitre"], spaceBefore=0, fontSize=15,
                 leading=20)))
@@ -493,7 +506,7 @@ def pied(canvas, doc):
 
 
 def main():
-    global PIED, COLOPHON
+    global PIED, COLOPHON, L
     import argparse
     ap = argparse.ArgumentParser(description="Rendu PDF d'un parcours TapeSense.")
     ap.add_argument("--src", default=CONTENU, help="dossier des fichiers .txt")
@@ -501,7 +514,10 @@ def main():
     ap.add_argument("--pied", default=PIED, help="texte du pied de page")
     ap.add_argument("--colophon", default=None,
                     help="colophon de couverture ; <br/> pour un retour a la ligne")
+    ap.add_argument("--langue", default="fr", choices=sorted(LIBELLES),
+                    help="langue des rares libelles fournis par la mise en page")
     a = ap.parse_args()
+    L = LIBELLES[a.langue]
     PIED = a.pied
     if a.colophon:
         COLOPHON = a.colophon
@@ -519,7 +535,7 @@ def main():
               leftMargin=MARGE_G, rightMargin=MARGE_D,
               topMargin=MARGE_H, bottomMargin=MARGE_B,
               title=PIED,
-              author="TapeSense", subject="Formation au trading, niveau débutant")
+              author="TapeSense", subject=PIED)
     frame = Frame(MARGE_G, MARGE_B, LARGEUR, PAGE_H - MARGE_H - MARGE_B,
                   id="corps", leftPadding=0, rightPadding=0,
                   topPadding=0, bottomPadding=0)

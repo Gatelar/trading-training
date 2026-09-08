@@ -53,7 +53,7 @@ ATR :: *Average true range*. Average true range of the last n candles. Measures 
 Break-even stop :: Moving the stop to the entry price once a profit threshold is reached. Puts the stop in the noise; costs about 25% of the expectancy in a standard case.
 Build sample :: The part of the data on which you search and tune. You may be wrong there as many times as necessary.
 Control sample :: The part of the data reserved for checking, looked at once. Going back to it after a further adjustment destroys it.
-Correlation :: Measure between −1 and +1 of how far two assets move together. Above +0.7, two positions in the same direction count as one.
+Correlation :: Measure between −1 and +1 of how far two assets move together. Above +0.7, two positions in the same direction form a single group: their risks add up.
 Cumulative exposure :: Loss taken if all open positions hit their stops in the same move. Different from the sum of the displayed risks.
 Filter :: Condition that removes trades from a set the reading has already produced. Never creates a trade. Judged on the quality of what it removes.
 Market regime :: The market's dominant state over the period observed — trending or not trending. Determines whether a trailing stop adds or removes expectancy.

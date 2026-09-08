@@ -49,7 +49,7 @@ NOTE: Seuls les termes introduits par ce parcours figurent ci-dessous. Pour les 
 
 GLOSS:
 ATR :: *Average true range*. Moyenne de l'amplitude réelle des n dernières bougies. Mesure une distance habituelle ; ne prédit rien. Sert à vérifier qu'un stop se situe entre 1 et 3 ATR.
-Corrélation :: Mesure entre −1 et +1 du degré auquel deux actifs varient ensemble. Au-delà de +0,7, deux positions de même sens comptent pour une seule.
+Corrélation :: Mesure entre −1 et +1 du degré auquel deux actifs varient ensemble. Au-delà de +0,7, deux positions de même sens forment un seul groupe : leurs risques s'additionnent.
 Critère d'abandon :: Valeur fixée à l'avance en dessous de laquelle une idée testée est jetée. Rend le test symétrique ; sans lui, seuls les résultats favorables concluent.
 Échantillon de construction :: Partie des données sur laquelle on cherche et on ajuste. On peut s'y tromper autant de fois que nécessaire.
 Échantillon de contrôle :: Partie des données réservée à la vérification, consultée une seule fois. Y retourner après un ajustement le détruit.

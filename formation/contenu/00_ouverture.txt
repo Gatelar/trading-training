@@ -39,7 +39,7 @@ H3: L'exercice n'est pas un bonus
 
 P: Chaque module se termine par un exercice dans le simulateur. C'est là que se produit l'apprentissage — le texte ne fait que préparer le terrain. Une étude citée au module 1 a suivi des traders sur quatre ans et n'a mesuré aucune progression spontanée. La différence entre répéter et apprendre tient dans la correction immédiate. Les exercices existent pour ça.
 
-H3: Trois conventions utilisées partout
+H3: Quatre conventions utilisées partout
 
 UL:
 - **Le capital de référence est 1 000 €.** Tous les exemples chiffrés partent de cette somme, pour que tu puisses les comparer entre eux. Adapte les proportions à ton cas.

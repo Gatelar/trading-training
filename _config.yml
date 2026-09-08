@@ -5,7 +5,7 @@
 #
 #   /formation/contenu-experimente/01_module1.txt   ->  12 Ko, le module en texte
 #   /formation/TapeSense_Parcours_Experimente.pdf   ->  265 Ko, le parcours entier
-#   /supabase/sql/009_3_contenu_experimente.sql     ->  83 Ko, tous les chapitres
+#   /supabase/sql/009_3_contenu_experimente.sql     ->  82 Ko, ses 26 chapitres
 #
 # Le contenu payant doit venir de Supabase, sous la RLS de la migration 008,
 # et de nulle part ailleurs.
@@ -16,7 +16,7 @@
 exclude:
   # --- Le contenu de la formation, sous toutes ses formes ---
   - formation/            # sources .txt des trois parcours, PDF, scripts de rendu
-  - supabase/             # migrations : le 009 contient les 101 chapitres en clair
+  - supabase/             # migrations : les 009 contiennent les 83 chapitres en clair
 
   # --- Outils de développement, sans intérêt en ligne ---
   - tools/                # génération d'images, prompts

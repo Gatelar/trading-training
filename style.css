@@ -1177,12 +1177,29 @@ html[lang="fr"] .lang-en { display: none !important; }
     }
 
     .btn-login {
-        padding: 8px 14px;
-        font-size: 0.8rem;
+        padding: 7px 12px;
+        font-size: 0.78rem;
     }
 
+    /* La barre est trop étroite pour tous les liens : on garde le premier
+       (la Formation, seule porte d'entrée du cours) et on compacte le reste.
+       Les autres liens restent joignables par le menu du compte. */
     .top-bar-plan {
+        padding: 7px 12px;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+    }
+
+    .top-bar-plan ~ .top-bar-plan {
         display: none;
+    }
+
+    .top-bar-right {
+        gap: 8px;
+    }
+
+    .top-bar-actions {
+        gap: 8px;
     }
 
     .ticker-track {
@@ -1200,6 +1217,25 @@ html[lang="fr"] .lang-en { display: none !important; }
 
     .progress-tabs {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 360px) {
+    /* iPhone SE et compagnie : on rogne le sélecteur de langue et les boutons
+       pour que la Formation tienne quand même dans la barre. */
+    .top-bar {
+        padding: 0 10px;
+    }
+
+    .lang-toggle-btn,
+    .lang-toggle-pill {
+        width: 28px;
+    }
+
+    .top-bar-plan,
+    .btn-login {
+        padding: 7px 10px;
+        font-size: 0.72rem;
     }
 }
 

@@ -1,4 +1,4 @@
--- ============ CONTENU DES CHAPITRES ============
+﻿-- ============ CONTENU DES CHAPITRES ============
 -- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.

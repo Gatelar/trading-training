@@ -98,8 +98,12 @@ def inserts(slug, langue, dossier):
 
 
 def ecrire(chemin, lignes):
+    # utf-8-sig, donc avec BOM : sans lui, un editeur Windows devine ces
+    # fichiers en CP1252 et le copier-coller vers Supabase part deja abime
+    # ('e accent aigu' devenu deux lettres). Le BOM sert de marque d'encodage,
+    # il n'est pas recopie dans le presse-papier. Voir 012_repare_encodage.
     os.makedirs(os.path.dirname(chemin), exist_ok=True)
-    io.open(chemin, "w", encoding="utf-8").write("\n".join(lignes))
+    io.open(chemin, "w", encoding="utf-8-sig").write("\n".join(lignes))
     return os.path.getsize(chemin) / 1024
 
 

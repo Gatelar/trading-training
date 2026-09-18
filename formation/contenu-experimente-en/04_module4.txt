@@ -101,19 +101,77 @@ EX: Five positions, one limit
 EXF: Skill assessed
 Goals 30 and 31: calculate the exposure of a portfolio of more than three positions taking direction and groups into account; decide which position to refuse when the limit is reached, naming the rule that settles it.
 
-EXF: Instructions
-**Step A.** You are shown a portfolio of six positions. Form the groups, then calculate the total exposure.
-**Step B.** The same portfolio is shown to you three weeks later, with a correlation matrix that has changed category on two pairings. Recalculate, and say whether your original decision would have been different.
-**Step C.** A seventh trade turns up with the limit already reached. Apply your refusal rule, written at the previous step, and name the Beginner or Intermediate rule that forbids the other two solutions.
+EXO: matrice | The matrix, at the time of the orders
+CONSIGNE: Three categories, never a coefficient. It describes the window it was calculated over, nothing more — which is the whole point of chapter 4.2.
+ACTIFS: EUR/USD | GBP/USD | USD/JPY | BTC/USD | ETH/USD | WTI
+DEFAUT: faible
+BLOC: forte | EUR/USD | GBP/USD
+BLOC: forte | BTC/USD | ETH/USD
+LEGENDE: forte | above +0.7
+LEGENDE: moyenne | between +0.3 and +0.7
+LEGENDE: faible | below +0.3 | including any negative correlation
 
-EXF: What the platform must provide
-- A six-position portfolio screen with asset, **direction**, risk as a percentage, and a drag-and-drop grouping area — the user forms the groups themselves, the platform never proposes them.
-- A correlation matrix in three colours, as in exercise 5 of the Intermediate track, and a "three weeks later" button that changes it without changing the positions.
-- A field for total exposure, tolerance ±0.1 points, and a timer for step A, displayed only at the end.
-- Step C: three solutions offered — refuse the last to arrive, cut an open position, refuse the worst ratio — and a field for naming the rule broken by the middle solution.
-- **Fallback** if drag and drop is unavailable: groups formed by tick boxes, mechanics and correction identical.
+EXO: groupes | Step A — your groups, then your exposure
+CONSIGNE: Six positions are open. Sort them by shared losing scenario — a position that loses with no other forms a group of its own — then calculate the total exposure.
+POS: EUR/USD | long | 0.5
+POS: GBP/USD | long | 0.4
+POS: USD/JPY | short | 0.4
+POS: BTC/USD | long | 0.3
+POS: ETH/USD | long | 0.2
+POS: WTI | long | 0.2
+GROUPE: the dollar falls | EUR/USD | GBP/USD | USD/JPY
+GROUPE: crypto rises | BTC/USD | ETH/USD
+GROUPE: oil rises | WTI
+INDICE: For each position, ask what has to happen for it to lose. On USD/JPY the dollar is quoted first: the name of the pair does not tell you which way you are betting on it.
+CHRONO: In chapter 4.4, the exposure table is updated in about twenty seconds, whatever the number of positions.
+CHAMP: Total exposure | 2 | 0.1 | % | Group "the dollar falls": 0.5 + 0.4 + 0.4 = 1.3%. The short USD/JPY **joins** this group instead of offsetting it: on this pair the dollar is the base currency, so selling it means selling the dollar — the same bet as the two longs. Group "crypto rises": 0.3 + 0.2 = 0.5%. Oil, alone: 0.2%. Between groups the correlations are weak: add them up. Total: **2%**, exactly the limit. Subtracting the short, as in the Intermediate track, gives 1.2% — out by 0.8 points. Direction is read off the scenario, not off the name of the pair.
 
-EXF: Worked correction
-**Step A.** The trap is the short among the longs, as in the Intermediate track — but here it is inverted: the short USD/JPY **joins** the group of bets against the dollar instead of offsetting it, because the dollar is what is being sold in both cases. A user who mechanically applies "opposite directions, subtract" is out by 0.8 points. Direction is read off the scenario, not off the name of the pair.
-**Step B.** The expected answer is that the original decision **does not change**, and that is counter-intuitive: two pairings changed category, so something ought to move. Nothing moves, because the groups were formed on scenarios and the scenarios have not changed. That is the whole teaching of chapter 4.2, and it can only be demonstrated by doing it twice.
-**Step C.** "Cut an open position" is chosen by a large share of users, because it is the only solution that lets you take the good trade. The rule broken is the Beginner track's sixth — target and stop not renegotiable — and the difficulty of the exercise is naming it when no target and no stop has been explicitly moved.
+EXO: matrice | Three weeks later
+CONSIGNE: Two pairings have changed category. Your six positions have not moved.
+ETAT: apres
+BASCULE: At the time of the orders | Three weeks later
+ACTIFS: EUR/USD | GBP/USD | USD/JPY | BTC/USD | ETH/USD | WTI
+DEFAUT: faible
+BLOC: forte | EUR/USD | GBP/USD
+BLOC: forte | BTC/USD | ETH/USD
+APRES: moyenne | EUR/USD | GBP/USD
+APRES: moyenne | BTC/USD | ETH/USD
+LEGENDE: forte | above +0.7
+LEGENDE: moyenne | between +0.3 and +0.7
+LEGENDE: faible | below +0.3 | including any negative correlation
+
+EXO: portefeuille | Step B — the same portfolio, recalculated
+CONSIGNE: Recalculate the exposure with the three-weeks-later matrix, then say what that changes to your decision.
+POS: EUR/USD | long | 0.5
+POS: GBP/USD | long | 0.4
+POS: USD/JPY | short | 0.4
+POS: BTC/USD | long | 0.3
+POS: ETH/USD | long | 0.2
+POS: WTI | long | 0.2
+CHAMP: Recalculated exposure | 2 | 0.1 | % | The two pairings that changed are inside a group, and inside a group the risks add up without exception: EUR/USD and GBP/USD still lose together if the dollar rises, BTC/USD and ETH/USD if crypto falls. Following the new coefficients gives 1.7%, and suggests 0.3 points of headroom that do not exist.
+QCM: Would your original decision have been different?
+- Yes: exposure falls, there is now room for a trade. | That is what the new matrix says, read pair by pair. But the groups were formed on scenarios, and no scenario has changed: that headroom is a window effect, exactly the one in chapter 4.2.
+- > No: the groups have not moved, the limit is still reached. | It is counter-intuitive: two pairings changed category, so something ought to move. Nothing moves, because the groups rest on scenarios, and a scenario is not re-assessed while the market is moving.
+- The groups must be rebuilt from the new matrix. | That would be grouping by coefficient — redoing the pair-by-pair check that chapter 4.1 replaces. The matrix is read between groups, never to break them up.
+
+EXO: portefeuille | Step C — the seventh trade
+CONSIGNE: Your limit is reached, and a very good trade turns up. The question is not whether it is good — it is. It is which one you refuse.
+POS: EUR/USD | long | 0.5
+POS: GBP/USD | long | 0.4
+POS: USD/JPY | short | 0.4
+POS: BTC/USD | long | 0.3
+POS: ETH/USD | long | 0.2
+POS: WTI | long | 0.2
+POS: AUD/USD | long | 0.5 | turning up · ratio 3
+QCM: What do you do?
+- > I refuse it: it is the last to arrive. | It is the only refusal that reopens no position already running. The trade is good; it is simply not for this portfolio.
+- I cut an open position to make room for it. | The most chosen answer, because it is the only one that lets you take the good trade. The arithmetic is neutral; the decision is not: you are renegotiating an open position in favour of one that does not exist yet.
+- I close the open position with the worst ratio to take it instead. | The same flaw as cutting, only more openly: you are re-assessing a running trade, target and stop included, because another one tempts you.
+QCM: Which rule forbids the other two solutions?
+- Three trades maximum per session. | It counts the trades in a session, not the open positions: none of the three solutions touches it.
+- No order without all six answers on the checklist. | The checklist is about the trade you open. The problem here is what you do to the ones already open.
+- > Target and stop not renegotiable once the position is open. | The Beginner track's sixth rule. The difficulty is recognising it when no target and no stop has been explicitly moved: cutting or closing an open position means renegotiating what was decided when it was opened.
+- Maximum cumulative exposure: 2%. | The eighth rule says the limit is reached, not how to hold it: all three solutions respect it.
+
+EXF: What the exercise demonstrates
+The same lesson, three times. Direction is read off the scenario, not off the name of a pair. A group built on a scenario does not move when the matrix moves. And when the limit is reached, the only refusal that reopens nothing is the last to arrive — the rule that forbids the other two comes from the first track, and you break it without touching a single stop.

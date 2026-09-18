@@ -53,7 +53,9 @@ LIBELLES = {
            "deux_points": " : ", "devise_avant": False,
            "correles": "Corr\u00e9lations", "classement": "Classement",
            "actif": "Actif", "sens": "Sens", "risque": "Risque",
-           "avec": "avec", "reste": "avec tout le reste"},
+           "avec": "avec", "autres": "toutes les autres paires",
+           "passe": "passe \u00e0", "tes_groupes": "Tes groupes",
+           "groupes": "Groupes"},
     "en": {"exercice": "EXERCISE", "couv": "Track|Beginner",
            "case": "Worked example", "err": "The classic mistake",
            "key": "Key points", "warn": "Warning",
@@ -62,7 +64,9 @@ LIBELLES = {
            "deux_points": ": ", "devise_avant": True,
            "correles": "Correlations", "classement": "Ranking",
            "actif": "Asset", "sens": "Side", "risque": "Risk",
-           "avec": "with", "reste": "with everything else"},
+           "avec": "with", "autres": "every other pair",
+           "passe": "moves to", "tes_groupes": "Your groups",
+           "groupes": "Groups"},
 }
 L = LIBELLES["fr"]
 
@@ -351,7 +355,8 @@ def lire_exo(tete, corps):
           "titre": t[1] if len(t) > 1 else "",
           "consigne": "", "questions": [], "fixe": None,
           "colonnes": [], "rangs": [], "actifs": [], "blocs": [], "croises": [],
-          "legendes": [], "positions": [], "lots": [], "items": []}
+          "legendes": [], "positions": [], "lots": [], "items": [],
+          "defaut": "", "apres": [], "bascule": None, "etat": "", "groupes": []}
     for ligne in corps:
         # Une option de QCM appartient au dernier item declare. « > » marque la
         # bonne : meme convention que le balisage lu par apprendre/exercice.js.
@@ -399,6 +404,16 @@ def lire_exo(tete, corps):
                                 "note": " | ".join(c[4:])})
         elif m.group(1) == "QCM":
             ex["items"].append({"type": "qcm", "question": m.group(2), "options": []})
+        elif m.group(1) == "DEFAUT":
+            ex["defaut"] = c[0]
+        elif m.group(1) == "APRES":
+            ex["apres"].append({"categorie": c[0], "a": c[1], "b": c[2]})
+        elif m.group(1) == "BASCULE":
+            ex["bascule"] = c
+        elif m.group(1) == "ETAT":
+            ex["etat"] = c[0]
+        elif m.group(1) == "GROUPE":
+            ex["groupes"].append({"nom": c[0], "actifs": c[1:]})
     return ex
 
 
@@ -435,13 +450,22 @@ def exercice_papier(tete, corps):
             lignes.append("- **%s**%s%s %s %s" % (
                 etiquette_cat(ex, cr["categorie"]), L["deux_points"],
                 cr["actif"], L["avec"], ", ".join(cr["avec"])))
-        reste = [a for a in ex["actifs"]
-                 if not any(a in bl["actifs"] for bl in ex["blocs"])
-                 and not any(a == cr["actif"] for cr in ex["croises"])]
-        if reste:
-            lignes.append("- **%s**%s%s %s" % (
-                etiquette_cat(ex, ex.get("defaut") or "faible"), L["deux_points"],
-                ", ".join(reste), L["reste"]))
+        # Tout couple non declare est de la categorie par defaut. Le dire en
+        # une ligne, plutot que de lister des actifs « avec tout le reste » :
+        # c'etait faux des qu'il y avait deux blocs.
+        defaut = ex["defaut"] or "faible"
+        effet = [lg["effet"] for lg in ex["legendes"] if lg["categorie"] == defaut and lg["effet"]]
+        lignes.append("- **%s**%s%s%s" % (
+            etiquette_cat(ex, defaut), " (%s)" % effet[0] if effet else "",
+            L["deux_points"], L["autres"]))
+        # Le second etat de la matrice : sur papier, pas de bouton — on ecrit
+        # ce qui a change, couple par couple.
+        if ex["apres"]:
+            titre = ex["bascule"][1] if ex["bascule"] and len(ex["bascule"]) > 1 else ""
+            for ap in ex["apres"]:
+                lignes.append("**%s**%s%s – %s %s **%s**" % (
+                    titre, L["deux_points"], ap["a"], ap["b"], L["passe"],
+                    etiquette_cat(ex, ap["categorie"])))
         out += [Spacer(1, 4), boite(L["correles"], lignes, BLEU, BLEU_FOND, BLEU),
                 Spacer(1, 10)]
 
@@ -452,6 +476,14 @@ def exercice_papier(tete, corps):
                    unite(chiffre(p[2]), "%") if len(p) > 2 else ""]
                   for p in ex["positions"]]
         out += [Spacer(1, 4), tableau(entetes, lignes, [40, 30, 30]), Spacer(1, 10)]
+
+    if ex["groupes"]:
+        out.append(Paragraph(inline("%s%s%s" % (
+            L["tes_groupes"], L["deux_points"], "\u2026" * 12)), S["corps"]))
+        reponses.append("**%s**" % L["groupes"])
+        for gr in ex["groupes"]:
+            reponses.append("- **%s**%s%s" % (gr["nom"], L["deux_points"],
+                                             ", ".join(gr["actifs"])))
 
     if ex["lots"]:
         for lot in ex["lots"]:

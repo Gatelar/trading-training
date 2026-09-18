@@ -63,6 +63,11 @@
             lots: [],
             indice: '',
             items: [],
+            apres: [],
+            bascule: null,
+            etat: '',
+            groupes: [],
+            chrono: '',
         };
         lignes.forEach(function (l) {
             // Une option de QCM : elle appartient au dernier item déclaré.
@@ -91,6 +96,25 @@
                     break;
                 case 'INDICE':
                     ex.indice = m[2];
+                    break;
+                case 'APRES':
+                    // La categorie d'un couple dans le second etat de la
+                    // matrice. Les positions, elles, ne changent pas.
+                    ex.apres.push({ categorie: c[0], a: c[1], b: c[2] });
+                    break;
+                case 'BASCULE':
+                    ex.bascule = { avant: c[0], apres: c[1] || c[0] };
+                    break;
+                case 'ETAT':
+                    ex.etat = c[0];
+                    break;
+                case 'GROUPE':
+                    // Le groupement attendu, jamais montre avant la fin : la
+                    // plateforme ne propose pas les groupes, elle les verifie.
+                    ex.groupes.push({ nom: c[0], actifs: c.slice(1) });
+                    break;
+                case 'CHRONO':
+                    ex.chrono = m[2];
                     break;
                 case 'BLOC':
                     // Toutes les paires internes à la liste sont de cette
@@ -586,22 +610,32 @@
     }
 
     // Prépare l'état d'un écran à questions, son bouton et sa ligne de message.
-    function poser(ex, racine, ctx) {
-        if (!ex.items.length) return;
+    // « monter », facultatif, construit ce que l'écran vérifie en plus de ses
+    // questions — un groupement, par exemple — et reçoit le même état : une
+    // étape se valide d'un seul bouton, parce que c'est une seule décision.
+    function poser(ex, racine, ctx, monter) {
+        if (!ex.items.length && !monter) return;
         var mem = memoire(ctx.cle);
         var etat = mem.lire() || {};
         etat.reponses = etat.reponses || {};
         etat.essais = etat.essais || {};
         etat.vus = etat.vus || {};
 
+        var garde = monter ? monter(etat, mem) : null;
         var zone = el('div', 'exo-items');
         racine.appendChild(zone);
-        var verifier = questions(ex.items, zone, ctx, etat, mem);
+        var questionsVerifier = questions(ex.items, zone, ctx, etat, mem);
+
+        function verifier(silencieux) {
+            var restants = (garde ? garde.verifier(silencieux) : 0) + questionsVerifier();
+            if (!restants && garde && garde.reussi) garde.reussi();
+            return restants;
+        }
 
         var p = el('div', 'exo-pied');
         var message = el('p', 'exo-message');
         p.appendChild(bouton('exo-valider', ctx.tt('ex.check', 'Vérifier'), function () {
-            var restants = verifier();
+            var restants = verifier(false);
             if (!restants) {
                 message.className = 'exo-message est-juste';
                 message.textContent = ctx.tt('ex.stepDone', 'Étape juste.');
@@ -617,7 +651,7 @@
         racine.appendChild(p);
 
         // Une reprise doit montrer ce que la session précédente avait acquis.
-        if (verifier() === 0) racine.classList.add('est-fini');
+        if (verifier(true) === 0) racine.classList.add('est-fini');
     }
 
     // ══════════ matrice de corrélation ══════════
@@ -628,7 +662,7 @@
 
     var DISQUES = { forte: '●', moyenne: '◐', faible: '○' };
 
-    function categorie(ex, a, b) {
+    function categorie(ex, a, b, apres) {
         var cat = ex.defaut || 'faible';
         ex.blocs.forEach(function (bl) {
             if (bl.actifs.indexOf(a) !== -1 && bl.actifs.indexOf(b) !== -1) cat = bl.categorie;
@@ -637,6 +671,11 @@
             if ((cr.actif === a && cr.avec.indexOf(b) !== -1) ||
                 (cr.actif === b && cr.avec.indexOf(a) !== -1)) cat = cr.categorie;
         });
+        if (apres) {
+            ex.apres.forEach(function (ap) {
+                if ((ap.a === a && ap.b === b) || (ap.a === b && ap.b === a)) cat = ap.categorie;
+            });
+        }
         return cat;
     }
 
@@ -650,30 +689,66 @@
         var racine = el('div', 'exo exo--matrice');
         racine.appendChild(entete(ex, ctx));
 
-        var wrap = el('div', 'exo-grille-wrap');
-        var table = el('table', 'exo-matrice');
-        var thead = el('thead'), trh = el('tr');
-        trh.appendChild(el('th'));
-        ex.actifs.forEach(function (a) { trh.appendChild(el('th', null, a)); });
-        thead.appendChild(trh);
-        table.appendChild(thead);
+        // Deux états quand la source en déclare un second : le même
+        // portefeuille, une matrice qui a bougé. Les couples qui ont changé de
+        // catégorie restent cerclés dans l'état « après », sinon il faudrait
+        // comparer deux grilles de tête, ce que le module dit impossible.
+        var double = ex.apres.length > 0;
+        var apres = double && ex.etat === 'apres';
+        var boutons = null;
 
-        var tbody = el('tbody');
-        ex.actifs.forEach(function (a) {
-            var tr = el('tr');
-            tr.appendChild(el('th', 'exo-matrice-actif', a));
-            ex.actifs.forEach(function (b) {
-                if (a === b) { tr.appendChild(el('td', 'est-soi', '—')); return; }
-                var cat = categorie(ex, a, b);
-                var td = el('td', 'cat-' + cat, DISQUES[cat] || '○');
-                td.setAttribute('title', a + ' / ' + b + ' — ' + (libelle[cat] || cat));
-                tr.appendChild(td);
+        if (double && ex.bascule) {
+            var bascule = el('div', 'exo-bascule');
+            boutons = [[false, ex.bascule.avant], [true, ex.bascule.apres]].map(function (b) {
+                var bt = bouton('exo-bascule-btn', b[1], function () {
+                    apres = b[0];
+                    dessiner();
+                });
+                bascule.appendChild(bt);
+                return { bt: bt, apres: b[0] };
             });
-            tbody.appendChild(tr);
-        });
-        table.appendChild(tbody);
-        wrap.appendChild(table);
+            racine.appendChild(bascule);
+        }
+
+        var wrap = el('div', 'exo-grille-wrap');
         racine.appendChild(wrap);
+
+        function dessiner() {
+            if (boutons) {
+                boutons.forEach(function (b) {
+                    b.bt.classList.toggle('est-choisi', b.apres === apres);
+                    b.bt.setAttribute('aria-pressed', b.apres === apres ? 'true' : 'false');
+                });
+            }
+            wrap.textContent = '';
+            var table = el('table', 'exo-matrice');
+            var thead = el('thead'), trh = el('tr');
+            trh.appendChild(el('th'));
+            ex.actifs.forEach(function (a) { trh.appendChild(el('th', null, a)); });
+            thead.appendChild(trh);
+            table.appendChild(thead);
+
+            var tbody = el('tbody');
+            ex.actifs.forEach(function (a) {
+                var tr = el('tr');
+                tr.appendChild(el('th', 'exo-matrice-actif', a));
+                ex.actifs.forEach(function (b) {
+                    if (a === b) { tr.appendChild(el('td', 'est-soi', '—')); return; }
+                    var cat = categorie(ex, a, b, apres);
+                    var change = apres && cat !== categorie(ex, a, b, false);
+                    var td = el('td', 'cat-' + cat + (change ? ' a-change' : ''),
+                        DISQUES[cat] || '○');
+                    td.setAttribute('title', a + ' – ' + b + (ctx.lang === 'fr' ? ' : ' : ': ') + (libelle[cat] || cat));
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+            wrap.appendChild(table);
+            if (apres) wrap.appendChild(el('p', 'exo-matrice-repere',
+                ctx.tt('ex.changed', 'Cerclé : le couple a changé de catégorie.')));
+        }
+        dessiner();
 
         if (ex.legendes.length) {
             var ul = el('ul', 'exo-legende');
@@ -699,7 +774,16 @@
     function portefeuille(ex, dans, ctx) {
         var racine = el('div', 'exo exo--portefeuille');
         racine.appendChild(entete(ex, ctx));
+        racine.appendChild(tableauPositions(ex, ctx));
+        poser(ex, racine, ctx);
+        dans.appendChild(racine);
+    }
 
+    function sensDe(pos) {
+        return (pos.sens || '').toLowerCase().indexOf('s') === 0 ? 'short' : 'long';
+    }
+
+    function tableauPositions(ex, ctx) {
         var wrap = el('div', 'exo-grille-wrap');
         var table = el('table', 'exo-portefeuille');
         var thead = el('thead'), trh = el('tr');
@@ -717,9 +801,8 @@
             var actif = el('th', 'exo-actif', pos.actif);
             if (pos.mention) actif.appendChild(el('span', 'exo-mention', pos.mention));
             tr.appendChild(actif);
-            var sens = (pos.sens || '').toLowerCase();
-            var td = el('td', 'exo-sens est-' + (sens.indexOf('s') === 0 ? 'short' : 'long'));
-            td.appendChild(el('span', 'exo-fleche', sens.indexOf('s') === 0 ? '↓' : '↑'));
+            var td = el('td', 'exo-sens est-' + sensDe(pos));
+            td.appendChild(el('span', 'exo-fleche', sensDe(pos) === 'short' ? '↓' : '↑'));
             td.appendChild(document.createTextNode(pos.sens));
             tr.appendChild(td);
             tr.appendChild(el('td', 'exo-risque', unite(pos.risque, '%', ctx.lang)));
@@ -727,9 +810,212 @@
         });
         table.appendChild(tbody);
         wrap.appendChild(table);
-        racine.appendChild(wrap);
+        return wrap;
+    }
 
-        poser(ex, racine, ctx);
+    // ══════════ groupes ══════════
+    // L'utilisateur constitue lui-même ses groupes ; la plateforme ne les propose
+    // jamais, et ne laisse pas deviner leur nombre : il y a toujours exactement
+    // un emplacement vide de plus que de groupes formés. Chaque position se
+    // glisse à la souris, ou se range par son menu — le clavier et le tactile
+    // n'ont pas de glisser-déposer, ce n'est pas un repli.
+
+    function duree(ms) {
+        var s = Math.max(1, Math.round(ms / 1000));
+        var m = Math.floor(s / 60);
+        return m ? m + ' min ' + (s % 60 < 10 ? '0' : '') + (s % 60) + ' s' : s + ' s';
+    }
+
+    function groupes(ex, dans, ctx) {
+        var racine = el('div', 'exo exo--groupes');
+        racine.appendChild(entete(ex, ctx));
+        racine.appendChild(tableauPositions(ex, ctx));
+
+        poser(ex, racine, ctx, function (etat, mem) {
+            etat.affect = etat.affect || {};
+
+            var zone = el('div', 'exo-groupes');
+            var aide = el('p', 'exo-note');
+            var chrono = el('p', 'exo-chrono');
+            racine.appendChild(zone);
+            racine.appendChild(aide);
+            racine.appendChild(chrono);
+            var verrou = false;
+
+            // Le chronomètre part au premier geste sur l'étape, pas au
+            // chargement : lire le cours avant n'est pas du temps d'exercice.
+            function geste() {
+                if (!etat.debut && !etat.duree) etat.debut = Date.now();
+            }
+
+            // Numérotation compacte : un groupe vidé disparaît, les autres se
+            // renumérotent dans l'ordre où ils sont apparus.
+            function compacter() {
+                var vus = [], table = {};
+                ex.positions.forEach(function (p) {
+                    var g = etat.affect[p.actif];
+                    if (!g) return;
+                    if (!(g in table)) { vus.push(g); table[g] = vus.length; }
+                });
+                ex.positions.forEach(function (p) {
+                    if (etat.affect[p.actif]) etat.affect[p.actif] = table[etat.affect[p.actif]];
+                });
+                return vus.length;
+            }
+
+            function placer(actif, g) {
+                if (verrou) return;
+                geste();
+                etat.affect[actif] = g;
+                aide.textContent = '';
+                dessiner();
+                mem.ecrire(etat);
+            }
+
+            function puce(pos, n) {
+                var ch = el('div', 'exo-puce est-' + sensDe(pos));
+                ch.draggable = !verrou;
+                ch.appendChild(el('span', 'exo-fleche', sensDe(pos) === 'short' ? '↓' : '↑'));
+                ch.appendChild(el('b', null, pos.actif));
+                ch.appendChild(el('span', 'exo-puce-risque', unite(pos.risque, '%', ctx.lang)));
+
+                var menu = document.createElement('select');
+                menu.className = 'exo-puce-menu';
+                menu.disabled = verrou;
+                menu.setAttribute('aria-label', ctx.tt('ex.moveTo', 'Ranger') + ' ' + pos.actif);
+                var options = [[0, ctx.tt('ex.unsortedOne', 'Non rangée')]];
+                for (var i = 1; i <= n; i++) options.push([i, ctx.tt('ex.group', 'Groupe') + ' ' + i]);
+                options.push([n + 1, ctx.tt('ex.newGroup', 'Nouveau groupe')]);
+                options.forEach(function (o) {
+                    var op = document.createElement('option');
+                    op.value = o[0];
+                    op.textContent = o[1];
+                    if ((etat.affect[pos.actif] || 0) === o[0]) op.selected = true;
+                    menu.appendChild(op);
+                });
+                menu.addEventListener('change', function () {
+                    placer(pos.actif, parseInt(menu.value, 10) || 0);
+                });
+                ch.appendChild(menu);
+
+                ch.addEventListener('dragstart', function (e) {
+                    e.dataTransfer.setData('text/plain', pos.actif);
+                    ch.classList.add('est-pris');
+                });
+                ch.addEventListener('dragend', function () { ch.classList.remove('est-pris'); });
+                return ch;
+            }
+
+            function bac(g, titre, n) {
+                var b = el('div', 'exo-bac' + (g === 0 ? ' est-reserve' : '') + (g > n ? ' est-vide' : ''));
+                b.appendChild(el('span', 'exo-bac-titre', titre));
+                var corps = el('div', 'exo-bac-corps');
+                ex.positions.forEach(function (p) {
+                    if ((etat.affect[p.actif] || 0) === g) corps.appendChild(puce(p, n));
+                });
+                if (g > n) corps.appendChild(el('span', 'exo-bac-invite', ctx.tt('ex.dropHere', 'Glisse une position ici')));
+                b.appendChild(corps);
+                b.addEventListener('dragover', function (e) { if (!verrou) { e.preventDefault(); b.classList.add('est-survol'); } });
+                b.addEventListener('dragleave', function () { b.classList.remove('est-survol'); });
+                b.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    b.classList.remove('est-survol');
+                    var actif = e.dataTransfer.getData('text/plain');
+                    if (actif) placer(actif, g);
+                });
+                return b;
+            }
+
+            function dessiner() {
+                var n = compacter();
+                zone.textContent = '';
+                var libres = ex.positions.filter(function (p) { return !etat.affect[p.actif]; });
+                if (libres.length) zone.appendChild(bac(0, ctx.tt('ex.unsorted', 'Non rangées'), n));
+                for (var g = 1; g <= n; g++) {
+                    var titre = ctx.tt('ex.group', 'Groupe') + ' ' + g;
+                    if (verrou) titre += ' — ' + nomDuGroupe(g);
+                    zone.appendChild(bac(g, titre, n));
+                }
+                if (!verrou) zone.appendChild(bac(n + 1, ctx.tt('ex.newGroup', 'Nouveau groupe'), n));
+            }
+
+            // Le nom de scénario attendu qui correspond à un groupe formé.
+            function nomDuGroupe(g) {
+                var membre = ex.positions.filter(function (p) { return etat.affect[p.actif] === g; })[0];
+                var attendu = membre && ex.groupes.filter(function (gr) {
+                    return gr.actifs.indexOf(membre.actif) !== -1;
+                })[0];
+                return attendu ? attendu.nom : '';
+            }
+
+            // Deux groupements sont les mêmes si chaque couple de positions est
+            // ensemble dans l'un exactement quand il l'est dans l'autre. Les
+            // numéros ne comptent pas : « groupe 1 » n'a pas de sens.
+            function conforme() {
+                var attendu = {};
+                ex.groupes.forEach(function (gr, i) {
+                    gr.actifs.forEach(function (a) { attendu[a] = i + 1; });
+                });
+                var ps = ex.positions;
+                for (var i = 0; i < ps.length; i++) {
+                    for (var j = i + 1; j < ps.length; j++) {
+                        var a = ps[i].actif, b = ps[j].actif;
+                        if ((etat.affect[a] === etat.affect[b]) !== (attendu[a] === attendu[b])) return false;
+                    }
+                }
+                return true;
+            }
+
+            dessiner();
+
+            return {
+                verifier: function (silencieux) {
+                    var libres = ex.positions.filter(function (p) { return !etat.affect[p.actif]; });
+                    if (libres.length) {
+                        if (!silencieux) {
+                            aide.textContent = ctx.tt('ex.groupsIncomplete',
+                                'Range chaque position. Une position qui ne perd avec aucune autre forme un groupe à elle seule.');
+                        }
+                        return 1;
+                    }
+                    if (conforme()) {
+                        aide.textContent = '';
+                        if (!verrou) { verrou = true; dessiner(); }
+                        return 0;
+                    }
+                    if (silencieux) return 1;
+                    var cle = ex.positions.map(function (p) { return etat.affect[p.actif]; }).join(',');
+                    var n = essai(etat, 'groupes', cle);
+                    mem.ecrire(etat);
+                    // Deux groupements faux différents : l'indice. Au troisième,
+                    // les groupes attendus, nommés — mais pas rangés à sa place :
+                    // c'est à lui de le faire.
+                    if (n >= 3) {
+                        aide.innerHTML = ctx.enligne(ctx.tt('ex.groupsExpected', 'Les groupes attendus :') + ' ' +
+                            ex.groupes.map(function (gr) {
+                                return '**' + gr.nom + '** (' + gr.actifs.join(', ') + ')';
+                            }).join(' · '));
+                    } else if (n >= 2 && ex.indice) {
+                        aide.innerHTML = ctx.enligne(ex.indice);
+                    } else {
+                        aide.textContent = ctx.tt('ex.groupsWrong',
+                            'Ces groupes ne réunissent pas des positions qui perdent ensemble.');
+                    }
+                    return 1;
+                },
+                reussi: function () {
+                    if (!etat.duree && etat.debut) {
+                        etat.duree = Date.now() - etat.debut;
+                        mem.ecrire(etat);
+                    }
+                    if (etat.duree) {
+                        chrono.innerHTML = ctx.enligne('**' + ctx.tt('ex.timeSpent', 'Temps passé sur cette étape') +
+                            (ctx.lang === 'fr' ? ' : ' : ': ') + duree(etat.duree) + '.** ' + (ex.chrono || ''));
+                    }
+                },
+            };
+        });
+
         dans.appendChild(racine);
     }
 
@@ -863,6 +1149,7 @@
             if (ex.type === 'grille' && ex.rangs.length) grille(ex, dans, ctx);
             else if (ex.type === 'matrice') matrice(ex, dans, ctx);
             else if (ex.type === 'portefeuille') portefeuille(ex, dans, ctx);
+            else if (ex.type === 'groupes' && ex.positions.length) groupes(ex, dans, ctx);
             else if (ex.type === 'classement' && ex.lots.length) classement(ex, dans, ctx);
             else if (ex.questions.length) vraifaux(ex, dans, ctx);
         },

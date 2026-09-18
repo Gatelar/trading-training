@@ -314,6 +314,80 @@
 .mo-body .exo-fleche-btn:hover:not(:disabled) { color: var(--accent); border-color: var(--border-bright); }
 .mo-body .exo-fleche-btn:disabled { opacity: .3; cursor: default; }
 
+/* ---------- matrice à deux états ---------- */
+.mo-body .exo-bascule {
+    display: inline-flex; margin-top: 16px; padding: 3px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.mo-body .exo-bascule-btn {
+    padding: 7px 14px; cursor: pointer; border: 0; border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em;
+    color: var(--text-muted); background: transparent;
+    transition: background-color .18s ease, color .18s ease;
+}
+.mo-body .exo-bascule-btn:hover { color: var(--text); }
+.mo-body .exo-bascule-btn.est-choisi { color: var(--bg); background: var(--accent); }
+/* Un couple qui a changé de catégorie : cerclé, pour qu'on le trouve sans
+   comparer deux grilles de tête. */
+.mo-body .exo-matrice td.a-change {
+    outline: 1px dashed var(--accent); outline-offset: -3px; border-radius: 4px;
+}
+
+.mo-body .exo-matrice-repere {
+    font-size: 12px; color: var(--text-muted); margin: 10px 0 0;
+}
+
+/* ---------- groupes ---------- */
+.mo-body .exo-groupes {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 10px; margin-top: 18px;
+}
+.mo-body .exo-bac {
+    min-height: 92px; padding: 10px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: rgba(255, 255, 255, .02);
+    transition: border-color .15s ease, background-color .15s ease;
+}
+.mo-body .exo-bac.est-reserve { background: rgba(0, 0, 0, .18); }
+.mo-body .exo-bac.est-vide { border-style: dashed; }
+.mo-body .exo-bac.est-survol { border-color: var(--accent); background: var(--accent-subtle); }
+.mo-body .exo.est-fini .exo-bac:not(.est-reserve) { border-color: var(--accent); }
+.mo-body .exo-bac-titre {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 8px;
+}
+.mo-body .exo.est-fini .exo-bac-titre { color: var(--accent); }
+.mo-body .exo-bac-corps { display: flex; flex-direction: column; gap: 6px; }
+.mo-body .exo-bac-invite { font-size: 12px; color: var(--text-dim); padding: 6px 0; }
+
+.mo-body .exo-puce {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    padding: 6px 8px; cursor: grab; font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; border: 1px solid var(--border-bright);
+    border-radius: 6px; background: var(--bg);
+}
+.mo-body .exo-puce.est-pris { opacity: .45; }
+.mo-body .exo-puce b { font-weight: 400; color: var(--text); }
+.mo-body .exo-puce .exo-fleche {
+    width: 18px; height: 18px; line-height: 17px; font-size: 12px;
+    text-align: center; border-radius: 4px;
+}
+.mo-body .exo-puce.est-long .exo-fleche { color: var(--bg); background: var(--accent); }
+.mo-body .exo-puce.est-short .exo-fleche {
+    color: var(--accent); border: 1px dashed var(--accent); line-height: 15px;
+}
+.mo-body .exo-puce-risque { color: var(--text-muted); }
+.mo-body .exo-puce-menu {
+    margin-left: auto; max-width: 100%; padding: 3px 4px; cursor: pointer;
+    font-family: inherit; font-size: 11px; color: var(--text-muted);
+    background: transparent; border: 1px solid var(--border); border-radius: 4px;
+}
+.mo-body .exo-puce-menu:disabled { display: none; }
+.mo-body .exo-puce-menu option { color: #111; }
+
+.mo-body .exo-chrono { font-size: 13.5px; color: var(--text-muted); margin: 14px 0 0; }
+.mo-body .exo-chrono strong { color: var(--accent); font-weight: 500; }
+
 /* ---------- correction dépliable, après les exercices ---------- */
 .mo-body .mo-ex-reveal {
     margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--border);
@@ -330,7 +404,8 @@
 }
 @media (prefers-reduced-motion: reduce) {
     .mo-body .exo-jauge span, .mo-body .exo-btn, .mo-body .exo-champ,
-    .mo-body .exo-suite, .mo-body .exo-rejouer, .mo-body .exo-valider {
+    .mo-body .exo-suite, .mo-body .exo-rejouer, .mo-body .exo-valider,
+    .mo-body .exo-bascule-btn, .mo-body .exo-bac {
         transition: none;
     }
 }

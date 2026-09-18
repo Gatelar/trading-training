@@ -47,10 +47,22 @@ COLOPHON = ("Contenu pédagogique · Aucun conseil en investissement<br/>"
 LIBELLES = {
     "fr": {"exercice": "EXERCICE", "couv": "Parcours|Débutant",
            "case": "Cas chiffré", "err": "L'erreur classique",
-           "key": "À retenir", "warn": "Avertissement"},
+           "key": "À retenir", "warn": "Avertissement",
+           "reponses": "Réponses", "vrai": "Vrai", "faux": "Faux",
+           "milliers": " ", "decimal": ",",
+           "deux_points": " : ", "devise_avant": False,
+           "correles": "Corr\u00e9lations", "classement": "Classement",
+           "actif": "Actif", "sens": "Sens", "risque": "Risque",
+           "avec": "avec", "reste": "avec tout le reste"},
     "en": {"exercice": "EXERCISE", "couv": "Track|Beginner",
            "case": "Worked example", "err": "The classic mistake",
-           "key": "Key points", "warn": "Warning"},
+           "key": "Key points", "warn": "Warning",
+           "reponses": "Answers", "vrai": "True", "faux": "False",
+           "milliers": ",", "decimal": ".",
+           "deux_points": ": ", "devise_avant": True,
+           "correles": "Correlations", "classement": "Ranking",
+           "actif": "Asset", "sens": "Side", "risque": "Risk",
+           "avec": "with", "reste": "with everything else"},
 }
 L = LIBELLES["fr"]
 
@@ -298,6 +310,205 @@ def filet(couleur=GRIS_CLAIR, epaisseur=0.8, avant=6, apres=10, largeur=None):
 # --------------------------------------------------------------------------
 
 
+# --------------------------------------------------------------------------
+# Exercices
+# --------------------------------------------------------------------------
+# Le meme balisage sert au site, qui en fait un exercice interactif, et au PDF,
+# qui en fait un exercice de papier : enonce d'abord, reponses ensuite, jamais
+# la correction collee sous la question. Voir apprendre/exercice.js.
+
+
+def chiffre(t):
+    """Une valeur canonique de source — chiffres nus, point decimal, pas de
+    separateur de milliers — remise dans la typographie de la langue."""
+    if not re.match(r"^-?\d+(\.\d+)?$", t):
+        return t
+    entier, _, decimales = t.partition(".")
+    signe, entier = ("-", entier[1:]) if entier.startswith("-") else ("", entier)
+    paquets = []
+    while len(entier) > 3:
+        paquets.insert(0, entier[-3:])
+        entier = entier[:-3]
+    paquets.insert(0, entier)
+    sortie = signe + L["milliers"].join(paquets)
+    return sortie + L["decimal"] + decimales if decimales else sortie
+
+
+def unite(valeur, suffixe):
+    """Colle une unite a un nombre selon l'usage de la langue : « 50 € » et
+    « 5 % » en francais, "$50" et "5%" en anglais."""
+    if not suffixe:
+        return valeur
+    if L["devise_avant"]:
+        return suffixe + valeur if suffixe in "€$£" else valeur + suffixe
+    return valeur + " " + suffixe
+
+
+def lire_exo(tete, corps):
+    champs = lambda l: [c.strip() for c in l.split("|")]
+    t = champs(tete)
+    ex = {"type": (t[0] or "vraifaux").lower(),
+          "titre": t[1] if len(t) > 1 else "",
+          "consigne": "", "questions": [], "fixe": None,
+          "colonnes": [], "rangs": [], "actifs": [], "blocs": [], "croises": [],
+          "legendes": [], "positions": [], "lots": [], "items": []}
+    for ligne in corps:
+        # Une option de QCM appartient au dernier item declare. « > » marque la
+        # bonne : meme convention que le balisage lu par apprendre/exercice.js.
+        if ligne.startswith("- ") and ex["items"] and ex["items"][-1]["type"] == "qcm":
+            o = champs(ligne[2:])
+            juste = o[0].startswith(">")
+            ex["items"][-1]["options"].append(
+                {"texte": (o[0][1:] if juste else o[0]).strip(), "juste": juste,
+                 "note": " | ".join(o[1:])})
+            continue
+        m = re.match(r"^([A-Z]+):\s?(.*)$", ligne)
+        if not m:
+            continue
+        c = champs(m.group(2))
+        if m.group(1) == "CONSIGNE":
+            ex["consigne"] = m.group(2)
+        elif m.group(1) == "Q":
+            ex["questions"].append({"texte": c[0],
+                                    "vrai": c[1].lower() == "vrai" if len(c) > 1 else False,
+                                    "note": " | ".join(c[2:])})
+        elif m.group(1) == "FIXE":
+            ex["fixe"] = c
+        elif m.group(1) == "COL":
+            ex["colonnes"].append({"label": c[0],
+                                   "suffixe": c[2] if len(c) > 2 else ""})
+        elif m.group(1) == "ROW":
+            ex["rangs"].append(c)
+        elif m.group(1) == "ACTIFS":
+            ex["actifs"] = c
+        elif m.group(1) == "BLOC":
+            ex["blocs"].append({"categorie": c[0], "actifs": c[1:]})
+        elif m.group(1) == "CROISE":
+            ex["croises"].append({"categorie": c[0], "actif": c[1], "avec": c[2:]})
+        elif m.group(1) == "LEGENDE":
+            ex["legendes"].append({"categorie": c[0], "seuil": c[1] if len(c) > 1 else "",
+                                   "effet": c[2] if len(c) > 2 else ""})
+        elif m.group(1) == "POS":
+            ex["positions"].append(c)
+        elif m.group(1) == "LOT":
+            ex["lots"].append(c)
+        elif m.group(1) == "CHAMP":
+            ex["items"].append({"type": "champ", "label": c[0],
+                                "vise": c[1] if len(c) > 1 else "",
+                                "suffixe": c[3] if len(c) > 3 else "",
+                                "note": " | ".join(c[4:])})
+        elif m.group(1) == "QCM":
+            ex["items"].append({"type": "qcm", "question": m.group(2), "options": []})
+    return ex
+
+
+def etiquette_cat(ex, categorie):
+    """Le mot-cle du balisage rendu lisible par la legende de la source."""
+    for lg in ex["legendes"]:
+        if lg["categorie"] == categorie:
+            return lg["seuil"] or categorie
+    return categorie
+
+
+def exercice_papier(tete, corps):
+    """Un bloc EXO en flowables : enonce a faire, puis reponses encadrees."""
+    ex = lire_exo(tete, corps)
+    out = [Spacer(1, 10)]
+    if ex["titre"]:
+        out.append(Paragraph(inline(ex["titre"].upper()), ParagraphStyle(
+            "exotitre", parent=S["sous_titre"], textColor=ENCRE, fontSize=9.6,
+            spaceBefore=0, spaceAfter=4)))
+    if ex["consigne"]:
+        out.append(Paragraph(inline(ex["consigne"]), S["corps"]))
+
+    reponses = []
+
+    # La matrice de correlation se lit en grille a l'ecran, en groupes sur le
+    # papier : c'est sous cette forme que la source la declare, et une grille de
+    # symboles en noir et blanc ne dit rien de plus qu'une phrase.
+    if ex["actifs"]:
+        lignes = []
+        for bl in ex["blocs"]:
+            lignes.append("- **%s**%s%s" % (etiquette_cat(ex, bl["categorie"]),
+                                            L["deux_points"], ", ".join(bl["actifs"])))
+        for cr in ex["croises"]:
+            lignes.append("- **%s**%s%s %s %s" % (
+                etiquette_cat(ex, cr["categorie"]), L["deux_points"],
+                cr["actif"], L["avec"], ", ".join(cr["avec"])))
+        reste = [a for a in ex["actifs"]
+                 if not any(a in bl["actifs"] for bl in ex["blocs"])
+                 and not any(a == cr["actif"] for cr in ex["croises"])]
+        if reste:
+            lignes.append("- **%s**%s%s %s" % (
+                etiquette_cat(ex, ex.get("defaut") or "faible"), L["deux_points"],
+                ", ".join(reste), L["reste"]))
+        out += [Spacer(1, 4), boite(L["correles"], lignes, BLEU, BLEU_FOND, BLEU),
+                Spacer(1, 10)]
+
+    if ex["positions"]:
+        entetes = [L["actif"], L["sens"], L["risque"]]
+        lignes = [[p[0] + (" (%s)" % p[3] if len(p) > 3 and p[3] else ""),
+                   p[1] if len(p) > 1 else "",
+                   unite(chiffre(p[2]), "%") if len(p) > 2 else ""]
+                  for p in ex["positions"]]
+        out += [Spacer(1, 4), tableau(entetes, lignes, [40, 30, 30]), Spacer(1, 10)]
+
+    if ex["lots"]:
+        for lot in ex["lots"]:
+            out.append(Paragraph(inline("**%s** — %s" % (lot[0], lot[1])), S["liste"],
+                                 bulletText="\u2022"))
+        classement = sorted(ex["lots"], key=lambda l: -float(l[2] or 0))
+        reponses.append("**%s**%s%s" % (
+            L["classement"], L["deux_points"],
+            "  >  ".join("%s (%s)" % (l[0], unite(chiffre(l[2]), "%")) for l in classement)))
+        for lot in classement:
+            if len(lot) > 3 and lot[3]:
+                reponses.append("- %s — %s" % (lot[0], lot[3]))
+
+    for it in ex["items"]:
+        if it["type"] == "qcm":
+            out.append(Paragraph(inline(it["question"]), S["corps"]))
+            for i, o in enumerate(it["options"]):
+                out.append(Paragraph(inline(o["texte"]), S["liste"],
+                                     bulletText="%s." % chr(97 + i)))
+            juste = [(i, o) for i, o in enumerate(it["options"]) if o["juste"]]
+            for i, o in juste:
+                reponses.append("**%s.** %s — %s" % (chr(97 + i), o["texte"], o["note"]))
+        else:
+            out.append(Paragraph(
+                inline("%s%s%s" % (it["label"], L["deux_points"], "\u2026\u2026\u2026\u2026")),
+                S["corps"]))
+            reponses.append("**%s**%s%s" % (
+                it["label"], L["deux_points"],
+                unite(chiffre(it["vise"]), it["suffixe"])
+                + ((" — " + it["note"]) if it["note"] else "")))
+
+    if ex["questions"]:
+        for i, q in enumerate(ex["questions"], 1):
+            out.append(Paragraph(inline(q["texte"]), S["liste"],
+                                 bulletText="%d." % i))
+            mot = L["vrai"] if q["vrai"] else L["faux"]
+            reponses.append("%d. **%s** — %s" % (i, mot, q["note"]))
+    elif ex["rangs"]:
+        if ex["fixe"]:
+            out.append(Paragraph(inline("**%s%s%s**%s" % (
+                ex["fixe"][0], L["deux_points"], ex["fixe"][1],
+                " (%s)" % ex["fixe"][2] if len(ex["fixe"]) > 2 else "")), S["corps"]))
+        entetes = [c["label"] for c in ex["colonnes"]]
+        vides = [[r[0]] + [""] * (len(entetes) - 1) for r in ex["rangs"]]
+        out += [Spacer(1, 4), tableau(entetes, vides), Spacer(1, 8)]
+        for r in ex["rangs"]:
+            valeurs = [unite(chiffre(v), ex["colonnes"][j + 1]["suffixe"])
+                       for j, v in enumerate(r[1:])]
+            reponses.append("**%s** — %s" % (r[0], ", ".join(valeurs)))
+
+    if reponses:
+        out += [Spacer(1, 6),
+                boite(L["reponses"], reponses, VERT, VERT_FOND, VERT),
+                Spacer(1, 12)]
+    return out
+
+
 def lire_blocs(chemin):
     with open(chemin, encoding="utf-8") as f:
         brut = f.read()
@@ -314,7 +525,7 @@ def lire_blocs(chemin):
         tag, reste = m.group(1), m.group(2)
         # Pour ces balises, la fin de la premiere ligne est un titre / une
         # etiquette : elle ne doit pas etre reprise dans le corps du bloc.
-        entete = {"MOD", "SEC", "SECX", "H2", "H3", "EX", "EXF", "COUV",
+        entete = {"MOD", "SEC", "SECX", "H2", "H3", "EX", "EXF", "EXO", "COUV",
                   "CASE", "ERR", "KEY", "WARN", "CARD", "TABLE"}
         corps = lignes[1:] if tag in entete else (
             ([reste] if reste.strip() else []) + lignes[1:])
@@ -439,6 +650,9 @@ def construire(blocs, story):
             story.append(Paragraph(inline(tete), ParagraphStyle(
                 "extitre", parent=S["chapitre"], spaceBefore=0, fontSize=15,
                 leading=20)))
+
+        elif tag == "EXO":
+            story.extend(exercice_papier(tete, corps))
 
         elif tag == "EXF":
             st = ParagraphStyle("exf", parent=S["sous_titre"], textColor=ENCRE,

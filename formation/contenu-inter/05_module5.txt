@@ -111,19 +111,43 @@ EX: Ce que tu risques vraiment
 EXF: Compétence évaluée
 Objectif 23 : calculer l'exposition cumulée d'un ensemble de positions ouvertes en tenant compte de leur corrélation et de leur sens.
 
-EXF: Consigne
-**Étape A.** Un portefeuille de quatre positions ouvertes t'est présenté. Calcule son exposition cumulée.
-**Étape B.** Un cinquième trade t'est proposé. Dis s'il passe la règle des 2 % et, sinon, à quelle taille il passerait.
-**Étape C.** Trois portefeuilles affichant tous « 1 % par position » te sont donnés. Classe-les du plus exposé au moins exposé.
+EXO: matrice | La matrice, en trois catégories
+CONSIGNE: Elle sert aux trois étapes. Trois catégories, jamais un coefficient — le chapitre 5.2 t'a donné tout ce qu'il faut pour t'en servir. Et rappelle-toi que la règle des sens prime sur elle.
+ACTIFS: EUR/USD | GBP/USD | AUD/USD | NZD/USD | XAU/USD | BTC/USD
+DEFAUT: faible
+BLOC: forte | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+CROISE: moyenne | XAU/USD | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+LEGENDE: forte | au-dessus de +0,7 | un seul groupe, les risques s'additionnent
+LEGENDE: moyenne | entre +0,3 et +0,7 | le second compte à moitié
+LEGENDE: faible | en dessous de +0,3 | additionne normalement
 
-EXF: Ce que la plateforme doit fournir
-- Un écran portefeuille listant quatre positions avec actif, **sens**, et risque en pourcentage. Le sens doit être aussi visible que le montant : c'est sur lui que porte le piège de l'exercice.
-- Une matrice de corrélation affichée **en trois couleurs** — au-dessus de +0,7, entre +0,3 et +0,7, en dessous — et non en coefficients numériques. L'exercice évalue l'application de la règle, pas la lecture d'un tableau de nombres.
-- Un champ de saisie pour l'exposition calculée, avec une tolérance de ±0,25 point.
-- Étape B : deux champs — « passe / ne passe pas » et « taille maximale acceptable ».
-- Étape C : trois portefeuilles à classer par glisser-déposer, affichant tous le même risque par position.
+EXO: portefeuille | Étape A — ton exposition cumulée
+CONSIGNE: Quatre positions sont ouvertes. Calcule ce que tu perds si elles touchent toutes leur stop dans le même mouvement de marché.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+CHAMP: Exposition cumulée | 1.5 | 0.25 | % | Le groupe dollar réunit EUR/USD, AUD/USD et GBP/USD. Mais le GBP/USD est **vendeur**, et dans un groupe fortement corrélé un sens opposé se retranche : 1 + 0,5 − 0,5 = 1 %. Le BTC/USD, faiblement corrélé, s'ajoute pour 0,5 %. Total : **1,5 %**. Additionner les quatre risques donne 2,5 % — c'est l'erreur la plus fréquente de cet exercice, et elle vient d'avoir appliqué les couleurs sans regarder la colonne « sens ».
 
-EXF: Correction commentée
-**Étape A.** Le piège est la position vendeuse. Un short GBP/USD au milieu de longs EUR/USD **réduit** l'exposition, alors que la matrice affiche une corrélation élevée entre les deux paires. Corrélation forte plus sens opposés égale exposition réduite. C'est l'erreur la plus fréquente de l'exercice, et elle vient d'appliquer la règle des couleurs sans regarder la colonne « sens ».
-**Étape B.** Le cinquième trade ne passe pas à 1 % et passe à 0,5 %. Répondre « ne passe pas » sans donner la taille est incomplet : la compétence évaluée est précisément de savoir à quelle taille il passerait, parce que c'est cette réponse-là qui te permet de prendre le trade au lieu d'y renoncer.
-**Étape C.** Les trois portefeuilles affichent le même risque par position et présentent des expositions réelles de **1 %, 2 % et 3,5 %**. Le classement est le seul résultat qui compte ici, et son enseignement tient en une phrase : l'affichage de ta plateforme ne répond pas à la question que tu dois te poser.
+EXO: portefeuille | Étape B — le cinquième trade
+CONSIGNE: Le même portefeuille, et un long NZD/USD à 1 % qui se présente. La huitième règle se vérifie avant l'ordre, jamais après.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+POS: NZD/USD | long | 1 | envisagé
+QCM: Ce trade passe-t-il la limite d'exposition cumulée de 2 % ?
+- Il passe : aucune position ne dépasse 1 %. | La limite ne porte pas sur une position, elle porte sur ce qui est ouvert en même temps. C'est exactement le trou décrit au chapitre 5.3.
+- > Il ne passe pas. | Le NZD/USD est corrélé au-dessus de +0,7 avec le reste du groupe dollar, et de même sens : le groupe passerait de 1 % à 2 %, et l'exposition totale à 2,5 %.
+- Il passe, parce que le short GBP/USD le compense. | Cette compensation est déjà comptée dans les 1,5 % de l'étape A. Elle ne se compte pas une seconde fois.
+CHAMP: Taille à laquelle il passerait | 0.5 | 0.1 | % | À 0,5 %, le groupe dollar monte à 1,5 % et l'exposition totale à 2 % pile. Répondre « il ne passe pas » sans donner cette taille est une réponse incomplète : c'est celle-ci qui te permet de prendre le trade au lieu d'y renoncer.
+
+EXO: classement | Étape C — trois portefeuilles, un seul affichage
+CONSIGNE: Les trois affichent « risque : 1 % par position », et ta plateforme a raison position par position. Classe-les du plus exposé au moins exposé.
+INDICE: Le nombre de positions ne dit rien de l'exposition. Regarde les sens d'abord, les groupes ensuite.
+LOT: Portefeuille A | long EUR/USD 1 % · long GBP/USD 1 % · long AUD/USD 1 % · long XAU/USD 1 % | 3.5 | Trois paris identiques contre le dollar, qui s'additionnent à 3 %, plus l'or qui compte à moitié pour 0,5 %.
+LOT: Portefeuille B | long EUR/USD 1 % · short GBP/USD 1 % · long BTC/USD 1 % | 1 | Le long et le short s'annulent presque entièrement à l'intérieur du groupe dollar. Reste le BTC, seul.
+LOT: Portefeuille C | long EUR/USD 1 % · long BTC/USD 1 % | 2 | Deux positions faiblement corrélées : les risques s'additionnent sans se renforcer.
+
+EXF: Ce que l'exercice démontre
+Le portefeuille le plus exposé est celui qui compte quatre lignes ; le moins exposé en compte trois. Le nombre de positions ne dit rien, et l'affichage de ta plateforme non plus : il répond avec exactitude à une question que tu ne te poses pas.

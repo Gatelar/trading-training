@@ -135,23 +135,26 @@ EX: The cost of starting
 EXF: Skill assessed
 Goals 1 and 2: explain what a price, a spread and a contract against the broker are; calculate the impact of a 1% market move at three levels of leverage.
 
-EXF: Instructions
-**Part A.** Six statements are shown to you one at a time. For each: true or false.
-**Part B.** Your capital is €1,000. For three levels of leverage, calculate the loss in euros and as a percentage of capital if the market falls 1%.
+EXO: vraifaux | Part A — eight statements
+CONSIGNE: One statement at a time, true or false. No going back: the correction appears after each answer, and above all it says why the wrong answer was tempting.
+Q: By buying EUR/USD, I own euros. | faux | You hold a contract against your broker. Tempting because the platform's vocabulary says "buy".
+Q: The spread is charged at entry, before the market has moved at all. | vrai | You buy at the high price and would sell back at the low one: the gap is paid the second the position opens. Every trade therefore starts at a loss.
+Q: If the market does not move, I lose nothing. | faux | The spread is taken at entry, the financing charge every night.
+Q: The broker wins when I lose. | faux | False in the general case, and this is the one most often got wrong. The broker is paid for activity: commissions, spread, overnight charges. Your result concerns him only indirectly.
+Q: Fees explain most of clients' losses. | faux | 14.2% according to the AMF. Tempting because it is the most comfortable explanation.
+Q: The median client's loss is far smaller than the average loss. | vrai | €1,843 against €10,887. The average is dragged by a few disasters; the median describes the ordinary client, the one you are most likely to be.
+Q: The most experienced clients lose markedly less. | faux | 87.56% losing among clients active four years running.
+Q: Leverage improves my chances of being right. | faux | It acts on size alone, never on probability.
 
-EXF: What the platform must provide
-- A screen with no chart. This exercise must contain no market data at all: it is about mechanisms, not about reading.
-- Part A: six true/false cards shown in sequence, no going back, with the correction displayed after each answer.
-- Part B: a three-row table (leverage ×5, ×30, ×100) and two numeric input columns — loss in €, loss in %. Validation with a tolerance of ±€1 and ±0.5 points.
-- The €1,000 capital is shown at all times in a top bar, and cannot be edited.
+EXO: grille | Part B — three levels of leverage
+CONSIGNE: Your capital is €1,000, and the market falls 1%. For each level of leverage, calculate the loss in euros, then what it represents as a percentage of capital.
+FIXE: Capital | €1,000 | fixed
+COL: Leverage
+COL: Loss in € | 1 | €
+COL: Loss in % | 0.5 | %
+ROW: ×5 | 50 | 5
+ROW: ×30 | 300 | 30
+ROW: ×100 | 1000 | 100
 
-EXF: Worked correction
-**Part A.** The six statements and their answers:
-- *"By buying EUR/USD, I own euros."* — False. You hold a contract against your broker. Tempting because the platform's vocabulary says "buy".
-- *"If the market does not move, I lose nothing."* — False. The spread is taken at entry, the financing charge every night.
-- *"The broker wins when I lose."* — False in the general case, and this is the one most often got wrong. The broker is paid for activity: commissions, spread, overnight charges. Your result concerns him only indirectly.
-- *"Fees explain most of clients' losses."* — False: 14.2% according to the AMF. Tempting because it is the most comfortable explanation.
-- *"The most experienced clients lose markedly less."* — False. 87.56% losing among clients active four years running.
-- *"Leverage improves my chances of being right."* — False. It acts on size alone, never on probability.
-**Part B.** Leverage ×5: €50, or 5%. Leverage ×30: €300, or 30%. Leverage ×100: €1,000, or 100%.
+EXF: What the third row means
 The third row is the only one that really counts. Plenty of users compute it correctly and draw exactly the wrong conclusion: "so I just need to not be wrong". No. It means that an **ordinary day** on EUR/USD — no crash, no surprise — is enough to wipe out the account. The question is not how to avoid being wrong. It is how to survive the normal.

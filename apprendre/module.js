@@ -120,51 +120,89 @@
         dans.appendChild(wrap);
     }
 
-    function rendre(corps, dans) {
+    // Le conteneur dépliable qui recueille ce qui suit les exercices
+    // interactifs : leur correction. Elle reste atteignable sans avoir fini —
+    // on n'enferme pas du contenu payant derrière un score — mais elle ne
+    // s'affiche plus d'entrée, sinon l'exercice n'en est plus un.
+    function repliable(dans) {
+        var boite = document.createElement('div');
+        boite.className = 'mo-ex-reveal';
+        var corps = document.createElement('div');
+        corps.hidden = true;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'exo-rejouer';
+        b.textContent = tt('ex.showFix', 'Voir la correction') + ' ▾';
+        b.addEventListener('click', function () {
+            corps.hidden = !corps.hidden;
+            b.textContent = (corps.hidden
+                ? tt('ex.showFix', 'Voir la correction') + ' ▾'
+                : tt('ex.hideFix', 'Masquer la correction') + ' ▴');
+        });
+        boite.appendChild(b);
+        boite.appendChild(corps);
+        dans.appendChild(boite);
+        return corps;
+    }
+
+    // opts.exercice : ce corps est celui d'un chapitre « EX ». opts.cle
+    // identifie l'exercice d'un module à l'autre, pour la reprise locale.
+    function rendre(corps, dans, opts) {
         // Le contenu poussé depuis Windows arrive avec des CRLF, et un retour
-        // chariot en fin de ligne empêche le $ de l'expression ci-dessous de
+        // chariot en fin de ligne empêche le $ des expressions ci-dessous de
         // coller : le balisage s'afficherait tel quel (« P: … »). On normalise.
-        corps.replace(/\r\n?/g, '\n').split(/\n\s*\n/).forEach(function (bloc) {
+        var source = corps.replace(/\r\n?/g, '\n');
+        var interactif = !!(opts && opts.exercice) && /(^|\n)EXO:/.test(source);
+        var apresExo = false, repli = null, rangExo = 0;
+
+        // Tant qu'aucun exercice n'a été posé, tout va dans le flux normal.
+        function ou() {
+            if (!interactif || !apresExo) return dans;
+            if (!repli) repli = repliable(dans);
+            return repli;
+        }
+
+        source.split(/\n\s*\n/).forEach(function (bloc) {
             var lignes = bloc.split('\n').filter(function (l) { return l.trim(); });
             if (!lignes.length) return;
             var m = lignes[0].match(/^([A-Z0-9_]+):\s?(.*)$/);
-            if (!m) { para(lignes.join(' '), dans); return; }
+            if (!m) { para(lignes.join(' '), ou()); return; }
 
             var tag = m[1], tete = m[2], reste = lignes.slice(1);
             var texte = (tete ? [tete] : []).concat(reste).join(' ');
 
             switch (tag) {
                 case 'P':
-                    para(texte, dans);
+                    para(texte, ou());
                     break;
                 case 'NOTE':
-                    encadre('note', '', [texte], dans);
+                    encadre('note', '', [texte], ou());
                     break;
                 case 'HOOK':
                     var h = document.createElement('div');
                     h.className = 'mo-hook';
                     para(reste.join(' ') || tete, h);
-                    dans.appendChild(h);
+                    ou().appendChild(h);
                     break;
                 case 'H3':
                     var h3 = document.createElement('h3');
                     h3.textContent = tete;
-                    dans.appendChild(h3);
+                    ou().appendChild(h3);
                     break;
                 case 'CASE':
-                    encadre('case', tete || tt('mo.case', 'Cas chiffré'), reste, dans);
+                    encadre('case', tete || tt('mo.case', 'Cas chiffré'), reste, ou());
                     break;
                 case 'ERR':
-                    encadre('err', tete || tt('mo.err', "L'erreur classique"), reste, dans);
+                    encadre('err', tete || tt('mo.err', "L'erreur classique"), reste, ou());
                     break;
                 case 'KEY':
-                    encadre('key', tete || tt('mo.key', 'À retenir'), reste, dans);
+                    encadre('key', tete || tt('mo.key', 'À retenir'), reste, ou());
                     break;
                 case 'CARD':
-                    encadre('card', tete, reste, dans);
+                    encadre('card', tete, reste, ou());
                     break;
                 case 'WARN':
-                    encadre('warn', tete || tt('mo.warn', 'Avertissement'), reste, dans);
+                    encadre('warn', tete || tt('mo.warn', 'Avertissement'), reste, ou());
                     break;
                 case 'UL':
                 case 'OL':
@@ -174,33 +212,47 @@
                         li.innerHTML = enligne(l.replace(/^-\s*/, ''));
                         liste.appendChild(li);
                     });
-                    dans.appendChild(liste);
+                    ou().appendChild(liste);
                     break;
                 case 'TABLE':
-                    tableau(tete, reste, dans);
+                    tableau(tete, reste, ou());
+                    break;
+                case 'EXO':
+                    // L'exercice lui-même : rendu par exercice.js, qui reçoit
+                    // de quoi formater et traduire plutôt que de le refaire.
+                    if (window.ttExercice) {
+                        rangExo++;
+                        window.ttExercice.bloc(tete, reste, dans, {
+                            enligne: enligne,
+                            tt: tt,
+                            lang: langue(),
+                            cle: 'ts_exo_' + ((opts && opts.cle) || 'x') + '_' + rangExo,
+                        });
+                        apresExo = true;
+                    }
                     break;
                 case 'EXF':
                     var f = document.createElement('p');
                     f.className = 'mo-ex-field';
                     f.textContent = tete;
-                    dans.appendChild(f);
+                    ou().appendChild(f);
                     reste.forEach(function (l) {
                         if (l.indexOf('- ') === 0) {
-                            var ul2 = dans.lastElementChild;
+                            var ul2 = ou().lastElementChild;
                             if (!ul2 || ul2.tagName !== 'UL') {
                                 ul2 = document.createElement('ul');
-                                dans.appendChild(ul2);
+                                ou().appendChild(ul2);
                             }
                             var li2 = document.createElement('li');
                             li2.innerHTML = enligne(l.slice(2));
                             ul2.appendChild(li2);
                         } else {
-                            para(l, dans);
+                            para(l, ou());
                         }
                     });
                     break;
                 default:
-                    para(texte, dans);
+                    para(texte, ou());
             }
         });
     }
@@ -374,8 +426,10 @@
 
         var b = document.getElementById('moBody');
         b.textContent = '';
+        var rangEx = 0;
         chapitres().forEach(function (c) {
             if (c.numero === 'EX') {
+                rangEx++;
                 var ex = document.createElement('section');
                 ex.className = 'mo-ex';
                 var k = document.createElement('p');
@@ -384,7 +438,10 @@
                 var h = document.createElement('h2');
                 h.textContent = c.titre;
                 ex.appendChild(k); ex.appendChild(h);
-                rendre(c.corps, ex);
+                rendre(c.corps, ex, {
+                    exercice: true,
+                    cle: PARCOURS.slug + '_' + NUM + '_' + rangEx,
+                });
                 b.appendChild(ex);
                 return;
             }

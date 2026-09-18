@@ -1,4 +1,4 @@
--- ============ CONTENU DES CHAPITRES ============
+﻿-- ============ CONTENU DES CHAPITRES ============
 -- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
@@ -130,25 +130,28 @@ insert into public.formation_chapitres (parcours, langue, module, numero, titre,
   ('debutant', 'fr', 1, 'EX', 'Le coût de départ', 'EXF: Compétence évaluée
 Objectifs 1 et 2 : expliquer ce qu''est un prix, un spread et un contrat contre le courtier ; calculer l''impact d''un mouvement de 1 % du marché pour trois niveaux de levier.
 
-EXF: Consigne
-**Partie A.** Six affirmations te sont présentées une par une. Pour chacune : vrai ou faux.
-**Partie B.** Ton capital est de 1 000 €. Pour trois niveaux de levier, calcule la perte en euros et en pourcentage du capital si le marché baisse de 1 %.
+EXO: vraifaux | Partie A — huit affirmations
+CONSIGNE: Une affirmation à la fois, vrai ou faux. Pas de retour en arrière : la correction s''affiche après chaque réponse, et elle dit surtout pourquoi la réponse fausse était tentante.
+Q: En achetant EUR/USD, je possède des euros. | faux | Tu détiens un contrat contre ton courtier. Tentant parce que le vocabulaire de la plateforme dit « acheter ».
+Q: Le spread est prélevé dès l''ouverture, avant que le marché ait bougé. | vrai | Tu achètes au prix haut et tu revendrais au prix bas : l''écart est payé à la seconde où la position s''ouvre. Chaque trade démarre donc en perte.
+Q: Si le marché ne bouge pas, je ne perds rien. | faux | Le spread est prélevé à l''ouverture, les frais de report chaque nuit.
+Q: Le courtier gagne quand je perds. | faux | Faux dans le cas général, et c''est la réponse la plus souvent ratée. Le courtier est rémunéré à l''activité : commissions, spread, report. Ton résultat ne le concerne qu''indirectement.
+Q: Les frais expliquent la plus grande partie des pertes des clients. | faux | 14,2 % selon l''AMF. Tentant parce que c''est l''explication la plus confortable.
+Q: La perte du client médian est bien plus petite que la perte moyenne. | vrai | 1 843 € contre 10 887 €. La moyenne est tirée par quelques désastres ; la médiane décrit le client ordinaire, celui que tu as le plus de chances d''être.
+Q: Les clients les plus expérimentés perdent nettement moins. | faux | 87,56 % de perdants chez les clients actifs quatre ans d''affilée.
+Q: Le levier augmente mes chances d''avoir raison. | faux | Il n''agit que sur l''amplitude, jamais sur la probabilité.
 
-EXF: Ce que la plateforme doit fournir
-- Écran sans graphique. Cet exercice ne doit contenir aucune donnée de marché : il porte sur des mécanismes, pas sur une lecture.
-- Partie A : six cartes vrai/faux présentées séquentiellement, sans retour en arrière, avec affichage de la correction après chaque réponse.
-- Partie B : un tableau à trois lignes (levier ×5, ×30, ×100) et deux colonnes de saisie numérique — perte en €, perte en %. Validation avec une tolérance de ±1 € et ±0,5 point.
-- Le capital de 1 000 € est affiché en permanence dans un bandeau supérieur, non modifiable.
+EXO: grille | Partie B — trois niveaux de levier
+CONSIGNE: Ton capital est de 1 000 €, et le marché baisse de 1 %. Pour chaque levier, calcule la perte en euros, puis ce qu''elle représente en pourcentage du capital.
+FIXE: Capital | 1 000 € | non modifiable
+COL: Levier
+COL: Perte en € | 1 | €
+COL: Perte en % | 0.5 | %
+ROW: ×5 | 50 | 5
+ROW: ×30 | 300 | 30
+ROW: ×100 | 1000 | 100
 
-EXF: Correction commentée
-**Partie A.** Les six affirmations et leur réponse :
-- *« En achetant EUR/USD, je possède des euros. »* — Faux. Tu détiens un contrat contre ton courtier. Tentant parce que le vocabulaire de la plateforme dit « acheter ».
-- *« Si le marché ne bouge pas, je ne perds rien. »* — Faux. Le spread est prélevé à l''ouverture, les frais de report chaque nuit.
-- *« Le courtier gagne quand je perds. »* — Faux dans le cas général, et c''est la réponse la plus souvent ratée. Le courtier est rémunéré à l''activité : commissions, spread, report. Ton résultat ne le concerne qu''indirectement.
-- *« Les frais expliquent la plus grande partie des pertes des clients. »* — Faux : 14,2 % selon l''AMF. Tentant parce que c''est l''explication la plus confortable.
-- *« Les clients les plus expérimentés perdent nettement moins. »* — Faux. 87,56 % de perdants chez les clients actifs quatre ans d''affilée.
-- *« Le levier augmente mes chances d''avoir raison. »* — Faux. Il n''agit que sur l''amplitude, jamais sur la probabilité.
-**Partie B.** Levier ×5 : 50 €, soit 5 %. Levier ×30 : 300 €, soit 30 %. Levier ×100 : 1 000 €, soit 100 %.
+EXF: Ce que la troisième ligne veut dire
 La troisième ligne est la seule qui compte vraiment. Beaucoup d''utilisateurs la calculent juste et en tirent la conclusion inverse de la bonne : « il suffit de ne pas se tromper ». Non. Elle signifie qu''une **journée ordinaire** sur EUR/USD — pas un krach, pas une surprise — suffit à effacer le compte. La question n''est pas d''éviter l''erreur. Elle est de survivre à la normale.', 6);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('debutant', 'fr', 2, '2.1', 'La seule question qui compte', 'HOOK:
@@ -1528,22 +1531,46 @@ insert into public.formation_chapitres (parcours, langue, module, numero, titre,
   ('intermediaire', 'fr', 5, 'EX', 'Ce que tu risques vraiment', 'EXF: Compétence évaluée
 Objectif 23 : calculer l''exposition cumulée d''un ensemble de positions ouvertes en tenant compte de leur corrélation et de leur sens.
 
-EXF: Consigne
-**Étape A.** Un portefeuille de quatre positions ouvertes t''est présenté. Calcule son exposition cumulée.
-**Étape B.** Un cinquième trade t''est proposé. Dis s''il passe la règle des 2 % et, sinon, à quelle taille il passerait.
-**Étape C.** Trois portefeuilles affichant tous « 1 % par position » te sont donnés. Classe-les du plus exposé au moins exposé.
+EXO: matrice | La matrice, en trois catégories
+CONSIGNE: Elle sert aux trois étapes. Trois catégories, jamais un coefficient — le chapitre 5.2 t''a donné tout ce qu''il faut pour t''en servir. Et rappelle-toi que la règle des sens prime sur elle.
+ACTIFS: EUR/USD | GBP/USD | AUD/USD | NZD/USD | XAU/USD | BTC/USD
+DEFAUT: faible
+BLOC: forte | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+CROISE: moyenne | XAU/USD | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+LEGENDE: forte | au-dessus de +0,7 | un seul groupe, les risques s''additionnent
+LEGENDE: moyenne | entre +0,3 et +0,7 | le second compte à moitié
+LEGENDE: faible | en dessous de +0,3 | additionne normalement
 
-EXF: Ce que la plateforme doit fournir
-- Un écran portefeuille listant quatre positions avec actif, **sens**, et risque en pourcentage. Le sens doit être aussi visible que le montant : c''est sur lui que porte le piège de l''exercice.
-- Une matrice de corrélation affichée **en trois couleurs** — au-dessus de +0,7, entre +0,3 et +0,7, en dessous — et non en coefficients numériques. L''exercice évalue l''application de la règle, pas la lecture d''un tableau de nombres.
-- Un champ de saisie pour l''exposition calculée, avec une tolérance de ±0,25 point.
-- Étape B : deux champs — « passe / ne passe pas » et « taille maximale acceptable ».
-- Étape C : trois portefeuilles à classer par glisser-déposer, affichant tous le même risque par position.
+EXO: portefeuille | Étape A — ton exposition cumulée
+CONSIGNE: Quatre positions sont ouvertes. Calcule ce que tu perds si elles touchent toutes leur stop dans le même mouvement de marché.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+CHAMP: Exposition cumulée | 1.5 | 0.25 | % | Le groupe dollar réunit EUR/USD, AUD/USD et GBP/USD. Mais le GBP/USD est **vendeur**, et dans un groupe fortement corrélé un sens opposé se retranche : 1 + 0,5 − 0,5 = 1 %. Le BTC/USD, faiblement corrélé, s''ajoute pour 0,5 %. Total : **1,5 %**. Additionner les quatre risques donne 2,5 % — c''est l''erreur la plus fréquente de cet exercice, et elle vient d''avoir appliqué les couleurs sans regarder la colonne « sens ».
 
-EXF: Correction commentée
-**Étape A.** Le piège est la position vendeuse. Un short GBP/USD au milieu de longs EUR/USD **réduit** l''exposition, alors que la matrice affiche une corrélation élevée entre les deux paires. Corrélation forte plus sens opposés égale exposition réduite. C''est l''erreur la plus fréquente de l''exercice, et elle vient d''appliquer la règle des couleurs sans regarder la colonne « sens ».
-**Étape B.** Le cinquième trade ne passe pas à 1 % et passe à 0,5 %. Répondre « ne passe pas » sans donner la taille est incomplet : la compétence évaluée est précisément de savoir à quelle taille il passerait, parce que c''est cette réponse-là qui te permet de prendre le trade au lieu d''y renoncer.
-**Étape C.** Les trois portefeuilles affichent le même risque par position et présentent des expositions réelles de **1 %, 2 % et 3,5 %**. Le classement est le seul résultat qui compte ici, et son enseignement tient en une phrase : l''affichage de ta plateforme ne répond pas à la question que tu dois te poser.', 28);
+EXO: portefeuille | Étape B — le cinquième trade
+CONSIGNE: Le même portefeuille, et un long NZD/USD à 1 % qui se présente. La huitième règle se vérifie avant l''ordre, jamais après.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+POS: NZD/USD | long | 1 | envisagé
+QCM: Ce trade passe-t-il la limite d''exposition cumulée de 2 % ?
+- Il passe : aucune position ne dépasse 1 %. | La limite ne porte pas sur une position, elle porte sur ce qui est ouvert en même temps. C''est exactement le trou décrit au chapitre 5.3.
+- > Il ne passe pas. | Le NZD/USD est corrélé au-dessus de +0,7 avec le reste du groupe dollar, et de même sens : le groupe passerait de 1 % à 2 %, et l''exposition totale à 2,5 %.
+- Il passe, parce que le short GBP/USD le compense. | Cette compensation est déjà comptée dans les 1,5 % de l''étape A. Elle ne se compte pas une seconde fois.
+CHAMP: Taille à laquelle il passerait | 0.5 | 0.1 | % | À 0,5 %, le groupe dollar monte à 1,5 % et l''exposition totale à 2 % pile. Répondre « il ne passe pas » sans donner cette taille est une réponse incomplète : c''est celle-ci qui te permet de prendre le trade au lieu d''y renoncer.
+
+EXO: classement | Étape C — trois portefeuilles, un seul affichage
+CONSIGNE: Les trois affichent « risque : 1 % par position », et ta plateforme a raison position par position. Classe-les du plus exposé au moins exposé.
+INDICE: Le nombre de positions ne dit rien de l''exposition. Regarde les sens d''abord, les groupes ensuite.
+LOT: Portefeuille A | long EUR/USD 1 % · long GBP/USD 1 % · long AUD/USD 1 % · long XAU/USD 1 % | 3.5 | Trois paris identiques contre le dollar, qui s''additionnent à 3 %, plus l''or qui compte à moitié pour 0,5 %.
+LOT: Portefeuille B | long EUR/USD 1 % · short GBP/USD 1 % · long BTC/USD 1 % | 1 | Le long et le short s''annulent presque entièrement à l''intérieur du groupe dollar. Reste le BTC, seul.
+LOT: Portefeuille C | long EUR/USD 1 % · long BTC/USD 1 % | 2 | Deux positions faiblement corrélées : les risques s''additionnent sans se renforcer.
+
+EXF: Ce que l''exercice démontre
+Le portefeuille le plus exposé est celui qui compte quatre lignes ; le moins exposé en compte trois. Le nombre de positions ne dit rien, et l''affichage de ta plateforme non plus : il répond avec exactitude à une question que tu ne te poses pas.', 28);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'fr', 6, '6.1', 'Ce qu''est un système', 'HOOK:
 Un système tient sur une page. Si le tien en demande cinq, ce n''est pas un système : c''est une collection d''exceptions, et tu ne pourras jamais la tester.
@@ -2544,25 +2571,28 @@ insert into public.formation_chapitres (parcours, langue, module, numero, titre,
   ('debutant', 'en', 1, 'EX', 'The cost of starting', 'EXF: Skill assessed
 Goals 1 and 2: explain what a price, a spread and a contract against the broker are; calculate the impact of a 1% market move at three levels of leverage.
 
-EXF: Instructions
-**Part A.** Six statements are shown to you one at a time. For each: true or false.
-**Part B.** Your capital is €1,000. For three levels of leverage, calculate the loss in euros and as a percentage of capital if the market falls 1%.
+EXO: vraifaux | Part A — eight statements
+CONSIGNE: One statement at a time, true or false. No going back: the correction appears after each answer, and above all it says why the wrong answer was tempting.
+Q: By buying EUR/USD, I own euros. | faux | You hold a contract against your broker. Tempting because the platform''s vocabulary says "buy".
+Q: The spread is charged at entry, before the market has moved at all. | vrai | You buy at the high price and would sell back at the low one: the gap is paid the second the position opens. Every trade therefore starts at a loss.
+Q: If the market does not move, I lose nothing. | faux | The spread is taken at entry, the financing charge every night.
+Q: The broker wins when I lose. | faux | False in the general case, and this is the one most often got wrong. The broker is paid for activity: commissions, spread, overnight charges. Your result concerns him only indirectly.
+Q: Fees explain most of clients'' losses. | faux | 14.2% according to the AMF. Tempting because it is the most comfortable explanation.
+Q: The median client''s loss is far smaller than the average loss. | vrai | €1,843 against €10,887. The average is dragged by a few disasters; the median describes the ordinary client, the one you are most likely to be.
+Q: The most experienced clients lose markedly less. | faux | 87.56% losing among clients active four years running.
+Q: Leverage improves my chances of being right. | faux | It acts on size alone, never on probability.
 
-EXF: What the platform must provide
-- A screen with no chart. This exercise must contain no market data at all: it is about mechanisms, not about reading.
-- Part A: six true/false cards shown in sequence, no going back, with the correction displayed after each answer.
-- Part B: a three-row table (leverage ×5, ×30, ×100) and two numeric input columns — loss in €, loss in %. Validation with a tolerance of ±€1 and ±0.5 points.
-- The €1,000 capital is shown at all times in a top bar, and cannot be edited.
+EXO: grille | Part B — three levels of leverage
+CONSIGNE: Your capital is €1,000, and the market falls 1%. For each level of leverage, calculate the loss in euros, then what it represents as a percentage of capital.
+FIXE: Capital | €1,000 | fixed
+COL: Leverage
+COL: Loss in € | 1 | €
+COL: Loss in % | 0.5 | %
+ROW: ×5 | 50 | 5
+ROW: ×30 | 300 | 30
+ROW: ×100 | 1000 | 100
 
-EXF: Worked correction
-**Part A.** The six statements and their answers:
-- *"By buying EUR/USD, I own euros."* — False. You hold a contract against your broker. Tempting because the platform''s vocabulary says "buy".
-- *"If the market does not move, I lose nothing."* — False. The spread is taken at entry, the financing charge every night.
-- *"The broker wins when I lose."* — False in the general case, and this is the one most often got wrong. The broker is paid for activity: commissions, spread, overnight charges. Your result concerns him only indirectly.
-- *"Fees explain most of clients'' losses."* — False: 14.2% according to the AMF. Tempting because it is the most comfortable explanation.
-- *"The most experienced clients lose markedly less."* — False. 87.56% losing among clients active four years running.
-- *"Leverage improves my chances of being right."* — False. It acts on size alone, never on probability.
-**Part B.** Leverage ×5: €50, or 5%. Leverage ×30: €300, or 30%. Leverage ×100: €1,000, or 100%.
+EXF: What the third row means
 The third row is the only one that really counts. Plenty of users compute it correctly and draw exactly the wrong conclusion: "so I just need to not be wrong". No. It means that an **ordinary day** on EUR/USD — no crash, no surprise — is enough to wipe out the account. The question is not how to avoid being wrong. It is how to survive the normal.', 6);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('debutant', 'en', 2, '2.1', 'The only question that matters', 'HOOK:
@@ -3942,22 +3972,46 @@ insert into public.formation_chapitres (parcours, langue, module, numero, titre,
   ('intermediaire', 'en', 5, 'EX', 'What you are actually risking', 'EXF: Skill assessed
 Goal 23: calculate the cumulative exposure of a set of open positions, taking their correlation and their direction into account.
 
-EXF: Instructions
-**Step A.** You are shown a portfolio of four open positions. Calculate its cumulative exposure.
-**Step B.** A fifth trade is offered. Say whether it passes the 2% rule and, if not, at what size it would.
-**Step C.** You are given three portfolios all displaying "1% per position". Rank them from most to least exposed.
+EXO: matrice | The matrix, in three categories
+CONSIGNE: It serves all three steps. Three categories, never a coefficient — chapter 5.2 gave you everything you need to use it. And remember that the direction rule overrides it.
+ACTIFS: EUR/USD | GBP/USD | AUD/USD | NZD/USD | XAU/USD | BTC/USD
+DEFAUT: faible
+BLOC: forte | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+CROISE: moyenne | XAU/USD | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+LEGENDE: forte | above +0.7 | one single group, the risks add up
+LEGENDE: moyenne | between +0.3 and +0.7 | the second counts half
+LEGENDE: faible | below +0.3 | add normally
 
-EXF: What the platform must provide
-- A portfolio screen listing four positions with asset, **direction**, and risk as a percentage. The direction must be as visible as the amount: that is where the exercise''s trap lies.
-- A correlation matrix displayed **in three colours** — above +0.7, between +0.3 and +0.7, below — and not as numerical coefficients. The exercise assesses applying the rule, not reading a table of numbers.
-- An input field for the calculated exposure, with a tolerance of ±0.25 points.
-- Step B: two fields — "passes / does not pass" and "maximum acceptable size".
-- Step C: three portfolios to rank by drag and drop, all displaying the same risk per position.
+EXO: portefeuille | Step A — your cumulative exposure
+CONSIGNE: Four positions are open. Calculate what you lose if they all hit their stop in the same market move.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+CHAMP: Cumulative exposure | 1.5 | 0.25 | % | The dollar group holds EUR/USD, AUD/USD and GBP/USD. But GBP/USD is **short**, and inside a strongly correlated group an opposite direction subtracts: 1 + 0.5 − 0.5 = 1%. BTC/USD, weakly correlated, adds 0.5%. Total: **1.5%**. Adding the four risks gives 2.5% — the most frequent error in this exercise, and it comes from applying the colours without looking at the "direction" column.
 
-EXF: Worked correction
-**Step A.** The trap is the short position. A short GBP/USD in among long EUR/USD **reduces** exposure, even though the matrix shows a high correlation between the two pairs. Strong correlation plus opposite directions equals reduced exposure. It is the most frequent error in the exercise, and it comes from applying the colour rule without looking at the "direction" column.
-**Step B.** The fifth trade does not pass at 1% and does pass at 0.5%. Answering "does not pass" without giving the size is incomplete: the skill assessed is precisely knowing what size it would pass at, because that is the answer that lets you take the trade instead of giving it up.
-**Step C.** The three portfolios display the same risk per position and have real exposures of **1%, 2% and 3.5%**. The ranking is the only result that matters here, and its lesson fits in one sentence: your platform''s display does not answer the question you have to ask.', 28);
+EXO: portefeuille | Step B — the fifth trade
+CONSIGNE: The same portfolio, and a long NZD/USD at 1% presenting itself. The eighth rule is checked before the order, never after.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+POS: NZD/USD | long | 1 | considered
+QCM: Does this trade pass the 2% cumulative exposure limit?
+- It passes: no position goes above 1%. | The limit is not about one position, it is about what is open at the same time. That is exactly the gap described in chapter 5.3.
+- > It does not pass. | NZD/USD is correlated above +0.7 with the rest of the dollar group, and in the same direction: the group would go from 1% to 2%, and total exposure to 2.5%.
+- It passes, because the short GBP/USD offsets it. | That offset is already counted in the 1.5% of step A. It is not counted a second time.
+CHAMP: Size at which it would pass | 0.5 | 0.1 | % | At 0.5%, the dollar group rises to 1.5% and total exposure to exactly 2%. Answering "it does not pass" without giving that size is an incomplete answer: this is the one that lets you take the trade instead of giving it up.
+
+EXO: classement | Step C — three portfolios, one single display
+CONSIGNE: All three display "risk: 1% per position", and your platform is right position by position. Rank them from most to least exposed.
+INDICE: The number of positions says nothing about exposure. Look at the directions first, the groups second.
+LOT: Portfolio A | long EUR/USD 1% · long GBP/USD 1% · long AUD/USD 1% · long XAU/USD 1% | 3.5 | Three identical bets against the dollar, adding up to 3%, plus gold counting half for 0.5%.
+LOT: Portfolio B | long EUR/USD 1% · short GBP/USD 1% · long BTC/USD 1% | 1 | The long and the short cancel almost entirely inside the dollar group. BTC is left on its own.
+LOT: Portfolio C | long EUR/USD 1% · long BTC/USD 1% | 2 | Two weakly correlated positions: the risks add up without reinforcing each other.
+
+EXF: What the exercise demonstrates
+The most exposed portfolio is the one with four lines; the least exposed has three. The number of positions says nothing, and neither does your platform''s display: it answers, accurately, a question you are not asking.', 28);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'en', 6, '6.1', 'What a system is', 'HOOK:
 A system fits on one page. If yours takes five, it is not a system: it is a collection of exceptions, and you will never be able to test it.

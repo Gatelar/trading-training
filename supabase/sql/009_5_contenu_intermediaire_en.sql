@@ -1,4 +1,4 @@
--- ============ CONTENU DES CHAPITRES ============
+﻿-- ============ CONTENU DES CHAPITRES ============
 -- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
@@ -665,22 +665,46 @@ insert into public.formation_chapitres (parcours, langue, module, numero, titre,
   ('intermediaire', 'en', 5, 'EX', 'What you are actually risking', 'EXF: Skill assessed
 Goal 23: calculate the cumulative exposure of a set of open positions, taking their correlation and their direction into account.
 
-EXF: Instructions
-**Step A.** You are shown a portfolio of four open positions. Calculate its cumulative exposure.
-**Step B.** A fifth trade is offered. Say whether it passes the 2% rule and, if not, at what size it would.
-**Step C.** You are given three portfolios all displaying "1% per position". Rank them from most to least exposed.
+EXO: matrice | The matrix, in three categories
+CONSIGNE: It serves all three steps. Three categories, never a coefficient — chapter 5.2 gave you everything you need to use it. And remember that the direction rule overrides it.
+ACTIFS: EUR/USD | GBP/USD | AUD/USD | NZD/USD | XAU/USD | BTC/USD
+DEFAUT: faible
+BLOC: forte | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+CROISE: moyenne | XAU/USD | EUR/USD | GBP/USD | AUD/USD | NZD/USD
+LEGENDE: forte | above +0.7 | one single group, the risks add up
+LEGENDE: moyenne | between +0.3 and +0.7 | the second counts half
+LEGENDE: faible | below +0.3 | add normally
 
-EXF: What the platform must provide
-- A portfolio screen listing four positions with asset, **direction**, and risk as a percentage. The direction must be as visible as the amount: that is where the exercise''s trap lies.
-- A correlation matrix displayed **in three colours** — above +0.7, between +0.3 and +0.7, below — and not as numerical coefficients. The exercise assesses applying the rule, not reading a table of numbers.
-- An input field for the calculated exposure, with a tolerance of ±0.25 points.
-- Step B: two fields — "passes / does not pass" and "maximum acceptable size".
-- Step C: three portfolios to rank by drag and drop, all displaying the same risk per position.
+EXO: portefeuille | Step A — your cumulative exposure
+CONSIGNE: Four positions are open. Calculate what you lose if they all hit their stop in the same market move.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+CHAMP: Cumulative exposure | 1.5 | 0.25 | % | The dollar group holds EUR/USD, AUD/USD and GBP/USD. But GBP/USD is **short**, and inside a strongly correlated group an opposite direction subtracts: 1 + 0.5 − 0.5 = 1%. BTC/USD, weakly correlated, adds 0.5%. Total: **1.5%**. Adding the four risks gives 2.5% — the most frequent error in this exercise, and it comes from applying the colours without looking at the "direction" column.
 
-EXF: Worked correction
-**Step A.** The trap is the short position. A short GBP/USD in among long EUR/USD **reduces** exposure, even though the matrix shows a high correlation between the two pairs. Strong correlation plus opposite directions equals reduced exposure. It is the most frequent error in the exercise, and it comes from applying the colour rule without looking at the "direction" column.
-**Step B.** The fifth trade does not pass at 1% and does pass at 0.5%. Answering "does not pass" without giving the size is incomplete: the skill assessed is precisely knowing what size it would pass at, because that is the answer that lets you take the trade instead of giving it up.
-**Step C.** The three portfolios display the same risk per position and have real exposures of **1%, 2% and 3.5%**. The ranking is the only result that matters here, and its lesson fits in one sentence: your platform''s display does not answer the question you have to ask.', 28);
+EXO: portefeuille | Step B — the fifth trade
+CONSIGNE: The same portfolio, and a long NZD/USD at 1% presenting itself. The eighth rule is checked before the order, never after.
+POS: EUR/USD | long | 1
+POS: AUD/USD | long | 0.5
+POS: GBP/USD | short | 0.5
+POS: BTC/USD | long | 0.5
+POS: NZD/USD | long | 1 | considered
+QCM: Does this trade pass the 2% cumulative exposure limit?
+- It passes: no position goes above 1%. | The limit is not about one position, it is about what is open at the same time. That is exactly the gap described in chapter 5.3.
+- > It does not pass. | NZD/USD is correlated above +0.7 with the rest of the dollar group, and in the same direction: the group would go from 1% to 2%, and total exposure to 2.5%.
+- It passes, because the short GBP/USD offsets it. | That offset is already counted in the 1.5% of step A. It is not counted a second time.
+CHAMP: Size at which it would pass | 0.5 | 0.1 | % | At 0.5%, the dollar group rises to 1.5% and total exposure to exactly 2%. Answering "it does not pass" without giving that size is an incomplete answer: this is the one that lets you take the trade instead of giving it up.
+
+EXO: classement | Step C — three portfolios, one single display
+CONSIGNE: All three display "risk: 1% per position", and your platform is right position by position. Rank them from most to least exposed.
+INDICE: The number of positions says nothing about exposure. Look at the directions first, the groups second.
+LOT: Portfolio A | long EUR/USD 1% · long GBP/USD 1% · long AUD/USD 1% · long XAU/USD 1% | 3.5 | Three identical bets against the dollar, adding up to 3%, plus gold counting half for 0.5%.
+LOT: Portfolio B | long EUR/USD 1% · short GBP/USD 1% · long BTC/USD 1% | 1 | The long and the short cancel almost entirely inside the dollar group. BTC is left on its own.
+LOT: Portfolio C | long EUR/USD 1% · long BTC/USD 1% | 2 | Two weakly correlated positions: the risks add up without reinforcing each other.
+
+EXF: What the exercise demonstrates
+The most exposed portfolio is the one with four lines; the least exposed has three. The number of positions says nothing, and neither does your platform''s display: it answers, accurately, a question you are not asking.', 28);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('intermediaire', 'en', 6, '6.1', 'What a system is', 'HOOK:
 A system fits on one page. If yours takes five, it is not a system: it is a collection of exceptions, and you will never be able to test it.

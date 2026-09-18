@@ -1,4 +1,4 @@
--- ============ CONTENU DES CHAPITRES ============
+﻿-- ============ CONTENU DES CHAPITRES ============
 -- GENERE AUTOMATIQUEMENT — ne pas modifier a la main.
 -- Source : formation/contenu*/ · Regenerer : python formation/push_chapitres.py
 -- Les memes fichiers produisent les PDF : les deux ne peuvent pas diverger.
@@ -133,25 +133,28 @@ insert into public.formation_chapitres (parcours, langue, module, numero, titre,
   ('debutant', 'fr', 1, 'EX', 'Le coût de départ', 'EXF: Compétence évaluée
 Objectifs 1 et 2 : expliquer ce qu''est un prix, un spread et un contrat contre le courtier ; calculer l''impact d''un mouvement de 1 % du marché pour trois niveaux de levier.
 
-EXF: Consigne
-**Partie A.** Six affirmations te sont présentées une par une. Pour chacune : vrai ou faux.
-**Partie B.** Ton capital est de 1 000 €. Pour trois niveaux de levier, calcule la perte en euros et en pourcentage du capital si le marché baisse de 1 %.
+EXO: vraifaux | Partie A — huit affirmations
+CONSIGNE: Une affirmation à la fois, vrai ou faux. Pas de retour en arrière : la correction s''affiche après chaque réponse, et elle dit surtout pourquoi la réponse fausse était tentante.
+Q: En achetant EUR/USD, je possède des euros. | faux | Tu détiens un contrat contre ton courtier. Tentant parce que le vocabulaire de la plateforme dit « acheter ».
+Q: Le spread est prélevé dès l''ouverture, avant que le marché ait bougé. | vrai | Tu achètes au prix haut et tu revendrais au prix bas : l''écart est payé à la seconde où la position s''ouvre. Chaque trade démarre donc en perte.
+Q: Si le marché ne bouge pas, je ne perds rien. | faux | Le spread est prélevé à l''ouverture, les frais de report chaque nuit.
+Q: Le courtier gagne quand je perds. | faux | Faux dans le cas général, et c''est la réponse la plus souvent ratée. Le courtier est rémunéré à l''activité : commissions, spread, report. Ton résultat ne le concerne qu''indirectement.
+Q: Les frais expliquent la plus grande partie des pertes des clients. | faux | 14,2 % selon l''AMF. Tentant parce que c''est l''explication la plus confortable.
+Q: La perte du client médian est bien plus petite que la perte moyenne. | vrai | 1 843 € contre 10 887 €. La moyenne est tirée par quelques désastres ; la médiane décrit le client ordinaire, celui que tu as le plus de chances d''être.
+Q: Les clients les plus expérimentés perdent nettement moins. | faux | 87,56 % de perdants chez les clients actifs quatre ans d''affilée.
+Q: Le levier augmente mes chances d''avoir raison. | faux | Il n''agit que sur l''amplitude, jamais sur la probabilité.
 
-EXF: Ce que la plateforme doit fournir
-- Écran sans graphique. Cet exercice ne doit contenir aucune donnée de marché : il porte sur des mécanismes, pas sur une lecture.
-- Partie A : six cartes vrai/faux présentées séquentiellement, sans retour en arrière, avec affichage de la correction après chaque réponse.
-- Partie B : un tableau à trois lignes (levier ×5, ×30, ×100) et deux colonnes de saisie numérique — perte en €, perte en %. Validation avec une tolérance de ±1 € et ±0,5 point.
-- Le capital de 1 000 € est affiché en permanence dans un bandeau supérieur, non modifiable.
+EXO: grille | Partie B — trois niveaux de levier
+CONSIGNE: Ton capital est de 1 000 €, et le marché baisse de 1 %. Pour chaque levier, calcule la perte en euros, puis ce qu''elle représente en pourcentage du capital.
+FIXE: Capital | 1 000 € | non modifiable
+COL: Levier
+COL: Perte en € | 1 | €
+COL: Perte en % | 0.5 | %
+ROW: ×5 | 50 | 5
+ROW: ×30 | 300 | 30
+ROW: ×100 | 1000 | 100
 
-EXF: Correction commentée
-**Partie A.** Les six affirmations et leur réponse :
-- *« En achetant EUR/USD, je possède des euros. »* — Faux. Tu détiens un contrat contre ton courtier. Tentant parce que le vocabulaire de la plateforme dit « acheter ».
-- *« Si le marché ne bouge pas, je ne perds rien. »* — Faux. Le spread est prélevé à l''ouverture, les frais de report chaque nuit.
-- *« Le courtier gagne quand je perds. »* — Faux dans le cas général, et c''est la réponse la plus souvent ratée. Le courtier est rémunéré à l''activité : commissions, spread, report. Ton résultat ne le concerne qu''indirectement.
-- *« Les frais expliquent la plus grande partie des pertes des clients. »* — Faux : 14,2 % selon l''AMF. Tentant parce que c''est l''explication la plus confortable.
-- *« Les clients les plus expérimentés perdent nettement moins. »* — Faux. 87,56 % de perdants chez les clients actifs quatre ans d''affilée.
-- *« Le levier augmente mes chances d''avoir raison. »* — Faux. Il n''agit que sur l''amplitude, jamais sur la probabilité.
-**Partie B.** Levier ×5 : 50 €, soit 5 %. Levier ×30 : 300 €, soit 30 %. Levier ×100 : 1 000 €, soit 100 %.
+EXF: Ce que la troisième ligne veut dire
 La troisième ligne est la seule qui compte vraiment. Beaucoup d''utilisateurs la calculent juste et en tirent la conclusion inverse de la bonne : « il suffit de ne pas se tromper ». Non. Elle signifie qu''une **journée ordinaire** sur EUR/USD — pas un krach, pas une surprise — suffit à effacer le compte. La question n''est pas d''éviter l''erreur. Elle est de survivre à la normale.', 6);
 insert into public.formation_chapitres (parcours, langue, module, numero, titre, corps, ordre) values
   ('debutant', 'fr', 2, '2.1', 'La seule question qui compte', 'HOOK:

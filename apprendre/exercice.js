@@ -424,7 +424,8 @@
 
         var pied = el('div', 'exo-pied');
         var message = el('p', 'exo-message');
-        pied.appendChild(bouton('exo-valider', ctx.tt('ex.check', 'Vérifier'), verifier));
+        pied.appendChild(bouton('exo-valider', ctx.tt('ex.check', 'Vérifier'),
+            function () { verifier(false); }));
         pied.appendChild(message);
         racine.appendChild(pied);
         dans.appendChild(racine);
